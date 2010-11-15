@@ -1,0 +1,22 @@
+/* Special Print CSS */
+
+body, html { background:none !important;}
+
+#content h1 { font-size:32px; color:#666;text-shadow: #fff 0px 1px 2px;}
+
+#sidebar, #content .button-add, #content h2, #content h3, #content .donelist, 
+#content div.add, #content .delete, #datepicker, #bottombar { display:none !important;}
+
+#content {width:96%;}
+
+#content .mainlist li { 
+-webkit-box-shadow: #fff 0px 1px 2px;
+-webkit-border-radius:0px;
+background:#fff;
+border-bottom:2px solid #999;}
+
+#content:after {
+float:right;
+font-style: italic;
+color:#999;
+content:"printed with the awesome wunderlist app (v1.1.0)";}
