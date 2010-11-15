@@ -13,6 +13,14 @@ wunderlist is based on Titanium. Download the current Titanium stable on http://
 Then type "git clone git@github.com:6wunderkinder/wunderlist.git" and that's it! Now you are member of the wunderlist community ;)
 
 --------------------
+ Known Bugs
+--------------------
+
+The desktop version of wunderlist has some strange bugs, we couldn't fix yet. They will be fixed, when Titanium 1.1.0 get's released.
+
+- Auto-Update 
+
+--------------------
  Getting Assistance
 --------------------
 
@@ -28,6 +36,10 @@ We'd also encourage you to follow us on Twitter at http://twitter.com/6Wunderkin
 - Daniel Marschner, App Developer
 - Dennis Schneider, App Developer
 - Marvin Labod, Front-End
+
+Translations:
+
+- Alejandro Martinez, Spanish
 
 Huge thanks to all our users, we love you!
 
