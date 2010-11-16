@@ -1,9 +1,14 @@
-15.11.2010
+16.11.2010
 
 [NEW] New date format dialog in menu for UK
 [NEW] "Start week on sunday" option
 [NEW] Filter functions optimized
 [NEW] Spanish translation (thanks to Alejandro Martinez)
+[NEW] French translation (thanks to Harry Lafranc)
+[NEW] Italian translation (thanks to Joram)
+[NEW] Polish translation (thanks to Sebastian Szok)
+[NEW] Portuguese translation (thanks to Sergio Melro)
+[NEW] Slovene translation (thanks to Jakub Jarabica)
 [FIX] Date-Bug fixed
 [FIX] "CTRL + A / CMD + A" Bug fixed
 [FIX] Little Performance tweaks
