@@ -31,6 +31,7 @@ Menu.initialize = function() {
 	// Language Menu
 	languageMenuItem.addItem('Deutsch', function() { Menu.switch_language('de') });
 	languageMenuItem.addItem('English', function() { Menu.switch_language('en') });
+	languageMenuItem.addItem('Espagnol', function() { Menu.switch_language('es') });
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
 
@@ -71,16 +72,7 @@ Menu.initialize = function() {
  * @author Dennis Schneider
  */
 Menu.switch_language = function(lang) {
-	switch(lang)
-	{
-		case 'de':
-			Titanium.App.Properties.setString('language', 'de');
-			break;
-
-		case 'en':
-			Titanium.App.Properties.setString('language', 'en');
-			break;
-	}
+	Titanium.App.Properties.setString('language', lang);
 	Titanium.App.restart();
 }
 

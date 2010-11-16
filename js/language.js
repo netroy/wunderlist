@@ -23,16 +23,30 @@ language.load = function()
 	code = code[0] + code[1]; // e.g. de or en
 	language.code = Titanium.App.Properties.getString('language', code);
 
-	if(language.code != 'de' && language.code != 'en')
+	if(language.code != 'de' && language.code != 'en' && language.code != 'es')
 	{
 		language.code = 'en';
 		Titanium.App.Properties.setString('language', 'en');
 	}
 
 	// Load the language file
-	path = Titanium.Filesystem.getResourcesDirectory() + "/language";
-	file = Titanium.Filesystem.getFile(path, language.code + ".json");
+	path          = Titanium.Filesystem.getResourcesDirectory() + "/language";
+	file          = Titanium.Filesystem.getFile(path, "en.json");
 	language.data = Titanium.JSON.parse(file.read());
+
+	if(language.code != 'en')
+	{
+		path                 = Titanium.Filesystem.getResourcesDirectory() + "/language";
+		file                 = Titanium.Filesystem.getFile(path, language.code + ".json");
+		language.translation = Titanium.JSON.parse(file.read());
+
+		for(langstring in language.data)
+		{
+			var translation = language.translation[langstring];
+			if(translation != undefined)
+				language.data[langstring] = translation;
+		}
+	}
 }
 
 /**
