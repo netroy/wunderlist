@@ -29,9 +29,10 @@ Menu.initialize = function() {
 	accountMenuItem.addSeparatorItem();
 
 	// Language Menu
-	languageMenuItem.addItem('Deutsch', function() { Menu.switch_language('de') });
-	languageMenuItem.addItem('English', function() { Menu.switch_language('en') });
-	languageMenuItem.addItem('Espagnol', function() { Menu.switch_language('es') });
+	languageMenuItem.addItem('Deutsch',   function() { Menu.switch_language('de') });
+	languageMenuItem.addItem('English',   function() { Menu.switch_language('en') });
+	languageMenuItem.addItem('Slovenski', function() { Menu.switch_language('sk') });
+	languageMenuItem.addItem('Espagnol',  function() { Menu.switch_language('es') });
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
 

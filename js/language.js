@@ -23,7 +23,7 @@ language.load = function()
 	code = code[0] + code[1]; // e.g. de or en
 	language.code = Titanium.App.Properties.getString('language', code);
 
-	if(language.code != 'de' && language.code != 'en' && language.code != 'es')
+	if(language.code != 'de' && language.code != 'en' && language.code != 'es' && language.code != 'sk')
 	{
 		language.code = 'en';
 		Titanium.App.Properties.setString('language', 'en');
