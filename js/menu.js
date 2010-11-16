@@ -36,7 +36,7 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Polski', function() { Menu.switch_language('pl') });
 	languageMenuItem.addItem('Português', function() { Menu.switch_language('pt') });
 	languageMenuItem.addItem('Italiano', function() { Menu.switch_language('it') });
-	languageMenuItem.addItem('Slovenski', function() { Menu.switch_language('sk') });
+	languageMenuItem.addItem('Slovensky', function() { Menu.switch_language('sk') });
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
