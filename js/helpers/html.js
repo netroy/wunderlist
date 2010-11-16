@@ -450,11 +450,11 @@ function createDatepicker()
 		buttonText: language.data.choose_date,
 		showOn: 'both',
 		firstDay: parseInt(firstDay),
-		dayNames: language.code == 'en' ? dayNamesEN : dayNamesDE,
-		dayNamesMin: language.code == 'en' ? dayNamesMinEN : dayNamesMinDE,
-		dayNamesShort: language.code == 'en' ? dayNamesShortEN : dayNamesShortDE,
-		monthNames: language.code == 'en' ? monthNamesEN : monthNamesDE,
-		monthNamesShort: language.code == 'en' ? monthNamesShortEN : monthNamesShortDE,
+		dayNames: language.code == 'de' ? dayNamesDE : dayNamesEN,
+		dayNamesMin: language.code == 'de' ? dayNamesMinDE : dayNamesMinEN,
+		dayNamesShort: language.code == 'de' ? dayNamesShortDE : dayNamesShortEN,
+		monthNames: language.code == 'de' ? monthNamesDE : monthNamesEN,
+		monthNamesShort: language.code == 'de' ? monthNamesShortDE : monthNamesShortEN,
 		beforeShow: function() {
 			var $edit_li = $(this).parent();
 			setTimeout(function() {
