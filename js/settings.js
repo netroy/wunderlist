@@ -17,7 +17,7 @@ Titanium.App.Properties.setString('runtime', runtime.toString());
  *
  * @author Dennis Schneider
  */
-if(Titanium.App.Properties.hasProperty('first_run') == false)
+if (Titanium.App.Properties.hasProperty('first_run') == false)
 {
 	Titanium.App.Properties.setString('active_theme', 'bgone');
 	Titanium.App.Properties.setString('first_run', '0');
@@ -62,11 +62,11 @@ Titanium.API.addEventListener(Titanium.EXIT, save_window_position);
  *
  * @author Christian Reber
  */
-function save_window_position() {
-	// Save Maximize State
+function save_window_position()
+{
 	currentWindow = Titanium.UI.getMainWindow();
 
-	if(position_saved == false && currentWindow.isMinimized() == false)
+	if (position_saved == false && currentWindow.isMinimized() == false)
 	{
 		Titanium.App.Properties.setString('maximized', currentWindow.isMaximized().toString());
 		Titanium.App.Properties.setString('user_height', currentWindow.height.toString());
@@ -74,6 +74,7 @@ function save_window_position() {
 		Titanium.App.Properties.setString('user_x', currentWindow.x.toString());
 		Titanium.App.Properties.setString('user_y', currentWindow.y.toString());
 		position_saved = true;
+		currentWindow.hide();
 	}
 }
 
@@ -82,7 +83,8 @@ function save_window_position() {
  *
  * @author Daniel Marschner
  */
-function load_last_opened_list() {
+function load_last_opened_list()
+{
 	return Titanium.App.Properties.getString('last_opened_list', '1');
 }
 
@@ -91,7 +93,8 @@ function load_last_opened_list() {
  *
  * @author Daniel Marschner
  */
-function save_last_opened_list(list_id) {
+function save_last_opened_list(list_id)
+{
 	Titanium.App.Properties.setString('last_opened_list', list_id.toString());
 }
 
@@ -100,7 +103,8 @@ function save_last_opened_list(list_id) {
  *
  * @author Daniel Marschner
  */
-function clear_last_opened_list() {
+function clear_last_opened_list()
+{
 	Titanium.App.Properties.setString('last_opened_list', '1');
 }
 
@@ -112,7 +116,8 @@ Titanium.API.addEventListener(Titanium.EXIT, save_sidebar_opened_status);
  *
  * @author Daniel Marschner
  */
-function save_sidebar_opened_status() {
+function save_sidebar_opened_status()
+{
 	Titanium.App.Properties.setString('sidebar_opened_status', sidebar_opened_status.toString());
 }
 
@@ -121,20 +126,26 @@ function save_sidebar_opened_status() {
  *
  * @author Daniel Marschner
  */
-function save_invited(value) {
+function save_invited(value)
+{
 	invited = value.toString();
 	Titanium.App.Properties.setString('invited', invited);
 }
 
-$(function() {
-
-	// Small workaround (bug fixes) for Mac OS X
+/**
+ * Little workaround bugfix for Mac OS X (sorry, but there is no way around)
+ * Shortcut Bind Command (or Ctrl) + Q
+ *
+ * @author Christian Reber
+ */
+$(function()
+{
 	if (os == 'darwin')
 	{
-		// Shortcut Bind Command (or Ctrl) + Q
 		$(document).bind('keydown', shortcutkey + '+q', function (event) {
 			if (listShortcutListener == 0)
 				Titanium.App.exit();
 		});
 	}
+	
 });

@@ -155,5 +155,9 @@
 	"changelog":				"Changelog",
 	"no_logout_sync":			"Non puoi effettuare il logout mentre avviene la sincronizzazione, attendere che sia terminata",
 	"add_task_button":			"Salva evento",
-	"backgrounds":				"Credits"
+	"backgrounds":				"Credits",
+	"switchdateformat": 		"formato della data",
+	"startday": 				"giornio d'inizio",
+	"sunday": 					"domenica",
+	"monday": 					"lunedi"
 }

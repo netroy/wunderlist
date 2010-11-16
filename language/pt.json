@@ -80,7 +80,7 @@
 	"edit_profile_desc":	    "Se quiser alterar a sua password ou e-mail, basta inserir o novo e-mail e password!",
 	"error_invalid_email":	    "Endereo de email invalido",
 	"error_login_failed":	    "Login errado. Por Favor tente de novo.",
-	"tutorials":			    "Tutoriais", 
+	"tutorials":			    "Tutoriais",
 	"overdue_text_pl":		    "tarefas esto atrasadas",
 	"overdue_text_sl":		    "tarefa esta atrasada",
 	"day_ago":				    "dia atras",
@@ -155,5 +155,9 @@
 	"changelog":				"Changelog",
 	"no_logout_sync":			"No pode sair durante a sincronizao, aguarde at que esta seja concluda",
 	"add_task_button":			"Guardar tarefa",
-	"backgrounds":				"Background Credits"
+	"backgrounds":				"Background Credits",
+	"switchdateformat": 		"formato de data",
+	"startday": 				"comeco do dia",
+	"sunday": 					"domingo",
+	"monday": 					"segunda-feira"
 }
