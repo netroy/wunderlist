@@ -20,12 +20,12 @@ background.list = {
 	'bgsix':   {bgPath: background.settings.defaultBgRootPath + 'darkfade.jpg',       bgPosition: background.settings.defaultBgPosition, bgColor: '#242424'},
 	'bgseven': {bgPath: background.settings.defaultBgRootPath + 'whitefade.jpg',      bgPosition: background.settings.defaultBgPosition, bgColor: '#9c9c9c'},
 	'bgfour':  {bgPath: background.settings.defaultBgRootPath + 'blue.jpg',           bgPosition: background.settings.defaultBgPosition, bgColor: '#2b1023'},
-	'bgone':   {bgPath: background.settings.defaultBgRootPath + 'wood.jpg', 	       bgPosition: background.settings.defaultBgPosition, bgColor: background.settings.defaultBgColor},
+	'bgone':   {bgPath: background.settings.defaultBgRootPath + 'wood.jpg', 	      bgPosition: background.settings.defaultBgPosition, bgColor: background.settings.defaultBgColor},
 	'bgnine':  {bgPath: background.settings.defaultBgRootPath + 'darkwood.jpg',       bgPosition: 'center center',                       bgColor: background.settings.defaultBgColor},
 	'bgfive':  {bgPath: background.settings.defaultBgRootPath + 'royal_purple.jpg',   bgPosition: background.settings.defaultBgPosition, bgColor: background.settings.defaultBgColor},
 	'bgeight': {bgPath: background.settings.defaultBgRootPath + 'monster.jpg',        bgPosition: 'top right',                           bgColor: '#81bcb8'},
 	'bgtwo':   {bgPath: background.settings.defaultBgRootPath + 'wheat.jpg',          bgPosition: 'center center',                       bgColor: background.settings.defaultBgColor},
-	'bgthree': {bgPath: background.settings.defaultBgRootPath + 'bokeh.jpg', 	       bgPosition: 'center center',                       bgColor: background.settings.defaultBgColor}
+	'bgthree': {bgPath: background.settings.defaultBgRootPath + 'bokeh.jpg', 	      bgPosition: 'center center',                       bgColor: background.settings.defaultBgColor}
 };
 
 /**

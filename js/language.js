@@ -1,5 +1,10 @@
 var language = language || {};
 
+/**
+ * Available languages
+ *
+ * @author Dennis Schneider, Daniel Marschner
+ */
 language.availableLang = new Array(
 	'de', 'en', 'es', 'fr',
 	'pl', 'pt', 'it', 'sk'
