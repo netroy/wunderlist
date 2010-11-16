@@ -1,19 +1,27 @@
 16.11.2010
 
-[NEW] New date format dialog in menu for UK
-[NEW] "Start week on sunday" option
-[NEW] Filter functions optimized
-[NEW] Spanish translation (thanks to Alejandro Martinez)
-[NEW] French translation (thanks to Harry Lafranc)
-[NEW] Italian translation (thanks to Joram)
-[NEW] Polish translation (thanks to Sebastian Szok)
-[NEW] Portuguese translation (thanks to Sergio Melro)
-[NEW] Slovene translation (thanks to Jakub Jarabica)
-[FIX] Date-Bug fixed
-[FIX] "CTRL + A / CMD + A" Bug fixed
-[FIX] Little Performance tweaks
-[FIX] Better OS X behaviour on close
+New: New date format dialog added (also “Start week on sunday” option added)
+New: Filter functions optimized
+New: Spanish translation (thanks to Alejandro Martinez)
+New: French translation (thanks to Harry Lafranc)
+New: Italian translation (thanks to Joram)
+New: Polish translation (thanks to Sebastian Szok)
+New: Portuguese translation (thanks to Sergio Melro)
+New: Slovene translation (thanks to Jakub Jarabica)
+New: Moved to github
+Fix: Date-Bug fixed
+Fix: “CTRL + A / CMD + A” Bug fixed
+Fix: Little Performance tweaks
+Fix: Better OS X behaviour on close
 
 09.11.2010
 
-[RELEASE] Version 1.0.0 as beta
+New: Multi platform support (Mac & Windows; iPhone coming soon)
+New: Cloud-Synchronization for Tasks & Lists
+New: Multi language support (English & German)
+New: Individually optimized shortcuts for supported operation systems
+New: Drag & Drop Tasks and Lists
+New: Done Tasks History
+New: Overdue Tasks Hint
+New: A lot of filter options
+New: Background Themes
