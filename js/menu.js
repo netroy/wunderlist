@@ -32,6 +32,10 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Deutsch', function() { Menu.switch_language('de') });
 	languageMenuItem.addItem('English', function() { Menu.switch_language('en') });
 	languageMenuItem.addItem('Espagnol', function() { Menu.switch_language('es') });
+	languageMenuItem.addItem('Français', function() { Menu.switch_language('fr') });
+	languageMenuItem.addItem('Polski', function() { Menu.switch_language('pl') });
+	languageMenuItem.addItem('Português', function() { Menu.switch_language('pt') });
+	languageMenuItem.addItem('Italiano', function() { Menu.switch_language('it') });
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
 
