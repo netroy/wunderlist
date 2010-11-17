@@ -22,7 +22,6 @@ $(function()
             if($is_checked)
             {
                 wunderlist.taskDone($task_id, $list_id);
-                filters.updateBadges();
 
       			if($("#donelist_list_today").length == 0) {
       				$(".mainlist").after("<h3 class='head_today'>" + language.data.done_today + "</h3>");
@@ -36,7 +35,7 @@ $(function()
             else
             {
                 wunderlist.taskUndone($task_id, $list_id);
-                filters.updateBadges();
+
                 make_timestamp_to_string();
 
                 $countli = $(this).parent().parent(".donelist").find("li");
@@ -68,6 +67,7 @@ $(function()
       			});
            	}
 
+			filters.updateBadges();
          }
 
          setTimeout(function() { checkClicked = 0; }, 100);

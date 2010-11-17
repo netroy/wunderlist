@@ -151,6 +151,7 @@ sync.fireSync = function()
 								case sync.status_codes.SYNC_NOT_EXIST:
 									sync.isSyncing = false;
 									showErrorDialog(language.data.sync_not_exist);
+									account.logout();
 									break;
 
 								default:
