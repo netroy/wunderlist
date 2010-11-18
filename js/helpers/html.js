@@ -424,6 +424,12 @@ function createDatepicker()
 	var monthNamesEN 	  = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	var monthNamesShortEN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+	var dayNamesFR        = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+	var dayNamesMinFR     = ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
+	var dayNamesShortFR   = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+	var monthNamesFR 	  = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+	var monthNamesShortFR = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aoû', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 	var dayNamesDE        = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 	var dayNamesMinDE 	  = ['So','Mo','Di','Mi','Do','Fr','Sa'];
 	var dayNamesShortDE   = ['Son','Mon','Din','Mit','Don','Fre','Sam'];
@@ -443,6 +449,31 @@ function createDatepicker()
 		Titanium.App.Properties.setString('weekstartday', firstDay.toString());
 	}
 
+	if(language.code == 'de')
+	{
+  		var dayNamesLang        = dayNamesDE;
+  		var dayNamesMinLang     = dayNamesMinDE;
+  		var dayNamesShortLang   = dayNamesShortDE;
+  		var monthNamesLang      = monthNamesDE;
+  		var monthNamesShortLang = monthNamesShortDE;
+	}
+	else if(language.code == 'fr')
+	{
+  		var dayNamesLang        = dayNamesFR;
+  		var dayNamesMinLang     = dayNamesMinFR;
+  		var dayNamesShortLang   = dayNamesShortFR;
+  		var monthNamesLang      = monthNamesFR;
+  		var monthNamesShortLang = monthNamesShortFR;
+	}
+	else
+	{
+  		var dayNamesLang        = dayNamesEN;
+  		var dayNamesMinLang     = dayNamesMinEN;
+  		var dayNamesShortLang   = dayNamesShortEN;
+  		var monthNamesLang      = monthNamesEN;
+  		var monthNamesShortLang = monthNamesShortEN;
+	}
+
 	$(".datepicker").datepicker({
 		constrainInput: true,
 		buttonImage: 'icons/time.png',
@@ -450,11 +481,11 @@ function createDatepicker()
 		buttonText: language.data.choose_date,
 		showOn: 'both',
 		firstDay: parseInt(firstDay),
-		dayNames: language.code == 'de' ? dayNamesDE : dayNamesEN,
-		dayNamesMin: language.code == 'de' ? dayNamesMinDE : dayNamesMinEN,
-		dayNamesShort: language.code == 'de' ? dayNamesShortDE : dayNamesShortEN,
-		monthNames: language.code == 'de' ? monthNamesDE : monthNamesEN,
-		monthNamesShort: language.code == 'de' ? monthNamesShortDE : monthNamesShortEN,
+		dayNames: dayNamesLang,
+		dayNamesMin: dayNamesMinLang,
+		dayNamesShort: dayNamesShortLang,
+		monthNames: monthNamesLang,
+		monthNamesShort: monthNamesShortLang,
 		beforeShow: function() {
 			var $edit_li = $(this).parent();
 			setTimeout(function() {
