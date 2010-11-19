@@ -21,9 +21,9 @@ function reset_window_size() {
  */
 Menu.initialize = function() {
 	var new_menu         = Titanium.UI.createMenu();
-	var accountMenuItem	 = new_menu.addItem(language.data.account);
+	var accountMenuItem	= new_menu.addItem(language.data.account);
 	var languageMenuItem = new_menu.addItem(language.data.language);
-	var extraMenuItem	 = new_menu.addItem(language.data.extra);
+	var extraMenuItem	   = new_menu.addItem(language.data.extra);
 
 	accountMenuItem.addItem(language.data.invitation, account.showInviteDialog);
 	accountMenuItem.addSeparatorItem();
@@ -40,6 +40,7 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Polski',     function() { Menu.switch_language('pl') });
 	languageMenuItem.addItem('Português',  function() { Menu.switch_language('pt') });
 	languageMenuItem.addItem('Slovensky',  function() { Menu.switch_language('sk') });
+	languageMenuItem.addItem('Українськa', function() { Menu.switch_language('uk') });
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);

@@ -8,7 +8,7 @@ var language = language || {};
 language.availableLang = new Array(
 	'de', 'en', 'es', 'fr',
 	'pl', 'pt', 'it', 'sk',
-	'ca', 'nl', 'da'
+	'ca', 'nl', 'da', 'uk'
 );
 
 /**
