@@ -29,16 +29,17 @@ Menu.initialize = function() {
 	accountMenuItem.addSeparatorItem();
 
 	// Language Menu
-	languageMenuItem.addItem('Deutsch', function() { Menu.switch_language('de') });
-	languageMenuItem.addItem('English', function() { Menu.switch_language('en') });
-	languageMenuItem.addItem('Español', function() { Menu.switch_language('es') });
-	languageMenuItem.addItem('Català', function() { Menu.switch_language('ca') });
-	languageMenuItem.addItem('Français', function() { Menu.switch_language('fr') });
-	languageMenuItem.addItem('Polski', function() { Menu.switch_language('pl') });
-	languageMenuItem.addItem('Português', function() { Menu.switch_language('pt') });
-	languageMenuItem.addItem('Italiano', function() { Menu.switch_language('it') });
-	languageMenuItem.addItem('Slovensky', function() { Menu.switch_language('sk') });
+	languageMenuItem.addItem('Català',     function() { Menu.switch_language('ca') });
+	languageMenuItem.addItem('Dansk',      function() { Menu.switch_language('da') });
+	languageMenuItem.addItem('Deutsch',    function() { Menu.switch_language('de') });
+	languageMenuItem.addItem('English',    function() { Menu.switch_language('en') });
+	languageMenuItem.addItem('Español',    function() { Menu.switch_language('es') });
+	languageMenuItem.addItem('Français',   function() { Menu.switch_language('fr') });
+	languageMenuItem.addItem('Italiano',   function() { Menu.switch_language('it') });
 	languageMenuItem.addItem('Nederlands', function() { Menu.switch_language('nl') });
+	languageMenuItem.addItem('Polski',     function() { Menu.switch_language('pl') });
+	languageMenuItem.addItem('Português',  function() { Menu.switch_language('pt') });
+	languageMenuItem.addItem('Slovensky',  function() { Menu.switch_language('sk') });
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
