@@ -8,7 +8,8 @@ var language = language || {};
 language.availableLang = new Array(
 	'de', 'en', 'es', 'fr',
 	'pl', 'pt', 'it', 'sk',
-	'ca', 'nl'
+	'ca', 'nl', 'da', 'uk',
+	'ru'
 );
 
 /**
@@ -42,13 +43,13 @@ language.load = function()
 
 	// Load the language file
 	path          = Titanium.Filesystem.getResourcesDirectory() + "/language";
-	file          = Titanium.Filesystem.getFile(path, "en.json");
+	file          = Titanium.Filesystem.getFile(path, 'en.json');
 	language.data = Titanium.JSON.parse(file.read());
 
 	if(language.code != 'en')
 	{
 		path                 = Titanium.Filesystem.getResourcesDirectory() + "/language";
-		file                 = Titanium.Filesystem.getFile(path, language.code + ".json");
+		file                 = Titanium.Filesystem.getFile(path, language.code + '.json');
 		language.translation = Titanium.JSON.parse(file.read());
 
 		for(langstring in language.data)

@@ -22,7 +22,7 @@ if (Titanium.App.Properties.hasProperty('first_run') == false)
 	Titanium.App.Properties.setString('active_theme', 'bgone');
 	Titanium.App.Properties.setString('first_run', '0');
 	Titanium.App.Properties.setString('user_height', '400');
-	Titanium.App.Properties.setString('user_width', '650');
+	Titanium.App.Properties.setString('user_width', '760');
 	Titanium.App.Properties.setString('runtime', '1');
 	Titanium.App.Properties.setString('dateformat', language.code);
 	Titanium.App.Properties.setString('invited', invited.toString());
@@ -37,7 +37,7 @@ else
 	else
 	{
 		currentWindow.height = parseInt(Titanium.App.Properties.getString('user_height', '400'));
-		currentWindow.width  = parseInt(Titanium.App.Properties.getString('user_width',  '650'));
+		currentWindow.width  = parseInt(Titanium.App.Properties.getString('user_width',  '760'));
 		var user_x = Titanium.App.Properties.getString('user_x', 'none');
 		var user_y = Titanium.App.Properties.getString('user_y', 'none');
 

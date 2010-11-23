@@ -39,7 +39,9 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Italiano', function() { Menu.switch_language('it') });
 	languageMenuItem.addItem('Slovensky', function() { Menu.switch_language('sk') });
 	languageMenuItem.addItem('Nederlands', function() { Menu.switch_language('nl') });
-	languageMenuItem.addItem('Pусский', function() { Menu.switch_language('nl') });
+	languageMenuItem.addItem('Pусский', function() { Menu.switch_language('ru') });
+	languageMenuItem.addItem('Українське', function() { Menu.switch_language('uk') });
+	languageMenuItem.addItem('Dansk', function() { Menu.switch_language('da') });
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
