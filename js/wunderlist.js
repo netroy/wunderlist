@@ -228,7 +228,7 @@ wunderlist.liveSearch = function(search)
 
 	if (resultSet.rowCount() > 0)
 	{
-		$("#content").append("<h1>"+ language.data.search_results + "</h1><ul id='list' class='mainlist'></ul>");
+		$("#content").append("<h1>"+ language.data.search_results + "</h1><ul id='list' class='mainlist search'></ul>");
 
         while(resultSet.isValidRow()) {
             var values = new Object();

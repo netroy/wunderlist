@@ -12,26 +12,39 @@ $(function()
 
             $(this).toggleClass("checked");
 
-            $is_checked = $(this).hasClass("checked");
+            is_checked = $(this).hasClass("checked");
 
         	$(this).parent().toggleClass('done');
 
             $task_id = $(this).parent().attr("id");
             $list_id = $("ul#list").attr("rel");
 
-            if($is_checked)
+			// If it is not checked, check and append to done list
+            if(is_checked)
             {
                 wunderlist.taskDone($task_id, $list_id);
 
-      			if($("#donelist_list_today").length == 0) {
-      				$(".mainlist").after("<h3 class='head_today'>" + language.data.done_today + "</h3>");
-      				$("#content h3.head_today").after("<ul id='donelist_list_today' class='donelist'></ul>")
-      			}
+				// If it is not the search side, create a done list at the bottom
+				if($('ul.search').length == 0)
+				{
+					if($("#donelist_list_today").length == 0) {
+						$(".mainlist").after("<h3 class='head_today'>" + language.data.done_today + "</h3>");
+						$("#content h3.head_today").after("<ul id='donelist_list_today' class='donelist'></ul>")
+					}
 
-      			$(this).parent().slideUp('fast', function() {
-     				$(this).prependTo("#donelist_list_today").slideDown();
-      			});
+					$(this).parent().slideUp('fast', function() {
+						$(this).prependTo("#donelist_list_today").slideDown();
+					});
+				}
+				// On the search side, just append the checked task to the end of the mainlist
+				else
+				{
+					$(this).parent().slideUp('fast', function() {
+						$(this).appendTo(".mainlist").slideDown();
+					});									
+				}
       		}
+      		// If is already checked, append to upper list
             else
             {
                 wunderlist.taskUndone($task_id, $list_id);
