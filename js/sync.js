@@ -67,8 +67,19 @@ sync.validateEmail = function(email)
  *
  * @author Dennis Schneider
  */
-sync.fireSync = function()
+sync.fireSync = function(logOutAfterSync, exitAfterSync)
 {
+	// Should the user be logged out after sync?
+	if(logOutAfterSync == undefined)
+	{
+		logOutAfterSync = false;
+	}
+	
+	if(exitAfterSync == undefined)
+	{
+		exitAfterSync = false;
+	}
+	
 	if(wunderlist.isUserLoggedIn() == false)
 	{
 		setTimeout(stopSyncAnimation, 10);
@@ -132,7 +143,7 @@ sync.fireSync = function()
 							switch(response.code)
 							{
 								case sync.status_codes.SYNC_SUCCESS:
-									sync.syncSuccess(response);
+									sync.syncSuccess(response, logOutAfterSync, exitAfterSync);
 									syncSuccessful = true;
 									clearInterval(sync.timeOutInterval);
 									sync.timeOutInterval = '';
@@ -197,7 +208,7 @@ sync.fireSync = function()
  *
  * @author Dennis Schneider
  */
-sync.syncSuccess = function(response_step1)
+sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
 {
 	// SYNC STEP 2
 	if(response_step1.sync_table != undefined)
@@ -348,10 +359,26 @@ sync.syncSuccess = function(response_step1)
 		}
 	}
 
-	setTimeout(function() { sync.isSyncing = false; }, 2000);
+	setTimeout(function() { sync.isSyncing = false; }, 2000);	
 	stopSyncAnimation();
+	
+	if(logOutAfterSync == true)
+	{
+		sync.isSyncing = false;
+		account.logout();
+	}
+
+	if(exitAfterSync == true)
+	{
+		Titanium.App.exit();
+	}
 }
 
+/**
+ * Changes the list id temporarily to the online id
+ *
+ * @author Daniel Marschner
+ */
 sync.setTaskListIdToListOnlineId = function(tasks)
 {
 	if(tasks != undefined)

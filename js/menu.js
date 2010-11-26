@@ -54,9 +54,9 @@ Menu.initialize = function() {
 	extraMenuItem.addItem(language.data.create_tutorials, wunderlist.recreateTutorials);
 
 	extraMenuItem.addSeparatorItem();
-	extraMenuItem.addItem(language.data.credits, openCreditsDialog);  // About Us Dialog
-	extraMenuItem.addItem(language.data.backgrounds, openBackgroundsDialog);  // Background Credits
-	extraMenuItem.addItem(language.data.wunderkinder, function() { Titanium.Desktop.openURL('http://www.6wunderkinder.com') });
+	extraMenuItem.addItem(language.data.credits,         openCreditsDialog);  // About Us Dialog
+	extraMenuItem.addItem(language.data.backgrounds,     openBackgroundsDialog);  // Background Credits
+	extraMenuItem.addItem(language.data.wunderkinder,    function() { Titanium.Desktop.openURL('http://www.6wunderkinder.com') });
 	extraMenuItem.addItem(language.data.wunderkinder_tw, function() { Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder') });
 	extraMenuItem.addItem(language.data.wunderkinder_fb, function() { Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder') });
 	extraMenuItem.addSeparatorItem();
@@ -67,7 +67,9 @@ Menu.initialize = function() {
 		accountMenuItem.addItem(language.data.change_login_data, account.editProfile)
 		accountMenuItem.addItem(language.data.delete_account, function() { account.deleteAccount() });
 		accountMenuItem.addSeparatorItem();
-		accountMenuItem.addItem(language.data.logout, account.logout);
+		accountMenuItem.addItem(language.data.logout, function() {
+			sync.fireSync(true);
+		});
 	}
 	else
 	{
@@ -104,10 +106,28 @@ Menu.initializeTrayIcon = function() {
 		trayIcon.setHint('wunderlist - todo application')
 
 		var trayMenu         = Titanium.UI.createMenu();
-		var trayExitItem	 = trayMenu.addItem(language.data.exit_wunderlist, Titanium.App.exit);
+		var trayExitItem	 = trayMenu.addItem(language.data.exit_wunderlist, Menu.exitWunderlist);
 		trayIcon.setMenu(trayMenu);
 	}
 }
+
+/**
+ * Own exit method for the app
+ *
+ * @author Dennis Schneider
+ */
+Menu.exitWunderlist = function() {
+	// If the user is logged in and internet is available
+	if(wunderlist.isUserLoggedIn() && Titanium.Network.online == true)
+	{
+		sync.fireSync(false, true);
+	}
+	else
+	{
+		Titanium.App.exit()
+	}
+}
+ 
 
 /**
  * Prevent standard close event

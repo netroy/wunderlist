@@ -738,7 +738,9 @@ account.logout = function()
 		account.showRegisterDialog();
 	}
 	else
+	{
 		showWhileSyncDialog(language.data.no_logout_sync);
+	}
 }
 
 /**
