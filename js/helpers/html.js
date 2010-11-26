@@ -68,12 +68,12 @@ generateTaskHTML = function(id, name, list_id, done, important, date)
 	if(done == 1)
 	{
 		html += "<div class='checkboxcon checked'>";
-		html += "<input class='input-checked' type='checkbox' checked='checked' />";
+		html += "<input tabIndex='-1' class='input-checked' type='checkbox' checked='checked' />";
 	}
 	else
 	{
 		html += "<div class='checkboxcon'>";
-		html += "<input class='input-checked' type='checkbox' />";
+		html += "<input tabIndex='-1' class='input-checked' type='checkbox' />";
 	}
 
 	html += '</div>';
