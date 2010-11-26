@@ -16,7 +16,7 @@ timer.init = function()
 			timer.auto_update_seconds--;
 			if(timer.auto_update_seconds === 0)
 			{
-				if(wunderlist.isUserLoggedIn())
+				if(wunderlist.isUserLoggedIn() && Titanium.Network.online == true)
 					$('#sync').click();
 				clearInterval(timer.auto_update_interval);
 				timer.init();
@@ -52,9 +52,10 @@ timer.start = function()
 		if(timer.isPaused == false)
 		{
 			timer.total_seconds--;
+			console.log(timer.total_seconds);
 			if(timer.total_seconds === 0)
 			{
-				if(wunderlist.isUserLoggedIn())
+				if(wunderlist.isUserLoggedIn() && Titanium.Network.online == true)
 					$('#sync').click();
 
 				clearInterval(timer.interval);

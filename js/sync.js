@@ -37,8 +37,8 @@ sync.init = function()
 	{
 		if(sync.isSyncing == false)
 		{
-			sync.fireSync();
 			timer.stop();
+			sync.fireSync();
 			return false;
 		}
 	});

@@ -70,7 +70,6 @@ function cancelSaveTask()
  */
 $(function()
 {
-
 	// DoubleClick on Task - Edit mode
     $('.mainlist li .description').live('dblclick', function()
 	{
@@ -83,7 +82,7 @@ $(function()
 
         var doneIsActive = ($('div#left a#done.active').length == 1);
 
-		// Überprüfen ob der Edit Modus bereits aktiviert ist
+		// Check if edit mode has already been activated
 		if($('#task-edit').length == 0 && doneIsActive == false)
 		{
 			var spanElement = $(this);

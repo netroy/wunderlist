@@ -75,25 +75,37 @@ Menu.initialize = function() {
 
 	Menu.remove();
 	Titanium.UI.setMenu(new_menu);
+}
 
-	// Create the tray icon and menu and prevent the application from exit on 'x'
-	var wunderlistWindow = Menu.preventCloseEvent();
-
+/**
+ * Creates a tray icon with menu
+ *
+ * @author Dennis Schneider
+ */
+Menu.initializeTrayIcon = function() {
 	var os = Titanium.Platform.name.toLowerCase();
-	if (os == 'darwin') {
-		var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traymac.png';
-	} else {
-		var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
+
+	// Only for windows and linux
+	if(os != 'darwin')
+	{
+		// Create the tray icon and menu and prevent the application from exit on 'x'
+		var wunderlistWindow = Menu.preventCloseEvent();
+
+		if (os == 'darwin') {
+			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traymac.png';
+		} else {
+			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
+		}
+
+		var trayIcon     = Titanium.UI.addTray(trayIconPath, function () {
+			Menu.showWindow(wunderlistWindow)
+		});
+		trayIcon.setHint('wunderlist - todo application')
+
+		var trayMenu         = Titanium.UI.createMenu();
+		var trayExitItem	 = trayMenu.addItem(language.data.exit_wunderlist, Titanium.App.exit);
+		trayIcon.setMenu(trayMenu);
 	}
-
-	var trayIcon     = Titanium.UI.addTray(trayIconPath, function () {
-		Menu.showWindow(wunderlistWindow)
-	});
-	trayIcon.setHint('wunderlist - todo application')
-
-	var trayMenu         = Titanium.UI.createMenu();
-	var trayExitItem	 = trayMenu.addItem(language.data.exit_wunderlist, Titanium.App.exit);
-	trayIcon.setMenu(trayMenu);
 }
 
 /**

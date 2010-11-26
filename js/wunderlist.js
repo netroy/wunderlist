@@ -7,6 +7,7 @@ $(function()
 	language.init();
 	account.init();
 	timer.init();
+	Menu.initializeTrayIcon();
 });
 
 /**
@@ -434,6 +435,7 @@ wunderlist.createTaskByOnlineId = function(online_id, name, date, done, list_id,
 wunderlist.updateTaskPosition = function(task_id, position)
 {
     this.database.execute("UPDATE tasks SET position = ?, version = version + 1 WHERE id = ?", position, task_id);
+    timer.stop().set(15).start();
 }
 
 /**
