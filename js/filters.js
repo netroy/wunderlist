@@ -65,30 +65,32 @@ filters.clearActiveStates = function(object) {
  */
 filters.updateBadges = function() {
 	// Generate Badges
-	$todaycount	= wunderlist.getBadgeCount('today');
-	$overduecount = wunderlist.getBadgeCount('overdue');
+	var todaycount	 = wunderlist.getBadgeCount('today');
+	var overduecount = wunderlist.getBadgeCount('overdue');
 
-	$today_has_no_badge		= $('#bottombar #left a#today span').length == 0;
-	$overdue_has_no_badge	= $('#bottombar #left a#overdue span').length == 0;
+	var today_has_no_badge	  = $('#bottombar #left a#today span').length == 0;
+	var overdue_has_no_badge = $('#bottombar #left a#overdue span').length == 0;
 
-	if($today_has_no_badge)
-		$('#left a#today').append('<span>' + $todaycount + '</span>');
+	if(today_has_no_badge == true)
+	{
+		$('#left a#today').append('<span>' + todaycount + '</span>');
+	}
 	else
 	{
-		$('#left a#today span').text($todaycount);
+		$('#left a#today span').text(todaycount);
 		$('#left a#today span').fadeOut('fast').fadeIn('fast');
 		$("#lists").css("bottom","74px");
 	}
 
-	if($overduecount > 1)
+	if(overduecount > 1)
 	{
-		overdue_text = $overduecount + ' ' + language.data.overdue_text_pl;
+		overdue_text = overduecount + ' ' + language.data.overdue_text_pl;
 		$('div#sidebar div#notification').fadeIn('fast');
 		$("#lists").css("bottom","74px");
 	}
-	else if($overduecount == 1)
+	else if(overduecount == 1)
 	{
-		overdue_text = $overduecount + ' ' + language.data.overdue_text_sl;
+		overdue_text = overduecount + ' ' + language.data.overdue_text_sl;
 		$('div#sidebar div#notification').fadeIn('fast');
 		$("#lists").css("bottom","74px");
 	}
@@ -99,24 +101,32 @@ filters.updateBadges = function() {
 		$("#lists").css("bottom","36px");
 	}
 
-	if($overdue_has_no_badge)
+	if(overdue_has_no_badge)
+	{
 		$('div#sidebar div#notification div').text(overdue_text);
+	}
 	else
 	{
-		$('div#sidebar div#notification div').text($overduecount);
+		$('div#sidebar div#notification div').text(overduecount);
 		$('div#sidebar div#notification').fadeOut('fast').fadeIn('fast');
 		$("#lists").css("bottom","74px");
 	}
 
-	$countAll = $overduecount + $todaycount;
+	var countAll = overduecount + todaycount;
 
-	if($todaycount == 0)
+	if(todaycount == 0)
+	{
 		$('#left a#today span').remove();
+	}
 
-	if($overduecount + $todaycount == 0)
-		Titanium.UI.setBadge('');
+	if(countAll == 0)
+	{
+		Titanium.UI.setBadge(null);
+	}
 	else
-		Titanium.UI.setBadge($countAll.toString());
+	{
+		Titanium.UI.setBadge(countAll.toString());
+	}
 }
 
 /**
