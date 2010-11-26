@@ -465,12 +465,39 @@ wunderlist.updateTaskListId = function(id, online_id)
  *
  * @author Dennis Schneider
  */
-wunderlist.taskDone = function(task_id, list_id)
+wunderlist.taskDone = function(task_id, list_id, isFilter)
 {
+	if(isFilter == undefined)
+	{
+		isFilter = false;
+	}
+	
 	done_date = Math.round(new Date().getTime() / 1000);
 	timer.stop().set(15).start();
 	this.database.execute("UPDATE tasks SET done = 1, done_date = ?, version = version + 1 WHERE id = ?", done_date, task_id);
-	this.updateCount(list_id);
+	
+	// If it is not a filter site, just update the done state of the task
+	if(isFilter == false)
+	{
+		this.updateCount(list_id);
+	}
+	// If it is a filter / search site, update all tasks
+	else
+	{
+		var resultSet = this.database.execute("SELECT id FROM lists");
+		var listIDs   = [];
+		
+		while(resultSet.isValidRow())
+		{	
+			listIDs.push(resultSet.field(0));
+			resultSet.next();
+		}
+		
+		for(id in listIDs)
+		{
+			this.updateCount(listIDs[id]);
+		}
+	}
 }
 
 /**
@@ -478,11 +505,38 @@ wunderlist.taskDone = function(task_id, list_id)
  *
  * @author Dennis Schneider
  */
-wunderlist.taskUndone = function(task_id, list_id)
+wunderlist.taskUndone = function(task_id, list_id, isFilter)
 {
+	if(isFilter == undefined)
+	{
+		isFilter = false;
+	}	
+	
 	timer.stop().set(15).start();
 	this.database.execute("UPDATE tasks SET done = 0, done_date = 0, version = version + 1 WHERE id = ?", task_id);
-	this.updateCount(list_id);
+
+	// If it is not a filter site, just update the done state of the task
+	if(isFilter == false)
+	{
+		this.updateCount(list_id);
+	}
+	// If it is a filter / search site, update all tasks
+	else
+	{
+		var resultSet = this.database.execute("SELECT id FROM lists");
+		var listIDs   = [];
+		
+		while(resultSet.isValidRow())
+		{	
+			listIDs.push(resultSet.field(0));
+			resultSet.next();
+		}
+		
+		for(id in listIDs)
+		{
+			this.updateCount(listIDs[id]);
+		}
+	}
 }
 
 /**

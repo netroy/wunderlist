@@ -22,11 +22,11 @@ $(function()
 			// If it is not checked, check and append to done list
             if(is_checked)
             {
-                wunderlist.taskDone($task_id, $list_id);
-
-				// If it is not the search side, create a done list at the bottom
-				if($('ul.search').length == 0)
+				// If it is not the search / filter site, create a done list at the bottom
+				if($('ul.search').length == 0 && $('ul.filterlist').length == 0)
 				{
+					wunderlist.taskDone($task_id, $list_id);
+					
 					if($("#donelist_list_today").length == 0) {
 						$(".mainlist").after("<h3 class='head_today'>" + language.data.done_today + "</h3>");
 						$("#content h3.head_today").after("<ul id='donelist_list_today' class='donelist'></ul>")
@@ -39,6 +39,8 @@ $(function()
 				// On the search side, just append the checked task to the end of the mainlist
 				else
 				{
+					wunderlist.taskDone($task_id, $list_id, true);
+					
 					$(this).parent().slideUp('fast', function() {
 						$(this).appendTo(".mainlist").slideDown();
 					});									
@@ -47,7 +49,14 @@ $(function()
       		// If is already checked, append to upper list
             else
             {
-                wunderlist.taskUndone($task_id, $list_id);
+				if($('ul.search').length == 0 && $('ul.filterlist').length == 0)
+				{
+					wunderlist.taskUndone($task_id, $list_id);
+				}
+				else
+				{
+					wunderlist.taskUndone($task_id, $list_id, true);
+				}
 
                 make_timestamp_to_string();
 
