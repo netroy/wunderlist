@@ -498,6 +498,12 @@ function createDatepicker()
 			var $edit_li = $(this).parent();
 			setTimeout(function() {
 				addRemoveDateButton($edit_li);
+				var timestamp   = $edit_li.children('.timestamp').attr('rel');
+				if(timestamp != undefined) 
+				{
+					var currentDate = new Date(timestamp * 1000);
+					var datepicker  = $('.datepicker').datepicker("setDate" , currentDate);			
+				}
 			}, 5);
 
             datePickerOpen = true;
