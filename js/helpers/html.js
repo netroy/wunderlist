@@ -281,8 +281,7 @@ function make_timestamp_to_string() {
 	$('.timestamp').each(function(intIndex) {
 
 		// Convert Timestamp to normal date
-		var timestamp = $(this).attr('rel');
-
+		var timestamp      = $(this).attr('rel');
 		var selected_date  = new Date(timestamp * 1000);
 
 		var day   = selected_date.getDate();
@@ -292,34 +291,33 @@ function make_timestamp_to_string() {
 		if(day < 10) { day = '0' + day }
 		if(month < 10) { month = '0' + month }
 
-		var today = getGMTDate();
-
-		var diff = Math.round((timestamp - today));
+		var today = new Date();
 
 		// Remove red color everytime
 		$(this).removeClass('red');
 
 		// If older then yesterday, mark red and show the date
-		if(diff < -86400) {
+		if(selected_date.getDate() < today.getDate() - 2 && selected_date.getMonth() <= today.getMonth()) {
 			$(this).addClass('red');
 			showDateByLanguage(this, day, month, year);
 		}
 		// If yesterday, mark red and show "yesterday"
-		else if(diff < 0 && diff >= -86400) {
+		else if((selected_date.getDate() < today.getDate() && selected_date.getDate() > today.getDate() - 2) && selected_date.getMonth() <= today.getMonth()) {
 			$(this).html(language.data.yesterday);
 			$(this).addClass('red');
 		}
 		// or today
-		else if(diff >= 0 && diff < 86400) {
+		else if(selected_date.getDate() == today.getDate() && selected_date.getMonth() == today.getMonth()) {
 			$(this).html(language.data.today);
 		}
 		// or tomorrow
-		else if(diff >= 86400 && diff < 172800) {
+		else if((selected_date.getDate() > today.getDate() && selected_date.getDate() < (today.getDate() + 2)) && selected_date.getMonth() == today.getMonth()) {
 			$(this).html(language.data.tomorrow);
 		}
 		else {
 			showDateByLanguage(this, day, month, year);
 		}
+
 	});
 }
 
@@ -328,24 +326,34 @@ function make_timestamp_to_string() {
  *
  * @author Dennis Schneider
  */
-function getGMTDate(date)
+function getWorldWideDate(date)
 {
+    // create Date object for current location
 	if(date == undefined)
-		var current_date  = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0);
+    	currentLocationDate = new Date();
 	else
-		var current_date = date;
+		currentLocationDate = date;
 
-	var monthName = getMonthName(current_date.getMonth());
-	var dayName   = getDayName(current_date.getDay());
+	currentLocationDate.setMinutes(0);
+	currentLocationDate.setHours(0);
+    currentLocationDate.setSeconds(0);
+	currentLocationDate.setMilliseconds(0);
 
-	dateString = dayName + ", " + monthName + " " + current_date.getDate() + ", " + current_date.getFullYear() + " 00:00:00";
+	var offset = (currentLocationDate.getTimezoneOffset() / 60) * (-1);
 
-	// time of current day beginning at 00:00:00
-	var current_date = new Date(dateString);
+    // convert to msec
+    // add local time zone offset
+    // get UTC time in msec
+    utc = currentLocationDate.getTime() + (currentLocationDate.getTimezoneOffset() * 60000);
 
-	current_date = current_date.getTime() / 1000;
+    // create new Date object for different city
+    // using supplied offset
+    timeZoneLocation = new Date(utc + (3600000 * offset));
 
-	return current_date;
+	var timestamp = timeZoneLocation.getTime() / 1000;
+	timestamp     = Math.round(timestamp);
+
+	return timestamp;
 }
 
 /**
@@ -515,7 +523,7 @@ function createDatepicker()
 
             // Get timestamp (in seconds) for database
 			var date       = new Date(dateText);
-			var timestamp  = getGMTDate(date);
+			var timestamp  = getWorldWideDate(date);
 
 			if($(this).parent().find('.input-add').length == 1)
 			{

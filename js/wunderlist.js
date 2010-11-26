@@ -632,7 +632,7 @@ wunderlist.getBadgeCount = function(filter_name)
 {
 	var sql = "SELECT id AS count FROM tasks WHERE ";
 
-	var current_date  = getGMTDate();
+	var current_date  = getWorldWideDate();
 
 	switch(filter_name)
 	{
@@ -731,7 +731,7 @@ wunderlist.getFilteredTasks = function(type, date_type)
 	var sql  = "SELECT tasks.id AS task_id, tasks.online_id AS online_id, tasks.name AS task_name, tasks.done, tasks.important, tasks.position, tasks.date, tasks.list_id ";
 		sql += "FROM tasks ";
 
-	current_date = getGMTDate();
+	current_date = getWorldWideDate();
 
 	switch(type)
 	{

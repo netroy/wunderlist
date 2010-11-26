@@ -75,6 +75,45 @@ Menu.initialize = function() {
 
 	Menu.remove();
 	Titanium.UI.setMenu(new_menu);
+
+	// Create the tray icon and menu and prevent the application from exit on 'x'
+	var wunderlistWindow = Menu.preventCloseEvent();
+
+	var trayIconPath = Titanium.API.Application.getResourcesPath() + '/wunderlist.png';
+	var trayIcon     = Titanium.UI.addTray(trayIconPath, function () {
+		Menu.showWindow(wunderlistWindow)
+	});
+	trayIcon.setHint('wunderlist - todo application')
+
+	var trayMenu         = Titanium.UI.createMenu();
+	var trayExitItem	 = trayMenu.addItem(language.data.exit_wunderlist, Titanium.App.exit);
+	trayIcon.setMenu(trayMenu);
+}
+
+/**
+ * Prevent standard close event
+ *
+ * @author Dennis Schneider
+ */
+Menu.preventCloseEvent = function() {
+	var wunderlistWindow = Titanium.UI.getCurrentWindow();
+
+	wunderlistWindow.addEventListener(Titanium.CLOSE, function(event) {
+		wunderlistWindow.hide();
+	    event.preventDefault();
+	    return false;
+	});
+
+	return wunderlistWindow;
+}
+
+/**
+ * Show the wunderlist window if it's hidden
+ *
+ * @author Dennis Schneider
+ */
+Menu.showWindow = function(wunderlistWindow) {
+	wunderlistWindow.show();
 }
 
 /**
