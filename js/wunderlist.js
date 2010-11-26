@@ -639,11 +639,13 @@ wunderlist.getBadgeCount = function(filter_name)
 	switch(filter_name)
 	{
 		case 'today':
-			sql += "tasks.date = " + current_date + " AND tasks.done = 0 AND tasks.deleted = 0";
+			sql += "tasks.date <= " + current_date + " AND tasks.date != 0 AND tasks.done = 0 AND tasks.deleted = 0";
 			break;
+			
 		case 'overdue':
 			sql += "tasks.done = 0 AND tasks.date < " + current_date + " AND tasks.date != 0 AND tasks.deleted = 0";
 			break;
+			
 		default:
 			break;
 	}
@@ -746,7 +748,7 @@ wunderlist.getFilteredTasks = function(type, date_type)
 		case 'today':
 			var listClass = "mainlist";
 			var title = language.data.all_today_tasks;
-			sql 	 += "WHERE tasks.date = " + current_date + " AND tasks.done = 0 AND tasks.deleted = 0 ";
+			sql 	 += "WHERE tasks.date <= " + current_date + " AND tasks.date != 0 AND tasks.done = 0 AND tasks.deleted = 0 ";
 			break;
 
 		case 'tomorrow':
