@@ -104,11 +104,10 @@ account.showRegisterDialog = function() {
 				title: language.data.register_title,
 				open: function()
 				{
-					$('#email').val('');
-					$('#password').val('');
-					$('#password').val('');
+					$('input#login-email').val('');
+					$('input#login-password').val('');
 					$('.error').hide().fadeIn("fast").text('');
-					$('#email').blur();
+					$('input#login-email').blur();
 				}
 		});
 	}
@@ -121,7 +120,7 @@ account.showRegisterDialog = function() {
 	$('#cancelreg').die();
 	$('#loginsubmit').die();
 	$('#registersubmit').die();
-	$('#email,#password').die();
+	$('#login-email,#login-password').die();
 	$('#forgot-pwd').die();
 
 	// Close Register Dialog
@@ -154,7 +153,7 @@ account.showRegisterDialog = function() {
 	});
 
 	// Login or Register on RETURN and close dialog on ESCAPE
-	$('#email,#password').live('keyup', function(evt) {
+	$('#login-email,#login-password').live('keyup', function(evt) {
 		if(evt.keyCode == 13 && logging_in == false)
 		{
 			logging_in = true;
@@ -176,13 +175,16 @@ account.showRegisterDialog = function() {
  * @author Dennis Schneider
  */
 account.login = function() {
-	var data = {};
- 	data['email'] 		= $('input#email').val().toLowerCase();
-	data['password'] 	= $.md5($('input#password').val());
+	var data         = {};
+ 	data['email'] 	 = $('input#login-email').val().toLowerCase();
+	data['password'] = $.md5($('input#login-password').val());
+
+	console.log(data['email']);
+	console.log(data['password']);
 
 	if(sync.validateEmail(data['email']))
 	{
-		if($('input#password').val() == '')
+		if($('input#login-password').val() == '')
 		{
 			$('.error').hide().fadeIn("fast").text(language.data.password_not_empty)
 			return false;
@@ -283,7 +285,7 @@ account.login = function() {
 account.forgotpw = function()
 {
 	var data 		= {};
-	data['email'] 	= $('input#email').val().toLowerCase();
+	data['email'] 	= $('input#login-email').val().toLowerCase();
 
 	if(sync.validateEmail(data['email']))
 	{
@@ -342,12 +344,12 @@ account.register = function(onlyRegister)
 		onlyRegister = false;
 
 	var data = {};
-	data['email'] 		= $('input#email').val().toLowerCase();
-	data['password'] 	= $.md5($('input#password').val());
+	data['email'] 		= $('input#login-email').val().toLowerCase();
+	data['password'] 	= $.md5($('input#login-password').val());
 
 	if(sync.validateEmail(data['email']))
 	{
-		if($('input#password').val() == '')
+		if($('input#login-password').val() == '')
 		{
 			$('.error').hide().fadeIn("fast").text(language.data.password_not_empty)
 			return false;
@@ -800,9 +802,9 @@ account.showInviteDialog = function()
  */
 account.invite = function()
 {
-	var data  	  		 = {};
-	var input 	  		 = $('div#invitebox input#email');
-	var text 	  		 = $('textarea#invite-text');
+	var data  = {};
+	var input = $('div#invitebox input#email');
+	var text  = $('textarea#invite-text');
 
     if(wunderlist.isUserLoggedIn())
     {

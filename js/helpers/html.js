@@ -6,8 +6,8 @@ function generateLoginRegisterDialogHTML()
 {
 	html = '<p class="pl8">' + language.data.login_hint + '</p><br />' +
 		'<div class="wunderlistlogo"></div>'+
-		'<input class="input-login" type="text" id="email" name="email" placeholder="' + language.data.email + '" />' +
-		'<input class="input-login" type="password" id="password" name="password" placeholder="' + language.data.password + '" />' +
+		'<input class="input-login" type="text" id="login-email" name="email" placeholder="' + language.data.email + '" />' +
+		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + language.data.password + '" />' +
 		'<div id="account-buttons">' +
 		'<input class="input-button register button-login" type="submit" id="loginsubmit" value="' + language.data.login + '" />' +
 		'<input class="input-button register" type="submit" id="registersubmit" value="' + language.data.register + '" />' +
