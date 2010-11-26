@@ -79,7 +79,13 @@ Menu.initialize = function() {
 	// Create the tray icon and menu and prevent the application from exit on 'x'
 	var wunderlistWindow = Menu.preventCloseEvent();
 
-	var trayIconPath = Titanium.API.Application.getResourcesPath() + '/wunderlist.png';
+	var os = Titanium.Platform.name.toLowerCase();
+	if (os == 'darwin') {
+		var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traymac.png';
+	} else {
+		var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
+	}
+
 	var trayIcon     = Titanium.UI.addTray(trayIconPath, function () {
 		Menu.showWindow(wunderlistWindow)
 	});
