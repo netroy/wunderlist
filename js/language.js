@@ -9,7 +9,7 @@ language.availableLang = new Array(
 	'de', 'en', 'es', 'fr',
 	'pl', 'pt', 'it', 'sk',
 	'ca', 'nl', 'da', 'uk',
-	'ru'
+	'ru', 'cs'
 );
 
 /**

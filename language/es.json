@@ -159,5 +159,6 @@
 	"switchdateformat":   		"Formato de fecha",
 	"startday":     			"Día de inicio de la semana",
 	"sunday":     				"Domingo",
-	"monday":     				"Lunes"
+	"monday":     				"Lunes",
+	"exit_wunderlist":			"cerrar wunderlist"
 }

@@ -1,6 +1,6 @@
 {
 	"sync":    				    "Synchronizing...",
-	"tooltip_sync":				"Synchronizing",
+	"tooltip_sync":				"Synchronize",
 	"lists":    			    "Lists",
 	"delete_list_question":	    "Do you really want to delete this list?",
 	"delete_list_no":		    "No, I'm Sorry",

@@ -29,19 +29,20 @@ Menu.initialize = function() {
 	accountMenuItem.addSeparatorItem();
 
 	// Language Menu
-	languageMenuItem.addItem('Deutsch', function() { Menu.switch_language('de') });
-	languageMenuItem.addItem('English', function() { Menu.switch_language('en') });
-	languageMenuItem.addItem('Español', function() { Menu.switch_language('es') });
-	languageMenuItem.addItem('Català', function() { Menu.switch_language('ca') });
-	languageMenuItem.addItem('Français', function() { Menu.switch_language('fr') });
-	languageMenuItem.addItem('Polski', function() { Menu.switch_language('pl') });
-	languageMenuItem.addItem('Português', function() { Menu.switch_language('pt') });
-	languageMenuItem.addItem('Italiano', function() { Menu.switch_language('it') });
-	languageMenuItem.addItem('Slovensky', function() { Menu.switch_language('sk') });
+	languageMenuItem.addItem('Deutsch',    function() { Menu.switch_language('de') });
+	languageMenuItem.addItem('English',    function() { Menu.switch_language('en') });
+	languageMenuItem.addItem('Español',    function() { Menu.switch_language('es') });
+	languageMenuItem.addItem('Català',     function() { Menu.switch_language('ca') });
+	languageMenuItem.addItem('Français',   function() { Menu.switch_language('fr') });
+	languageMenuItem.addItem('Polski',     function() { Menu.switch_language('pl') });
+	languageMenuItem.addItem('Português',  function() { Menu.switch_language('pt') });
+	languageMenuItem.addItem('Italiano',   function() { Menu.switch_language('it') });
+	languageMenuItem.addItem('Slovensky',  function() { Menu.switch_language('sk') });
 	languageMenuItem.addItem('Nederlands', function() { Menu.switch_language('nl') });
-	languageMenuItem.addItem('Pусский', function() { Menu.switch_language('ru') });
+	languageMenuItem.addItem('Pусский',    function() { Menu.switch_language('ru') });
 	languageMenuItem.addItem('Українське', function() { Menu.switch_language('uk') });
-	languageMenuItem.addItem('Dansk', function() { Menu.switch_language('da') });
+	languageMenuItem.addItem('Dansk',      function() { Menu.switch_language('da') });
+	languageMenuItem.addItem('České',      function() { Menu.switch_language('cs') });
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
