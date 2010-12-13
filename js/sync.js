@@ -52,7 +52,7 @@ sync.init = function()
  */
 sync.validateEmail = function(email)
 {
-	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	var reg = /^([A-Za-z0-9\+_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 	if(reg.test(email) == false) {
 		$('.error').text(language.data.error_invalid_email);
 		return false;
