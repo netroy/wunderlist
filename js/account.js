@@ -200,7 +200,7 @@ account.login = function() {
 			{
 				if(xhrobject.status == 0)
 					showErrorDialog(language.data.no_internet);
-				else if(xhrobject.status = 200)
+				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
@@ -297,7 +297,7 @@ account.forgotpw = function()
 			{
 				if(xhrobject.status == 0)
 					showErrorDialog(language.data.no_internet);
-				else if(xhrobject.status = 200)
+				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
@@ -365,7 +365,7 @@ account.register = function(onlyRegister)
 			{
 				if(xhrobject.status == 0)
 					showErrorDialog(language.data.no_internet);
-				else if(xhrobject.status = 200)
+				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
@@ -541,7 +541,7 @@ account.change_profile_data = function() {
 			{
 				if(xhrobject.status == 0)
 					showErrorDialog(language.data.no_internet);
-				else if(xhrobject.status = 200)
+				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
@@ -673,7 +673,7 @@ account.delete_account_data = function() {
 			{
 				if(xhrobject.status == 0)
 					showErrorDialog(language.no_internet);
-				else if(xhrobject.status = 200)
+				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
@@ -827,7 +827,7 @@ account.invite = function()
 			{
 				if(xhrobject.status == 0)
 					account.showInviteOKDialog(language.data.no_internet);
-				else if(xhrobject.status = 200)
+				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
