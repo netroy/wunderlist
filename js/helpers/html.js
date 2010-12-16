@@ -496,14 +496,15 @@ function createDatepicker()
 		monthNamesShort: monthNamesShortLang,
 		beforeShow: function() {
 			var $edit_li = $(this).parent();
+
 			setTimeout(function() {
-				addRemoveDateButton($edit_li);
-				var timestamp   = $edit_li.children('.timestamp').attr('rel');
-				if(timestamp != undefined) 
+				var timestamp = $edit_li.children('.timestamp').attr('rel');
+				if(timestamp != undefined && timestamp != 0)
 				{
 					var currentDate = new Date(timestamp * 1000);
-					var datepicker  = $('.datepicker').datepicker("setDate" , currentDate);			
+					$edit_li.find('.datepicker').datepicker("setDate" , currentDate);
 				}
+				addRemoveDateButton($edit_li);
 			}, 5);
 
             datePickerOpen = true;
