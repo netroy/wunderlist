@@ -97,3 +97,30 @@ timer.resume = function()
 	this.isPaused = false;
 	return this;
 }
+
+// timer.midnight = function()
+// {
+// 	var now      = getWorldWideDate();
+// 	var midnight = getWorldWideDate(new Date("Sep 29 2007 00:00:01"));
+// 	var seconds = (theevent - now) / 1000;
+// 	var minutes = seconds / 60;
+// 	var hours = minutes / 60;
+// 	var days = hours / 24;
+// 	ID=window.setTimeout("timer.midnight();", 60000);
+// 	function update() {
+// 	now = new Date();
+// 	seconds = (theevent - now) / 1000;
+// 	seconds = Math.round(seconds);
+// 	minutes = seconds / 60;
+// 	minutes = Math.round(minutes);
+// 	hours = minutes / 60;
+// 	hours = Math.round(hours);
+// 	days = hours / 24;
+// 	days = Math.round(days);
+// 	document.form1.days.value = days;
+// 	document.form1.hours.value = hours;
+// 	document.form1.minutes.value = minutes;
+// 	document.form1.seconds.value = seconds;
+// 	ID=window.setTimeout("update();",1000);
+// 	}
+// }
