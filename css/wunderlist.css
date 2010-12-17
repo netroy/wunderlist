@@ -49,7 +49,7 @@ a {color:#393939 }
 #sidebar {
 right:0px;
 background:url(/images/sidebar.png) right repeat-y;
-/*background:#f6f6f9;*/
+
 width:269px;
 height:100%;
 top:0px;
@@ -62,7 +62,7 @@ overflow-x: hidden;
 position:fixed;
 right:0px;
 bottom:36px;
-top:58px}
+top:59px}
 
 #sidebar .separator {
 border-bottom:1px solid #e8e9f0;
@@ -73,14 +73,16 @@ position:absolute;
 top:56px}
 
 #sidebar .searchside {
-position:absolute;
+position:absolute;	
 right:45px;
+z-index:2;
 top:5px;
 width:170px;
 padding:0px 14px 0px 18px;
 margin-left:20px;
 margin-top:12px;
--webkit-box-shadow: inset 1px 1px 3px #999;
+-webkit-box-shadow:0px 1px 1px #fff;
+border:1px solid #c8cddd;
 -webkit-border-radius:15px;
 background:#fff url(/images/searchicon_alt.png) 5% 50% no-repeat}
 
@@ -109,10 +111,12 @@ width:14px}
 display:block}
 
 #sidebar h3 {
+z-index:1;
+position:absolute;
+right:0px;
+background: -webkit-gradient(linear, left top, left bottom, from(#f6f7f8), to(#e7eaf2));
+border-bottom:1px solid #d1d2d4;
 padding-left:35px;
-clear:both;
-text-transform:uppercase;
-color:#777;
 width:224px;
 padding-top:22px;
 padding-bottom:10px;
@@ -147,10 +151,7 @@ display:block;
 height:23px;
 border-bottom:1px solid #e8e9f0}
 
-#sidebar .list:first-child {
-border-top:1px solid #e8e9f0}
-
-#sidebar .list:hover, #sidebar .list.hover {background: -webkit-gradient(linear, left top, left bottom, from(#f5f7fe), to(#eef0f7))}
+#sidebar .list:hover, #sidebar .list.hover {background: -webkit-gradient(linear, left top, left bottom, from(#f0f1f3), to(#ecedef))}
 
 #sidebar .list b {
 white-space:nowrap;
@@ -174,16 +175,19 @@ background:#fff;  border:1px solid #bbb; padding:4px 8px; margin-top:-4px; -webk
 font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
 -webkit-box-shadow: inset 1px 1px 3px #999; width:130px !important}
 
-#sidebar .ui-state-disabled input , #sidebar .ui-dropped-disabled input {
-background: #21638c; color:#fff; -webkit-box-shadow: inset 1px 1px 3px #174460}
+
+/* List Edit Icons */
+
+#sidebar .ui-state-disabled input , #sidebar .ui-dropped-disabled input {background: #21638c; color:#fff; -webkit-box-shadow: inset 1px 1px 3px #174460}
 
 #sidebar .ui-state-disabled div.deletep , #sidebar .ui-dropped-disabled div.deletep {background:url(/icons/delete_white.png)}
 #sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/edit_white.png)}
 #sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/icons/editdone_white.png)}
-
 #sidebar .ui-state-disabled div.sharep , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/sharelist_white.png)}
-
 #sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-image:url(/icons/inbox_white.png)}
+
+#sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {opacity:0.5}
+#sidebar .ui-state-disabled div:hover , #sidebar .ui-dropped-disabled div:hover {opacity:1.0}
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
 background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
@@ -205,7 +209,7 @@ margin-top:-3px;
 font-weight:bold}
 
 #sidebar #notification {
-background:#d6dae2 url(/images/sidebar_separator.jpg) top left no-repeat;
+background:#e7eaf2;
 border-top:1px solid #fff;
 bottom: 36px;
 position: absolute;
