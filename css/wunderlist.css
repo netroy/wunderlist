@@ -49,6 +49,7 @@ a {color:#393939 }
 #sidebar {
 right:0px;
 background:url(/images/sidebar.png) right repeat-y;
+/*background:#f6f6f9;*/
 width:269px;
 height:100%;
 top:0px;
@@ -117,12 +118,6 @@ padding-top:22px;
 padding-bottom:10px;
 height:26px}
 
-#sidebar h3 .edit {
-text-indent: -9999px;
-float:right;
-margin-right:14px;
-background:url(/images/edit.png); width:12px; height:12px; display:block}
-
 #sidebar h3 .active {background:url(/images/editdone.png)}
 
 #sidebar h3 .add { text-indent: -9999px; float:right; margin: 2px 10px 0 0; background:url(/images/addlist.png); width: 12px; height: 12px; display:block }
@@ -138,6 +133,10 @@ background:url(/images/edit.png); width:12px; height:12px; display:block}
 
 #sidebar div.sharep { background:url(/icons/sharelist.png); cursor:pointer; margin-right:4px; width:16px; height:14px; float:right; display:none}
 #sidebar div.sharep:hover { background:url(/icons/sharelist_active.png)}
+
+#sidebar b.inbox {
+padding-left:24px;
+background:url(/icons/inbox.png) 0px left no-repeat}
 
 #sidebar .list {
 cursor:pointer;
@@ -184,6 +183,8 @@ background: #21638c; color:#fff; -webkit-box-shadow: inset 1px 1px 3px #174460}
 
 #sidebar .ui-state-disabled div.sharep , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/sharelist_white.png)}
 
+#sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-image:url(/icons/inbox_white.png)}
+
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
 background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
 border-bottom:apx solid #177bbd;
@@ -205,12 +206,13 @@ font-weight:bold}
 
 #sidebar #notification {
 background:#d6dae2 url(/images/sidebar_separator.jpg) top left no-repeat;
+border-top:1px solid #fff;
 bottom: 36px;
 position: absolute;
 right:0px;
 height:32px;
 padding-top:10px;
-width: 239px;
+width: 259px;
 z-index: 50}
 
 #sidebar #notification div {
