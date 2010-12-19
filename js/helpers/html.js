@@ -86,6 +86,7 @@ generateTaskHTML = function(id, name, list_id, done, important, date)
 		html += '<span class="showdate"></span>';
 
 	html += '<span class="icon delete" title="' + language.data.delete_task + '"></span>';
+	html += '<span class="icon note" title="' + language.data.delete_task + '"></span>';
 	html += '</li>';
 
 	return html;
@@ -136,9 +137,9 @@ function generateCreditsDialogHTML()
 }
 
 function generateBackgroundsDialogHTML() {
-	html =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a><br/>' +
-			'<a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a><br/>' +
-			'<a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a></p>';
+	html =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
+			'<a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a> (Artcore)<br/>' +
+			'<a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a> (Galaxgui)</p>';
 	return html;
 }
 

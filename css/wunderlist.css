@@ -138,9 +138,7 @@ height:26px}
 #sidebar div.sharep { background:url(/icons/sharelist.png); cursor:pointer; margin-right:4px; width:16px; height:14px; float:right; display:none}
 #sidebar div.sharep:hover { background:url(/icons/sharelist_active.png)}
 
-#sidebar b.inbox {
-padding-left:24px;
-background:url(/icons/inbox.png) 0px left no-repeat}
+#sidebar b.inbox {padding-left:24px;background:url(/icons/inbox.png) 0px left no-repeat}
 
 #sidebar .list {
 cursor:pointer;
@@ -175,7 +173,6 @@ background:#fff;  border:1px solid #bbb; padding:4px 8px; margin-top:-4px; -webk
 font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
 -webkit-box-shadow: inset 1px 1px 3px #999; width:130px !important}
 
-
 /* List Edit Icons */
 
 #sidebar .ui-state-disabled input , #sidebar .ui-dropped-disabled input {background: #21638c; color:#fff; -webkit-box-shadow: inset 1px 1px 3px #174460}
@@ -191,9 +188,7 @@ font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
 background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
-border-bottom:apx solid #177bbd;
-color:#fff;
-text-shadow: #125a8a 0px 1px 2px}
+border-bottom:apx solid #177bbd;color:#fff;text-shadow: #125a8a 0px 1px 2px}
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {opacity:1.0}
 
@@ -353,16 +348,12 @@ position:relative; height:33px;
 background:url(/images/addbar.png) repeat-x;
 -webkit-border-radius:6px}
 
-div.add .showdate {
-position:absolute; right:28px !important; top:10px; font-size:11px; font-weight:bold; color:#fff}
+div.add .showdate {position:absolute; right:28px !important; top:10px; font-size:11px; font-weight:bold; color:#fff}
 
 div.add input {
 border:none; color:#fff; font-weight:bold; font-family:Arial, Verdana; font-size:13px;
-width:auto !important;
-padding:9px 0px; background:none;
-position:absolute;
-right:90px;
-top:3px;left:28px}
+width:auto !important;padding:9px 0px; background:none;
+position:absolute;right:90px;top:3px;left:28px}
 
 #content li.done {opacity:0.6; color:#333;text-decoration:line-through}
 
@@ -389,7 +380,7 @@ white-space:nowrap;
 text-overflow:ellipsis;
 overflow:hidden;
 position:absolute;
-right:90px;
+right:110px;
 left:52px;
 top:0px;
 padding-top: 7px;
@@ -397,7 +388,7 @@ height: 27px;
 display:block;
 color:#333}
 
-#content .showdate {position:absolute; right:28px; font-size:11px; font-weight:bold}
+#content .showdate {position:absolute; right:50px; font-size:11px; font-weight:bold}
 
 #content .addhere {letter-spacing:1px; text-shadow: #333 0px 1px 2px; font-weight:bold; margin-top:12px; text-transform: uppercase}
 #content .addhere a { color:#fff}
@@ -428,6 +419,7 @@ li input { font-family:Arial; border:none;margin-left:7px;margin-top:-3px; backg
 .mainlist li .ui-datepicker-trigger { float:left; margin-right:3px}
 .ui-datepicker-trigger:hover {opacity:1.0}
 div.add .ui-datepicker-trigger { margin-top:10px; margin-left:7px}
+
 #task-edit {position:absolute;right:90px;left:45px;top:7px;
 -webkit-box-shadow: inset 1px 1px 3px #999;-webkit-border-radius:15px;background:#fff; padding:3px 6px}
 #ui-datepicker-div { z-index: 100 !important; }
@@ -453,10 +445,27 @@ background:#c30;
 
 #content span.icon {height:14px; display:block; float:left; width:14px; margin-right:7px}
 
-#content span.delete {background:url(/icons/delete_active.png); float:right; display: none; cursor:pointer}
+#content span.delete {background:url(/icons/delete.png); float:right; display: none; cursor:pointer; height:16px}
+
+#content span.note {
+position:absolute;right:19px;top:7px;
+background:url(/icons/note.png); float:right; display:none; cursor:pointer, height:16px; width:16px}
+
+#content .mainlist li:hover span.note {display:block}
+
+#content span.hasnote {background:url(/icons/hasnote.png)}
+#content span.activenote {display:block}
 
 #content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/icons/important.png);cursor:pointer}
 #content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/icons/star.png) no-repeat;cursor:pointer}
+
+/* -- NOTE ---------------------------------------------------------------- */
+
+#note {
+background:#fff;
+border-bottom:1px solid #ddd;
+margin:6px;
+padding:6px;}
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 
@@ -468,39 +477,8 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 /* -- TOOLTIP --------------------------------------------------------------------------- */
 
-#sync_tooltip, #tooltip, #taskTooltip {
-position:absolute;
-background:url(/images/tooltipbg.png);
-opacity:0.7;
--webkit-border-radius:10px;
-padding:4px 8px 4px 8px;
-color:#fff;
-z-index:100;
-font-size:11px;
-font-weight:bold;
-display:none}
-
-#taskTooltip {
-background:#333;
-opacity:0.9;
-width:220px;
-padding:7px 8px;
-line-height:16px;
-font-size:12px;
--webkit-border-radius:5px}
-
-#taskTooltip span {
-position:absolute;
-left:105px;
-height:0px; width:0px;
-border-style: solid}
-
-#taskTooltip span.top {
-border-color: transparent transparent #333 transparent;
-border-width: 0px 10px 10px 10px;
-top:-10px}
-
-#taskTooltip span.bottom {
-border-color: #333 transparent transparent transparent;
-border-width: 10px 10px 0px 10px;
-bottom:-10px}
+#sync_tooltip, #tooltip, #taskTooltip {position:absolute;background:url(/images/tooltipbg.png);opacity:0.7;-webkit-border-radius:10px;padding:4px 8px 4px 8px;color:#fff;z-index:100;font-size:11px;font-weight:bold;display:none}
+#taskTooltip {background:#333;opacity:0.9;width:220px;padding:7px 8px;line-height:16px;font-size:12px;-webkit-border-radius:5px}
+#taskTooltip span {position:absolute;left:105px;height:0px; width:0px;border-style: solid}
+#taskTooltip span.top {border-color: transparent transparent #333 transparent;border-width: 0px 10px 10px 10px;top:-10px}
+#taskTooltip span.bottom {border-color: #333 transparent transparent transparent;border-width: 10px 10px 0px 10px;bottom:-10px}
