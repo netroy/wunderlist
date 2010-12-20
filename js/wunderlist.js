@@ -38,9 +38,10 @@ wunderlist.initDatabase = function()
 		this.database.execute(sql);
 		Titanium.App.Properties.setString('prefinal_first_run', '1');
 	}
-
-	this.database.execute("CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, inbox INTEGER DEFAULT 0, shared INTEGER DEFAULT 0)");
-	this.database.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, list_id TEXT, note TEXT, date INTEGER DEFAULT 0, done_date INTEGER DEFAULT 0, done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, recurring INTEGER DEFAULT 0, recurring_interval INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0)");
+	// , shared INTEGER DEFAULT 0
+	this.database.execute("CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, inbox INTEGER DEFAULT 0)");
+	// recurring INTEGER DEFAULT 0, recurring_interval INTEGER DEFAULT 0,
+	this.database.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, list_id TEXT, note TEXT, date INTEGER DEFAULT 0, done_date INTEGER DEFAULT 0, done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0)");
 }
 
 /**
@@ -410,10 +411,10 @@ wunderlist.updateTask = function(task_id, name, date)
  *
  * @author Dennis Schneider
  */
-wunderlist.updateTaskByOnlineId = function(online_id, name, date, done, list_id, position, important, done_date, deleted, version)
+wunderlist.updateTaskByOnlineId = function(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note)
 {
 	if(date == '') date = 0;
-	this.database.execute("UPDATE tasks SET name = ?, date = ?, done = ?, list_id = ?, position = ?, important = ?, done_date = ?, deleted = ?, version = ? WHERE online_id = ?", name, date, done, list_id, position, important, done_date, deleted, version, online_id);
+	this.database.execute("UPDATE tasks SET name = ?, date = ?, done = ?, list_id = ?, position = ?, important = ?, done_date = ?, deleted = ?, version = ?, note = ? WHERE online_id = ?", name, date, done, list_id, position, important, done_date, deleted, version, note, online_id);
 }
 
 /**
@@ -421,10 +422,10 @@ wunderlist.updateTaskByOnlineId = function(online_id, name, date, done, list_id,
  *
  * @author Dennis Schneider
  */
-wunderlist.createTaskByOnlineId = function(online_id, name, date, done, list_id, position, important, done_date, deleted, version)
+wunderlist.createTaskByOnlineId = function(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note)
 {
 	if(date == '') date = 0;
-	this.database.execute("INSERT INTO tasks (online_id, name, date, done, list_id, position, important, done_date, deleted, version) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", online_id, name, date, done, list_id, position, important, done_date, deleted, version);
+	this.database.execute("INSERT INTO tasks (online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", online_id, name, date, done, list_id, position, important, done_date, deleted, version, note);
 }
 
 /**

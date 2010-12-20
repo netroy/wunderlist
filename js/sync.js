@@ -265,12 +265,12 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
 					// If task is already in database
 					if(wunderlist.elementExists(tasks[i].online_id, 'tasks'))
 					{
-						wunderlist.updateTaskByOnlineId(tasks[i].online_id, tasks[i].name, tasks[i].date, tasks[i].done, sync_offline_list_id, tasks[i].position, tasks[i].important, tasks[i].done_date, tasks[i].deleted, tasks[i].version);
+						wunderlist.updateTaskByOnlineId(tasks[i].online_id, tasks[i].name, tasks[i].date, tasks[i].done, sync_offline_list_id, tasks[i].position, tasks[i].important, tasks[i].done_date, tasks[i].deleted, tasks[i].version, tasks[i].note);
 					}
 					else
 					{
 						// Create a whole new task with the given id
-						wunderlist.createTaskByOnlineId(tasks[i].online_id, tasks[i].name, tasks[i].date, tasks[i].done, sync_offline_list_id, tasks[i].position, tasks[i].important, tasks[i].done_date, tasks[i].deleted, tasks[i].version);
+						wunderlist.createTaskByOnlineId(tasks[i].online_id, tasks[i].name, tasks[i].date, tasks[i].done, sync_offline_list_id, tasks[i].position, tasks[i].important, tasks[i].done_date, tasks[i].deleted, tasks[i].version, tasks[i].note);
 					}
 				}
 			}
