@@ -59,6 +59,7 @@ Menu.initialize = function() {
 	extraMenuItem.addItem(language.data.create_tutorials, wunderlist.recreateTutorials);
 
 	extraMenuItem.addSeparatorItem();
+	extraMenuItem.addItem('Knowledge Base',    function() { Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb') });
 	extraMenuItem.addItem(language.data.credits,         openCreditsDialog);  // About Us Dialog
 	extraMenuItem.addItem(language.data.backgrounds,     openBackgroundsDialog);  // Background Credits
 	extraMenuItem.addItem(language.data.wunderkinder,    function() { Titanium.Desktop.openURL('http://www.6wunderkinder.com') });
