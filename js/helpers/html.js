@@ -5,8 +5,14 @@
  */
 function generateShareListDialogHTML()
 {
-	html = '<div id="invitebox">'+
-
+	html = '<div id="sharebox"><br/>'+
+		'<p><b>Currently invited people</b></p><br/>'+
+		'<ul>'+
+		'<li><span></span> sebastian@6wunderkinder.com</li>'+
+		'<li><span></span> daniel@6wunderkinder.com</li>'+
+		'<li><span></span> christian@6wunderkinder.com</li>'+
+		'</ul><br/>'+
+		'<p><b>Invite more people</b></p>'+
 		'<p><input class="input-login input-share" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
 		'<textarea class="textarea-dialog" id="invite-text" maxlength="140">Hey, du wurdest in eine wunderlist liste von name eingeladen! have fun!</textarea>' +
 		'<input id="send_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>';

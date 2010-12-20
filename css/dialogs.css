@@ -1,41 +1,44 @@
+/* GENERAL DIALOG IMPROVEMENTS */
+
+.ui-dialog .ui-dialog-titlebar { padding-left:12px !important}
 
 /* LOGIN DIALOG --------------------------------------------------------------------------------------- */
 
-p.pwd { padding:2px 0px 12px 8px; clear:both; float:left; margin-top:-18px;}
+p.pwd { padding:2px 0px 12px 8px; clear:both; float:left; margin-top:-18px}
 
-a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important; float:right;}
+a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important; float:right}
 
 #account-buttons { height: 135px; }
 #account-buttons #account-loader { display: none; position: absolute; z-index: 100; bottom: 25px; right: 140px; }
 
 .ui-widget-overlay {
-background: #000 url(../../backgrounds/wood.jpg) top center no-repeat !important; opacity:1 !important;
-overflow:visible;}
+background: #000 url(/backgrounds/wood.jpg) top center no-repeat !important; opacity:1 !important;
+overflow:visible}
 
 .dialog-login, .dialog-edit-profile {
-top: 50% !important; left: 50% !important; margin-left: -240px; margin-top: -130px; height: 260px; width:470px !important;}
+top: 50% !important; left: 50% !important; margin-left: -240px; margin-top: -130px; height: 260px; width:470px !important}
 
 .dialog-login .error, .dialog-edit-profile .error {
 text-align:left; color:#c30; height:20px; padding-top:10px; text-align:right; float:right; width:315px; margin-bottom:-4px; }
 
-.dialog-edit-profile { width: 326px !important; margin-left:-163px !important; width:320px !important; margin-top:-163px;}
+.dialog-edit-profile { width: 326px !important; margin-left:-163px !important; width:320px !important; margin-top:-163px}
 
 .ui-widget-content {
 background:-webkit-gradient(linear, left center, right center, from(#d0d0d0), to(#ececec)) !important;
--webkit-border-radius:5px;-webkit-box-shadow:0px 3px 16px #222;}
+-webkit-border-radius:5px;-webkit-box-shadow:0px 3px 16px #222}
 
-.ui-dialog-content {-webkit-gradient:none;-webkit-border-radius:0px;-webkit-box-shadow:none; min-height:0px !important;}
+.ui-dialog-content {-webkit-gradient:none;-webkit-border-radius:0px;-webkit-box-shadow:none; min-height:0px !important}
 
-.ui-widget-header {color:#555 !important;border:none !important;font-size:14px !important; padding-top:12px !important;padding-left:20px !important;background:none !important;text-shadow:1px 1px 1px #fff;}
+.ui-widget-header {color:#555 !important;border:none !important;font-size:14px !important; padding-top:12px !important;padding-left:20px !important;background:none !important;text-shadow:1px 1px 1px #fff}
 
-.dialog-login .ui-dialog-titlebar-close {display: none !important;}
+.dialog-login .ui-dialog-titlebar-close {display: none !important}
 
-.ui-dialog-titlebar-close { top:20px !important; right:8px !important;}
+.ui-dialog-titlebar-close { top:20px !important; right:8px !important}
 
 .ui-dialog-titlebar-close:hover,  .ui-datepicker-prev:hover, .ui-datepicker-next:hover  {
-border:1px solid #ddd !important; background:#ccc; -webkit-border-radius:3px; cursor:pointer;}
+border:1px solid #ddd !important; background:#ccc; -webkit-border-radius:3px; cursor:pointer}
 
-.wunderlistlogo {width:139px;height:139px;background:url(../images/wunderlisticon.png); float:left;margin-top:-2px;margin-left:-10px;}
+.wunderlistlogo {width:139px;height:139px;background:url(../images/wunderlisticon.png); float:left;margin-top:-2px;margin-left:-10px}
 
 .input-login {padding:8px;float:right;display:block;width:282px;margin-top:12px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
@@ -44,100 +47,109 @@ border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12p
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
 
 .input-button, button {background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ececec)) !important;
-color:#333;-webkit-box-shadow:0px 1px 3px #999;border:1px solid #9c9ea4;padding:5px 6px;text-shadow:1px 1px 1px #fff;-webkit-border-radius:4px;margin:12px 0px 0px 12px;float:right;cursor:pointer;}
+color:#333;-webkit-box-shadow:0px 1px 3px #999;border:1px solid #9c9ea4;padding:5px 6px;text-shadow:1px 1px 1px #fff;-webkit-border-radius:4px;margin:12px 0px 0px 12px;float:right;cursor:pointer}
 
 .input-button:hover, button:hover {
 -webkit-box-shadow:0px 1px 3px #666;
-background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#fff)) !important;}
+background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#fff)) !important}
 
-.register { font-weight:bold;}
+.register { font-weight:bold}
 
 .button-login {
 color:#fff;border:1px solid #166fa9;text-shadow:1px 1px 1px #166fa9;
 background:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3)) !important;
--webkit-border-radius:4px;}
+-webkit-border-radius:4px}
 
 .button-login:hover {
-background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32a3f0)) !important;}
+background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32a3f0)) !important}
 
 /* SOCIAL MEDIA SHARE DIALOG ---------------------------------------------------------------------------- */
 
-.dialog-social, .dialog-sharelist { top: 50% !important; left: 50% !important; margin-left: -250px; margin-top: -150px; height: 300px; width:500px !important;}
+.dialog-social, .dialog-sharelist { top: 50% !important; left: 50% !important; margin-left: -250px; margin-top: -150px; height: 300px; width:500px !important}
 
-.dialog-social .ui-dialog-titlebar { background:none !important;}
+.dialog-social .ui-dialog-titlebar { background:none !important}
 
-.dialog-social .invitefriends { font-size:16px; font-weight:bold; margin-top:12px; color:#333;}
+.dialog-social .invitefriends { font-size:16px; font-weight:bold; margin-top:12px; color:#333}
 
-.dialog-social input {margin-left:0px; margin-right:0px;}
-.dialog-social input.input-social {float:left; width:250px;}
+.dialog-social input {margin-left:0px; margin-right:0px}
+.dialog-social input.input-social {float:left; width:250px}
 
 .dialog-social input.button-social {
 float:right; height:32px; width:70px; margin-left:7px;
-font-weight:bold; margin-bottom:10px !important;}
+font-weight:bold; margin-bottom:10px !important}
 
-p.socialmedia { clear:both; border-top:2px solid #ccc; padding-top:10px; padding-left:5px;}
+p.socialmedia { clear:both; border-top:2px solid #ccc; padding-top:10px; padding-left:5px}
 
-p.socialmedia span { font-size:14px; font-weight:bold; display:block;margin-top:7px;margin-bottom:7px;}
+p.socialmedia span { font-size:14px; font-weight:bold; display:block;margin-top:7px;margin-bottom:7px}
 
 p.socialmedia span.icons a, .followus a {
-display:block; width:32px; height:32px; float:right; margin-left:14px;-webkit-box-shadow:0px 1px 3px #999;-webkit-border-radius:5px;}
+display:block; width:32px; height:32px; float:right; margin-left:14px;-webkit-box-shadow:0px 1px 3px #999;-webkit-border-radius:5px}
 
-p.socialmedia span.icons a:hover , .followus a:hover { -webkit-box-shadow:0px 1px 3px #666;}
-p.socialmedia span.icons a.facebook,  .followfacebook  { background:url(../icons/facebook.png);}
-p.socialmedia span.icons a.twitter, .followtwitter { background:url(../icons/twitter.png);}
-p.socialmedia span.icons a.stumbleupon { background:url(../icons/stumbleupon.png);}
-p.socialmedia span.icons a.digg { background:url(../icons/digg.png);}
+p.socialmedia span.icons a:hover , .followus a:hover { -webkit-box-shadow:0px 1px 3px #666}
+p.socialmedia span.icons a.facebook,  .followfacebook  { background:url(../icons/facebook.png)}
+p.socialmedia span.icons a.twitter, .followtwitter { background:url(../icons/twitter.png)}
+p.socialmedia span.icons a.stumbleupon { background:url(../icons/stumbleupon.png)}
+p.socialmedia span.icons a.digg { background:url(../icons/digg.png)}
 
 .textarea-dialog {
 width: 323px; height:50px; padding:10px; margin-top:6px; margin-bottom:-6px;
 -webkit-box-shadow:0px 1px 1px #fff;-webkit-border-radius:5px;
-border:1px solid #9c9ea4; font-size:11px; color:#777;}
+border:1px solid #9c9ea4; font-size:11px; color:#777}
 
-#invitebox { margin-top:-12px; }
+#invitebox { margin-top:-12px}
 
 /* SHARE LIST DIALOG ------------------------------------------------------------------------------------ */
 
-.dialog-sharelist {width:360px !important; margin-left:-180px !important}
+.dialog-sharelist {width:360px !important; margin-left:-180px !important; }
 
-.dialog-sharelist input.input-share {width:96%; padding:2%;}
+	.dialog-sharelist ul li {
+		padding:5px;
+		background:rgba(255,255,255,0.5);
+		-webkit-border-radius:3px;
+		margin-bottom:2px}
+		
+	.dialog-sharelist li span { background:url(/icons/delete.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right}
+	.dialog-sharelist  li span:hover { background:url(/icons/delete_active.png)}
 
-.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
+	.dialog-sharelist input.input-share {width:96%; padding:2%}
+
+	.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
 
 /* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
 
-.followus { position:relative; clear:both; }
+.followus { position:relative; clear:both}
 
-.dialog-login, .dialog-login div {overflow:visible !important;}
+.dialog-login, .dialog-login div {overflow:visible !important}
 
 .followus p {
-position:absolute; top:24px; right: -8px; background:url(../images/followus.png) 0px 3px no-repeat; padding-left:70px; width:90px;}
+position:absolute; top:24px; right: -8px; background:url(../images/followus.png) 0px 3px no-repeat; padding-left:70px; width:90px}
 
-.followus a { margin-left:2px; margin-right:8px; -webkit-box-shadow:0px 1px 3px #666; }
-.followus a:hover { -webkit-box-shadow:0px 1px 3px #333; }
+.followus a { margin-left:2px; margin-right:8px; -webkit-box-shadow:0px 1px 3px #666}
+.followus a:hover { -webkit-box-shadow:0px 1px 3px #333}
 
 /* DATEPICKER DIALOG ------------------------------------------------------------------------------------ */
 
 .ui-datepicker-header {
-padding:3px 0px 0px 0px !important;}
+padding:3px 0px 0px 0px !important}
 
 .ui-datepicker-calendar a.ui-state-default {
 background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ececec));
-border:1px solid #ccc;}
+border:1px solid #ccc}
 
 .ui-datepicker-calendar .ui-state-active {
 background:url(../images/sidebar_bg.png) top left repeat-x !important;
 border:1px solid #1177b9 !important;
-color:#fff !important;}
+color:#fff !important}
 
 .ui-datepicker-calendar th {
-color:#777 !important;}
+color:#777 !important}
 
 div.remove_date {
 float:right;
 font-weight:bold;
 color:#777;
 margin-right:5px;
-margin-bottom:5px;}
+margin-bottom:5px}
 
 /* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
 
@@ -145,7 +157,7 @@ margin-bottom:5px;}
 color:#666;
 padding:4px;
 margin-bottom:4px;
--webkit-border-radius:3px;}
+-webkit-border-radius:3px}
 
 .radios p.selected { color:#fff; background:#29aa38; -webkit-box-shadow: 1px 0px 1px #333; }
 
@@ -165,16 +177,16 @@ border:none;
 -webkit-border-radius:0px;
 background:none !important;
 border:none;
--webkit-box-shadow:none;}
+-webkit-box-shadow:none}
 
 .dialog-delete-list, .dialog-delete-task {
-height:110px;}
+height:110px}
 
 .dialog-delete-task {
 	width: 330px !important;
 }
 
-.dialog-delete-list .ui-widget-header, .dialog-delete-task .ui-widget-header { font-size:13px !important;}
+.dialog-delete-list .ui-widget-header, .dialog-delete-task .ui-widget-header { font-size:13px !important}
 
 /* DATE FORMAT SWITCHER DIALOG ---------------------------------------------------------------------------- */
 

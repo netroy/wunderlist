@@ -37,6 +37,9 @@ background: #fff}
 word-wrap: break-word;font-size:18px;letter-spacing:1px;color:#fff; text-shadow: 0px 1px 3px #333;
 text-align:center;margin-bottom:13px; padding-bottom:3px}
 
+#content h1 {
+margin-top:20px}
+
 #content h2 { font-size:14px; opacity:0.8; margin-top:25px; margin-bottom:10px}
 #content h3 { font-size:12px; opacity:0.7; text-align:center; padding-top:16px !important; margin-top:0px}
 
@@ -223,7 +226,7 @@ height:19px;
 text-shadow: 0px 1px 1px #2c0a0a;
 padding-top:6px;
 width:214px;
-color:#fff;}
+color:#fff}
 
 /* BOTTOM BAR -------------------------------------------------------------------------------*/
 
@@ -307,15 +310,15 @@ bottom:10px}
 #bottombar #right a {width:18px; height:19px; float:right; display:block; opacity:0.5; text-indent: -9999px; margin-right:5px}
 #bottombar #right a:hover, #bottombar #right a.active { cursor:pointer; opacity:1.0}
 
-#bottombar #right a.bgone { background:url(/images/icon_wood.png);}
-#bottombar #right a.bgtwo { background:url(/images/icon_wheat.png);}
-#bottombar #right a.bgthree { background:url(/images/icon_bokeh.png);}
-#bottombar #right a.bgfour { background:url(/images/icon_blue.png);}
-#bottombar #right a.bgfive { background:url(/images/icon_royal_purple.png);}
-#bottombar #right a.bgsix { background:url(/images/icon_dark.png);}
-#bottombar #right a.bgseven { background:url(/images/icon_white.png);}
-#bottombar #right a.bgeight { background:url(/images/icon_monster.png);}
-#bottombar #right a.bgnine { background:url(/images/icon_darkwood.png);}
+#bottombar #right a.bgone { background:url(/images/icon_wood.png)}
+#bottombar #right a.bgtwo { background:url(/images/icon_wheat.png)}
+#bottombar #right a.bgthree { background:url(/images/icon_bokeh.png)}
+#bottombar #right a.bgfour { background:url(/images/icon_blue.png)}
+#bottombar #right a.bgfive { background:url(/images/icon_royal_purple.png)}
+#bottombar #right a.bgsix { background:url(/images/icon_dark.png)}
+#bottombar #right a.bgseven { background:url(/images/icon_white.png)}
+#bottombar #right a.bgeight { background:url(/images/icon_monster.png)}
+#bottombar #right a.bgnine { background:url(/images/icon_darkwood.png)}
 
 span#credits { float:right; font-weight: bold; padding:2px 5px; cursor:pointer}
 
@@ -412,7 +415,7 @@ li input { font-family:Arial; border:none;margin-left:7px;margin-top:-3px; backg
 
 .input-checked {float:left; margin-right:7px}
 .input-add {width:80%; margin-right:7px; margin-top:-3px; padding-left:20px}
-.input-add::-webkit-input-placeholder { color:#fff; opacity:0.5;}
+.input-add::-webkit-input-placeholder { color:#fff; opacity:0.5}
 
 .ui-datepicker-trigger { opacity:0.8; float:left; margin-right:7px; cursor:pointer}
 .mainlist li .ui-datepicker-trigger { float:left; margin-right:3px}
@@ -421,7 +424,7 @@ div.add .ui-datepicker-trigger { margin-top:10px; margin-left:7px}
 
 #task-edit {position:absolute;right:90px;left:45px;top:7px;
 -webkit-box-shadow: inset 1px 1px 3px #999;-webkit-border-radius:15px;background:#fff; padding:3px 6px}
-#ui-datepicker-div { z-index: 100 !important; }
+#ui-datepicker-div { z-index: 100 !important}
 
 /* BADGES ------------------------------------------------------------------------------ */
 
@@ -452,7 +455,8 @@ background:url(/icons/note.png); float:right; display:none; cursor:pointer, heig
 
 #content .mainlist li:hover span.note {display:block}
 
-#content span.hasnote {background:url(/icons/hasnote.png); display:block}
+#content span.hasnote {background:url(/icons/hasnote.png)}
+#content span.activenote {display:block}
 
 #content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/icons/important.png);cursor:pointer}
 #content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/icons/star.png) no-repeat;cursor:pointer}
@@ -480,6 +484,17 @@ padding:6px 3%;
 border:none;
 border-top:1px solid #ddd;
 background:#fff}
+
+/* -- Share Functions Of Lists ---------------------------------------------------------------- */
+
+#listfunctions {position:absolute; right:280px; height:17px; top:12px; z-index:999; width:81px;}
+
+	#listfunctions a { width:17px; height:17px; background:#000; display:block; float:left; opacity:0.5; cursor:pointer; margin-left:10px;}
+	#listfunctions a:hover { opacity:1.0}
+
+	#listfunctions .list-print {background:url(/icons/print.png) no-repeat;}
+	#listfunctions .list-email {background:url(/icons/sendmail.png) no-repeat;}
+	#listfunctions .list-cloud {background:url(/icons/cloudapp.png) no-repeat;}
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 
