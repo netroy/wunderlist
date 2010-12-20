@@ -8,6 +8,7 @@ $(function()
 	account.init();
 	timer.init();
 	Menu.initializeTrayIcon();
+	notifications.init();
 });
 
 /**
