@@ -366,13 +366,13 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 			// Notifications for received new lists
 			if(sync_table_step1.new_lists != undefined && sync_table_step1.new_lists.length > 0)
 			{
-				sync.showSyncNotification(sync_table_step1.new_lists, 'list(s)', 'Added');
+				sync.showSyncNotification(sync_table_step1.new_lists, 'list', 'Added');
 			}
 
 			// Notifications for received new tasks
 			if(sync_table_step1.new_tasks != undefined && sync_table_step1.new_tasks.length > 0)
 			{
-				sync.showSyncNotification(sync_table_step1.new_tasks, 'task(s)', 'Added');
+				sync.showSyncNotification(sync_table_step1.new_tasks, 'task', 'Added');
 			}
 
 			// Show a notification for edited lists
@@ -384,7 +384,7 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 				// Notifications for edited lists
 				if(required_lists_data != undefined)
 				{
-					sync.showSyncNotification(required_lists_data, 'list(s)', 'Edited');
+					sync.showSyncNotification(required_lists_data, 'list', 'Edited');
 				}
 			}
 
@@ -397,7 +397,7 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 				// Notifications for edited tasks
 				if(required_tasks_data != undefined)
 				{
-					sync.showSyncNotification(required_tasks_data, 'task(s)', 'Edited');
+					sync.showSyncNotification(required_tasks_data, 'task', 'Edited');
 				}
 			}
 
@@ -411,7 +411,7 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 
 			if(new_lists_data != undefined)
 			{
-				sync.showSyncNotification(new_lists_data, 'list(s)', 'Added');
+				sync.showSyncNotification(new_lists_data, 'lists', 'Added');
 			}
 		}
 
@@ -423,7 +423,7 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 
 			if(new_tasks_data != undefined)
 			{
-				sync.showSyncNotification(new_tasks_data, 'task(s)', 'Added');
+				sync.showSyncNotification(new_tasks_data, 'task', 'Added');
 			}
 		}
 	}
@@ -464,6 +464,13 @@ sync.showSyncNotification = function(data, type, action)
 			edited++;
 		}
 	});
+
+	// Add plural form
+	// @TODO Prepare for different languages
+	if(deleted > 1 || edited > 1)
+	{
+		type += 's';
+	}
 
 	if(deleted > 0)
 	{
