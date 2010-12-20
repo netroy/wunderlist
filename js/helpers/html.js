@@ -87,6 +87,7 @@ generateTaskHTML = function(id, name, list_id, done, important, date)
 		html += '<span class="showdate"></span>';
 
 	html += '<span class="icon delete" title="' + language.data.delete_task + '"></span>';
+	html += '<span class="icon note" title="' + language.data.delete_task + '"></span>';
 	html += '</li>';
 
 	return html;
@@ -111,8 +112,8 @@ function generateNewListElementHTML(listId, listElementName, listElementInputCla
 	var html  = "<a id='" + listId + "' class='list sortablelist'>";
     	html += "<span>0</span>";
     	html += "<div class='deletep'></div>";
-    	html += "<div class='editp'></div>";
     	html += "<div class='savep'></div>";
+    	html += "<div class='editp'></div>";
     	html += "<input class='" + listElementInputClass + "' maxlength='50' type='text' value='" + listElementName + "' />";
     	html += "</a>";
 
@@ -137,9 +138,9 @@ function generateCreditsDialogHTML()
 }
 
 function generateBackgroundsDialogHTML() {
-	html =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a><br/>' +
-			'<a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a><br/>' +
-			'<a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a></p>';
+	html =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
+			'<a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a> (Artcore)<br/>' +
+			'<a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a> (Galaxgui)</p>';
 	return html;
 }
 
@@ -303,7 +304,7 @@ function make_timestamp_to_string() {
 			showDateByLanguage(this, day, month, year);
 		}
 		// If yesterday, mark red and show "yesterday"
-		else if((selected_date.getDate() < today.getDate() && selected_date.getDate() > today.getDate() - 2) && selected_date.getMonth() <= today.getMonth()) {
+		else if((selected_date.getDate() < today.getDate() && selected_date.getDate() > today.getDate() - 2) && selected_date.getMonth() == today.getMonth()) {
 			$(this).html(language.data.yesterday);
 			$(this).addClass('red');
 		}

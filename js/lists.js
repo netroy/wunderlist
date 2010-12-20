@@ -359,6 +359,8 @@ $(function() {
     $("a.list").live('mouseover', function() {
     	var countInput = $(this).children('input').length;
 
+		$(this).children('.sharep').show();
+
 		if(countInput == 0)
 			$(this).children('.editp').show();
 
@@ -369,6 +371,8 @@ $(function() {
     // Hide option buttons on "mouseout"
 	$("a.list").live('mouseout', function() {
     	var countInput = $(this).children('input').length;
+
+		$(this).children('.sharep').hide();
 
 		$(this).children('.editp').hide();
 

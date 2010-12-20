@@ -31,6 +31,7 @@ function saveNewTask()
 				$html += "<span class='showdate'></span>";
 
 			$html += "<span class='icon delete' title='delete task'></span>";
+			$html += "<span class='icon note' title='notes'></span>";
 			$html += "</li>";
 
 			$(".mainlist").append($html);

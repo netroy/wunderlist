@@ -11,11 +11,11 @@ sidebar.init = function() {
 		$(".togglesidebar").css("-webkit-transform","rotate(0deg)");
 		$("#sidebar").css("right","0px");
 		$("#lists").css("right","0px");
-		$("#content").css("right","239px");
+		$("#content").css("right","259px");
 	} else {
 		$(".togglesidebar").css("-webkit-transform","rotate(180deg)");
-		$("#sidebar").css("right","-249px");
-		$("#lists").css("right","-249px");
+		$("#sidebar").css("right","-269px");
+		$("#lists").css("right","-269px");
 		$("#content").css("right","0px");
 	}
 
@@ -32,15 +32,15 @@ sidebar.toggle = function() {
 
 		if(sidebar_opened_status == "true") {
 			$(this).css("-webkit-transform","rotate(180deg)");
-			$("#sidebar").stop().animate({right: '-249'});
-			$("#lists").stop().animate({right: '-249'});
+			$("#sidebar").stop().animate({right: '-269'});
+			$("#lists").stop().animate({right: '-269'});
 			$("#content").stop().animate({right: '0'});
 			sidebar_opened_status = "false";
 		} else {
 			$(this).css("-webkit-transform","rotate(0deg)");
 			$("#sidebar").stop().animate({right: '0'});
 			$("#lists").stop().animate({right: '0'});
-			$("#content").stop().animate({right: '239'});
+			$("#content").stop().animate({right: '259'});
 			sidebar_opened_status = "true";
 		}
 
