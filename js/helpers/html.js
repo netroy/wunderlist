@@ -1,4 +1,5 @@
-/** Returns the HTML structure of the login/register Dialog
+/**
+ * Returns the HTML structure of the login/register Dialog
  *
  * @author Daniel Marschner
  */
@@ -341,16 +342,24 @@ function getWorldWideDate(date)
 
 	var offset = (currentLocationDate.getTimezoneOffset() / 60) * (-1);
 
+	console.log('Offset ' + offset);
+
     // convert to msec
     // add local time zone offset
     // get UTC time in msec
     utc = currentLocationDate.getTime() + (currentLocationDate.getTimezoneOffset() * 60000);
+
+	console.log('UTC ' + currentLocationDate.getTime());
 
     // create new Date object for different city
     // using supplied offset
     timeZoneLocation = new Date(utc + (3600000 * offset));
 
 	var timestamp = timeZoneLocation.getTime() / 1000;
+
+
+	console.log('TimeZoneLocation ' + timestamp);
+
 	timestamp     = Math.round(timestamp);
 
 	return timestamp;

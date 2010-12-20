@@ -145,15 +145,16 @@ $(document).ready(function() {
 	tooltip();
 
 	/**
-	 * Printing with Ctrl + P
+	 * Printing with Ctrl / Command + P
 	 * DEACTIVATED - Printing dialog doesn't work stable in Titanium 1.0.0 and 1.1.0
 	 *
-	 * @author Christian Reber
-	 * @author Daniel Marschner
+	 * @author Christian Reber,  Daniel Marschner, Dennis Schneider
 	 */
-	/*$(document).bind('keydown', 'Ctrl+p', function (evt) {
+	/*$(document).bind('keydown', shortcutkey + '+p', function (evt) {
 		if(printShortcutListener == 0)
+		{
 			window.print();
+		}
 
 		printShortcutListener++;
 
