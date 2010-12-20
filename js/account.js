@@ -179,9 +179,6 @@ account.login = function() {
  	data['email'] 	 = $('input#login-email').val().toLowerCase();
 	data['password'] = $.md5($('input#login-password').val());
 
-	console.log(data['email']);
-	console.log(data['password']);
-
 	if(sync.validateEmail(data['email']))
 	{
 		if($('input#login-password').val() == '')

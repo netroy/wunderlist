@@ -99,9 +99,12 @@ Menu.initializeTrayIcon = function() {
 		// Create the tray icon and menu and prevent the application from exit on 'x'
 		var wunderlistWindow = Menu.preventCloseEvent();
 
-		if (os == 'darwin') {
+		if (os != 'darwin')
+		{
 			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traymac.png';
-		} else {
+		} 
+		else
+		{
 			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
 		}
 
@@ -176,7 +179,8 @@ Menu.switch_language = function(lang) {
  * @author Dennis Schneider
  */
 Menu.remove = function() {
-	if(Titanium.UI.Menu != undefined) {
+	if(Titanium.UI.Menu != undefined)
+	{
 		Titanium.UI.Menu.clear();
 	}
 }
