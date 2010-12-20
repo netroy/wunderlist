@@ -49,7 +49,6 @@ a {color:#393939 }
 #sidebar {
 right:0px;
 background:url(/images/sidebar.png) right repeat-y;
-
 width:269px;
 height:100%;
 top:0px;
@@ -453,8 +452,7 @@ background:url(/icons/note.png); float:right; display:none; cursor:pointer, heig
 
 #content .mainlist li:hover span.note {display:block}
 
-#content span.hasnote {background:url(/icons/hasnote.png)}
-#content span.activenote {display:block}
+#content span.hasnote {background:url(/icons/hasnote.png); display:block}
 
 #content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/icons/important.png);cursor:pointer}
 #content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/icons/star.png) no-repeat;cursor:pointer}
@@ -462,10 +460,26 @@ background:url(/icons/note.png); float:right; display:none; cursor:pointer, heig
 /* -- NOTE ---------------------------------------------------------------- */
 
 #note {
-background:#fff;
-border-bottom:1px solid #ddd;
-margin:6px;
-padding:6px;}
+width:258px;
+overflow-y:auto;
+overflow-x: hidden;
+position:absolute;
+right:0px;
+bottom:36px;
+top:59px}
+
+#note textarea {
+position:absolute;
+bottom:6px;
+top:6px;
+right:0px;
+width:88%;
+height:auto;
+margin:10px 3%;
+padding:6px 3%;
+border:none;
+border-top:1px solid #ddd;
+background:#fff}
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 

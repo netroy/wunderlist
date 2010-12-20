@@ -1,17 +1,27 @@
 $(function() {
-	$(".mainlist li").each(function() {
 	
-		var noteIcon = $(this).find(".note");
-		var noteIcons = $(".note");
-		var listItems = $("#lists a.list");
-		var note = $("#note");
+	var noteIcons = $(".note");
+	var listItems = $("#lists");
+	var note = $("#note textarea");
+	
+	note.hide();
+			
+	// CLICK
+	noteIcons.live("click", function(){
+							
+		if($(this).hasClass("hasnote")) {
 		
-		// CLICK
-		noteIcon.click(function(){
-				noteIcons.hide();
-				listItems.hide();
-				note.show();
-				noteIcon.addClass("activenote");
-		});
+			$(this).removeClass("hasnote");
+			note.text("").hide();
+			listItems.show();
+		
+		} else {
+		
+			listItems.hide();
+			note.text("sdf khjsdgfkjh gsdjkhfg sdjkhfg kjshdg fkjhsgd fkjhsgdkjfhgsdkjhfg").show();
+			noteIcons.removeClass("hasnote");
+			$(this).addClass("hasnote");
+		}
+		
 	});
 });
