@@ -1,6 +1,22 @@
 /**
  * Returns the HTML structure of the login/register Dialog
  *
+ * @author Marvin Labod
+ */
+function generateShareListDialogHTML()
+{
+	html = '<div id="invitebox">'+
+
+		'<p><input class="input-login input-share" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
+		'<textarea class="textarea-dialog" id="invite-text" maxlength="140">Hey, du wurdest in eine wunderlist liste von name eingeladen! have fun!</textarea>' +
+		'<input id="send_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>';
+
+	return html;
+}
+
+/**
+ * Returns the HTML structure of the login/register Dialog
+ *
  * @author Daniel Marschner
  */
 function generateLoginRegisterDialogHTML()

@@ -62,7 +62,7 @@ background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32
 
 /* SOCIAL MEDIA SHARE DIALOG ---------------------------------------------------------------------------- */
 
-.dialog-social { top: 50% !important; left: 50% !important; margin-left: -250px; margin-top: -150px; height: 300px; width:500px !important;}
+.dialog-social, .dialog-sharelist { top: 50% !important; left: 50% !important; margin-left: -250px; margin-top: -150px; height: 300px; width:500px !important;}
 
 .dialog-social .ui-dialog-titlebar { background:none !important;}
 
@@ -94,6 +94,14 @@ width: 323px; height:50px; padding:10px; margin-top:6px; margin-bottom:-6px;
 border:1px solid #9c9ea4; font-size:11px; color:#777;}
 
 #invitebox { margin-top:-12px; }
+
+/* SHARE LIST DIALOG ------------------------------------------------------------------------------------ */
+
+.dialog-sharelist {width:360px !important; margin-left:-180px !important}
+
+.dialog-sharelist input.input-share {width:96%; padding:2%;}
+
+.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
 
 /* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
 
