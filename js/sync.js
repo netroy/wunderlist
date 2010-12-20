@@ -134,14 +134,12 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 
 					if(xhrobject.status == 200)
 					{
-						switchSyncSymbol(xhrobject.status);
-
 						var response = eval('(' + response_data + ')');
 
 						switch(response.code)
 						{
 							case sync.status_codes.SYNC_SUCCESS:
-								sync.syncSuccess(response, logOutAfterSync, exitAfterSync);
+								sync.syncSuccess(response, logOutAfterSync, exitAfterSync, data['sync_table']['new_lists']);
 								syncSuccessful = true;
 								clearInterval(sync.timeOutInterval);
 								sync.timeOutInterval = '';
@@ -209,7 +207,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
  *
  * @author Dennis Schneider
  */
-sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
+sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_lists)
 {
 	// SYNC STEP 2
 	if(response_step1.sync_table != undefined)
@@ -353,26 +351,86 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
 			}
 		});
 
-		// Delete elements from database forever
-		if(sync_table_step1 != undefined)
-		{
-			this.deleteElementsAfterSync(sync_table_step1);
-		}
-
 		// Only if there is a sync table
 		if(sync_table_step1 != undefined)
 		{
+			// Delete elements from database forever
+			this.deleteElementsAfterSync(sync_table_step1);
+
 			// Only, if there are new elements from online to fetch and to insert locally
 			if(sync_table_step1.new_lists != undefined || sync_table_step1.new_tasks != undefined)
 			{
 				account.loadInterface();
+			}
+
+			// Notifications for received new lists
+			if(sync_table_step1.new_lists != undefined && sync_table_step1.new_lists.length > 0)
+			{
+				sync.showSyncNotification(sync_table_step1.new_lists, 'list', 'Added');
+			}
+
+			// Notifications for received new tasks
+			if(sync_table_step1.new_tasks != undefined && sync_table_step1.new_tasks.length > 0)
+			{
+				sync.showSyncNotification(sync_table_step1.new_tasks, 'task', 'Added');
+			}
+
+			// Show a notification for edited lists
+			if(data['sync_table']['required_lists'] != undefined)
+			{
+				var required_lists_data = Titanium.JSON.stringify(data['sync_table']['required_lists']);
+				required_lists_data     = eval('(' + required_lists_data + ')');
+
+				// Notifications for edited lists
+				if(required_lists_data != undefined)
+				{
+					sync.showSyncNotification(required_lists_data, 'list', 'Edited');
+				}
+			}
+
+			// Show a notification for edited tasks
+			if(data['sync_table']['required_tasks'] != undefined)
+			{
+				var required_tasks_data = Titanium.JSON.stringify(data['sync_table']['required_tasks']);
+				required_tasks_data     = eval('(' + required_tasks_data + ')');
+
+				// Notifications for edited tasks
+				if(required_tasks_data != undefined)
+				{
+					sync.showSyncNotification(required_tasks_data, 'task', 'Edited');
+				}
+			}
+
+		}
+
+		// Show a notification for newly added (send) lists
+		if(new_lists != undefined)
+		{
+			var new_lists_data = Titanium.JSON.stringify(new_lists);
+			new_lists_data     = eval('(' + new_lists_data + ')');
+
+			if(new_lists_data != undefined)
+			{
+				sync.showSyncNotification(new_lists_data, 'lists', 'Added');
+			}
+		}
+
+		// Show a notification for newly added (send) tasks
+		if(data['sync_table']['new_tasks'] != undefined)
+		{
+			var new_tasks_data = Titanium.JSON.stringify(data['sync_table']['new_tasks']);
+			new_tasks_data     = eval('(' + new_tasks_data + ')');
+
+			if(new_tasks_data != undefined)
+			{
+				sync.showSyncNotification(new_tasks_data, 'task', 'Added');
 			}
 		}
 	}
 
 	setTimeout(function() { sync.isSyncing = false; }, 2000);	
 	stopSyncAnimation();
-	
+
 	if(logOutAfterSync == true)
 	{
 		sync.isSyncing = false;
@@ -382,6 +440,48 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
 	if(exitAfterSync == true)
 	{
 		Titanium.App.exit();
+	}
+}
+
+/**
+ * Show a notification for the updated tasks / lists
+ *
+ * @author Dennis Schneider
+ */
+sync.showSyncNotification = function(data, type, action)
+{
+	var deleted = 0;
+	var edited  = 0;
+
+	$.each(data, function(key, item)
+	{
+		if(item.deleted == 1)
+		{
+			deleted++;
+		}
+		else
+		{
+			edited++;
+		}
+	});
+
+	// Add plural form
+	// @TODO Prepare for different languages
+	if(deleted > 1 || edited > 1)
+	{
+		type += 's';
+	}
+
+	if(deleted > 0)
+	{
+		var message = 'Deleted ' + deleted + ' ' + type;
+		notifications.createNotification('Successfully synced your data', message);
+	}
+
+	if(edited > 0)
+	{
+		var message = action + ' ' + edited + ' ' + type;
+		notifications.createNotification('Successfully synced your data', message);
 	}
 }
 

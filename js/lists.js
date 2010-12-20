@@ -435,6 +435,54 @@ $(function() {
 			listEventListener = false;
 	});
 
+	var stepUp = false;
+
+	// Shortcut Bind Command(or Ctrl)+Up - Step through lists
+	$(document).bind('keydown', shortcutkey + '+up', function (evt) {
+		if(stepUp == false)
+		{
+			stepUp   = true;
+			$element = $('div#lists > a.ui-state-disabled');
+			if($element.prev().attr('id') == undefined)
+			{
+				$('div#lists a').last().click();
+			}
+			else
+			{
+				$('div#lists > a.ui-state-disabled').prev().click();
+			}
+		}
+
+		setTimeout(function()
+		{
+			stepUp = false;
+		}, 100);
+	});
+
+	var stepDown = false;
+
+	// Shortcut Bind Command(or Ctrl)+Down - Step through lists
+	$(document).bind('keydown', shortcutkey + '+down', function (evt) {
+		if(stepDown == false)
+		{
+			stepDown = true;
+			$element = $('div#lists > a.ui-state-disabled');
+			if($element.next().attr('id') == undefined)
+			{
+				$('div#lists a').first().click();
+			}
+			else
+			{
+				$('div#lists > a.ui-state-disabled').next().click();
+			}
+		}
+
+		setTimeout(function()
+		{
+			stepDown = false;
+		}, 100);
+	});
+
 	/**
 	 * Show older tasks
 	 *

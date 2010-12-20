@@ -59,6 +59,7 @@ Menu.initialize = function() {
 	extraMenuItem.addItem(language.data.create_tutorials, wunderlist.recreateTutorials);
 
 	extraMenuItem.addSeparatorItem();
+	extraMenuItem.addItem('Knowledge Base',    function() { Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb') });
 	extraMenuItem.addItem(language.data.credits,         openCreditsDialog);  // About Us Dialog
 	extraMenuItem.addItem(language.data.backgrounds,     openBackgroundsDialog);  // Background Credits
 	extraMenuItem.addItem(language.data.wunderkinder,    function() { Titanium.Desktop.openURL('http://www.6wunderkinder.com') });
@@ -99,9 +100,12 @@ Menu.initializeTrayIcon = function() {
 		// Create the tray icon and menu and prevent the application from exit on 'x'
 		var wunderlistWindow = Menu.preventCloseEvent();
 
-		if (os == 'darwin') {
+		if (os != 'darwin')
+		{
 			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traymac.png';
-		} else {
+		} 
+		else
+		{
 			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
 		}
 
@@ -176,7 +180,8 @@ Menu.switch_language = function(lang) {
  * @author Dennis Schneider
  */
 Menu.remove = function() {
-	if(Titanium.UI.Menu != undefined) {
+	if(Titanium.UI.Menu != undefined)
+	{
 		Titanium.UI.Menu.clear();
 	}
 }

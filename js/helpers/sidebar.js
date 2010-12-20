@@ -46,3 +46,22 @@ sidebar.toggle = function() {
 
 	});
 };
+
+$(function() {
+	var sidebarToggle = false;
+
+	// Shortcut Bind Command(or Ctrl)+b - Hide the sidebar
+	$(document).bind('keydown', shortcutkey + '+b', function (evt) {
+		if(sidebarToggle == false)
+		{
+			sidebarToggle = true;
+			$('div#right span.togglesidebar').click();
+		}
+
+		setTimeout(function()
+		{
+			sidebarToggle = false;
+		}, 100);
+	});
+	
+});
