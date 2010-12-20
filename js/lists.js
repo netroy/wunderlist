@@ -461,7 +461,7 @@ $(function() {
 
 	var stepDown = false;
 
-	// Shortcut Bind Command(or Ctrl)+Up - Step through lists
+	// Shortcut Bind Command(or Ctrl)+Down - Step through lists
 	$(document).bind('keydown', shortcutkey + '+down', function (evt) {
 		if(stepDown == false)
 		{
