@@ -61,13 +61,18 @@ $(document).ready(function() {
 	$(document).bind('keydown', 'Esc', function (evt) {
 		if($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn())
 		{
-			if($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 && !cancelEditTask && $('#lists a.list input').length == 0)
+			if($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 && !cancelEditTask && $('#lists a.list input').length == 0 && $('#note textarea:focus').length == 0)
 			{
 				openList(1);
 				$("#left a").removeClass("active");
 				$("input#search").val('').blur();
 			}
-			else {
+			else if($('#note textarea:focus').length == 1)
+			{
+				$('div#note input#cancel-note').click();
+			}
+			else
+			{
 				cancelSaveTask();
 				cancelEditTask = true;
 			}

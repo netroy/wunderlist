@@ -510,6 +510,8 @@ wunderlist.saveNoteForTask = function(note_text, task_id)
 	console.log(note_text);
 	console.log(task_id);
 	this.database.execute("UPDATE tasks SET note = ? WHERE id = ?", note_text, task_id);
+
+	timer.stop().set(15).start();
 }
 
 /**

@@ -248,7 +248,7 @@ sharing.openShareListDialog = function()
  */
 sharing.openNoInternetShareDialog = function()
 {
-	// @TODO Put code here
+	showErrorDialog('Sharing is only possible if you have an active internet connection');
 }
 
 // Load on start
