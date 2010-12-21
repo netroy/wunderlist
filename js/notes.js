@@ -52,7 +52,7 @@ $(function()
 		notes.note.attr('id', task_id);
 		var noteContent = wunderlist.getNoteForTask(task_id);
 		notes.note.val(noteContent);
-							
+		
 		if($(this).hasClass("activenote"))
 		{
 			notes.hideNoteElements();
@@ -61,6 +61,7 @@ $(function()
 		else 
 		{
 			notes.showNoteElements();
+			notes.noteIcons.removeClass("activenote");
 			$(this).addClass("activenote");		
 		}
 	});

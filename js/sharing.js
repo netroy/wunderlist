@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
  * sharing.js
-=======
- * open Sharing Dialog
->>>>>>> 87d3880b62a7724432c67ebad95fe30a102c2050
  *
  * Class for sharing lists
  * 
