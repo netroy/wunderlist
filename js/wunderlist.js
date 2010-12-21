@@ -8,6 +8,7 @@ $(function()
 	account.init();
 	timer.init();
 	Menu.initializeTrayIcon();
+	sharing.init();
 	notifications.init();
 });
 
@@ -342,6 +343,23 @@ wunderlist.getListIdByOnlineId = function(list_id)
 		return resultSet.field(0)
 
 	return list_id;
+}
+
+/*
+ * Fetches the online id of a list by the given list id
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.getOnlineIdByListId = function(list_id)
+{
+	var resultSet = this.database.execute("SELECT online_id FROM lists WHERE id = ?", list_id);
+
+	if(resultSet.isValidRow())
+	{
+		return resultSet.field(0);
+	}
+
+	return 0;
 }
 
 /**
