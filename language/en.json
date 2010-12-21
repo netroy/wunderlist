@@ -164,5 +164,6 @@
 	"empty_list":				"You want to share an empty list?",
 	"try_again_later":			"Mmmh, something went wrong. Maybe you try it again in a few minutes?",
 	"share_denied":				"The sharing of the list was denied",
-	"share_failure":			"The sharing of the list failed"
+	"share_failure":			"The sharing of the list failed",
+	"share_list_with_cloudapp": "Share this list with other with CloudApp"
 }
