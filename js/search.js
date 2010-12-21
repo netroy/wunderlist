@@ -64,7 +64,6 @@ $(document).ready(function() {
 	$(document).bind('keydown', 'Esc', function (evt) {
 		if(($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn()) && documentEscapeActive == false)
 		{
-			console.log("hahah");
 			documentEscapeActive = true;
 			
 			if($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 && !cancelEditTask && $('#lists a.list input').length == 0 && $('#note textarea:focus').length == 0 && $('#note textarea').css('display') == 'none')
