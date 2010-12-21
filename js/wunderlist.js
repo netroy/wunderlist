@@ -10,6 +10,7 @@ $(function()
 	Menu.initializeTrayIcon();
 	sharing.init();
 	notifications.init();
+	share.init();
 });
 
 /**
