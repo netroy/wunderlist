@@ -1,5 +1,5 @@
 /**
- * Sync.js
+ * sync.js
  *
  * Class for logging in into sync server, sync sending and retrieval
  * @author Dennis Schneider
@@ -31,7 +31,7 @@ sync.init = function()
         'SYNC_FAILURE': 				301,
         'SYNC_DENIED':	 				302,
         'SYNC_NOT_EXIST':				303
-     };
+    };
 
 	$('#sync').click(function()
 	{
@@ -106,7 +106,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 	{
 		// SYNC STEP 1
 		var data = {};
-		user_credentials				= wunderlist.getUserCredentials();
+		var user_credentials			= wunderlist.getUserCredentials();
 		data['email']					= user_credentials['email'];
 		data['password']				= user_credentials['password'];
 		data['step']					= 1;
