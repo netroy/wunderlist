@@ -5,17 +5,10 @@
  */
 function generateShareListDialogHTML()
 {
-	html = '<div id="sharebox"><br/>'+
-		'<p><b>Currently invited people</b></p><br/>'+
-		'<ul>'+
-		'<li><span></span> sebastian@6wunderkinder.com</li>'+
-		'<li><span></span> daniel@6wunderkinder.com</li>'+
-		'<li><span></span> christian@6wunderkinder.com</li>'+
-		'</ul><br/>'+
-		'<p><b>Invite more people</b></p>'+
-		'<p><input class="input-login input-share" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
-		'<textarea class="textarea-dialog" id="invite-text" maxlength="140">Hey, du wurdest in eine wunderlist liste von name eingeladen! have fun!</textarea>' +
-		'<input id="send_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>';
+	html =  '<p><input class="input-login input-sharelist" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
+			'<textarea class="textarea-dialog" id="invite-text" maxlength="140">Hey, du wurdest in eine wunderlist liste von name eingeladen! have fun!</textarea>' +
+			'<input id="send_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div><br/><br/><br/>' +
+			'<ul class="sharelistusers"></ul>';
 
 	return html;
 }
@@ -28,14 +21,14 @@ function generateShareListDialogHTML()
 function generateLoginRegisterDialogHTML()
 {
 	html = '<p class="pl8">' + language.data.login_hint + '</p><br />' +
-		'<div class="wunderlistlogo"></div>'+
+		'<div class="wunderlistlogo"></div>' +
 		'<input class="input-login" type="text" id="login-email" name="email" placeholder="' + language.data.email + '" />' +
 		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + language.data.password + '" />' +
-		'<div id="account-buttons">' +
+		'<div id="account-buttons">'+
 		'<input class="input-button register button-login" type="submit" id="loginsubmit" value="' + language.data.login + '" />' +
 		'<input class="input-button register" type="submit" id="registersubmit" value="' + language.data.register + '" />' +
 		'<input class="input-button" type="submit" id="cancelreg" value="' + language.data.no_thanks + '" />' +
-		'<img id="account-loader" src="images/ajax-loader.gif" />' +
+		'<img id="account-loader" src="images/ajax-loader.gif" />'+
 		'</div>' +
 		'<p class="error"></p>' +
         '<p class="pwd"><a id="forgot-pwd" href="#" target="_blank">' + language.data.forgot_password + '</a></p>' +

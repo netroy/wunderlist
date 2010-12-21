@@ -38,7 +38,7 @@ background:-webkit-gradient(linear, left center, right center, from(#d0d0d0), to
 .ui-dialog-titlebar-close:hover,  .ui-datepicker-prev:hover, .ui-datepicker-next:hover  {
 border:1px solid #ddd !important; background:#ccc; -webkit-border-radius:3px; cursor:pointer}
 
-.wunderlistlogo {width:139px;height:139px;background:url(../images/wunderlisticon.png); float:left;margin-top:-2px;margin-left:-10px}
+.wunderlistlogo {width:139px;height:139px;background:url(/images/wunderlisticon.png); float:left;margin-top:-2px;margin-left:-10px}
 
 .input-login {padding:8px;float:right;display:block;width:282px;margin-top:12px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
@@ -86,10 +86,10 @@ p.socialmedia span.icons a, .followus a {
 display:block; width:32px; height:32px; float:right; margin-left:14px;-webkit-box-shadow:0px 1px 3px #999;-webkit-border-radius:5px}
 
 p.socialmedia span.icons a:hover , .followus a:hover { -webkit-box-shadow:0px 1px 3px #666}
-p.socialmedia span.icons a.facebook,  .followfacebook  { background:url(../icons/facebook.png)}
-p.socialmedia span.icons a.twitter, .followtwitter { background:url(../icons/twitter.png)}
-p.socialmedia span.icons a.stumbleupon { background:url(../icons/stumbleupon.png)}
-p.socialmedia span.icons a.digg { background:url(../icons/digg.png)}
+p.socialmedia span.icons a.facebook,  .followfacebook  { background:url(/icons/facebook.png)}
+p.socialmedia span.icons a.twitter, .followtwitter { background:url(/icons/twitter.png)}
+p.socialmedia span.icons a.stumbleupon { background:url(/icons/stumbleupon.png)}
+p.socialmedia span.icons a.digg { background:url(/icons/digg.png)}
 
 .textarea-dialog {
 width: 323px; height:50px; padding:10px; margin-top:6px; margin-bottom:-6px;
@@ -108,12 +108,14 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 		-webkit-border-radius:3px;
 		margin-bottom:2px}
 		
-	.dialog-sharelist li span { background:url(/icons/delete.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right}
-	.dialog-sharelist  li span:hover { background:url(/icons/delete_active.png)}
+	.dialog-sharelist li span { background:url(/icons/delete_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; opacity:0.5}
+	.dialog-sharelist li span:hover {opacity:1.0}
 
-	.dialog-sharelist input.input-share {width:96%; padding:2%}
+	.dialog-sharelist input.input-sharelist {width:96%; padding:2%}
 
 	.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
+	
+	.dialog-sharelist p.invitedpeople { margin-bottom:10px;}
 
 /* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
 
@@ -122,7 +124,7 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 .dialog-login, .dialog-login div {overflow:visible !important}
 
 .followus p {
-position:absolute; top:24px; right: -8px; background:url(../images/followus.png) 0px 3px no-repeat; padding-left:70px; width:90px}
+position:absolute; top:24px; right: -8px; background:url(/images/followus.png) 0px 3px no-repeat; padding-left:70px; width:90px}
 
 .followus a { margin-left:2px; margin-right:8px; -webkit-box-shadow:0px 1px 3px #666}
 .followus a:hover { -webkit-box-shadow:0px 1px 3px #333}
@@ -137,7 +139,7 @@ background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ecece
 border:1px solid #ccc}
 
 .ui-datepicker-calendar .ui-state-active {
-background:url(../images/sidebar_bg.png) top left repeat-x !important;
+background:url(/images/sidebar_bg.png) top left repeat-x !important;
 border:1px solid #1177b9 !important;
 color:#fff !important}
 
