@@ -160,7 +160,9 @@
 	"startday":					"Startday of the week",
 	"sunday":					"Sunday",
 	"monday":					"Monday",
-	"exit_wunderlist":			"exit wunderlist",
+	"exit_wunderlist":			"Exit wunderlist",
+	"empty_list":				"You want to share an empty list?",
+	"try_again_later":			"Mmmh, something went wrong. Maybe you try it again in a few minutes?",
 	"share_denied":				"The sharing of the list was denied",
 	"share_failure":			"The sharing of the list failed"
 }
