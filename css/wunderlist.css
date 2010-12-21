@@ -500,7 +500,10 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 /* -- TOOLTIP --------------------------------------------------------------------------- */
 
-#sync_tooltip, #tooltip, #taskTooltip {position:absolute;background:url(/images/tooltipbg.png);opacity:0.7;-webkit-border-radius:10px;padding:4px 8px 4px 8px;color:#fff;z-index:100;font-size:11px;font-weight:bold;display:none}
+#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:url(/images/tooltipbg.png);opacity:0.7;-webkit-border-radius:10px;padding:4px 8px 4px 8px;color:#fff;z-index:100;font-size:11px;font-weight:bold;display:none}
+
+#cloudtip {display:block; top:24px; right:0px;width:200px !important;}
+
 #taskTooltip {background:#333;opacity:0.9;width:220px;padding:7px 8px;line-height:16px;font-size:12px;-webkit-border-radius:5px}
 #taskTooltip span {position:absolute;left:105px;height:0px; width:0px;border-style: solid}
 #taskTooltip span.top {border-color: transparent transparent #333 transparent;border-width: 0px 10px 10px 10px;top:-10px}

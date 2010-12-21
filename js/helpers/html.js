@@ -48,7 +48,7 @@ generateListContentHTML = function(list_id, list_name)
 {
 	var html = '';
 
-	html +=  "<div id='listfunctions'><a class='list-print'></a><a class='list-email'></a><a class='list-cloud'></a></div>";
+	html +=  "<div id='listfunctions'><a class='list-print'></a><a class='list-email'></a><a class='list-cloud'></a><div id='cloudtip'><span>copy</span> url goes here</div></div>";
 	html += "<h1>" + unescape(list_name) + "</h1>";
 	html += "<div class='add'>";
 	html += "<input type='text' class='input-add' placeholder='" + language.data.add_task + "' />";
