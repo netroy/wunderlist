@@ -115,8 +115,8 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 
 	.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
 	
-	.dialog-sharelist p.invitedpeople { margin-bottom:10px;}
-
+	.dialog-sharelist p.invitedpeople { margin-bottom:10px; margin-top:80px}
+	
 /* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
 
 .followus { position:relative; clear:both}

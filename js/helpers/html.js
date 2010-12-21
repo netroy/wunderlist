@@ -6,8 +6,7 @@
 function generateShareListDialogHTML()
 {
 	html =  '<p><input class="input-login input-sharelist" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
-			'<textarea class="textarea-dialog" id="invite-text" maxlength="140">Hey, du wurdest in eine wunderlist liste von name eingeladen! have fun!</textarea>' +
-			'<input id="send_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div><br/><br/><br/>' +
+			'<input id="send_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
 
 	return html;
