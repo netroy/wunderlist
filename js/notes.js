@@ -42,17 +42,6 @@ $(function()
 	notes.listItems = $('div#lists');
 	notes.note      = $('#note textarea');
 
-<<<<<<< HEAD
-$(function() {
-	
-	var noteIcons = $(".note");
-	var listItems = $("#lists");
-	var note = $("#note textarea");
-	
-	var noteContent = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Duo dolores et ea rebum";
-	
-=======
->>>>>>> a4b0f5517eed0d3f991d8c61c5482626ce6f3640
 	// Hide Note initially
 	notes.note.hide();
 			
