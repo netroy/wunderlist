@@ -291,9 +291,11 @@ function openList(list_id)
 makeListsSortable = function()
 {
 	$("#lists").sortable({
+		axis: 'y',
 		scroll: false,
 		cursor: 'pointer',
 		placeholder: 'placeholder',
+		distance: 20,
 		items: '.sortablelist',
 		update: saveListPosition
 	});

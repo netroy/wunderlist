@@ -40,8 +40,8 @@ background.init = function() {
 		$('#backgroundList').prepend('<a class="' + bgClass + '">' + (bgCounter++) + '</a>');
 
 		$('a.' + bgClass).bind('click', function() {
-			$('#bghelp').fadeOut(350, function() {
-                $(this).css('background', background.list[bgClass].bgColor + ' url(' + background.list[bgClass].bgPath + ') '+ background.list[bgClass].bgPosition +' no-repeat fixed').fadeIn(350)
+			$('#bghelp').fadeOut(200, function() {
+                $(this).css('background', background.list[bgClass].bgColor + ' url(' + background.list[bgClass].bgPath + ') '+ background.list[bgClass].bgPosition +' no-repeat fixed').fadeIn(200)
 			});
 			$('body').css('background','none');
 			styleActive(this);
