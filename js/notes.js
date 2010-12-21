@@ -83,6 +83,8 @@ $(function()
 
 		notes.noteIcons.removeClass("activenote");
 		notes.hideNoteElements();
+
+		timer.resume();
 	});
 
 	// Save the note
@@ -98,5 +100,13 @@ $(function()
 		notes.noteIcons.removeClass("activenote");
 		notes.note.val(noteContent);
 		notes.hideNoteElements();
+
+		timer.resume();
+	});
+
+	// 
+	$('#note textarea').live('keyup', function(e)
+	{
+		timer.pause();
 	});
 });

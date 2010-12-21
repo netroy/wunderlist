@@ -57,21 +57,31 @@ $(document).ready(function() {
         setTimeout(function() { focusSearch = 0; }, 1000);
 	});
 
+
+	var documentEscapeActive = false;
+	
 	// Shortcut Bind Esc - Go to my tasks
 	$(document).bind('keydown', 'Esc', function (evt) {
-		if($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn())
+		if(($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn()) && documentEscapeActive == false)
 		{
-			if($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 && !cancelEditTask && $('#lists a.list input').length == 0)
+			documentEscapeActive = true;
+			
+			if($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 && !cancelEditTask && $('#lists a.list input').length == 0 && $('#note textarea:focus').length == 0 && $('#note textarea').css('display') == 'none')
 			{
 				openList(1);
 				$("#left a").removeClass("active");
 				$("input#search").val('').blur();
 			}
-			else {
+			else if($('#note textarea:focus').length == 1 || $('#note textarea').css('display') == 'block')
+			{
+				$('div#note input#cancel-note').click();
+			}
+			else
+			{
 				cancelSaveTask();
 				cancelEditTask = true;
 			}
-			setTimeout(function() {cancelEditTask = false}, 1000);
+			setTimeout(function() {cancelEditTask = false;documentEscapeActive = false}, 1000);
 		}
 	});
 
