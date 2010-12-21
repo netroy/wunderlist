@@ -160,5 +160,7 @@
 	"startday":					"Starttag der Woche",
 	"sunday":					"Sonntag",
 	"monday":					"Montag",
-	"exit_wunderlist":			"wunderlist beenden"
+	"exit_wunderlist":			"wunderlist beenden",
+	"share_denied":				"Das Teilen der Liste wurde verweigert",
+	"share_failure":			"Das Teilen der Liste ist fehlgeschlagen"
 }

@@ -32,6 +32,7 @@
 	<script type="text/javascript" src="js/sync.js"></script>
 	<script type="text/javascript" src="js/wunderlist.js"></script>
 	<script type="text/javascript" src="js/search.js"></script>
+	<script type="text/javascript" src="js/share.js"></script>
 
 	<script type="text/javascript" src="js/notifications.js"></script>
 	<script type="text/javascript" src="js/filters.js"></script>
@@ -47,7 +48,6 @@
 	<script type="text/javascript" src="js/menu.js"></script>
 	<script type="text/javascript" src="js/timer.js"></script>
 	<script type="text/javascript" src="js/layout.js"></script>
-	<script type="text/javascript" src="js/mail.js"></script>
 </head>
 
 <body>
@@ -62,7 +62,11 @@
 		<h3>
 			<a class="add" href="#" title="">add</a>
 		</h3>
-		<div id="note"><textarea></textarea></div>
+		<div id="note">
+			<textarea></textarea>
+			<input id="save-note" type="button" value="Save" />
+			<input id="cancel-note" type="button" value="Cancel" />
+		</div>
 		<div id="lists"></div>
 		<div id="notification"><div></div></div>
 	</div>

@@ -479,6 +479,21 @@ border:none;
 border-top:1px solid #ddd;
 background:#fff}
 
+#note input {
+position: absolute;
+right: 200px;
+bottom: 40px;
+display: none;
+}
+
+#note input#save-note {
+right: 200px;
+}
+
+#note input#cancel-note {
+right: 40px;
+}
+
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 
 #listfunctions {position:absolute; right:20px; height:17px; top:10px; z-index:999; width:81px}
