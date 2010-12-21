@@ -40,10 +40,12 @@ wunderlist.initDatabase = function()
 		this.database.execute(sql);
 		Titanium.App.Properties.setString('prefinal_first_run', '1');
 	}
+	// @TODO Write update function for database - Set notes to default '' - add shared value - add recurring and recurring interval
+
 	// , shared INTEGER DEFAULT 0
 	this.database.execute("CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, inbox INTEGER DEFAULT 0)");
 	// recurring INTEGER DEFAULT 0, recurring_interval INTEGER DEFAULT 0,
-	this.database.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, list_id TEXT, note TEXT, date INTEGER DEFAULT 0, done_date INTEGER DEFAULT 0, done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0)");
+	this.database.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, list_id TEXT, note TEXT DEFAULT '', date INTEGER DEFAULT 0, done_date INTEGER DEFAULT 0, done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0)");
 }
 
 /**
@@ -479,6 +481,35 @@ wunderlist.updateTaskId = function(id, online_id)
 wunderlist.updateTaskListId = function(id, online_id)
 {
 	this.database.execute("UPDATE tasks SET list_id = ? WHERE list_id = ?", online_id, id);
+}
+
+/**
+ * Get the note for the specified task
+ * 
+ * @author Dennis Schneider
+ */
+wunderlist.getNoteForTask = function(task_id)
+{
+	var resultSet = this.database.execute("SELECT note FROM tasks WHERE id = ?", task_id);
+
+	if(resultSet.isValidRow())
+	{
+		return resultSet.field(0);
+	}
+
+	return '';
+}
+
+/**
+ * Save the note for the specified task
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.saveNoteForTask = function(note_text, task_id)
+{
+	console.log(note_text);
+	console.log(task_id);
+	this.database.execute("UPDATE tasks SET note = ? WHERE id = ?", note_text, task_id);
 }
 
 /**
@@ -1032,9 +1063,9 @@ wunderlist.getLastDoneTasks = function(list_id)
 			var day_string = language.data.day_ago;
 			var heading    = '<h3>';
 
-			if (listId == 0) { day_string = language.data.done_today; days_text = ''; heading = '<h3 class="head_today">'; }
-			else if (listId == 1) { day_string = language.data.done_yesterday; days_text = ''; }
-			else { day_string = language.data.days_ago; days_text = listId; };
+			if (listId == 0) {day_string = language.data.done_today;days_text = '';heading = '<h3 class="head_today">';}
+			else if (listId == 1) {day_string = language.data.done_yesterday;days_text = '';}
+			else {day_string = language.data.days_ago;days_text = listId;};
 
 			// Check for older tasks and append new div
 			if (listId > 1 && ($('#older_tasks').length == 0))
