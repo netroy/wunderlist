@@ -25,10 +25,10 @@ sharing.init = function()
 
 	sharing.status_codes =
 	{
-        'CONST_SHARE_SUCCESS':    800,
-        'CONST_SHARE_FAILURE':    801,
-        'CONST_SHARE_DENIED':     802,
-        'CONST_SHARE_NOT_EXISTS': 803
+        'SHARE_SUCCESS':    800,
+        'SHARE_FAILURE':    801,
+        'SHARE_DENIED':     802,
+        'SHARE_NOT_EXISTS': 803
     };
 
 	// Hitting Enter on Input Field
@@ -124,19 +124,19 @@ sharing.shareLists = function()
 
 					switch(response.code)
 					{
-						case sync.status_codes.SYNC_SUCCESS:
+						case sharing.status_codes.SHARE_SUCCESS:
 							sharing.shareSuccess(response);
 							break;
 
-						case sync.status_codes.SYNC_FAILURE:
-							showErrorDialog(language.data.sync_failure);
+						case sharing.status_codes.SHARE_FAILURE:
+							showErrorDialog(language.data.share_failure);
 							break;
 
-						case sync.status_codes.SYNC_DENIED:
-							showErrorDialog(language.data.sync_denied);
+						case sharing.status_codes.SHARE_DENIED:
+							showErrorDialog(language.data.share_denied);
 							break;
 
-						case sync.status_codes.SYNC_NOT_EXIST:
+						case sharing.status_codes.SHARE_NOT_EXIST:
 							showErrorDialog(language.data.sync_not_exist);
 							break;
 
@@ -200,19 +200,19 @@ sharing.getSharedEmails = function()
 
 					switch(response.code)
 					{
-						case sync.status_codes.SYNC_SUCCESS:
+						case sharing.status_codes.SHARE_SUCCESS:
 							// @TODO FILL DIALOG WITH EMAIL ADDRESSES
 							break;
 
-						case sync.status_codes.SYNC_FAILURE:
-							showErrorDialog(language.data.sync_failure);
+						case sharing.status_codes.SHARE_FAILURE:
+							showErrorDialog(language.data.share_failure);
 							break;
 
-						case sync.status_codes.SYNC_DENIED:
-							showErrorDialog(language.data.sync_denied);
+						case sharing.status_codes.SHARE_DENIED:
+							showErrorDialog(language.data.share_denied);
 							break;
 
-						case sync.status_codes.SYNC_NOT_EXIST:
+						case sharing.status_codes.SHARE_NOT_EXIST:
 							showErrorDialog(language.data.sync_not_exist);
 							break;
 
