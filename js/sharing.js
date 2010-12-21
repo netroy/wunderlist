@@ -15,8 +15,8 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl        = 'https://sync.wunderlist.net/share';
-	sharing.sharedEmailsUrl = 'https://sync.wunderlist.net/share/%s/emails';
+	sharing.shareUrl        = 'http://192.168.178.58/share';//'https://sync.wunderlist.net/share';
+	sharing.sharedEmailsUrl = 'http://192.168.178.58/share/%s/emails';//'https://sync.wunderlist.net/share/%s/emails';
 	sharing.shareListDialog = null;
 
 	sharing.status_codes =
@@ -62,7 +62,7 @@ sharing.init = function()
 
 	// Open Share Dialog
 	$(".sharep").click(function(){
-		openShareListDialog();
+		sharing.openShareListDialog();
 	});
 
 	// Delete Button for remove Sharing for a single E-Mail
@@ -100,8 +100,8 @@ sharing.shareLists = function()
 	data['email']        = user_credentials['email'];
 	data['password']     = user_credentials['password'];
 	data['list_id']      = wunderlist.getOnlineIdByListId(list_id);
-	data['add']	         = {};
-	data['delete']       = {};
+	data['add']	         = new Array('marschner@innovatics.de', 'daniel@6wunderkinder.com');
+	data['delete']       = new Array();
 
 	$.ajax({
 		url: sharing.shareUrl,
@@ -113,10 +113,9 @@ sharing.shareLists = function()
 		},
 		success: function(response_data, text, xhrobject)
 		{
+			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
-				switchSyncSymbol(xhrobject.status);
-
 				if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
@@ -125,6 +124,7 @@ sharing.shareLists = function()
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							sharing.shareSuccess(response);
+							console.log(response);
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
@@ -191,8 +191,6 @@ sharing.getSharedEmails = function()
 		{
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
-				switchSyncSymbol(xhrobject.status);
-
 				if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
