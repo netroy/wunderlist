@@ -46,8 +46,12 @@ $(function()
 	notes.note.hide();
 			
 	// Click on Note Icon
-	notes.noteIcons.live('click', function()
+	$('li.more span.note').live('click', function()
 	{
+		notes.noteIcons = $('li.more span.note');
+		notes.listItems = $('div#lists');
+		notes.note      = $('#note textarea');
+
 		var task_id = $(this).parent().attr('id');
 		notes.note.attr('id', task_id);
 		var noteContent = wunderlist.getNoteForTask(task_id);
@@ -69,6 +73,10 @@ $(function()
 	// Save the note
 	$('div#note input#save-note').live('click', function()
 	{
+		notes.noteIcons = $('li.more span.note');
+		notes.listItems = $('div#lists');
+		notes.note      = $('#note textarea');
+
 		var note_text = notes.note.val();
 		var task_id   = notes.note.attr('id');
 		wunderlist.saveNoteForTask(note_text, task_id);
@@ -80,6 +88,10 @@ $(function()
 	// Save the note
 	$('div#note input#cancel-note').live('click', function()
 	{
+		notes.noteIcons = $('li.more span.note');
+		notes.listItems = $('div#lists');
+		notes.note      = $('#note textarea');
+
 		var task_id   = notes.note.attr('id');
 		var noteContent = wunderlist.getNoteForTask(task_id);
 
