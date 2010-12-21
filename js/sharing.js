@@ -27,23 +27,30 @@ sharing.init = function()
         'SHARE_NOT_EXISTS': 803
     };
 
+	sharing.addedEmail = false;
+
 	// Hitting Enter on Input Field
 	$('.input-sharelist').live('keydown', function(event)
 	{
-		if(event.keyCode == 13)
+		if(sharing.addedEmail == false)
 		{
-			var shareList      = $('.sharelistusers');
-			var shareListItems = shareList.children('li');
-
-			var email = $(this).val();
-			$(this).val("");
-
-			shareList.append('<li><span></span> ' + email + '</li>');
-
-			if(shareListItems.length == 0)
+			sharing.addedEmail = true;
+			if(event.keyCode == 13)
 			{
-				shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+				var shareList      = $('.sharelistusers');
+				var shareListItems = shareList.children('li');
+
+				var email = $(this).val();
+				$(this).val("");
+
+				shareList.append('<li><span></span> ' + email + '</li>');
+
+				if(shareListItems.length == 0)
+				{
+					shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+				}
 			}
+			setTimeout(function() {sharing.addedEmail = false}, 1000);
 		}
 	});
 
