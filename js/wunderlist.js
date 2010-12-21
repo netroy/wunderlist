@@ -230,6 +230,7 @@ wunderlist.liveSearch = function(search)
 
 	if (resultSet.rowCount() > 0)
 	{
+		$("#content").prepend("<div id='listfunctions'><a class='list-print'></a><a class='list-email'></a><a class='list-cloud'></a></div>");
 		$("#content").append("<h1>"+ language.data.search_results + "</h1><ul id='list' class='mainlist search'></ul>");
 
         while(resultSet.isValidRow()) {
@@ -861,6 +862,7 @@ wunderlist.getFilteredTasks = function(type, date_type)
 	var content = $("#content");
 
 	content.html('').hide();
+	content.prepend("<div id='listfunctions'><a class='list-print'></a><a class='list-email'></a><a class='list-cloud'></a></div>");
 	content.append('<h1>' + title + '</h1><ul id="list" class="filterlist ' + listClass + '"></ul>');
 
 	var resultSet = this.database.execute(sql);

@@ -38,7 +38,7 @@ word-wrap: break-word;font-size:18px;letter-spacing:1px;color:#fff; text-shadow:
 text-align:center;margin-bottom:13px; padding-bottom:3px}
 
 #content h1 {
-margin-top:20px}
+margin-top:14px}
 
 #content h2 { font-size:14px; opacity:0.8; margin-top:25px; margin-bottom:10px}
 #content h3 { font-size:12px; opacity:0.7; text-align:center; padding-top:16px !important; margin-top:0px}
@@ -86,7 +86,7 @@ margin-top:12px;
 -webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #c8cddd;
 -webkit-border-radius:15px;
-background:#fff url(/images/searchicon_alt.png) 5% 50% no-repeat}
+background:#fff url(/images/searchicon.png) 5% 50% no-repeat}
 
 #sidebar .searchside input {
 border:none;
@@ -99,10 +99,11 @@ margin-left:5px}
 #sidebar .searchside .clearsearch {
 display:none;
 position:absolute;
+opacity:0.5;
 background:url(/icons/delete_active.png);
 position:absolute;
 right:100px;
-top:6px;
+top:4px;
 z-index:10;
 cursor:pointer;
 right:6px;
@@ -128,19 +129,19 @@ height:26px}
 
 #sidebar h3 .add { text-indent: -9999px; float:right; margin: 2px 10px 0 0; background:url(/images/addlist.png); width: 12px; height: 12px; display:block }
 
-#sidebar div.deletep { background:url(/icons/delete.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none}
-#sidebar div.deletep:hover { background:url(/icons/delete_active.png)}
+#sidebar div.deletep { background:url(/icons/delete_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; opacity:0.5}
+#sidebar div.deletep:hover {opacity:1.0}
 
-#sidebar div.editp { background:url(/icons/edit.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none}
-#sidebar div.editp:hover { background:url(/icons/edit_active.png)}
+#sidebar div.editp { background:url(/icons/edit_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; opacity:0.5}
+#sidebar div.editp:hover {opacity:1.0}
 
-#sidebar div.savep { background:url(/icons/editdone.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none}
-#sidebar div.savep:hover { background:url(/icons/editdone_active.png)}
+#sidebar div.savep { background:url(/icons/editdone_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; opacity:0.5}
+#sidebar div.savep:hover {opacity:1.0}
 
-#sidebar div.sharep { background:url(/icons/sharelist.png); cursor:pointer; margin-right:4px; width:16px; height:14px; float:right; display:none}
-#sidebar div.sharep:hover { background:url(/icons/sharelist_active.png)}
+#sidebar div.sharep { background:url(/icons/sharelist_active.png); cursor:pointer; margin-right:4px; width:16px; height:14px; float:right; display:none; opacity:0.5}
+#sidebar div.sharep:hover {opacity:1.0}
 
-#sidebar b.inbox {padding-left:24px;background:url(/icons/inbox.png) 0px left no-repeat}
+#sidebar b.inbox {padding-left:24px; background:url(/icons/inbox.png) no-repeat; background-position:0px 0px;}
 
 #sidebar .list {
 cursor:pointer;
@@ -183,7 +184,7 @@ font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
 #sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/edit_white.png)}
 #sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/icons/editdone_white.png)}
 #sidebar .ui-state-disabled div.sharep , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/sharelist_white.png)}
-#sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-image:url(/icons/inbox_white.png)}
+#sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-position:0px -14px}
 
 #sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {opacity:0.5}
 #sidebar .ui-state-disabled div:hover , #sidebar .ui-dropped-disabled div:hover {opacity:1.0}
@@ -377,18 +378,7 @@ width:35px !important;
 height:35px !important;
 background:url(/images/dragging.png) !important}
 
-#content .description {
-white-space:nowrap;
-text-overflow:ellipsis;
-overflow:hidden;
-position:absolute;
-right:110px;
-left:52px;
-top:0px;
-padding-top: 7px;
-height: 27px;
-display:block;
-color:#333}
+#content .description {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;position:absolute;right:110px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:#333}
 
 #content .showdate {position:absolute; right:50px; font-size:11px; font-weight:bold}
 
@@ -447,15 +437,15 @@ background:#c30;
 
 #content span.icon {height:14px; display:block; float:left; width:14px; margin-right:7px}
 
-#content span.delete {background:url(/icons/delete.png); float:right; display: none; cursor:pointer; height:16px}
+#content span.delete {background:url(/icons/delete_active.png); opacity:0.5; float:right; display: none; cursor:pointer; height:16px}
+#content span.delete:hover {opacity:1.0}
 
-#content span.note {
-position:absolute;right:19px;top:7px;
-background:url(/icons/note.png); float:right; display:none; cursor:pointer, height:16px; width:16px}
+#content span.note {position:absolute;right:19px;top:7px;background:url(/icons/note.png); float:right; display:none; cursor:pointer, height:16px; width:16px; opacity:0.5}
+
+#content span.note:hover {opacity:1.0}
 
 #content .mainlist li:hover span.note {display:block}
 
-#content span.hasnote {background:url(/icons/hasnote.png)}
 #content span.activenote {display:block}
 
 #content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/icons/important.png);cursor:pointer}
@@ -463,8 +453,7 @@ background:url(/icons/note.png); float:right; display:none; cursor:pointer, heig
 
 /* -- NOTE ---------------------------------------------------------------- */
 
-#note {
-width:258px;
+#note {width:258px;
 overflow-y:auto;
 overflow-x: hidden;
 position:absolute;
@@ -487,14 +476,14 @@ background:#fff}
 
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 
-#listfunctions {position:absolute; right:280px; height:17px; top:12px; z-index:999; width:81px;}
+#listfunctions {position:absolute; right:20px; height:17px; top:10px; z-index:999; width:81px}
 
-	#listfunctions a { width:17px; height:17px; background:#000; display:block; float:left; opacity:0.5; cursor:pointer; margin-left:10px;}
+	#listfunctions a { width:17px; height:17px; background:#000; display:block; float:left; opacity:0.5; cursor:pointer; margin-left:10px}
 	#listfunctions a:hover { opacity:1.0}
 
-	#listfunctions .list-print {background:url(/icons/print.png) no-repeat;}
-	#listfunctions .list-email {background:url(/icons/sendmail.png) no-repeat;}
-	#listfunctions .list-cloud {background:url(/icons/cloudapp.png) no-repeat;}
+	#listfunctions .list-print {background:url(/icons/print.png) no-repeat}
+	#listfunctions .list-email {background:url(/icons/sendmail.png) no-repeat}
+	#listfunctions .list-cloud {background:url(/icons/cloudapp.png) no-repeat}
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 
