@@ -32,18 +32,20 @@ sharing.init = function()
     };
 
 	// Hitting Enter on Input Field
-	$(".input-sharelist").live("keydown", function(event){
-		if(event.keyCode == 13) {
-
-			var shareList = $(".sharelistusers");
+	$(".input-sharelist").live("keydown", function(event)
+	{
+		if(event.keyCode == 13)
+		{
+			var shareList      = $(".sharelistusers");
 			var shareListItems = shareList.children("li");
 
 			var email = $(this).val();
 			$(this).val("");
 
-			shareList.append("<li><span></span> "+ email +"</li>");
+			shareList.append("<li><span></span> " + email + "</li>");
 
-			if(shareListItems.length == 0) {
+			if(shareListItems.length == 0)
+			{
 				shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
 			}
 		}
@@ -84,6 +86,7 @@ sharing.init = function()
 	$('div#sharebox input#send_invitation').live('click', function()
 	{
 		sharing.shareLists();
+		sharing.getSharedEmails();
 		closeDialog(sharing.shareListDialog);
 	});
 }
@@ -97,7 +100,7 @@ sharing.shareLists = function()
 {
 	list_id              = $('div#lists a.ui-state-disabled').attr('id');
 	var data             = {};
-	var user_credentials = wunderlist.getUserCredentials();
+	user_credentials     = wunderlist.getUserCredentials();
 	data['email']        = user_credentials['email'];
 	data['password']     = user_credentials['password'];
 	data['list_id']      = wunderlist.getOnlineIdByListId(list_id);
@@ -171,10 +174,10 @@ sharing.shareSuccess = function(response)
  */
 sharing.getSharedEmails = function()
 {
-	var data             = {};
-	var user_credentials = wunderlist.getUserCredentials();
-	data['email']        = user_credentials['email'];
-	data['password']     = user_credentials['password'];
+	var data         = {};
+	user_credentials = wunderlist.getUserCredentials();
+	data['email']    = user_credentials['email'];
+	data['password'] = user_credentials['password'];
 
 	list_id  = $('div#lists a.ui-state-disabled').attr('id');
 	list_id  = wunderlist.getOnlineIdByListId(list_id);
@@ -202,6 +205,7 @@ sharing.getSharedEmails = function()
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							// @TODO FILL DIALOG WITH EMAIL ADDRESSES
+							console.log(response);
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:

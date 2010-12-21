@@ -106,7 +106,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 	{
 		// SYNC STEP 1
 		var data = {};
-		var user_credentials			= wunderlist.getUserCredentials();
+		user_credentials			    = wunderlist.getUserCredentials();
 		data['email']					= user_credentials['email'];
 		data['password']				= user_credentials['password'];
 		data['step']					= 1;
