@@ -52,11 +52,19 @@ $(function()
 	// Click on Note Icon
 	$('li.more span.note').live('click', function()
 	{
+		if(sidebar_opened_status == "false") {
+			$(".togglesidebar").css("-webkit-transform","rotate(0deg)");
+			$("#sidebar").stop().animate({right: '0'});
+			$("#lists").stop().animate({right: '0'});
+			$("#content").stop().animate({right: '259'});
+			sidebar_opened_status = "true";
+		}
+		
 		notes.noteIcons = $('li.more span.note');
 		notes.listItems = $('div#lists');
 		notes.note      = $('#note textarea');
 		notes.cellotape = $('#cellotape');
-
+		
 		var task_id = $(this).parent().attr('id');
 		notes.note.attr('id', task_id);
 		var noteContent = wunderlist.getNoteForTask(task_id);
