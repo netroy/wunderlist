@@ -16,7 +16,7 @@ var sharing = sharing || {};
 sharing.init = function()
 {
 	sharing.shareUrl        = 'http://192.168.178.58/share';//'https://sync.wunderlist.net/share';
-	sharing.sharedEmailsUrl = 'http://192.168.178.58/share/%s/emails';//'https://sync.wunderlist.net/share/%s/emails';
+	sharing.sharedEmailsUrl = 'http://192.168.178.58/share/emails';//'https://sync.wunderlist.net/share/emails';
 	sharing.shareListDialog = null;
 
 	sharing.status_codes =
@@ -24,7 +24,8 @@ sharing.init = function()
         'SHARE_SUCCESS':    800,
         'SHARE_FAILURE':    801,
         'SHARE_DENIED':     802,
-        'SHARE_NOT_EXISTS': 803
+        'SHARE_NOT_EXISTS': 803,
+		'SHARE_NOT_SHARED': 804
     };
 
 	sharing.addedEmail = false;
@@ -41,7 +42,7 @@ sharing.init = function()
 	});
 
 	// Called on pressed sharing button
-	$('div#lists a div.sharep').click(function()
+	$('div#lists a div.sharep').live('click', function()
 	{
 		if(Titanium.Network.online == true)
 		{
@@ -49,18 +50,6 @@ sharing.init = function()
 
 			var list_id        = $(this).parent().attr('id');
 			var emails         = sharing.getSharedEmails(list_id);
-			var shareList      = $('.sharelistusers');
-			var shareListItems = shareList.children('li');
-
-			$.each(emails, function(key, value)
-			{
-				shareList.append('<li><span></span> ' + $.trim(email) + '</li>');
-
-				if(shareListItems.length == 0)
-				{
-					shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
-				}
-			});
 		}
 		else
 		{
@@ -69,15 +58,15 @@ sharing.init = function()
 	});
 
 	// Delete Button for remove Sharing for a single E-Mail
-	$(".dialog-sharelist li span").live("click", function()
+	$('.dialog-sharelist li span').live('click', function()
 	{
 		$(this).parent().remove();
 		
-		var shareListItems = $(".sharelistusers").children("li");
+		var shareListItems = $('.sharelistusers').children('li');
 		
 		if(shareListItems.length == 0)
 		{
-			$("p.invitedpeople").remove();
+			$('p.invitedpeople').remove();
 		}
 	});
 
@@ -171,7 +160,6 @@ sharing.sendSharedList = function(list_id)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							showOKDialog(language.data.shared_successfully);
-							console.log(response);
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
@@ -207,15 +195,16 @@ sharing.sendSharedList = function(list_id)
  */
 sharing.getSharedEmails = function(list_id)
 {
+	list_id          = wunderlist.getOnlineIdByListId(list_id);
+
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
 	data['email']    = user_credentials['email'];
 	data['password'] = user_credentials['password'];
-	list_id          = wunderlist.getOnlineIdByListId(list_id);
-	emailUrl         = sharing.sharedEmailsUrl.split('%s').join(list_id);
+	data['list_id']  = list_id;
 
 	$.ajax({
-		url: emailUrl,
+		url: sharing.sharedEmailsUrl,
 		type: 'POST',
 		data: data,
 		beforeSend: function()
@@ -233,8 +222,23 @@ sharing.getSharedEmails = function(list_id)
 					switch(response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
-							// @TODO FILL DIALOG WITH EMAIL ADDRESSES
-							console.log(response);
+							var shareList      = $('.sharelistusers');
+							$('.invitedpeople').remove();
+							var shareListItems = shareList.children('li');
+							shareListItems.remove();
+
+							if(response.emails != undefined && response.emails.length > 0)
+							{
+								for(value in response.emails)
+								{
+									shareList.append('<li><span></span> ' + $.trim(response.emails[value]) + '</li>');
+
+									if(shareListItems.length == 0)
+									{
+										shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+									}
+								}
+							}
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
@@ -247,6 +251,13 @@ sharing.getSharedEmails = function(list_id)
 
 						case sharing.status_codes.SHARE_NOT_EXIST:
 							showErrorDialog(language.data.sync_not_exist);
+							break;
+
+						case sharing.status_codes.SHARE_NOT_SHARED:
+							var shareList = $('.sharelistusers');
+							$('.invitedpeople').remove();
+							var shareListItems = shareList.children('li');
+							shareListItems.remove();
 							break;
 
 						default:

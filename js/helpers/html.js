@@ -126,6 +126,7 @@ function generateNewListElementHTML(listId, listElementName, listElementInputCla
 
 	var html  = "<a id='" + listId + "' class='list sortablelist'>";
     	html += "<span>0</span>";
+		html += "<div class='sharep'></div>";
     	html += "<div class='deletep'></div>";
     	html += "<div class='savep'></div>";
     	html += "<div class='editp'></div>";
