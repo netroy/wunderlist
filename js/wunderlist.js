@@ -11,6 +11,9 @@ $(function()
 	sharing.init();
 	notifications.init();
 	share.init();
+	
+	// Start the neccessary updates
+	//updater.init();
 });
 
 /**
@@ -41,12 +44,20 @@ wunderlist.initDatabase = function()
 		this.database.execute(sql);
 		Titanium.App.Properties.setString('prefinal_first_run', '1');
 	}
-	// @TODO Write update function for database - Set notes to default '' - add shared value - add recurring and recurring interval
-
-	this.database.execute("CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, inbox INTEGER DEFAULT 0, shared INTEGER DEFAULT 0)");
+	
+	this.database.execute("CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, inbox INTEGER DEFAULT 0)");
 	// recurring INTEGER DEFAULT 0, recurring_interval INTEGER DEFAULT 0,
 	this.database.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, list_id TEXT, note TEXT DEFAULT '', date INTEGER DEFAULT 0, done_date INTEGER DEFAULT 0, done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0)");
 }
+
+/**
+ * Is needed for the new update (shared lists) 17.12.2010
+ *
+ * @author Daniel Marschner
+ */
+wunderlist.update_110 = function() {
+	this.database.execute('ALTER TABLE "main"."lists" ADD COLUMN "shared" INTEGER DEFAULT 0');
+};
 
 /**
  * Creates the standard database calls
@@ -703,7 +714,7 @@ wunderlist.updateListByOnlineId = function(id, name, deleted, position, version,
  */
 wunderlist.createListByOnlineId = function(id, name, deleted, position, version, inbox, shared)
 {
-	this.database.execute("INSERT INTO lists (online_id, name, deleted, position, version, inbox) VALUES(?, ?, ?, ?, ?, ?, ?) ", id, name, deleted, position, version, inbox, shared);
+	this.database.execute("INSERT INTO lists (online_id, name, deleted, position, version, inbox, shared) VALUES(?, ?, ?, ?, ?, ?, ?) ", id, name, deleted, position, version, inbox, shared);
 }
 
 /**

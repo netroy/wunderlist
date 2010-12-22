@@ -8,6 +8,10 @@ p.pwd { padding:2px 0px 12px 8px; clear:both; float:left; margin-top:-18px}
 
 a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important; float:right}
 
+#newsletter-signup { float: right; width: 300px; margin-top: 8px; }
+#newsletter-signup input { float: right; margin-right: 5px; }
+#newsletter-signup span { float: right; }
+
 #account-buttons { height: 135px; }
 #account-buttons #account-loader { display: none; position: absolute; z-index: 100; bottom: 25px; right: 140px; }
 
@@ -38,16 +42,16 @@ background:-webkit-gradient(linear, left center, right center, from(#d0d0d0), to
 .ui-dialog-titlebar-close:hover,  .ui-datepicker-prev:hover, .ui-datepicker-next:hover  {
 border:1px solid #ddd !important; background:#ccc; -webkit-border-radius:3px; cursor:pointer}
 
-.wunderlistlogo {width:139px;height:139px;background:url(/images/wunderlisticon.png); float:left;margin-top:-2px;margin-left:-10px}
+.wunderlistlogo {width:139px;height:139px;background:url(/images/wunderlisticon.png); float:left;margin-top:-6px;margin-left:-10px}
 
-.input-login {padding:8px;float:right;display:block;width:282px;margin-top:12px !important;-webkit-box-shadow:0px 1px 1px #fff;
+.input-login {padding:8px;float:right;display:block;width:282px;margin-top:8px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
 
 .input-normal {padding:8px;display:block;width:282px;margin-top:12px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
 
 .input-button, button {background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ececec)) !important;
-color:#333;-webkit-box-shadow:0px 1px 3px #999;border:1px solid #9c9ea4;padding:5px 6px;text-shadow:1px 1px 1px #fff;-webkit-border-radius:4px;margin:12px 0px 0px 12px;float:right;cursor:pointer}
+color:#333;-webkit-box-shadow:0px 1px 3px #999;border:1px solid #9c9ea4;padding:5px 6px;text-shadow:1px 1px 1px #fff;-webkit-border-radius:4px;margin:8px 0px 0px 8px;float:right;cursor:pointer}
 
 .input-button:hover, button:hover {
 -webkit-box-shadow:0px 1px 3px #666;

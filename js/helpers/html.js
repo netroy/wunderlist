@@ -23,6 +23,9 @@ function generateLoginRegisterDialogHTML()
 		'<div class="wunderlistlogo"></div>' +
 		'<input class="input-login" type="text" id="login-email" name="email" placeholder="' + language.data.email + '" />' +
 		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + language.data.password + '" />' +
+		'<div id="newsletter-signup">'+
+		'<span>' + language.data.newsletter + '</span><input type="checkbox" name="login-newsletter" id="login-newsletter" value="1" checked="checked" />' +
+		'</div>'+
 		'<div id="account-buttons">'+
 		'<input class="input-button register button-login" type="submit" id="loginsubmit" value="' + language.data.login + '" />' +
 		'<input class="input-button register" type="submit" id="registersubmit" value="' + language.data.register + '" />' +
@@ -238,6 +241,15 @@ function strip_tags (input, allowed)
 		return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
 	});
 }
+
+/**
+ * Replace the search string with the given string
+ *
+ * @author Daniel Marschner
+ */
+str_replace = function(search, replace, subject) {
+	return subject.split(search).join(replace);
+};
 
 /**
  * Removes HTML tags and escapes single quotes

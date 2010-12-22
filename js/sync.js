@@ -19,7 +19,7 @@ $(function()
  */
 sync.init = function()
 {
-	this.syncDomain 		= 'http://192.168.178.58/1.1.0';//'https://sync.wunderlist.net';
+	this.syncDomain 		= 'http://192.168.178.58/1.1.0';
 	this.syncUrl			= this.syncDomain;
 	this.alreadyRegistered 	= false;
 	this.timeOutInterval 	= '';
@@ -80,6 +80,15 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 		exitAfterSync = false;
 	}
 	
+	if (Titanium.Network.online == false)
+	{
+		if(logOutAfterSync == true)
+		{
+			sync.isSyncing = false;
+			account.logout();
+		}
+	}
+	
 	if(wunderlist.isUserLoggedIn() == false)
 	{
 		setTimeout(stopSyncAnimation, 10);
@@ -128,6 +137,8 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 			},
 			success: function(response_data, text, xhrobject)
 			{
+				console.log(response_data);
+				
 				if(response_data != '' && text != '' && xhrobject != undefined)
 				{
 					switchSyncSymbol(xhrobject.status);
@@ -180,6 +191,12 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 				sync.isSyncing = false;
 			}
 		});
+		
+		if(syncSuccessful == false && logOutAfterSync == true)
+		{
+			sync.isSyncing = false;
+			account.logout();
+		}
 	}
 
 	// Create a timeout interval, if not already created

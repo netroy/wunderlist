@@ -8,7 +8,7 @@ var delete_account_dialog;
 var logging_in = false;
 
 account.init = function() {
-	this.syncDomain 	   = 'http://192.168.178.58';//'https://sync.wunderlist.net';
+	this.syncDomain 	   = 'http://192.168.178.58';
 	this.registerUrl       = this.syncDomain + '/register';
 	this.loginUrl          = this.syncDomain + '/login';
 	this.forgotPasswordUrl = this.syncDomain + '/password';
@@ -337,14 +337,19 @@ account.forgotpw = function()
  */
 account.register = function(onlyRegister)
 {
-	if(onlyRegister == undefined)
+	if (onlyRegister == undefined)
 		onlyRegister = false;
 
 	var data = {};
-	data['email'] 		= $('input#login-email').val().toLowerCase();
-	data['password'] 	= $.md5($('input#login-password').val());
+	data['email']    = $('input#login-email').val().toLowerCase();
+	data['password'] = $.md5($('input#login-password').val());
+	
+	var newsletter = parseInt($('input#login-newsletter').val());
+	
+	if (newsletter == 1)
+		data['newsletter'] = newsletter;
 
-	if(sync.validateEmail(data['email']))
+	if (sync.validateEmail(data['email']))
 	{
 		if($('input#login-password').val() == '')
 		{
