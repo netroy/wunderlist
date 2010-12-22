@@ -703,7 +703,7 @@ wunderlist.updateListByOnlineId = function(id, name, deleted, position, version,
  */
 wunderlist.createListByOnlineId = function(id, name, deleted, position, version, inbox, shared)
 {
-	this.database.execute("INSERT INTO lists (online_id, name, deleted, position, version, inbox) VALUES(?, ?, ?, ?, ?, ?, ?) ", id, name, deleted, position, version, inbox, shared);
+	this.database.execute("INSERT INTO lists (online_id, name, deleted, position, version, inbox, shared) VALUES(?, ?, ?, ?, ?, ?, ?) ", id, name, deleted, position, version, inbox, shared);
 }
 
 /**
