@@ -456,7 +456,8 @@ background:#c30;
 
 /* -- NOTE ---------------------------------------------------------------- */
 
-#note {width:258px;
+#note {
+width:258px;
 overflow-y:auto;
 overflow-x: hidden;
 position:absolute;
@@ -466,28 +467,28 @@ top:59px}
 
 #note textarea {
 position:absolute;
-bottom:6px;
+bottom:36px;
 top:6px;
+background:url("/images/notebg.png");
+-webkit-box-shadow:0px 2px 4px #ccc;
+font-weight:bold;
+font-family: "Comic Sans MS", Arial, Sans-Serif;
 right:0px;
-width:88%;
+width:76%;
 height:auto;
-margin:10px 3%;
-padding:6px 3%;
-border:none;
-border-top:1px solid #ddd;
-background:#fff}
+border:4px solid #fff;
+margin:10px 7%;
+padding:10px 5%;
+color:#555;
+font-size:12px}
 
-#note input {
-position: absolute;
-right: 200px;
-bottom: 40px;
-display: none}
 
-#note input#save-note {
-right: 200px}
+/* Save And Cancel Button */
 
-#note input#cancel-note {
-right: 40px}
+#note a {position: absolute;display: none; border:none; opacity:0.8; bottom:20px; width:59px; height:13px}
+#note a:hover {opacity:1.0; cursor:pointer}
+#note a#save-note {background:url(/images/note-save.png);right: 10px}
+#note a#cancel-note {background:url(/images/note-cancel.png);right: 90px; bottom:21px;}
 
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 

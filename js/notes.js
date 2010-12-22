@@ -17,8 +17,8 @@ notes.hideNoteElements = function()
 {
 	notes.listItems.toggle();
 	notes.note.toggle();
-	$('div#note input#cancel-note').hide();
-	$('div#note input#save-note').hide();
+	$('div#note a#cancel-note').hide();
+	$('div#note a#save-note').hide();
 }
 
 /**
@@ -31,8 +31,8 @@ notes.showNoteElements = function()
 	notes.listItems.hide();
 	notes.note.show();
 	notes.noteIcons.removeClass("activenote");
-	$('div#note input#cancel-note').show();
-	$('div#note input#save-note').show();
+	$('div#note a#cancel-note').show();
+	$('div#note a#save-note').show();
 }
 
 // Loaded on start
@@ -71,7 +71,7 @@ $(function()
 	});
 
 	// Save the note
-	$('div#note input#save-note').live('click', function()
+	$('div#note a#save-note').live('click', function()
 	{
 		notes.noteIcons = $('li.more span.note');
 		notes.listItems = $('div#lists');
@@ -88,7 +88,7 @@ $(function()
 	});
 
 	// Save the note
-	$('div#note input#cancel-note').live('click', function()
+	$('div#note a#cancel-note').live('click', function()
 	{
 		notes.noteIcons = $('li.more span.note');
 		notes.listItems = $('div#lists');
@@ -118,7 +118,7 @@ $(function()
 		if(($('#note textarea:focus').length == 1 || $('#note textarea').css('display') == 'block') && saveNoteCommand == false)
 		{
 			saveNoteCommand = true;
-			$('div#note input#save-note').click();
+			$('div#note a#save-note').click();
 			setTimeout(function() {saveNoteCommand = false}, 1000);
 		}
 	});

@@ -74,7 +74,7 @@ $(document).ready(function() {
 			}
 			else if($('#note textarea:focus').length == 1 || $('#note textarea').css('display') == 'block')
 			{
-				$('div#note input#cancel-note').click();
+				$('div#note a#cancel-note').click();
 			}
 			else
 			{
