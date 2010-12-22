@@ -61,11 +61,11 @@ sharing.init = function()
 				$('.invitedpeople').remove();
 
 				var list_id = $(this).parent().attr('id');
+				sharing.deletedMails = new Array();
 
 				// Only request shared emails, if list is already shared
 				if(wunderlist.listIsAlreadyShared(list_id) == true)
 				{
-					sharing.deletedMails = new Array();
 					sharing.getSharedEmails(list_id);
 				}
 				else
@@ -90,15 +90,12 @@ sharing.init = function()
 		if(sharing.deletedEmail == false)
 		{
 			sharing.deletedEmail = true;
-			
-			$(this).parent().remove();
 
 			var shareListItems = $('.sharelistusers').children('li');
+			var email          = $.trim($(this).parent().text());
 
-			var email = $(this).parent().text();
+			$(this).parent().remove();
 			sharing.deletedMails.push(email);
-
-			console.log(sharing.deletedMails);
 
 			if(shareListItems.length == 0)
 			{
@@ -177,7 +174,7 @@ sharing.sendSharedList = function(list_id)
 	data['password'] = user_credentials['password'];
 	data['list_id']  = wunderlist.getOnlineIdByListId(list_id);
 	data['add']	     = collected_emails;
-	data['delete']   = new Array();
+	data['delete']   = sharing.deletedMails;
 
 	$.ajax({
 		url: sharing.shareUrl,

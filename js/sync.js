@@ -365,9 +365,6 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 
 			sync.notifyListnames = {};
 
-			console.log(sync_table_step1.new_lists);
-			console.log(sync_table_step1.new_tasks);
-
 			// Notifications for received new lists
 			if(sync_table_step1.new_lists != undefined && sync_table_step1.new_lists.length > 0)
 			{
