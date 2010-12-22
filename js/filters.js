@@ -80,6 +80,7 @@ filters.updateBadges = function() {
 		$('#left a#today span').text(todaycount);
 		$('#left a#today span').fadeOut('fast').fadeIn('fast');
 		$("#lists").css("bottom","74px");
+		$("#note").css("bottom","74px");
 	}
 
 	if(overduecount > 1)
@@ -87,18 +88,21 @@ filters.updateBadges = function() {
 		overdue_text = overduecount + ' ' + language.data.overdue_text_pl;
 		$('div#sidebar div#notification').fadeIn('fast');
 		$("#lists").css("bottom","74px");
+		$("#note").css("bottom","74px");
 	}
 	else if(overduecount == 1)
 	{
 		overdue_text = overduecount + ' ' + language.data.overdue_text_sl;
 		$('div#sidebar div#notification').fadeIn('fast');
 		$("#lists").css("bottom","74px");
+		$("#note").css("bottom","74px");
 	}
 	else
 	{
 		overdue_text = '';
 		$('div#sidebar div#notification').fadeOut('fast');
 		$("#lists").css("bottom","36px");
+		$("#note").css("bottom","36px");
 	}
 
 	if(overdue_has_no_badge)
