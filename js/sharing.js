@@ -55,7 +55,6 @@ sharing.init = function()
 			if(sharing.clickedSharingButton == false)
 			{
 				sharing.clickedSharingButton = true;
-				sharing.openShareListDialog();
 
 				var shareList      = $('.sharelistusers');
 				shareList.empty();
@@ -68,6 +67,10 @@ sharing.init = function()
 				{
 					sharing.deletedMails = new Array();
 					sharing.getSharedEmails(list_id);
+				}
+				else
+				{
+					sharing.openShareListDialog();
 				}
 
 				setTimeout(function() {sharing.clickedSharingButton = false}, 1000);
@@ -249,6 +252,8 @@ sharing.getSharedEmails = function(list_id)
 					switch(response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
+							sharing.openShareListDialog();
+
 							var shareList      = $('.sharelistusers');
 							var shareListItems = shareList.children('li');
 							shareListItems = shareList.children('li');
