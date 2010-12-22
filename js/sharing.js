@@ -15,8 +15,8 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl        = 'https://sync.wunderlist.net/share';
-	sharing.sharedEmailsUrl = 'https://sync.wunderlist.net/share/%s/emails';
+	sharing.shareUrl        = 'http://192.168.178.58/share';//'https://sync.wunderlist.net/share';
+	sharing.sharedEmailsUrl = 'http://192.168.178.58/share/%s/emails';//'https://sync.wunderlist.net/share/%s/emails';
 	sharing.shareListDialog = null;
 
 	sharing.status_codes =
