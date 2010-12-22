@@ -82,21 +82,30 @@ sharing.init = function()
 		}
 	});
 
+	sharing.deletedEmail = false;
+
 	// Delete Button for remove Sharing for a single E-Mail
 	$('.dialog-sharelist li span').live('click', function()
 	{
-		$(this).parent().remove();
-		
-		var shareListItems = $('.sharelistusers').children('li');
-
-		var email = $(this).parent().text();
-		sharing.deletedMails.push(email);
-
-		console.log(sharing.deletedMails);
-
-		if(shareListItems.length == 0)
+		if(sharing.deletedEmail == false)
 		{
-			$('p.invitedpeople').remove();
+			sharing.deletedEmail = true;
+			
+			$(this).parent().remove();
+
+			var shareListItems = $('.sharelistusers').children('li');
+
+			var email = $(this).parent().text();
+			sharing.deletedMails.push(email);
+
+			console.log(sharing.deletedMails);
+
+			if(shareListItems.length == 0)
+			{
+				$('p.invitedpeople').remove();
+			}
+
+			setTimeout(function() {sharing.deletedEmail = false}, 1000)
 		}
 	});
 

@@ -363,6 +363,11 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 				account.loadInterface();
 			}
 
+			sync.notifyListnames = {};
+
+			console.log(sync_table_step1.new_lists);
+			console.log(sync_table_step1.new_tasks);
+
 			// Notifications for received new lists
 			if(sync_table_step1.new_lists != undefined && sync_table_step1.new_lists.length > 0)
 			{
@@ -374,6 +379,16 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 			{
 				sync.showSyncNotification(sync_table_step1.new_tasks, 'tasks');
 			}
+
+			var message = '';
+			
+			// Show Notifications
+			$.each(sync.notifyListnames, function(key, item)
+			{
+				message += 'Updated the list "' + unescape(item) + '"\n';
+			});
+
+			notifications.createNotification('Successfully synced your data', message);
 		}
 	}
 
@@ -399,29 +414,21 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
  */
 sync.showSyncNotification = function(data, type)
 {
-	var list_names = {};
-
 	if(type == 'lists')
 	{
 		$.each(data, function(key, item)
 		{
-			list_names[item.name] = item.name;
+			sync.notifyListnames[item.name] = item.name;
 		});
 	}
 	else
 	{
 		$.each(data, function(key, item)
 		{
-			console.log(item.list_id);
-			list_names[item.list_id] = wunderlist.getListNameById(item.list_id);
+			var list_name = wunderlist.getListNameById(item.list_id);
+			sync.notifyListnames[list_name] = list_name;
 		});
 	}
-
-	$.each(list_names, function(key, item)
-	{
-		var message = 'Updated the list ' + item;
-		notifications.createNotification('Successfully synced your data', message);
-	});
 }
 
 /**
