@@ -142,7 +142,10 @@ function saveList(listElement)
 
     listElementInput.remove();
 
-	html = '<b>' + unescape(listElementName) + '</b>';
+	if(listElement.attr('id') == 1)
+		html = '<b class="inbox">' + unescape(listElementName) + '</b>';
+	else
+		html = '<b>' + unescape(listElementName) + '</b>';
 
 	listElement.children('.savep').hide();
 	listElement.children('.deletep').hide();

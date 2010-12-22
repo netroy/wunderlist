@@ -33,11 +33,14 @@ sharing.init = function()
 	// Hitting Enter on Input Field
 	$('.input-sharelist').live('keydown', function(event)
 	{
-		if(sharing.addedEmail == false)
+		if(event.keyCode == 29)
 		{
-			sharing.addedEmail = true;
-			$('#send_share_invitation').click();
-			setTimeout(function() {sharing.addedEmail = false}, 1000);
+			if(sharing.addedEmail == false)
+			{
+				sharing.addedEmail = true;
+				$('#send_share_invitation').click();
+				setTimeout(function() {sharing.addedEmail = false}, 1000);
+			}
 		}
 	});
 
@@ -49,7 +52,12 @@ sharing.init = function()
 			sharing.openShareListDialog();
 
 			var list_id        = $(this).parent().attr('id');
-			var emails         = sharing.getSharedEmails(list_id);
+
+			// Only request shared emails, if list is already shared
+			if(wunderlist.listIsAlreadyShared(list_id) == true)
+			{
+				sharing.getSharedEmails(list_id);
+			}
 		}
 		else
 		{
