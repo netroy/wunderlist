@@ -35,21 +35,7 @@ sharing.init = function()
 		if(sharing.addedEmail == false)
 		{
 			sharing.addedEmail = true;
-			if(event.keyCode == 13)
-			{
-				var shareList      = $('.sharelistusers');
-				var shareListItems = shareList.children('li');
-
-				var email = $(this).val();
-				$(this).val("");
-
-				shareList.append('<li><span></span> ' + email + '</li>');
-
-				if(shareListItems.length == 0)
-				{
-					shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
-				}
-			}
+			$('#send_share_invitation').click();
 			setTimeout(function() {sharing.addedEmail = false}, 1000);
 		}
 	});
@@ -60,17 +46,26 @@ sharing.init = function()
 		if(Titanium.Network.online == true)
 		{
 			sharing.openShareListDialog();
+
+			var list_id        = $(this).parent().attr('id');
+			var emails         = sharing.getSharedEmails(list_id);
+			var shareList      = $('.sharelistusers');
+			var shareListItems = shareList.children('li');
+
+			$.each(emails, function(key, value)
+			{
+				shareList.append('<li><span></span> ' + $.trim(email) + '</li>');
+
+				if(shareListItems.length == 0)
+				{
+					shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+				}
+			});
 		}
 		else
 		{
 			sharing.openNoInternetShareDialog();
 		}
-	});
-
-	// Open Share Dialog
-	$(".sharep").click(function()
-	{
-		sharing.openShareListDialog();
 	});
 
 	// Delete Button for remove Sharing for a single E-Mail
@@ -95,7 +90,6 @@ sharing.init = function()
 		{
 			sharing.sendInvitation = true;
 			sharing.shareLists();
-			//sharing.getSharedEmails();
 			closeDialog(sharing.shareListDialog);
 			
 			setTimeout(function() {sharing.sendInvitation = false}, 5000);
@@ -131,15 +125,23 @@ sharing.shareLists = function()
  */
 sharing.sendSharedList = function(list_id)
 {
-	var $emails          = $('.sharelistusers li');
 	var collected_emails = new Array();
+	var emails           = $('#share-list-email').val().split(',');
 
 	// Collect the entered emails
-	$emails.each(function(key, value)
+	for(value in emails)
 	{
-		var email = $.trim($(value).text());
-		collected_emails.push(email);
-	});
+		var email = $.trim(emails[value]);
+		if(sync.validateEmail(email))
+		{
+			collected_emails.push(email);
+		}
+		else
+		{
+			showErrorDialog(language.data.invalid_email);
+			return false;
+		}
+	}
 
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
@@ -203,16 +205,14 @@ sharing.sendSharedList = function(list_id)
  *
  * @author Dennis Schneider
  */
-sharing.getSharedEmails = function()
+sharing.getSharedEmails = function(list_id)
 {
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
 	data['email']    = user_credentials['email'];
 	data['password'] = user_credentials['password'];
-
-	list_id  = $('div#lists a.ui-state-disabled').attr('id');
-	list_id  = wunderlist.getOnlineIdByListId(list_id);
-	emailUrl = sharing.sharedEmailsUrl.split('%s').join(list_id);
+	list_id          = wunderlist.getOnlineIdByListId(list_id);
+	emailUrl         = sharing.sharedEmailsUrl.split('%s').join(list_id);
 
 	$.ajax({
 		url: emailUrl,
