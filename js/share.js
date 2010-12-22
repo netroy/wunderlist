@@ -183,6 +183,11 @@ share.print = function()
 		template = template.replace(/####TASKS####/g, html);
 
 		file.write(template);
+		
+		if (os == 'darwin')
+			var file_url = 'file://';
+		else
+			var file_url = 'file:///';
 
 		Titanium.Desktop.openURL('file://' + encodeURI(file));
 	}
