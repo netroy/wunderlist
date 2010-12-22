@@ -5,7 +5,7 @@
  */
 function generateShareListDialogHTML()
 {
-	html =  '<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" value="' + language.data.invite_email + '" />' +
+	html =  '<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
 			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
 

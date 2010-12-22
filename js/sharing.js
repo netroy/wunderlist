@@ -35,21 +35,7 @@ sharing.init = function()
 		if(sharing.addedEmail == false)
 		{
 			sharing.addedEmail = true;
-			if(event.keyCode == 13)
-			{
-				var shareList      = $('.sharelistusers');
-				var shareListItems = shareList.children('li');
-
-				var email = $(this).val();
-				$(this).val("");
-
-				shareList.append('<li><span></span> ' + email + '</li>');
-
-				if(shareListItems.length == 0)
-				{
-					shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
-				}
-			}
+			$('#send_share_invitation').click();
 			setTimeout(function() {sharing.addedEmail = false}, 1000);
 		}
 	});
@@ -60,17 +46,26 @@ sharing.init = function()
 		if(Titanium.Network.online == true)
 		{
 			sharing.openShareListDialog();
+
+			var list_id        = $(this).parent().attr('id');
+			var emails         = sharing.getSharedEmails(list_id);
+			var shareList      = $('.sharelistusers');
+			var shareListItems = shareList.children('li');
+
+			$.each(emails, function(key, value)
+			{
+				shareList.append('<li><span></span> ' + $.trim(email) + '</li>');
+
+				if(shareListItems.length == 0)
+				{
+					shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+				}
+			});
 		}
 		else
 		{
 			sharing.openNoInternetShareDialog();
 		}
-	});
-
-	// Open Share Dialog
-	$(".sharep").click(function()
-	{
-		sharing.openShareListDialog();
 	});
 
 	// Delete Button for remove Sharing for a single E-Mail
@@ -95,7 +90,6 @@ sharing.init = function()
 		{
 			sharing.sendInvitation = true;
 			sharing.shareLists();
-			//sharing.getSharedEmails();
 			closeDialog(sharing.shareListDialog);
 			
 			setTimeout(function() {sharing.sendInvitation = false}, 5000);
@@ -104,21 +98,50 @@ sharing.init = function()
 }
 
 /**
- * Share the list to the given emails
+ * Check if the list is already shared, then share the list
  *
  * @author Dennis Schneider
  */
 sharing.shareLists = function()
 {
-	list_id              = $('div#lists a.ui-state-disabled').attr('id');
-	var $emails          = $('.sharelistusers li');
-	var collected_emails = new Array();
-
-	$emails.each(function(key, value)
+	list_id = $('div#lists a.ui-state-disabled').attr('id');
+	
+	// If list is not shared, set it to shared and sync it
+	if(wunderlist.listIsAlreadyShared(list_id) == false)
 	{
-		var email = $.trim($(value).text());
-		collected_emails.push(email);
-	});
+		wunderlist.setListToShared(list_id);
+		sync.fireSync(false, false, list_id);
+	}
+	else
+	{
+		sharing.sendSharedList(list_id);
+	}
+}
+
+/**
+ * Collect the entered emails and share the list
+ *
+ * @author Dennis Schneider
+ */
+sharing.sendSharedList = function(list_id)
+{
+	var collected_emails = new Array();
+	var emails           = $('#share-list-email').val().split(',');
+
+	// Collect the entered emails
+	for(value in emails)
+	{
+		var email = $.trim(emails[value]);
+		if(sync.validateEmail(email))
+		{
+			collected_emails.push(email);
+		}
+		else
+		{
+			showErrorDialog(language.data.invalid_email);
+			return false;
+		}
+	}
 
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
@@ -134,11 +157,10 @@ sharing.shareLists = function()
 		data: data,
 		beforeSend: function()
 		{
-			// Show loading indicator on invitation dialog
+			// @TODO Show loading indicator on invitation dialog
 		},
 		success: function(response_data, text, xhrobject)
 		{
-			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -148,7 +170,7 @@ sharing.shareLists = function()
 					switch(response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
-							sharing.shareSuccess(response);
+							showOKDialog(language.data.shared_successfully);
 							console.log(response);
 							break;
 
@@ -179,30 +201,18 @@ sharing.shareLists = function()
 }
 
 /**
- * When the sharing request was successful
- *
- * @author Dennis Schneider
- */
-sharing.shareSuccess = function(response)
-{
-	// Do stuff with the response
-}
-
-/**
  * Get the emails for the shared list from the server
  *
  * @author Dennis Schneider
  */
-sharing.getSharedEmails = function()
+sharing.getSharedEmails = function(list_id)
 {
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
 	data['email']    = user_credentials['email'];
 	data['password'] = user_credentials['password'];
-
-	list_id  = $('div#lists a.ui-state-disabled').attr('id');
-	list_id  = wunderlist.getOnlineIdByListId(list_id);
-	emailUrl = sharing.sharedEmailsUrl.split('%s').join(list_id);
+	list_id          = wunderlist.getOnlineIdByListId(list_id);
+	emailUrl         = sharing.sharedEmailsUrl.split('%s').join(list_id);
 
 	$.ajax({
 		url: emailUrl,
