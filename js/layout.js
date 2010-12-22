@@ -16,17 +16,34 @@ var syncShortcutListener = 0;
 
 // Tooltip
 tooltip = function() {
-	$("a.more, span.more").hover(function(e) {
+	$("a.more, span.more, #listfunctions a").live("mouseenter", function(e) {
 		var content = $(this).attr("rel");
 		var offset = $(this).offset();
 		var width = $(this).width();
 
-		if($(this).attr("id") == "all"){width = "-4";};
-		if($(this).attr("id") == "sync"){width = "4";};
+		// if($(this).attr("id") == "all"){width = "-4";}
 
 		$("body").append("<p id='tooltip'>"+ content +"</p>");
-		$("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-width/2) + "px").fadeIn("fast");
-	}, function(){
+		
+		var tipWidth = $("#tooltip").width();
+		if($(this).attr("id") == "sync"){tipWidth = "36";}
+
+		$("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-tipWidth/2) + "px").fadeIn("fast");
+				
+		if($(this).parent().attr("id") == "listfunctions") {
+			$("#tooltip").css("top",(offset.top+25));
+		}
+		
+		if ($("#cloudtip:visible").length == 1 && $(this).parent().attr("id") == "listfunctions") {
+			$("#tooltip").hide();
+		}
+		
+		if($(this).parent().attr("id") == "left") {
+			$("#tooltip").css("left",(offset.left+17-tipWidth/2) + "px");
+		}
+	});
+		
+	$("a.more, span.more, #listfunctions a").live("mouseleave", function(e) {
 		$("#tooltip").remove();
 	});
 };

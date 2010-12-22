@@ -3,7 +3,7 @@ var share = share || {};
 share.init = function()
 {
 	$('a.list-email').live("click", share.share_by_email);
-	$('a.list-cloud').live("click", share.share_with_cloudapp);
+	$('a.list-cloud').live("click", showCloudAppDialog);
 	$('a.list-print').live("click", share.print);
 	
 	// Open URL on click
@@ -32,14 +32,30 @@ share.share_by_email = function()
 	{
 		// Generate List Name
 		var name = encodeURI('wunderlist - ' + $('#content h1:first').text());
-
-		// Generate Tasks
-		var tasks = '';
-		j_tasks.each(function() {
-			tasks = tasks + encodeURI('• ' + $(this).text()) + '%0A';
+		
+		// Get all tasks from database within the current list
+		tasks = wunderlist.getTasksByListId($('ul#list').attr('rel'));
+		
+		// Build tasks html
+		var body = '';
+		
+		$.each(tasks, function(key, value)
+		{
+			// Add task
+			body += encodeURI('• ' + value.name)
+			
+			// Add date
+			if (value.date != '')
+				body += '%20(' + convert_timestamp_into_date(value.date) + ')';
+			
+			// Add note
+			if (value.note != '')
+				body += '%0A%0A' + encodeURI(value.note) + '%0A';
+			
+			body += '%0A';
 		});
 
-		Titanium.Desktop.openURL('mailto:?subject=' + name + '&body=' + tasks + '%0A' + encodeURI(' I generated this list with my task tool wunderlist from 6 Wunderkinder - Get it from http://www.6wunderkinder.com'));
+		Titanium.Desktop.openURL('mailto:?subject=' + name + '&body=' + body + '%0A' + encodeURI(' I generated this list with my task tool wunderlist from 6 Wunderkinder - Get it from http://www.6wunderkinder.com'));
 	}
 	else
 	{
@@ -54,12 +70,10 @@ share.share_by_email = function()
  */
 share.share_with_cloudapp = function()
 {
-	var url = 'http://cloudapp.wunderlist.net';		
+	var url = 'http://cloudapp.wunderlist.net';
 	
 	// Get All Tasks
-	var j_tasks = $('ul.mainlist span.description');
-	
-	if (j_tasks.length > 0)
+	if ($('ul.mainlist span.description').length > 0)
 	{
 		// Generate data
 		var data = {};		
@@ -67,15 +81,29 @@ share.share_with_cloudapp = function()
 
 		data['email']    = user_credentials['email'];
 		data['password'] = user_credentials['password'];
-		data['list']     = 'wunderlist - ' + $('#content h1:first').text();
+		data['list']     = $('#content h1:first').text();
 
-		// Generate Tasks
-		var tasks = new Array();
-		j_tasks.each(function() {
-			tasks.push($(this).text());
-		});
+		// Get all tasks from database within the current list
+		tasks = wunderlist.getTasksByListId($('ul#list').attr('rel'));
 		
-		data['tasks'] = tasks;
+		// Build tasks html
+		data['tasks'] = new Array();
+		
+		$.each(tasks, function(key, value)
+		{
+			var new_task = new Array();
+			
+			// Add name
+			new_task.push(value.name);
+			
+			// Add date
+			new_task.push(value.date);
+			
+			// Add note
+			new_task.push(value.note);
+			
+			data['tasks'].push(new_task);
+		});
 		
 		// Generate CloudApp Link
 		$.ajax({
@@ -142,7 +170,7 @@ share.print = function()
 			
 			// Add date
 			if (value.date != '')
-				html += '(<b>' + convert_timestamp_into_date(value.date) + '</b>)';
+				html += ' (<b>' + convert_timestamp_into_date(value.date) + '</b>)';
 			
 			// Add note
 			if (value.note != '')

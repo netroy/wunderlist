@@ -151,7 +151,7 @@ wunderlist.initLists = function()
 		var html = '';
 
 		if(list['inbox'] == 1)
- 			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='sharep'></div><div class='editp'></div><div class='savep'></div><b class='inbox'>" + list['name'] + "</b></a>";
+ 			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='editp'></div><div class='savep'></div><b class='inbox'>" + list['name'] + "</b></a>";
  		else
  			html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='sharep'></div><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b>" + list['name'] + "</b></a>";
 
@@ -171,7 +171,7 @@ wunderlist.initLists = function()
  */
 wunderlist.getTasksByListId = function(list_id)
 {
-	var resultTaskSet = this.database.execute("SELECT * FROM tasks WHERE list_id = ?", list_id);
+	var resultTaskSet = this.database.execute("SELECT * FROM tasks WHERE list_id = ? AND deleted = 0 AND done = 0 ORDER BY important DESC, position ASC", list_id);
 
 	var tasks = {};
 	var k     = 0;

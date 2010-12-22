@@ -145,19 +145,17 @@ height:26px}
 
 #sidebar .list {
 cursor:pointer;
-color:#555;
+color:#444;
 text-shadow: #fff 0px 1px 2px;
 padding:10px 10px 0px 14px;
-
+background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
 display:block;
 height:23px;
-border-bottom:1px solid #e8e9f0}
+border-bottom:1px solid #e1e2e4}
 
 #sidebar .list:first-child {
 border-top:1px solid #fff}
-
-
-#sidebar .list:hover, #sidebar .list.hover {background: -webkit-gradient(linear, left top, left bottom, from(#f0f1f3), to(#eee))}
+#sidebar .list:hover, #sidebar .list.hover {background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));}
 
 #sidebar .list b {
 white-space:nowrap;
@@ -196,7 +194,7 @@ font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
 background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
-border-bottom:apx solid #177bbd;color:#fff;text-shadow: #125a8a 0px 1px 2px}
+border-bottom:1px solid #177bbd; color:#fff;text-shadow: #125a8a 0px 1px 2px}
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {opacity:1.0}
 
@@ -483,16 +481,13 @@ background:#fff}
 position: absolute;
 right: 200px;
 bottom: 40px;
-display: none;
-}
+display: none}
 
 #note input#save-note {
-right: 200px;
-}
+right: 200px}
 
 #note input#cancel-note {
-right: 40px;
-}
+right: 40px}
 
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 
@@ -515,14 +510,17 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 /* -- TOOLTIP --------------------------------------------------------------------------- */
 
-#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:url(/images/tooltipbg.png);opacity:0.7;-webkit-border-radius:10px;padding:4px 8px 4px 8px;color:#fff;z-index:100;font-size:11px;font-weight:bold;display:none}
+#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:rgba(0,0,0,0.8);-webkit-border-radius:10px;padding:5px 8px 5px 8px;color:#fff;z-index:100;font-size:11px;font-weight:bold;display:none}
 
-#cloudtip { top:24px; right:0px; }
-#cloudtip span.link { color: white;}
-#cloudtip span.copy { background: #ccc; -webkit-border-radius: 10px; cursor:pointer; color: #333;}
-#cloudtip span.copy:hover { background: #aaa; color: 111;}
+#cloudtip { top:24px; right:-10px; width:288px;}
+
+#cloudtip span.link { color: #fff; float:left; display:block; margin-top:1px;}
 #cloudtip span.link:hover { text-decoration: underline; cursor: pointer;}
 
+#cloudtip span.copy { background:rgba(255,255,255,0.2); -webkit-border-radius:14px; padding:1px 5px 0px 5px;float:right; cursor:pointer; display:block; font-size:9px;margin-top:1px; margin-right:-2px;}
+#cloudtip span.copy:hover { background:rgba(255,255,255,0.4)}
+
+#cloudtip span.triangle {border:4px solid transparent; border-bottom:4px solid rgba(0,0,0,0.8); height:0px; width:0px; position:absolute; right:14px; top:-8px;}
 
 #taskTooltip {background:#333;opacity:0.9;width:220px;padding:7px 8px;line-height:16px;font-size:12px;-webkit-border-radius:5px}
 #taskTooltip span {position:absolute;left:105px;height:0px; width:0px;border-style: solid}
