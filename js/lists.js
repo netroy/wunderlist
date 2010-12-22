@@ -132,7 +132,7 @@ function saveList(listElement)
 	var listElementInput = listElement.children('input');
     var listElementName  = convertStringForDB(listElementInput.val());
 
-	if(listElement.hasClass('ui-state-disabled'))
+	if(listElement.hasClass('ui-state-disabled') && listElementName != '')
 		$('#content h1').text(unescape(listElementName));
 
 	if(listElementName == '')
