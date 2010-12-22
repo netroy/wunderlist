@@ -70,8 +70,7 @@ share.share_by_email = function()
  */
 share.share_with_cloudapp = function()
 {
-	var url = 'http://cloudapp.localhost';
-	//var url = 'http://cloudapp.wunderlist.net';
+	var url = 'http://cloudapp.wunderlist.net';
 	
 	// Get All Tasks
 	if ($('ul.mainlist span.description').length > 0)
