@@ -18,6 +18,7 @@ sharing.init = function()
 	sharing.shareUrl        = 'http://192.168.178.58/share';//'https://sync.wunderlist.net/share';
 	sharing.sharedEmailsUrl = 'http://192.168.178.58/share/emails';//'https://sync.wunderlist.net/share/emails';
 	sharing.shareListDialog = null;
+	sharing.deletedMails    = new Array();
 
 	sharing.status_codes =
 	{
@@ -44,19 +45,28 @@ sharing.init = function()
 		}
 	});
 
+	sharing.clickedSharingButton = false;
+
 	// Called on pressed sharing button
 	$('div#lists a div.sharep').live('click', function()
 	{
 		if(Titanium.Network.online == true)
 		{
-			sharing.openShareListDialog();
-
-			var list_id        = $(this).parent().attr('id');
-
-			// Only request shared emails, if list is already shared
-			if(wunderlist.listIsAlreadyShared(list_id) == true)
+			if(sharing.clickedSharingButton == false)
 			{
-				sharing.getSharedEmails(list_id);
+				sharing.clickedSharingButton = true;
+				sharing.openShareListDialog();
+
+				var list_id = $(this).parent().attr('id');
+
+				// Only request shared emails, if list is already shared
+				if(wunderlist.listIsAlreadyShared(list_id) == true)
+				{
+					sharing.deletedMails = new Array();
+					sharing.getSharedEmails(list_id);
+				}
+
+				setTimeout(function() {sharing.clickedSharingButton = false}, 1000);
 			}
 		}
 		else
@@ -71,7 +81,12 @@ sharing.init = function()
 		$(this).parent().remove();
 		
 		var shareListItems = $('.sharelistusers').children('li');
-		
+
+		var email = $(this).parent().text();
+		sharing.deletedMails.push(email);
+
+		console.log(sharing.deletedMails);
+
 		if(shareListItems.length == 0)
 		{
 			$('p.invitedpeople').remove();
@@ -231,20 +246,23 @@ sharing.getSharedEmails = function(list_id)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							var shareList      = $('.sharelistusers');
-							$('.invitedpeople').remove();
 							var shareListItems = shareList.children('li');
-							shareListItems.remove();
+							shareList.empty();
+							$('.invitedpeople').remove();
+							shareListItems = shareList.children('li');
+
+							console.log(shareListItems.length);
 
 							if(response.emails != undefined && response.emails.length > 0)
 							{
+								if(shareListItems.length == 0)
+								{
+									shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+								}
+								
 								for(value in response.emails)
 								{
 									shareList.append('<li><span></span> ' + $.trim(response.emails[value]) + '</li>');
-
-									if(shareListItems.length == 0)
-									{
-										shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
-									}
 								}
 							}
 							break;
@@ -263,9 +281,8 @@ sharing.getSharedEmails = function(list_id)
 
 						case sharing.status_codes.SHARE_NOT_SHARED:
 							var shareList = $('.sharelistusers');
+							shareList.empty();
 							$('.invitedpeople').remove();
-							var shareListItems = shareList.children('li');
-							shareListItems.remove();
 							break;
 
 						default:

@@ -879,11 +879,11 @@ wunderlist.getListIdsByTaskId = function(task_id)
  */
 wunderlist.getListNameById = function(list_id)
 {
-	var sql  = "SELECT lists.name";
-		sql += "FROM tasks ";
+	var sql  = "SELECT lists.name ";
+		sql += "FROM lists ";
 		sql += "WHERE lists.id = '" + list_id + "'";
 
-	var resultSet = wunderlist.query(sql);
+	var resultSet = this.database.execute(sql);
 
 	if(resultSet.isValidRow())
 		return resultSet.field(0);
