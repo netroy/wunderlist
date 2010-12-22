@@ -154,16 +154,27 @@ sharing.sendSharedList = function(list_id)
 	var emails           = $('#share-list-email').val().split(',');
 
 	// Collect the entered emails
-	for(value in emails)
+	if(emails.length > 0 && emails[0] != '')
 	{
-		var email = $.trim(emails[value]);
-		if(sync.validateEmail(email))
+		for(value in emails)
 		{
-			collected_emails.push(email);
+			var email = $.trim(emails[value]);
+			if(sync.validateEmail(email))
+			{
+				collected_emails.push(email);
+			}
+			else
+			{
+				showErrorDialog(language.data.invalid_email);
+				return false;
+			}
 		}
-		else
+	}
+	else
+	{
+		if(sharing.deletedMails.length == 0)
 		{
-			showErrorDialog(language.data.invalid_email);
+			showErrorDialog(language.data.shared_not_changed);
 			return false;
 		}
 	}
