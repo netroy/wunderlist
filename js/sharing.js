@@ -57,6 +57,10 @@ sharing.init = function()
 				sharing.clickedSharingButton = true;
 				sharing.openShareListDialog();
 
+				var shareList      = $('.sharelistusers');
+				shareList.empty();
+				$('.invitedpeople').remove();
+
 				var list_id = $(this).parent().attr('id');
 
 				// Only request shared emails, if list is already shared
@@ -247,8 +251,6 @@ sharing.getSharedEmails = function(list_id)
 						case sharing.status_codes.SHARE_SUCCESS:
 							var shareList      = $('.sharelistusers');
 							var shareListItems = shareList.children('li');
-							shareList.empty();
-							$('.invitedpeople').remove();
 							shareListItems = shareList.children('li');
 
 							console.log(shareListItems.length);
@@ -280,9 +282,7 @@ sharing.getSharedEmails = function(list_id)
 							break;
 
 						case sharing.status_codes.SHARE_NOT_SHARED:
-							var shareList = $('.sharelistusers');
-							shareList.empty();
-							$('.invitedpeople').remove();
+							// Do nothing
 							break;
 
 						default:

@@ -161,7 +161,7 @@
 	"sunday":					"Sonntag",
 	"monday":					"Montag",
 	"exit_wunderlist":			"wunderlist beenden",
-	"share_denied":				"Das Teilen der Liste wurde verweigert",
+	"share_denied":				"Das Teilen der Liste wurde verweigert. Möglicherweise bist Du nicht der Besitzer.",
 	"share_failure":			"Das Teilen der Liste ist fehlgeschlagen",
 	"share_list_with_cloudapp": "Die Liste über CloudApp mit anderen teilen",
 	"shared_successfully":		"Die Liste wurde erfolgreich geteilt"
