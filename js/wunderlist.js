@@ -151,7 +151,7 @@ wunderlist.initLists = function()
 		var html = '';
 
 		if(list['inbox'] == 1)
- 			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='sharep'></div><div class='editp'></div><div class='savep'></div><b class='inbox'>" + list['name'] + "</b></a>";
+ 			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='editp'></div><div class='savep'></div><b class='inbox'>" + list['name'] + "</b></a>";
  		else
  			html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='sharep'></div><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b>" + list['name'] + "</b></a>";
 
