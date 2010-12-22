@@ -104,16 +104,37 @@ sharing.init = function()
 }
 
 /**
- * Share the list to the given emails
+ * Check if the list is already shared, then share the list
  *
  * @author Dennis Schneider
  */
 sharing.shareLists = function()
 {
-	list_id              = $('div#lists a.ui-state-disabled').attr('id');
+	list_id = $('div#lists a.ui-state-disabled').attr('id');
+	
+	// If list is not shared, set it to shared and sync it
+	if(wunderlist.listIsAlreadyShared(list_id) == false)
+	{
+		wunderlist.setListToShared(list_id);
+		sync.fireSync(false, false, list_id);
+	}
+	else
+	{
+		sharing.sendSharedList(list_id);
+	}
+}
+
+/**
+ * Collect the entered emails and share the list
+ *
+ * @author Dennis Schneider
+ */
+sharing.sendSharedList = function(list_id)
+{
 	var $emails          = $('.sharelistusers li');
 	var collected_emails = new Array();
 
+	// Collect the entered emails
 	$emails.each(function(key, value)
 	{
 		var email = $.trim($(value).text());
@@ -134,11 +155,10 @@ sharing.shareLists = function()
 		data: data,
 		beforeSend: function()
 		{
-			// Show loading indicator on invitation dialog
+			// @TODO Show loading indicator on invitation dialog
 		},
 		success: function(response_data, text, xhrobject)
 		{
-			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -148,7 +168,7 @@ sharing.shareLists = function()
 					switch(response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
-							sharing.shareSuccess(response);
+							showOKDialog(language.data.shared_successfully);
 							console.log(response);
 							break;
 
@@ -176,16 +196,6 @@ sharing.shareLists = function()
 			showErrorDialog(language.data.sync_error);
 		}
 	});
-}
-
-/**
- * When the sharing request was successful
- *
- * @author Dennis Schneider
- */
-sharing.shareSuccess = function(response)
-{
-	// Do stuff with the response
 }
 
 /**
