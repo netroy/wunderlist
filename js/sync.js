@@ -385,7 +385,10 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 				message += 'Updated the list "' + unescape(item) + '"\n';
 			});
 
-			notifications.createNotification('Successfully synced your data', message);
+			if(sync_table_step1.new_tasks != undefined && sync_table_step1.new_lists != undefined)
+			{
+				notifications.createNotification('Successfully synced your data', message);
+			}
 		}
 	}
 
