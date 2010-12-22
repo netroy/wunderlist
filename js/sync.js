@@ -19,7 +19,7 @@ $(function()
  */
 sync.init = function()
 {
-	this.syncDomain 		= 'http://192.168.178.58/1.1.0';//https://sync.wunderlist.net';
+	this.syncDomain 		= 'https://sync.wunderlist.net';
 	this.syncUrl			= this.syncDomain;
 	this.alreadyRegistered 	= false;
 	this.timeOutInterval 	= '';

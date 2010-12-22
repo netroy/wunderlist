@@ -171,7 +171,7 @@ wunderlist.initLists = function()
  */
 wunderlist.getTasksByListId = function(list_id)
 {
-	var resultTaskSet = this.database.execute("SELECT * FROM tasks WHERE list_id = ?", list_id);
+	var resultTaskSet = this.database.execute("SELECT * FROM tasks WHERE list_id = ? AND deleted = 0 AND done = 0 ORDER BY important DESC, position ASC", list_id);
 
 	var tasks = {};
 	var k     = 0;

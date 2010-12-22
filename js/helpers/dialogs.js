@@ -1,6 +1,7 @@
 var confirmationDialog;
 var okDialog;
 var whileSyncDialog;
+var cloudAppDialog;
 
 /**
  * Generates a dialog window
@@ -81,6 +82,34 @@ function showOKDialog(title) {
 	}
 	else
 		openDialog(okDialog);
+}
+
+/**
+ * Confirmation Dialog for Cloud App
+ *
+ * @author Dennis Schneider
+ */
+function showCloudAppDialog() {
+	if(cloudAppDialog == undefined)
+	{
+		cloudAppDialog = $('<div><p>CloudApp allows you to share your tasks from anywhere in the world through an intuitive web interface. If you click yes, a secret URL will be generated you can send anyone of your colleagues or friends. They don\'t need a wunderlist or CloudApp account!<br><br>But be sure: If anyone knows the generated URL, your tasks are public!</p></div>').dialog({
+			autoOpen  : true,
+			draggable : false,
+			modal     : false,
+			title     : 'Are you sure to publish your tasks?',
+			buttons   : {
+				'No'  : function() {
+					$(this).dialog('close');
+				},
+				'Yes' : function() {
+					share.share_with_cloudapp();
+					$(this).dialog('close');
+				}
+			}
+		});
+	}
+	else
+		openDialog(cloudAppDialog);
 }
 
 /**
