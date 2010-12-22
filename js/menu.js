@@ -48,6 +48,7 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('ألماني',        function() { Menu.switch_language('ar') });
 	languageMenuItem.addItem('Svenska',    function() { Menu.switch_language('se') });
 	languageMenuItem.addItem('日本人',      function() { Menu.switch_language('ja') });
+	languageMenuItem.addItem('Magyar',     function() { Menu.switch_language('hu') });
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);

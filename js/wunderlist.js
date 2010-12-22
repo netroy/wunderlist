@@ -162,7 +162,7 @@ wunderlist.initLists = function()
 		var html = '';
 
 		if(list['inbox'] == 1)
- 			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='sharep'></div><div class='editp'></div><div class='savep'></div><b class='inbox'>" + list['name'] + "</b></a>";
+ 			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='editp'></div><div class='savep'></div><b class='inbox'>" + list['name'] + "</b></a>";
  		else
  			html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='sharep'></div><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b>" + list['name'] + "</b></a>";
 
@@ -182,7 +182,7 @@ wunderlist.initLists = function()
  */
 wunderlist.getTasksByListId = function(list_id)
 {
-	var resultTaskSet = this.database.execute("SELECT * FROM tasks WHERE list_id = ?", list_id);
+	var resultTaskSet = this.database.execute("SELECT * FROM tasks WHERE list_id = ? AND deleted = 0 AND done = 0 ORDER BY important DESC, position ASC", list_id);
 
 	var tasks = {};
 	var k     = 0;
@@ -544,11 +544,43 @@ wunderlist.getNoteForTask = function(task_id)
  */
 wunderlist.saveNoteForTask = function(note_text, task_id)
 {
-	console.log(note_text);
-	console.log(task_id);
-	this.database.execute("UPDATE tasks SET note = ? WHERE id = ?", note_text, task_id);
+	this.database.execute("UPDATE tasks SET note = ?, version = version + 1 WHERE id = ?", note_text, task_id);
 
 	timer.stop().set(15).start();
+}
+
+/**
+ * Check if the list is already shared
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.listIsAlreadyShared = function(list_id)
+{
+	var resultSet = this.database.execute("SELECT shared FROM lists WHERE id = ? AND shared = 1", list_id);
+
+	if(resultSet.isValidRow() && resultSet.rowCount() > 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Set the list to shared
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.setListToShared = function(list_id)
+{
+	var resultSet = this.database.execute("UPDATE lists SET shared = 1, version = version + 1 WHERE id = ?", list_id);
+
+	if(resultSet.isValidRow())
+	{
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -858,11 +890,11 @@ wunderlist.getListIdsByTaskId = function(task_id)
  */
 wunderlist.getListNameById = function(list_id)
 {
-	var sql  = "SELECT lists.name";
-		sql += "FROM tasks ";
+	var sql  = "SELECT lists.name ";
+		sql += "FROM lists ";
 		sql += "WHERE lists.id = '" + list_id + "'";
 
-	var resultSet = wunderlist.query(sql);
+	var resultSet = this.database.execute(sql);
 
 	if(resultSet.isValidRow())
 		return resultSet.field(0);

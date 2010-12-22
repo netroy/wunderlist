@@ -132,7 +132,7 @@ function saveList(listElement)
 	var listElementInput = listElement.children('input');
     var listElementName  = convertStringForDB(listElementInput.val());
 
-	if(listElement.hasClass('ui-state-disabled'))
+	if(listElement.hasClass('ui-state-disabled') && listElementName != '')
 		$('#content h1').text(unescape(listElementName));
 
 	if(listElementName == '')
@@ -142,7 +142,10 @@ function saveList(listElement)
 
     listElementInput.remove();
 
-	html = '<b>' + unescape(listElementName) + '</b>';
+	if(listElement.attr('id') == 1)
+		html = '<b class="inbox">' + unescape(listElementName) + '</b>';
+	else
+		html = '<b>' + unescape(listElementName) + '</b>';
 
 	listElement.children('.savep').hide();
 	listElement.children('.deletep').hide();

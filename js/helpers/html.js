@@ -5,7 +5,7 @@
  */
 function generateShareListDialogHTML()
 {
-	html =  '<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" value="' + language.data.invite_email + '" />' +
+	html =  '<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
 			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
 
@@ -51,7 +51,7 @@ generateListContentHTML = function(list_id, list_name)
 {
 	var html = '';
 
-	html +=  "<div id='listfunctions'><a class='list-print'></a><a class='list-email'></a><a class='list-cloud'></a><div id='cloudtip'><span class='link'>http://wunderli.st/812ße912a09k</span>&nbsp;&nbsp;<span class='copy'> copy </span></div></div>";
+	html +=  "<div id='listfunctions'><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
 	html += "<h1>" + unescape(list_name) + "</h1>";
 	html += "<div class='add'>";
 	html += "<input type='text' class='input-add' placeholder='" + language.data.add_task + "' />";
@@ -105,7 +105,7 @@ generateTaskHTML = function(id, name, list_id, done, important, date)
 		html += '<span class="showdate"></span>';
 
 	html += '<span class="icon delete" title="' + language.data.delete_task + '"></span>';
-	html += '<span class="icon note" title="' + language.data.delete_task + '"></span>';
+	html += '<span class="icon note" title="note"></span>';
 	html += '</li>';
 
 	return html;
@@ -129,6 +129,7 @@ function generateNewListElementHTML(listId, listElementName, listElementInputCla
 
 	var html  = "<a id='" + listId + "' class='list sortablelist'>";
     	html += "<span>0</span>";
+		html += "<div class='sharep'></div>";
     	html += "<div class='deletep'></div>";
     	html += "<div class='savep'></div>";
     	html += "<div class='editp'></div>";

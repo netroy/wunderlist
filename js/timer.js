@@ -52,7 +52,6 @@ timer.start = function()
 		if(timer.isPaused == false)
 		{
 			timer.total_seconds--;
-			console.log(timer.total_seconds);
 			if(timer.total_seconds === 0)
 			{
 				if(wunderlist.isUserLoggedIn() && Titanium.Network.online == true)

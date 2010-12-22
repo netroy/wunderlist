@@ -383,64 +383,13 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 			// Notifications for received new lists
 			if(sync_table_step1.new_lists != undefined && sync_table_step1.new_lists.length > 0)
 			{
-				sync.showSyncNotification(sync_table_step1.new_lists, 'list', 'Added');
+				sync.showSyncNotification(sync_table_step1.new_lists, 'lists');
 			}
 
 			// Notifications for received new tasks
 			if(sync_table_step1.new_tasks != undefined && sync_table_step1.new_tasks.length > 0)
 			{
-				sync.showSyncNotification(sync_table_step1.new_tasks, 'task', 'Added');
-			}
-
-			// Show a notification for edited lists
-			if(data['sync_table']['required_lists'] != undefined)
-			{
-				var required_lists_data = Titanium.JSON.stringify(data['sync_table']['required_lists']);
-				required_lists_data     = eval('(' + required_lists_data + ')');
-
-				// Notifications for edited lists
-				if(required_lists_data != undefined)
-				{
-					sync.showSyncNotification(required_lists_data, 'list', 'Edited');
-				}
-			}
-
-			// Show a notification for edited tasks
-			if(data['sync_table']['required_tasks'] != undefined)
-			{
-				var required_tasks_data = Titanium.JSON.stringify(data['sync_table']['required_tasks']);
-				required_tasks_data     = eval('(' + required_tasks_data + ')');
-
-				// Notifications for edited tasks
-				if(required_tasks_data != undefined)
-				{
-					sync.showSyncNotification(required_tasks_data, 'task', 'Edited');
-				}
-			}
-
-		}
-
-		// Show a notification for newly added (send) lists
-		if(new_lists != undefined)
-		{
-			var new_lists_data = Titanium.JSON.stringify(new_lists);
-			new_lists_data     = eval('(' + new_lists_data + ')');
-
-			if(new_lists_data != undefined)
-			{
-				sync.showSyncNotification(new_lists_data, 'lists', 'Added');
-			}
-		}
-
-		// Show a notification for newly added (send) tasks
-		if(data['sync_table']['new_tasks'] != undefined)
-		{
-			var new_tasks_data = Titanium.JSON.stringify(data['sync_table']['new_tasks']);
-			new_tasks_data     = eval('(' + new_tasks_data + ')');
-
-			if(new_tasks_data != undefined)
-			{
-				sync.showSyncNotification(new_tasks_data, 'task', 'Added');
+				sync.showSyncNotification(sync_table_step1.new_tasks, 'tasks');
 			}
 		}
 	}
@@ -465,41 +414,31 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
  *
  * @author Dennis Schneider
  */
-sync.showSyncNotification = function(data, type, action)
+sync.showSyncNotification = function(data, type)
 {
-	var deleted = 0;
-	var edited  = 0;
+	var list_names = {};
 
-	$.each(data, function(key, item)
+	if(type == 'lists')
 	{
-		if(item.deleted == 1)
+		$.each(data, function(key, item)
 		{
-			deleted++;
-		}
-		else
+			list_names[item.name] = item.name;
+		});
+	}
+	else
+	{
+		$.each(data, function(key, item)
 		{
-			edited++;
-		}
+			console.log(item.list_id);
+			list_names[item.list_id] = wunderlist.getListNameById(item.list_id);
+		});
+	}
+
+	$.each(list_names, function(key, item)
+	{
+		var message = 'Updated the list ' + item;
+		notifications.createNotification('Successfully synced your data', message);
 	});
-
-	// Add plural form
-	// @TODO Prepare for different languages
-	if(deleted > 1 || edited > 1)
-	{
-		type += 's';
-	}
-
-	if(deleted > 0)
-	{
-		var message = 'Deleted ' + deleted + ' ' + type;
-		notifications.createNotification('Successfully synced your data', message);
-	}
-
-	if(edited > 0)
-	{
-		var message = action + ' ' + edited + ' ' + type;
-		notifications.createNotification('Successfully synced your data', message);
-	}
 }
 
 /**
