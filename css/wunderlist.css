@@ -478,7 +478,7 @@ width:76%;
 height:auto;
 border:4px solid #fff;
 margin:10px 7%;
-padding:10px 5%;
+padding:20px 5% 10px 5%;
 color:#555;
 font-size:12px}
 
@@ -489,6 +489,8 @@ font-size:12px}
 #note a:hover {opacity:1.0; cursor:pointer}
 #note a#save-note {background:url(/images/note-save.png);right: 10px}
 #note a#cancel-note {background:url(/images/note-cancel.png);right: 90px; bottom:21px;}
+
+#note #cellotape {position:absolute; right:90px; width:80px; height:21px; top:8px; background:url("/images/cellotape.png"); z-index:899; display:none;}
 
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 

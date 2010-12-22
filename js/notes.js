@@ -19,6 +19,7 @@ notes.hideNoteElements = function()
 	notes.note.toggle();
 	$('div#note a#cancel-note').hide();
 	$('div#note a#save-note').hide();
+	$('div#cellotape').hide();
 }
 
 /**
@@ -30,6 +31,7 @@ notes.showNoteElements = function()
 {
 	notes.listItems.hide();
 	notes.note.show();
+	notes.cellotape.show();
 	notes.noteIcons.removeClass("activenote");
 	$('div#note a#cancel-note').show();
 	$('div#note a#save-note').show();
@@ -41,9 +43,11 @@ $(function()
 	notes.noteIcons = $('li.more span.note');
 	notes.listItems = $('div#lists');
 	notes.note      = $('#note textarea');
+	notes.cellotape = $('#cellotape');
 
 	// Hide Note initially
 	notes.note.hide();
+	notes.cellotape.hide();
 			
 	// Click on Note Icon
 	$('li.more span.note').live('click', function()
@@ -51,6 +55,7 @@ $(function()
 		notes.noteIcons = $('li.more span.note');
 		notes.listItems = $('div#lists');
 		notes.note      = $('#note textarea');
+		notes.cellotape = $('#cellotape');
 
 		var task_id = $(this).parent().attr('id');
 		notes.note.attr('id', task_id);
