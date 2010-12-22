@@ -56,6 +56,8 @@ sharing.init = function()
 			{
 				sharing.clickedSharingButton = true;
 
+				$('#share-list-email').val('');
+
 				var shareList      = $('.sharelistusers');
 				shareList.empty();
 				$('.invitedpeople').remove();
@@ -197,6 +199,7 @@ sharing.sendSharedList = function(list_id)
 		},
 		success: function(response_data, text, xhrobject)
 		{
+			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -260,6 +263,7 @@ sharing.getSharedEmails = function(list_id)
 		},
 		success: function(response_data, text, xhrobject)
 		{
+			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -304,7 +308,7 @@ sharing.getSharedEmails = function(list_id)
 							break;
 
 						case sharing.status_codes.SHARE_NOT_SHARED:
-							// Do nothing
+							sharing.openShareListDialog();
 							break;
 
 						default:

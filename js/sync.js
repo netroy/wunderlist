@@ -67,7 +67,7 @@ sync.validateEmail = function(email)
  *
  * @author Dennis Schneider
  */
-sync.fireSync = function(logOutAfterSync, exitAfterSync)
+sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 {
 	// Should the user be logged out after sync?
 	if(logOutAfterSync == undefined)
@@ -150,7 +150,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 						switch(response.code)
 						{
 							case sync.status_codes.SYNC_SUCCESS:
-								sync.syncSuccess(response, logOutAfterSync, exitAfterSync, data['sync_table']['new_lists']);
+								sync.syncSuccess(response, logOutAfterSync, exitAfterSync, list_id);
 								syncSuccessful = true;
 								clearInterval(sync.timeOutInterval);
 								sync.timeOutInterval = '';
@@ -224,7 +224,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
  *
  * @author Dennis Schneider
  */
-sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_lists)
+sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list_id)
 {
 	// SYNC STEP 2
 	if(response_step1.sync_table != undefined)
@@ -411,6 +411,11 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 
 	setTimeout(function() { sync.isSyncing = false; }, 2000);	
 	stopSyncAnimation();
+
+	if(list_id > 0)
+	{
+		sharing.sendSharedList(list_id);
+	}
 
 	if(logOutAfterSync == true)
 	{
