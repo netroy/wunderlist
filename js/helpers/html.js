@@ -5,8 +5,8 @@
  */
 function generateShareListDialogHTML()
 {
-	html =  '<p><input class="input-login input-sharelist" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
-			'<input id="send_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>' +
+	html =  '<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" value="' + language.data.invite_email + '" />' +
+			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="send invitation" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
 
 	return html;
@@ -48,7 +48,7 @@ generateListContentHTML = function(list_id, list_name)
 {
 	var html = '';
 
-	html +=  "<div id='listfunctions'><a class='list-print'></a><a class='list-email'></a><a class='list-cloud'></a><div id='cloudtip'><span>copy</span> url goes here</div></div>";
+	html +=  "<div id='listfunctions'><a class='list-print'></a><a class='list-email'></a><a class='list-cloud'></a><div id='cloudtip'><span class='link'>http://wunderli.st/812ße912a09k</span>&nbsp;&nbsp;<span class='copy'> copy </span></div></div>";
 	html += "<h1>" + unescape(list_name) + "</h1>";
 	html += "<div class='add'>";
 	html += "<input type='text' class='input-add' placeholder='" + language.data.add_task + "' />";

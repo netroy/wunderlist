@@ -104,9 +104,22 @@ $(function()
 		timer.resume();
 	});
 
-	// 
 	$('#note textarea').live('keyup', function(e)
 	{
 		timer.pause();
+	});
+
+
+	var saveNoteCommand = false;
+
+	// Save the note with ctrl / command + return key
+	$(document).bind('keydown', shortcutkey + '+return', function (evt)
+	{
+		if(($('#note textarea:focus').length == 1 || $('#note textarea').css('display') == 'block') && saveNoteCommand == false)
+		{
+			saveNoteCommand = true;
+			$('div#note input#save-note').click();
+			setTimeout(function() {saveNoteCommand = false}, 1000);
+		}
 	});
 });

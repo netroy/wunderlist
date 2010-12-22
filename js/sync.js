@@ -238,12 +238,12 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, new_
 					// If list is already in database
 					if(wunderlist.elementExists(lists[i].online_id, 'lists'))
 					{
-						wunderlist.updateListByOnlineId(lists[i].online_id, lists[i].name, lists[i].deleted, lists[i].position, lists[i].version, lists[i].inbox);
+						wunderlist.updateListByOnlineId(lists[i].online_id, lists[i].name, lists[i].deleted, lists[i].position, lists[i].version, lists[i].inbox, lists[i].shared);
 					}
 					else
 					{
 						// Create a whole new list with the given uid
-						wunderlist.createListByOnlineId(lists[i].online_id, lists[i].name, lists[i].deleted, lists[i].position, lists[i].version, lists[i].inbox);
+						wunderlist.createListByOnlineId(lists[i].online_id, lists[i].name, lists[i].deleted, lists[i].position, lists[i].version, lists[i].inbox, lists[i].shared);
 					}
 				}
 			}

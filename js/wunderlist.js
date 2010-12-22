@@ -43,8 +43,7 @@ wunderlist.initDatabase = function()
 	}
 	// @TODO Write update function for database - Set notes to default '' - add shared value - add recurring and recurring interval
 
-	// , shared INTEGER DEFAULT 0
-	this.database.execute("CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, inbox INTEGER DEFAULT 0)");
+	this.database.execute("CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, inbox INTEGER DEFAULT 0, shared INTEGER DEFAULT 0)");
 	// recurring INTEGER DEFAULT 0, recurring_interval INTEGER DEFAULT 0,
 	this.database.execute("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, name TEXT, list_id TEXT, note TEXT DEFAULT '', date INTEGER DEFAULT 0, done_date INTEGER DEFAULT 0, done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0)");
 }
@@ -163,6 +162,32 @@ wunderlist.initLists = function()
 
 		listsResultSet.next();
     }
+}
+
+/**
+ * Gets the tasks of the specified list
+ * 
+ * @author Dennis Schneider
+ */
+wunderlist.getTasksByListId = function(list_id)
+{
+	var resultTaskSet = this.database.execute("SELECT * FROM tasks WHERE list_id = ?", list_id);
+
+	var tasks = {};
+	var k     = 0;
+	while(resultTaskSet.isValidRow())
+	{
+		tasks[k] = {};
+		for(var i = 0; i < resultTaskSet.fieldCount(); i++)
+		{
+			
+			tasks[k][resultTaskSet.fieldName(i)] = resultTaskSet.field(i);
+		}
+		resultTaskSet.next();
+		k++;
+	}
+
+	return tasks;
 }
 
 /**
@@ -666,9 +691,9 @@ wunderlist.updateListPosition = function(list_id, position)
  *
  * @author Dennis Schneider
  */
-wunderlist.updateListByOnlineId = function(id, name, deleted, position, version, inbox)
+wunderlist.updateListByOnlineId = function(id, name, deleted, position, version, inbox, shared)
 {
-	this.database.execute("UPDATE lists SET name = ?, deleted = ?, position = ?, version = ?, inbox = ? WHERE online_id = ?", name, deleted, position, version, inbox, id);
+	this.database.execute("UPDATE lists SET name = ?, deleted = ?, position = ?, version = ?, inbox = ?, shared = ? WHERE online_id = ?", name, deleted, position, version, inbox, shared, id);
 }
 
 /**
@@ -676,9 +701,9 @@ wunderlist.updateListByOnlineId = function(id, name, deleted, position, version,
  *
  * @author Dennis Schneider
  */
-wunderlist.createListByOnlineId = function(id, name, deleted, position, version, inbox)
+wunderlist.createListByOnlineId = function(id, name, deleted, position, version, inbox, shared)
 {
-	this.database.execute("INSERT INTO lists (online_id, name, deleted, position, version, inbox) VALUES(?, ?, ?, ?, ?, ?) ", id, name, deleted, position, version, inbox);
+	this.database.execute("INSERT INTO lists (online_id, name, deleted, position, version, inbox) VALUES(?, ?, ?, ?, ?, ?, ?) ", id, name, deleted, position, version, inbox, shared);
 }
 
 /**

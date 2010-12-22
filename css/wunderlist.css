@@ -517,7 +517,12 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 #sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:url(/images/tooltipbg.png);opacity:0.7;-webkit-border-radius:10px;padding:4px 8px 4px 8px;color:#fff;z-index:100;font-size:11px;font-weight:bold;display:none}
 
-#cloudtip {display:block; top:24px; right:0px;width:200px !important;}
+#cloudtip { top:24px; right:0px; }
+#cloudtip span.link { color: white;}
+#cloudtip span.copy { background: #ccc; -webkit-border-radius: 10px; cursor:pointer; color: #333;}
+#cloudtip span.copy:hover { background: #aaa; color: 111;}
+#cloudtip span.link:hover { text-decoration: underline; cursor: pointer;}
+
 
 #taskTooltip {background:#333;opacity:0.9;width:220px;padding:7px 8px;line-height:16px;font-size:12px;-webkit-border-radius:5px}
 #taskTooltip span {position:absolute;left:105px;height:0px; width:0px;border-style: solid}

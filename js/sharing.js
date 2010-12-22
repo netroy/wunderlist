@@ -27,23 +27,30 @@ sharing.init = function()
         'SHARE_NOT_EXISTS': 803
     };
 
+	sharing.addedEmail = false;
+
 	// Hitting Enter on Input Field
-	$(".input-sharelist").live("keydown", function(event)
+	$('.input-sharelist').live('keydown', function(event)
 	{
-		if(event.keyCode == 13)
+		if(sharing.addedEmail == false)
 		{
-			var shareList      = $(".sharelistusers");
-			var shareListItems = shareList.children("li");
-
-			var email = $(this).val();
-			$(this).val("");
-
-			shareList.append("<li><span></span> " + email + "</li>");
-
-			if(shareListItems.length == 0)
+			sharing.addedEmail = true;
+			if(event.keyCode == 13)
 			{
-				shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+				var shareList      = $('.sharelistusers');
+				var shareListItems = shareList.children('li');
+
+				var email = $(this).val();
+				$(this).val("");
+
+				shareList.append('<li><span></span> ' + email + '</li>');
+
+				if(shareListItems.length == 0)
+				{
+					shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+				}
 			}
+			setTimeout(function() {sharing.addedEmail = false}, 1000);
 		}
 	});
 
@@ -61,8 +68,9 @@ sharing.init = function()
 	});
 
 	// Open Share Dialog
-	$(".sharep").click(function(){
-		openShareListDialog();
+	$(".sharep").click(function()
+	{
+		sharing.openShareListDialog();
 	});
 
 	// Delete Button for remove Sharing for a single E-Mail
@@ -78,12 +86,20 @@ sharing.init = function()
 		}
 	});
 
+	sharing.sendInvitation = false;
+
 	// Send the invitation
-	$('div#sharebox input#send_invitation').live('click', function()
+	$('#send_share_invitation').live('click', function()
 	{
-		sharing.shareLists();
-		sharing.getSharedEmails();
-		closeDialog(sharing.shareListDialog);
+		if(sharing.sendInvitation == false)
+		{
+			sharing.sendInvitation = true;
+			sharing.shareLists();
+			//sharing.getSharedEmails();
+			closeDialog(sharing.shareListDialog);
+			
+			setTimeout(function() {sharing.sendInvitation = false}, 5000);
+		}
 	});
 }
 
@@ -95,13 +111,22 @@ sharing.init = function()
 sharing.shareLists = function()
 {
 	list_id              = $('div#lists a.ui-state-disabled').attr('id');
-	var data             = {};
-	user_credentials     = wunderlist.getUserCredentials();
-	data['email']        = user_credentials['email'];
-	data['password']     = user_credentials['password'];
-	data['list_id']      = wunderlist.getOnlineIdByListId(list_id);
-	data['add']	         = {};
-	data['delete']       = {};
+	var $emails          = $('.sharelistusers li');
+	var collected_emails = new Array();
+
+	$emails.each(function(key, value)
+	{
+		var email = $.trim($(value).text());
+		collected_emails.push(email);
+	});
+
+	var data         = {};
+	user_credentials = wunderlist.getUserCredentials();
+	data['email']    = user_credentials['email'];
+	data['password'] = user_credentials['password'];
+	data['list_id']  = wunderlist.getOnlineIdByListId(list_id);
+	data['add']	     = collected_emails;
+	data['delete']   = new Array();
 
 	$.ajax({
 		url: sharing.shareUrl,
@@ -113,10 +138,9 @@ sharing.shareLists = function()
 		},
 		success: function(response_data, text, xhrobject)
 		{
+			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
-				switchSyncSymbol(xhrobject.status);
-
 				if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
@@ -125,6 +149,7 @@ sharing.shareLists = function()
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							sharing.shareSuccess(response);
+							console.log(response);
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
@@ -191,8 +216,6 @@ sharing.getSharedEmails = function()
 		{
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
-				switchSyncSymbol(xhrobject.status);
-
 				if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
@@ -237,7 +260,10 @@ sharing.getSharedEmails = function()
  */
 sharing.openShareListDialog = function()
 {
-	sharing.shareListDialog = generateDialog('Share List', generateShareListDialogHTML(), 'dialog-sharelist')
+	if(sharing.shareListDialog == undefined)
+	{
+		sharing.shareListDialog = generateDialog('Share List', generateShareListDialogHTML(), 'dialog-sharelist')
+	}
 	openDialog(sharing.shareListDialog);
 }
 
