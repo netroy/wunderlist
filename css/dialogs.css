@@ -107,10 +107,8 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 .dialog-sharelist {width:360px !important; margin-left:-180px !important; }
 
 	.dialog-sharelist ul li {
-		padding:5px;
-		background:rgba(255,255,255,0.5);
-		-webkit-border-radius:3px;
-		margin-bottom:2px}
+		background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
+		border-bottom:1px solid #177bbd; color:#fff;text-shadow: #125a8a 0px 1px 2px; -moz-border-radius:3px;}
 		
 	.dialog-sharelist li span { background:url(/icons/delete_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; opacity:0.5}
 	.dialog-sharelist li span:hover {opacity:1.0}
@@ -120,6 +118,16 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 	.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
 	
 	.dialog-sharelist p.invitedpeople { margin-bottom:10px; margin-top:80px}
+	
+	.dialog-sharelist p.small {
+		text-shadow: #fff 0px 1px 2px;
+		padding:6px;
+		-webkit-border-radius:3px;
+		border:1px solid #fff;
+		font-size:10px;
+		margin-top:6px;
+		background: #f3f4f6;
+	}
 	
 /* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
 
