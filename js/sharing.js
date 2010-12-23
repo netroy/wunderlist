@@ -49,7 +49,7 @@ sharing.init = function()
 	sharing.clickedSharingButton = false;
 
 	// Called on pressed sharing button
-	$('div#lists a div.sharep').live('click', function()
+	$('#listfunctions a.list-share').live('click', function()
 	{
 		if(Titanium.Network.online == true)
 		{
