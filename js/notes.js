@@ -57,7 +57,7 @@ $(function()
 			// If the note icon was clicked before and the last clicked note icon is the same as the icon click right now
 			if(notes.currentNoteIcon != undefined && notes.currentNoteIcon.parent().attr('id') == $(this).parent().attr('id'))
 			{
-				$('div#note a#cancel-note').click();
+				$('div#note a#save-note').click();
 				return false;
 			}
 		}
@@ -65,7 +65,7 @@ $(function()
 		// If there is a note opened and not saved and another note is clicked, just close it by canceling
 		if(notes.currentNoteIcon != undefined)
 		{
-			$('div#note a#cancel-note').click();
+			$('div#note a#save-note').click();
 		}
 
 		// If the sidebar is not opened open it
