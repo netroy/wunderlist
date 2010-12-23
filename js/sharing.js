@@ -41,7 +41,7 @@ sharing.init = function()
 			{
 				sharing.addedEmail = true;
 				$('#send_share_invitation').click();
-				setTimeout(function() {sharing.addedEmail = false}, 1000);
+				setTimeout(function() {sharing.addedEmail = false}, 300);
 			}
 		}
 	});
@@ -63,7 +63,7 @@ sharing.init = function()
 				shareList.empty();
 				$('.invitedpeople').remove();
 
-				var list_id = $(this).parent().attr('id');
+				var list_id = $('div#lists a.ui-state-disabled').attr('id');
 				sharing.deletedMails = new Array();
 
 				// Only request shared emails, if list is already shared
@@ -273,6 +273,8 @@ sharing.getSharedEmails = function(list_id)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							sharing.openShareListDialog();
+
+							console.log(response.emails);
 
 							var shareList      = $('.sharelistusers');
 							var shareListItems = shareList.children('li');
