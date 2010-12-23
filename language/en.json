@@ -168,5 +168,6 @@
 	"share_list_with_cloudapp": "Share this list with other with CloudApp",
 	"newsletter":               "Sign me up for the 6 Wunderkinder newsletter",
 	"shared_successfully":		"The list was shared successfully",
-	"shared_not_changed":		"No changes were made to the sharing options"
+	"shared_not_changed":		"No changes were made to the sharing options",
+	"shared_delete_success":	"The user was successfully deleted from the list"
 }

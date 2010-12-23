@@ -100,6 +100,9 @@ sharing.init = function()
 			$(this).parent().remove();
 			sharing.deletedMails.push(email);
 
+			list_id = $('div#lists a.ui-state-disabled').attr('id');
+			sharing.sendSharedList(list_id, 'delete');
+
 			if(shareListItems.length == 0)
 			{
 				$('p.invitedpeople').remove();
@@ -151,8 +154,13 @@ sharing.shareLists = function()
  *
  * @author Dennis Schneider
  */
-sharing.sendSharedList = function(list_id)
+sharing.sendSharedList = function(list_id, type)
 {
+	if(type == undefined)
+	{
+		type = 'share';
+	}
+
 	var collected_emails = new Array();
 	var emails           = $('#share-list-email').val().split(',');
 
@@ -209,7 +217,14 @@ sharing.sendSharedList = function(list_id)
 					switch(response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
-							showOKDialog(language.data.shared_successfully);
+							if(type == 'share')
+							{
+								showOKDialog(language.data.shared_successfully);
+							}
+							else
+							{
+								showOKDialog(language.data.shared_deleted_successfully);
+							}
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
@@ -273,8 +288,6 @@ sharing.getSharedEmails = function(list_id)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							sharing.openShareListDialog();
-
-							console.log(response.emails);
 
 							var shareList      = $('.sharelistusers');
 							var shareListItems = shareList.children('li');
