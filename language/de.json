@@ -165,5 +165,11 @@
 	"share_failure":			"Das Teilen der Liste ist fehlgeschlagen",
 	"share_list_with_cloudapp": "Die Liste über CloudApp mit anderen teilen",
 	"shared_successfully":		"Die Liste wurde erfolgreich geteilt",
-	"shared_not_changed":		"Es wurden keine Änderungen vorgenommen"
+	"shared_not_changed":		"Es wurden keine Änderungen vorgenommen",
+	"currently_shared_with":	"Aktuell geteilt mit",
+	"sharelist_info":			"Jetzt kannst du ganz einfach mit Freunden oder Kollegen Listen teilen. Trage einfach die entsprechende E-Mail unten ein. Du kannst den Zugriff auf die Liste hier auch bearbeiten. Viel Spass!",
+	"sharelist_hint":			"HINWEIS",
+	"sharelist_hint_text":		"Leute ohne wunderlist-Account bekommen eine normale Einladungs E-Mail. Du musst sie dann erneut einladen, wenn sie einen Account haben.",
+	"sharelist_button":			"Einladung verschicken"
+
 }

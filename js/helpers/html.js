@@ -5,10 +5,10 @@
  */
 function generateShareListDialogHTML()
 {
-	html =  '<p>Now you can share any list for collaboration with collegues or friends. Just add their email address to send an invitation to them. You can change the access to your list at any time on this screen. Have fun!'+
-			'<p class="small"><b>HINT</b>: People without a wunderlist account will get a normal invite mail. You will have to share the list again, when they signed up.</p>'+
+	html =  '<p>'+ language.data.sharelist_info +'</p>'+
+			'<p class="small"><b>'+ language.data.sharelist_hint +'</b>: '+ language.data.sharelist_hint_text +'</p>'+
 			'<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
-			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="send / save invitation" /></p></div>' +
+			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="'+ language.data.sharelist_button +'" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
 
 	return html;
@@ -32,7 +32,7 @@ function generateLoginRegisterDialogHTML()
 		'<input class="input-button register button-login" type="submit" id="loginsubmit" value="' + language.data.login + '" />' +
 		'<input class="input-button register" type="submit" id="registersubmit" value="' + language.data.register + '" />' +
 		'<input class="input-button" type="submit" id="cancelreg" value="' + language.data.no_thanks + '" />' +
-		'<img id="account-loader" src="images/ajax-loader.gif" />'+
+		'<img id="account-loader" src="images/ajax-loader.gif" />' +
 		'</div>' +
 		'<p class="error"></p>' +
         '<p class="pwd"><a id="forgot-pwd" href="#" target="_blank">' + language.data.forgot_password + '</a></p>' +

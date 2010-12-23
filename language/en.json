@@ -168,5 +168,10 @@
 	"share_list_with_cloudapp": "Share this list with other with CloudApp",
 	"newsletter":               "Sign me up for the 6 Wunderkinder newsletter",
 	"shared_successfully":		"The list was shared successfully",
-	"shared_not_changed":		"No changes were made to the sharing options"
+	"shared_not_changed":		"No changes were made to the sharing options",
+	"currently_shared_with":	"Currently Shared with",
+	"sharelist_info":			"Now you can share any list for collaboration with collegues or friends. Just add their email address to send an invitation to them. You can change the access to your list at any time on this screen. Have fun!",
+	"sharelist_hint":			"HINT",
+	"sharelist_hint_text":		"People without a wunderlist account will get a normal invite mail. You will have to share the list again, when they signed up.",
+	"sharelist_button":			"send invitation"
 }
