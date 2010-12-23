@@ -170,6 +170,7 @@
 	"sharelist_info":			"Jetzt kannst du ganz einfach mit Freunden oder Kollegen Listen teilen. Trage einfach die entsprechende E-Mail unten ein. Du kannst den Zugriff auf die Liste hier auch bearbeiten. Viel Spass!",
 	"sharelist_hint":			"HINWEIS",
 	"sharelist_hint_text":		"Leute ohne wunderlist-Account bekommen eine normale Einladungs E-Mail. Du musst sie dann erneut einladen, wenn sie einen Account haben.",
-	"sharelist_button":			"Einladung verschicken"
+	"sharelist_button":			"Einladung verschicken",
+	"shared_delete_success":	"Der Benutzer wurde erfolgreich aus der Liste entfernt"
 
 }
