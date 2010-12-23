@@ -41,7 +41,7 @@ sharing.init = function()
 			{
 				sharing.addedEmail = true;
 				$('#send_share_invitation').click();
-				setTimeout(function() {sharing.addedEmail = false}, 1000);
+				setTimeout(function() {sharing.addedEmail = false}, 300);
 			}
 		}
 	});
