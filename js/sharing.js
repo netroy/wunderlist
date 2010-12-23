@@ -15,8 +15,8 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl               = 'http://192.168.178.58/share';
-	sharing.sharedEmailsUrl        = 'http://192.168.178.58/share/emails';
+	sharing.shareUrl               = 'http://sync.wunderlist.net/share';
+	sharing.sharedEmailsUrl        = 'http://sync.wunderlist.net/share/emails';
 	sharing.shareListDialog        = null;
 	sharing.deletedMails           = new Array();
 	sharing.openedNoInternetDialog = false;

@@ -8,7 +8,7 @@ var delete_account_dialog;
 var logging_in = false;
 
 account.init = function() {
-	this.syncDomain 	   = 'http://192.168.178.58';
+	this.syncDomain 	   = 'http://sync.wunderlist.net';
 	this.registerUrl       = this.syncDomain + '/register';
 	this.loginUrl          = this.syncDomain + '/login';
 	this.forgotPasswordUrl = this.syncDomain + '/password';
