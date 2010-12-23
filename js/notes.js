@@ -50,7 +50,7 @@ $(function()
 	notes.cellotape.hide();
 			
 	// Click on Note Icon
-	$('li.more span.note').live('click', function()
+	$('ul#list li span.note').live('click', function()
 	{
 		if(sidebar_opened_status == "false") {
 			$(".togglesidebar").css("-webkit-transform","rotate(0deg)");
@@ -60,7 +60,7 @@ $(function()
 			sidebar_opened_status = "true";
 		}
 		
-		notes.noteIcons = $('li.more span.note');
+		notes.noteIcons = $('ul#list li span.note');
 		notes.listItems = $('div#lists');
 		notes.note      = $('#note textarea');
 		notes.cellotape = $('#cellotape');
@@ -86,7 +86,7 @@ $(function()
 	// Save the note
 	$('div#note a#save-note').live('click', function()
 	{
-		notes.noteIcons = $('li.more span.note');
+		notes.noteIcons = $('ul#list li span.note');
 		notes.listItems = $('div#lists');
 		notes.note      = $('#note textarea');
 
@@ -103,11 +103,11 @@ $(function()
 	// Save the note
 	$('div#note a#cancel-note').live('click', function()
 	{
-		notes.noteIcons = $('li.more span.note');
+		notes.noteIcons = $('ul#list li span.note');
 		notes.listItems = $('div#lists');
 		notes.note      = $('#note textarea');
 
-		var task_id   = notes.note.attr('id');
+		var task_id     = notes.note.attr('id');
 		var noteContent = wunderlist.getNoteForTask(task_id);
 
 		notes.noteIcons.removeClass("activenote");
