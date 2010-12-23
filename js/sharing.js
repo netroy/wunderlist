@@ -265,24 +265,27 @@ sharing.sendSharedList = function(list_id, type)
 							if(type == 'share')
 							{
 								$('div#lists a#' + offline_list_id + ' b').addClass('shared');
-								if(response.email != undefined && data['email'] == response.email)
+
+								show_ok = true;
+
+								for(var i = 0; i < collected_emails.length; i++)
 								{
-									showShareOwnEmailDialog();
-									// If there was only the own email shared, remove shared symbol
-									if(collected_emails.length == 1)
+									if(collected_emails[i] == data['email'])
 									{
-										$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
-										wunderlist.setListToUnShared(offline_list_id);
-									}
-									else
-									{
-										showOKDialog(language.data.shared_successfully);
+										showShareOwnEmailDialog();
+										// If there was only the own email shared, remove shared symbol
+										if(collected_emails.length == 1)
+										{
+											show_ok = false;
+											$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
+											wunderlist.setListToUnShared(offline_list_id);
+										}
+										break;			
 									}
 								}
-								else
-								{
+
+								if(show_ok == true)
 									showOKDialog(language.data.shared_successfully);
-								}
 							}
 							else
 							{
