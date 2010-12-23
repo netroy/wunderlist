@@ -68,7 +68,7 @@ generateListContentHTML = function(list_id, list_name)
  * @author Dennis Schneider
  * @author Daniel Marschner
  */
-generateTaskHTML = function(id, name, list_id, done, important, date)
+generateTaskHTML = function(id, name, list_id, done, important, date, note)
 {
 	var favourite;
 
@@ -105,7 +105,12 @@ generateTaskHTML = function(id, name, list_id, done, important, date)
 		html += '<span class="showdate"></span>';
 
 	html += '<span class="icon delete" title="' + language.data.delete_task + '"></span>';
-	html += '<span class="icon note" title="note"></span>';
+
+	if(note != '' && note != undefined)
+		html += '<span class="icon note activenote" title="note"></span>';
+	else
+		html += '<span class="icon note" title="note"></span>';
+	
 	html += '</li>';
 
 	return html;
