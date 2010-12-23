@@ -12,7 +12,7 @@ a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important;
 #newsletter-signup input { float: right; margin-right: 5px; }
 #newsletter-signup span { float: right; }
 
-#account-buttons { height: 135px; }
+#account-buttons { height:35px; margin-top:115px;}
 #account-buttons #account-loader { display: none; position: absolute; z-index: 100; bottom: 25px; right: 140px; }
 
 .ui-widget-overlay {
@@ -42,7 +42,7 @@ background:-webkit-gradient(linear, left center, right center, from(#d0d0d0), to
 .ui-dialog-titlebar-close:hover,  .ui-datepicker-prev:hover, .ui-datepicker-next:hover  {
 border:1px solid #ddd !important; background:#ccc; -webkit-border-radius:3px; cursor:pointer}
 
-.wunderlistlogo {width:139px;height:139px;background:url(/images/wunderlisticon.png); float:left;margin-top:-6px;margin-left:-10px}
+.wunderlistlogo {width:139px;height:139px;background:url(/images/wunderlisticon.png); position:absolute; top:20px;}
 
 .input-login {padding:8px;float:right;display:block;width:282px;margin-top:8px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
