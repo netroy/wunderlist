@@ -15,10 +15,11 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl        = 'http://192.168.178.58/share';
-	sharing.sharedEmailsUrl = 'http://192.168.178.58/share/emails';
-	sharing.shareListDialog = null;
-	sharing.deletedMails    = new Array();
+	sharing.shareUrl               = 'http://192.168.178.58/share';
+	sharing.sharedEmailsUrl        = 'http://192.168.178.58/share/emails';
+	sharing.shareListDialog        = null;
+	sharing.deletedMails           = new Array();
+	sharing.openedNoInternetDialog = false;
 
 	sharing.status_codes =
 	{
@@ -199,7 +200,6 @@ sharing.sendSharedList = function(list_id)
 		},
 		success: function(response_data, text, xhrobject)
 		{
-			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -263,7 +263,6 @@ sharing.getSharedEmails = function(list_id)
 		},
 		success: function(response_data, text, xhrobject)
 		{
-			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -278,8 +277,6 @@ sharing.getSharedEmails = function(list_id)
 							var shareList      = $('.sharelistusers');
 							var shareListItems = shareList.children('li');
 							shareListItems = shareList.children('li');
-
-							console.log(shareListItems.length);
 
 							if(response.emails != undefined && response.emails.length > 0)
 							{
@@ -346,7 +343,12 @@ sharing.openShareListDialog = function()
  */
 sharing.openNoInternetShareDialog = function()
 {
-	showErrorDialog('Sharing is only possible if you have an active internet connection');
+	if(sharing.openedNoInternetDialog == false)
+	{
+		sharing.openedNoInternetDialog = true;
+		showErrorDialog('Sharing is only possible if you have an active internet connection');
+		setTimeout(function() {sharing.openedNoInternetDialog = false}, 1000);
+	}
 }
 
 // Load on start
