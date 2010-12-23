@@ -137,8 +137,6 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 			},
 			success: function(response_data, text, xhrobject)
 			{
-				console.log(response_data);
-				
 				if(response_data != '' && text != '' && xhrobject != undefined)
 				{
 					switchSyncSymbol(xhrobject.status);
@@ -507,6 +505,34 @@ sync.deleteElementsAfterSync = function(sync_table)
 				if(wunderlist.elementIsDeleted(sync_table.required_tasks[i], 'tasks'))
 				{
 					wunderlist.deleteElementForever(sync_table.required_tasks[i], 'tasks');
+				}
+			}
+		}
+	}
+
+	if(sync_table.new_lists != undefined)
+	{
+		if(sync_table.new_lists.length > 0)
+		{
+			for(var i = 0, max = sync_table.new_lists.length; i < max; i++)
+			{
+				if(wunderlist.elementIsDeleted(sync_table.new_lists[i], 'lists'))
+				{
+					wunderlist.deleteElementForever(sync_table.new_lists[i], 'lists');
+				}
+			}
+		}
+	}
+
+	if(sync_table.new_tasks != undefined)
+	{
+		if(sync_table.new_tasks.length > 0)
+		{
+			for(var i = 0, max = sync_table.new_tasks.length; i < max; i++)
+			{
+				if(wunderlist.elementIsDeleted(sync_table.new_tasks[i], 'tasks'))
+				{
+					wunderlist.deleteElementForever(sync_table.new_tasks[i], 'tasks');
 				}
 			}
 		}

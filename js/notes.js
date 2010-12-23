@@ -51,11 +51,24 @@ $(function()
 	// Click on Note Icon
 	$('ul#list li span.note').live('click', function()
 	{
+		// If the textarea is displayed right now
+		if($('#note textarea').css('display') == 'block')
+		{
+			// If the note icon was clicked before and the last clicked note icon is the same as the icon click right now
+			if(notes.currentNoteIcon != undefined && notes.currentNoteIcon.parent().attr('id') == $(this).parent().attr('id'))
+			{
+				$('div#note a#cancel-note').click();
+				return false;
+			}
+		}
+
+		// If there is a note opened and not saved and another note is clicked, just close it by canceling
 		if(notes.currentNoteIcon != undefined)
 		{
 			$('div#note a#cancel-note').click();
 		}
 
+		// If the sidebar is not opened open it
 		if(sidebar_opened_status == "false")
 		{
 			$(".togglesidebar").css("-webkit-transform","rotate(0deg)");
@@ -142,7 +155,7 @@ $(function()
 		{
 			saveNoteCommand = true;
 			$('div#note a#save-note').click();
-			setTimeout(function() {saveNoteCommand = false}, 1000);
+			setTimeout(function() {saveNoteCommand = false}, 100);
 		}
 	});
 });
