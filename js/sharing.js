@@ -77,7 +77,7 @@ sharing.init = function()
 				}
 
 				$('#share-list-email').blur();
-				setTimeout(function() {sharing.clickedSharingButton = false}, 1000);
+				setTimeout(function() {sharing.clickedSharingButton = false}, 300);
 			}
 		}
 		else
@@ -132,7 +132,7 @@ sharing.init = function()
 				$('p.invitedpeople').remove();
 			}
 
-			setTimeout(function() {sharing.deletedEmail = false}, 1000)
+			setTimeout(function() {sharing.deletedEmail = false}, 300)
 		}
 	});
 
@@ -147,7 +147,7 @@ sharing.init = function()
 			sharing.shareLists();
 			closeDialog(sharing.shareListDialog);
 			
-			setTimeout(function() {sharing.sendInvitation = false}, 5000);
+			setTimeout(function() {sharing.sendInvitation = false}, 2000);
 		}
 	});
 }
@@ -159,6 +159,12 @@ sharing.init = function()
  */
 sharing.shareLists = function()
 {
+	if($('#share-list-email').val() == '')
+	{
+		showErrorDialog(language.data.invalid_email);
+		return false;
+	}
+
 	list_id = $('div#lists a.ui-state-disabled').attr('id');
 	
 	// If list is not shared, set it to shared and sync it
