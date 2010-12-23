@@ -321,7 +321,7 @@ sharing.getSharedEmails = function(list_id)
 							{
 								if(shareListItems.length == 0)
 								{
-									shareList.before("<p class='invitedpeople'><b>Currently invited people</b></br></p>");
+									shareList.before("<p class='invitedpeople'><b>"+ language.data.currently_shared_with +":</b></br></p>");
 								}
 								
 								for(value in response.emails)

@@ -119,7 +119,7 @@ function showDeletedDialog(title) {
 function showCloudAppDialog() {
 	if(cloudAppDialog == undefined)
 	{
-		cloudAppDialog = $('<div><p>CloudApp allows you to share your tasks from anywhere in the world through an intuitive web interface. If you click yes, a secret URL will be generated you can send anyone of your colleagues or friends. They don\'t need a wunderlist or CloudApp account!<br><br>But be sure: If anyone knows the generated URL, your tasks are public!</p></div>').dialog({
+		cloudAppDialog = $('<div><p>' + language.data.cloudapp_1 + '<br><br>' + language.data.cloudapp_2 + '</p></div>').dialog({
 			autoOpen  : true,
 			draggable : false,
 			modal     : false,

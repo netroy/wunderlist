@@ -160,6 +160,8 @@
 	"startday":					"Startday of the week",
 	"sunday":					"Sunday",
 	"monday":					"Monday",
+	"cloudapp_1":				"This feature allows you to share your list with CloudApp. If you click yes, your list gets uploaded to CloudApp and a secret URL will be generated. You can use the URL to share your tasks easily with others who don't have a wunderlist account or share them public on Twitter.",
+	"cloudapp_2":				"HINT: This is permanent. Anyone who knows the URL will be able to see your current list. It gets deleted automatically after 30 days.",
 	"exit_wunderlist":			"Exit wunderlist",
 	"empty_list":				"You want to share an empty list?",
 	"try_again_later":			"Mmmh, something went wrong. Maybe you try it again in a few minutes?",
@@ -169,6 +171,11 @@
 	"newsletter":               "Sign me up for the 6 Wunderkinder newsletter",
 	"shared_successfully":		"The list was shared successfully",
 	"shared_not_changed":		"No changes were made to the sharing options",
-	"shared_delete_success":	"The email was successfully deleted from the list",
+	"currently_shared_with":	"Currently Shared with",
+	"sharelist_info":			"Now you can share any list for collaboration with collegues or friends. Just add their email address to send an invitation to them. You can change the access to your list at any time on this screen. Have fun!",
+	"sharelist_hint":			"HINT",
+	"sharelist_hint_text":		"People without a wunderlist account will get a normal invite mail. You will have to share the list again, when they signed up.",
+	"sharelist_button":			"send invitation",
+	"shared_delete_success":	"The user was successfully deleted from the list",
 	"delete_shared_email":		"Do you really want to delete the email from your shared list?"
 }
