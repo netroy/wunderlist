@@ -69,6 +69,11 @@ sync.validateEmail = function(email)
  */
 sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 {
+	if(list_id == undefined)
+	{
+		list_id = 0;
+	}
+
 	// Should the user be logged out after sync?
 	if(logOutAfterSync == undefined)
 	{
@@ -224,6 +229,11 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
  */
 sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list_id)
 {
+	if(list_id == undefined)
+	{
+		list_id = 0;
+	}
+
 	// SYNC STEP 2
 	if(response_step1.sync_table != undefined)
 	{
@@ -505,34 +515,6 @@ sync.deleteElementsAfterSync = function(sync_table)
 				if(wunderlist.elementIsDeleted(sync_table.required_tasks[i], 'tasks'))
 				{
 					wunderlist.deleteElementForever(sync_table.required_tasks[i], 'tasks');
-				}
-			}
-		}
-	}
-
-	if(sync_table.new_lists != undefined)
-	{
-		if(sync_table.new_lists.length > 0)
-		{
-			for(var i = 0, max = sync_table.new_lists.length; i < max; i++)
-			{
-				if(wunderlist.elementIsDeleted(sync_table.new_lists[i], 'lists'))
-				{
-					wunderlist.deleteElementForever(sync_table.new_lists[i], 'lists');
-				}
-			}
-		}
-	}
-
-	if(sync_table.new_tasks != undefined)
-	{
-		if(sync_table.new_tasks.length > 0)
-		{
-			for(var i = 0, max = sync_table.new_tasks.length; i < max; i++)
-			{
-				if(wunderlist.elementIsDeleted(sync_table.new_tasks[i], 'tasks'))
-				{
-					wunderlist.deleteElementForever(sync_table.new_tasks[i], 'tasks');
 				}
 			}
 		}

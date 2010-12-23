@@ -195,6 +195,7 @@ account.login = function() {
 			data: data,
 			success: function(response_data, text, xhrobject)
 			{
+				console.log(response_data);
 				if(xhrobject.status == 0)
 					showErrorDialog(language.data.no_internet);
 				else if(xhrobject.status == 200)
