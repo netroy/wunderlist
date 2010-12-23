@@ -16,10 +16,10 @@ var notes = notes || {};
 notes.hideNoteElements = function()
 {
 	notes.listItems.toggle();
-	notes.note.toggle();
 	$('div#note a#cancel-note').hide();
 	$('div#note a#save-note').hide();
-	$('div#cellotape').hide();
+	$('#note textarea').hide();
+	notes.cellotape.hide();
 }
 
 /**
@@ -32,7 +32,6 @@ notes.showNoteElements = function()
 	notes.listItems.hide();
 	notes.note.show();
 	notes.cellotape.show();
-	notes.noteIcons.removeClass("activenote");
 	$('div#note a#cancel-note').show();
 	$('div#note a#save-note').show();
 }
@@ -40,7 +39,7 @@ notes.showNoteElements = function()
 // Loaded on start
 $(function()
 {
-	notes.noteIcons = $('li.more span.note');
+	notes.noteIcons = $('ul#list li span.note');
 	notes.listItems = $('div#lists');
 	notes.note      = $('#note textarea');
 	notes.cellotape = $('#cellotape');
@@ -48,11 +47,17 @@ $(function()
 	// Hide Note initially
 	notes.note.hide();
 	notes.cellotape.hide();
-			
+
 	// Click on Note Icon
 	$('ul#list li span.note').live('click', function()
 	{
-		if(sidebar_opened_status == "false") {
+		if(notes.currentNoteIcon != undefined)
+		{
+			$('div#note a#cancel-note').click();
+		}
+
+		if(sidebar_opened_status == "false")
+		{
 			$(".togglesidebar").css("-webkit-transform","rotate(0deg)");
 			$("#sidebar").stop().animate({right: '0'});
 			$("#lists").stop().animate({right: '0'});
@@ -60,27 +65,20 @@ $(function()
 			sidebar_opened_status = "true";
 		}
 		
-		notes.noteIcons = $('ul#list li span.note');
-		notes.listItems = $('div#lists');
-		notes.note      = $('#note textarea');
-		notes.cellotape = $('#cellotape');
-		
-		var task_id = $(this).parent().attr('id');
+		notes.noteIcons       = $('ul#list li span.note');
+		notes.listItems       = $('div#lists');
+		notes.note            = $('#note textarea');
+		notes.cellotape       = $('#cellotape');
+		notes.currentNoteIcon = $(this);
+
+		var task_id = notes.currentNoteIcon.parent().attr('id');
 		notes.note.attr('id', task_id);
 		var noteContent = wunderlist.getNoteForTask(task_id);
+
 		notes.note.val(noteContent);
+		notes.showNoteElements();
 		
-		if($(this).hasClass("activenote"))
-		{
-			notes.hideNoteElements();
-			$(this).toggleClass("activenote");
-		} 
-		else 
-		{
-			notes.showNoteElements();
-			notes.noteIcons.removeClass("activenote");
-			$(this).addClass("activenote");		
-		}
+		$(this).addClass("activenote");
 	});
 
 	// Save the note
@@ -92,9 +90,16 @@ $(function()
 
 		var note_text = notes.note.val();
 		var task_id   = notes.note.attr('id');
-		wunderlist.saveNoteForTask(note_text, task_id);
 
-		notes.noteIcons.removeClass("activenote");
+		if(note_text != '')
+		{
+			wunderlist.saveNoteForTask(note_text, task_id);
+		}
+		else
+		{
+			notes.currentNoteIcon.removeClass('activenote');
+		}
+
 		notes.hideNoteElements();
 
 		timer.resume();
@@ -109,8 +114,13 @@ $(function()
 
 		var task_id     = notes.note.attr('id');
 		var noteContent = wunderlist.getNoteForTask(task_id);
+		var note_text   = notes.note.val();
+		
+		if(noteContent == '')
+		{
+			notes.currentNoteIcon.removeClass('activenote');
+		}
 
-		notes.noteIcons.removeClass("activenote");
 		notes.note.val(noteContent);
 		notes.hideNoteElements();
 

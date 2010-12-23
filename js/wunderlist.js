@@ -23,7 +23,7 @@ $(function()
  */
 wunderlist.initAppTitle = function()
 {
-	document.title = 'wunderlist ' + Titanium.App.getVersion();
+	document.title = 'wunderlist ';
 }
 
 /**
@@ -227,7 +227,7 @@ wunderlist.fetchData = function(resultTaskSet)
 		for(var i = 0; i < resultTaskSet.fieldCount(); i++)
 			task[resultTaskSet.fieldName(i)] = resultTaskSet.field(i);
 
-		html += generateTaskHTML(task['task_id'], task['task_name'], task['list_id'], task['done'], task['important'], task['date']);
+		html += generateTaskHTML(task['task_id'], task['task_name'], task['list_id'], task['done'], task['important'], task['date'], task['note']);
 
 		resultTaskSet.next();
 	}
@@ -278,7 +278,7 @@ wunderlist.liveSearch = function(search)
             for(var i = 0, max = resultSet.fieldCount(); i < max; i++)
                 values[resultSet.fieldName(i)] = resultSet.field(i);
 
-            var task = generateTaskHTML(values['id'], values['name'], values['list_id'], values['done'], values['important'], values['date']);
+            var task = generateTaskHTML(values['id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']);
 
             $("#content ul.mainlist").append(task);
 
@@ -846,7 +846,7 @@ wunderlist.getListById = function(list_id)
 	};
 
 	// Select the list tasks
-	var sql  = "SELECT tasks.id AS task_id, tasks.online_id AS online_id, tasks.name AS task_name, tasks.done, tasks.important, tasks.date, tasks.position, tasks.list_id ";
+	var sql  = "SELECT tasks.id AS task_id, tasks.online_id AS online_id, tasks.name AS task_name, tasks.done, tasks.important, tasks.date, tasks.position, tasks.list_id, tasks.note ";
 	    sql += "FROM tasks ";
 	    sql += "WHERE tasks.list_id = '" + list['id'] + "' AND tasks.done = 0 AND tasks.deleted = 0 ";
 	    sql += "ORDER BY tasks.important DESC, tasks.position ASC";
@@ -1123,7 +1123,7 @@ wunderlist.getLastDoneTasks = function(list_id)
 			if (wunderlist.isArray(doneListsTasks[htmlId]) == false)
 				doneListsTasks[htmlId] = [];
 
-	        doneListsTasks[htmlId].push(generateTaskHTML(values['task_id'], values['task_name'], values['list_id'], values['done'], values['important'], values['date']));
+	        doneListsTasks[htmlId].push(generateTaskHTML(values['task_id'], values['task_name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
 
 	        resultSet.next();
 		}
