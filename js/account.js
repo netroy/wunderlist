@@ -345,10 +345,10 @@ account.register = function(onlyRegister)
 	data['email']    = $('input#login-email').val().toLowerCase();
 	data['password'] = $.md5($('input#login-password').val());
 	
-	var newsletter = parseInt($('input#login-newsletter').val());
+	var newsletter = $('input#login-newsletter').attr('checked');
 	
-	if (newsletter == 1)
-		data['newsletter'] = newsletter;
+	if (newsletter == true)
+		data['newsletter'] = 1;
 
 	if (sync.validateEmail(data['email']))
 	{

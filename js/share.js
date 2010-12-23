@@ -94,13 +94,13 @@ share.share_with_cloudapp = function()
 			var new_task = new Array();
 			
 			// Add name
-			new_task.push(value.name);
+			new_task.push(unescape(value.name));
 			
 			// Add date
 			new_task.push(value.date);
 			
 			// Add note
-			new_task.push(value.note);
+			new_task.push(unescape(value.note));
 			
 			data['tasks'].push(new_task);
 		});
@@ -166,7 +166,7 @@ share.print = function()
 		$.each(tasks, function(key, value)
 		{
 			// Add task
-			html += '<li><span></span>' + value.name;
+			html += '<li><span></span>' + unescape(value.name);
 			
 			// Add date
 			if (value.date != '')
@@ -174,7 +174,7 @@ share.print = function()
 			
 			// Add note
 			if (value.note != '')
-				html += '<p>' + value.note.replace(/\n/g,'<br/>') + '</p>';
+				html += '<p>' + unescape(value.note.replace(/\n/g,'<br/>')) + '</p>';
 			
 			html += '</li>';
 		});
