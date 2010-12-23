@@ -169,5 +169,6 @@
 	"newsletter":               "Sign me up for the 6 Wunderkinder newsletter",
 	"shared_successfully":		"The list was shared successfully",
 	"shared_not_changed":		"No changes were made to the sharing options",
-	"shared_delete_success":	"The user was successfully deleted from the list"
+	"shared_delete_success":	"The email was successfully deleted from the list",
+	"delete_shared_email":		"Do you really want to delete the email from your shared list?"
 }

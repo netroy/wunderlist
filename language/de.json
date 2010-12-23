@@ -166,5 +166,6 @@
 	"share_list_with_cloudapp": "Die Liste über CloudApp mit anderen teilen",
 	"shared_successfully":		"Die Liste wurde erfolgreich geteilt",
 	"shared_not_changed":		"Es wurden keine Änderungen vorgenommen",
-	"shared_delete_success":	"Der Benutzer wurde erfolgreich aus der Liste entfernt"
+	"shared_delete_success":	"Die E-Mail wurde erfolgreich aus der Liste entfernt",
+	"delete_shared_email":		"Willst du diese E-Mail-Adresse wirklich von deiner geteilten Liste entfernen?"
 }
