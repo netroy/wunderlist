@@ -12,7 +12,7 @@ a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important;
 #newsletter-signup input { float: right; margin-right: 5px; }
 #newsletter-signup span { float: right; }
 
-#account-buttons { margin-top: 80px; height:65px}
+#account-buttons { margin-top: 80px; height:5px}
 #account-buttons #account-loader { display: none; position: absolute; z-index: 100; bottom: 25px; right: 140px; }
 
 .ui-widget-overlay {
