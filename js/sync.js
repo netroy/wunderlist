@@ -407,7 +407,10 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list
 			// Show Notifications
 			$.each(sync.notifyListnames, function(key, item)
 			{
-				message += 'Updated the list "' + unescape(item) + '"\n';
+				if(item != undefined)
+				{
+					message += 'Updated the list "' + unescape(item) + '"\n';
+				}
 			});
 
 			if(sync_table_step1.new_tasks != undefined && sync_table_step1.new_lists != undefined)
