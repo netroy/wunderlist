@@ -139,6 +139,7 @@ height:26px}
 #sidebar div.savep:hover {opacity:1.0}
 
 #sidebar b.inbox {padding-left:24px; background:url(/icons/inbox.png) no-repeat; background-position:0px 0px;}
+#sidebar b.shared {padding-left:24px; background:url(/icons/sharelist.png) no-repeat; background-position:0px 0px;}
 
 #sidebar .list {
 cursor:pointer;
@@ -184,6 +185,7 @@ font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
 #sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/edit_white.png)}
 #sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/icons/editdone_white.png)}
 #sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-position:0px -14px}
+#sidebar .ui-state-disabled b.shared , #sidebar .ui-dropped-disabled b.shared {background-position:0px -14px}
 
 #sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {opacity:0.5}
 #sidebar .ui-state-disabled div:hover , #sidebar .ui-dropped-disabled div:hover {opacity:1.0}
