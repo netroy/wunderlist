@@ -5,7 +5,8 @@
  */
 function generateShareListDialogHTML()
 {
-	html =  '<p>Sharing is caring! Now you can share any list for collaboration with collegues or friends. Just add their email address to send an invitation to them. You can change the access to your list at any time on this screen. Have fun!</p>'+
+	html =  '<p>Now you can share any list for collaboration with collegues or friends. Just add their email address to send an invitation to them. You can change the access to your list at any time on this screen. Have fun!'+
+			'<p class="small"><b>HINT</b>: People without a wunderlist account will get a normal invite mail. You will have to share the list again, when they signed up.</p>'+
 			'<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
 			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="send / save invitation" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
