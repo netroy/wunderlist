@@ -23,7 +23,7 @@ $(function()
  */
 wunderlist.initAppTitle = function()
 {
-	document.title = 'wunderlist ' + Titanium.App.getVersion();
+	document.title = 'wunderlist ';
 }
 
 /**
