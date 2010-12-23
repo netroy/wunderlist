@@ -110,7 +110,6 @@ sharing.init = function()
 						},
 						'Yes' : function() {
 							var email = $.trim($('.dialog-sharelist li span').parent().text());
-							console.log(email);
 							sharing.deletedMails.push(email);
 							var list_id = $('div#lists a.ui-state-disabled').attr('id');
 							sharing.sendSharedList(list_id, 'delete');
