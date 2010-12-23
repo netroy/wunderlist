@@ -163,7 +163,7 @@
 	"cloudapp_1":				"This feature allows you to share your list with CloudApp. If you click yes, your list gets uploaded to CloudApp and a secret URL will be generated. You can use the URL to share your tasks easily with others who don't have a wunderlist account or share them public on Twitter.",
 	"cloudapp_2":				"HINT: This is permanent. Anyone who knows the URL will be able to see your current list. It gets deleted automatically after 30 days.",
 	"exit_wunderlist":			"Exit wunderlist",
-	"empty_list":				"You want to share an empty list?",
+	"empty_list":				"It is not possible to send or share an empty list",
 	"try_again_later":			"Mmmh, something went wrong. Maybe you try it again in a few minutes?",
 	"share_denied":				"The sharing of the list was denied. Maybe you are not the owner of the list.",
 	"share_failure":			"The sharing of the list failed",

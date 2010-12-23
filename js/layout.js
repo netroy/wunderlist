@@ -192,7 +192,7 @@ $(document).ready(function() {
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn() == true)
 		{
-			if(syncShortcutListener == 0)
+			if(syncShortcutListener == 0 && sync.isSyncing == false)
 			{
 				timer.stop();
 				sync.fireSync();
