@@ -15,8 +15,8 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl               = 'http://192.168.178.58/share';
-	sharing.sharedEmailsUrl        = 'http://192.168.178.58/share/emails';
+	sharing.shareUrl               = 'https://sync.wunderlist.net/share';
+	sharing.sharedEmailsUrl        = 'https://sync.wunderlist.net/share/emails';
 	sharing.shareListDialog        = null;
 	sharing.deletedMails           = new Array();
 	sharing.openedNoInternetDialog = false;
@@ -94,14 +94,37 @@ sharing.init = function()
 		{
 			sharing.deletedEmail = true;
 
-			var shareListItems = $('.sharelistusers').children('li');
-			var email          = $.trim($(this).parent().text());
+			var shareListItems      = $('.sharelistusers').children('li');
 
-			$(this).parent().remove();
-			sharing.deletedMails.push(email);
-
-			list_id = $('div#lists a.ui-state-disabled').attr('id');
-			sharing.sendSharedList(list_id, 'delete');
+			if(sharing.deleteSharedEmail == undefined)
+			{
+				sharing.deleteSharedEmail = $('<div></div>').dialog({
+					autoOpen  : true,
+					draggable : false,
+					modal     : false,
+					title     : language.data.delete_shared_email,
+					buttons   : {
+						'No'  : function() {
+							$(this).dialog('close');
+						},
+						'Yes' : function() {
+							var email = $.trim($('.dialog-sharelist li span').parent().text());
+							console.log(email);
+							sharing.deletedMails.push(email);
+							var list_id = $('div#lists a.ui-state-disabled').attr('id');
+							sharing.sendSharedList(list_id, 'delete');
+							sharing.deletedMails = new Array();
+							if($('.sharelistusers').children('li').length == 0)
+							{
+								$('.invitedpeople').remove();
+							}
+							$(this).dialog('close');
+						}
+					}
+				});
+			}
+			else
+				openDialog(sharing.deleteSharedEmail);
 
 			if(shareListItems.length == 0)
 			{
@@ -223,7 +246,8 @@ sharing.sendSharedList = function(list_id, type)
 							}
 							else
 							{
-								showOKDialog(language.data.shared_deleted_successfully);
+								$('.dialog-sharelist li span').parent().remove();
+								showDeletedDialog(language.data.shared_delete_success);
 							}
 							break;
 

@@ -176,5 +176,6 @@
 	"sharelist_hint":			"HINT",
 	"sharelist_hint_text":		"People without a wunderlist account will get a normal invite mail. You will have to share the list again, when they signed up.",
 	"sharelist_button":			"send invitation",
-	"shared_delete_success":	"The user was successfully deleted from the list"
+	"shared_delete_success":	"The user was successfully deleted from the list",
+	"delete_shared_email":		"Do you really want to delete the email from your shared list?"
 }

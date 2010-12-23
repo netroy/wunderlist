@@ -1,5 +1,6 @@
 var confirmationDialog;
 var okDialog;
+var deleteDialog;
 var whileSyncDialog;
 var cloudAppDialog;
 
@@ -66,6 +67,7 @@ function showConfirmationDialog() {
  * @author Dennis Schneider
  */
 function showOKDialog(title) {
+
 	if(okDialog == undefined)
 	{
 		okDialog = $('<div></div>').dialog({
@@ -82,6 +84,31 @@ function showOKDialog(title) {
 	}
 	else
 		openDialog(okDialog);
+}
+
+/**
+ * Show an ok dialog deleting a shared list user
+ *
+ * @author Dennis Schneider
+ */
+function showDeletedDialog(title) {
+
+	if(deleteDialog == undefined)
+	{
+		deleteDialog = $('<div></div>').dialog({
+			autoOpen: true,
+			draggable: false,
+			modal: false,
+			title: title,
+			buttons: {
+				'OK': function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+	}
+	else
+		openDialog(deleteDialog);
 }
 
 /**

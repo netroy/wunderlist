@@ -189,7 +189,7 @@ share.print = function()
 		else
 			var file_url = 'file:///';
 
-		Titanium.Desktop.openURL('file://' + encodeURI(file));
+		Titanium.Desktop.openURL(file_url + encodeURI(file));
 	}
 	else
 	{

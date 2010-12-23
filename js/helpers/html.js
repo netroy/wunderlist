@@ -53,7 +53,14 @@ generateListContentHTML = function(list_id, list_name)
 {
 	var html = '';
 
-	html +=  "<div id='listfunctions'><a rel='share this list' class='list-share'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
+	if(list_id != 1)
+	{
+		html +=  "<div id='listfunctions'><a rel='share this list' class='list-share'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
+	}
+	else
+	{
+		html +=  "<div id='listfunctions'><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
+	}
 	html += "<h1>" + unescape(list_name) + "</h1>";
 	html += "<div class='add'>";
 	html += "<input type='text' class='input-add' placeholder='" + language.data.add_task + "' />";
