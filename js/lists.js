@@ -132,11 +132,11 @@ function saveList(listElement)
 	var listElementInput = listElement.children('input');
     var listElementName  = convertStringForDB(listElementInput.val());
 
-	if(listElement.hasClass('ui-state-disabled') && listElementName != '')
-		$('#content h1').text(unescape(listElementName));
-
 	if(listElementName == '')
 		listElementName = language.data.new_list;
+
+	if(listElement.hasClass('ui-state-disabled') && listElementName != '')
+		$('#content h1').text(unescape(listElementName));
 
 	wunderlist.updateList(listElement.attr("id"), listElementName);
 
@@ -364,8 +364,6 @@ $(function() {
     $("a.list").live('mouseover', function() {
     	var countInput = $(this).children('input').length;
 
-		$(this).children('.sharep').show();
-
 		if(countInput == 0)
 			$(this).children('.editp').show();
 
@@ -376,8 +374,6 @@ $(function() {
     // Hide option buttons on "mouseout"
 	$("a.list").live('mouseout', function() {
     	var countInput = $(this).children('input').length;
-
-		$(this).children('.sharep').hide();
 
 		$(this).children('.editp').hide();
 

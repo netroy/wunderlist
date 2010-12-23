@@ -15,10 +15,11 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl        = 'http://192.168.178.58/share';
-	sharing.sharedEmailsUrl = 'http://192.168.178.58/share/emails';
-	sharing.shareListDialog = null;
-	sharing.deletedMails    = new Array();
+	sharing.shareUrl               = 'http://192.168.178.58/share';
+	sharing.sharedEmailsUrl        = 'http://192.168.178.58/share/emails';
+	sharing.shareListDialog        = null;
+	sharing.deletedMails           = new Array();
+	sharing.openedNoInternetDialog = false;
 
 	sharing.status_codes =
 	{
@@ -40,7 +41,7 @@ sharing.init = function()
 			{
 				sharing.addedEmail = true;
 				$('#send_share_invitation').click();
-				setTimeout(function() {sharing.addedEmail = false}, 1000);
+				setTimeout(function() {sharing.addedEmail = false}, 300);
 			}
 		}
 	});
@@ -48,7 +49,7 @@ sharing.init = function()
 	sharing.clickedSharingButton = false;
 
 	// Called on pressed sharing button
-	$('div#lists a div.sharep').live('click', function()
+	$('#listfunctions a.list-share').live('click', function()
 	{
 		if(Titanium.Network.online == true)
 		{
@@ -62,7 +63,7 @@ sharing.init = function()
 				shareList.empty();
 				$('.invitedpeople').remove();
 
-				var list_id = $(this).parent().attr('id');
+				var list_id = $('div#lists a.ui-state-disabled').attr('id');
 				sharing.deletedMails = new Array();
 
 				// Only request shared emails, if list is already shared
@@ -98,6 +99,9 @@ sharing.init = function()
 
 			$(this).parent().remove();
 			sharing.deletedMails.push(email);
+
+			list_id = $('div#lists a.ui-state-disabled').attr('id');
+			sharing.sendSharedList(list_id, 'delete');
 
 			if(shareListItems.length == 0)
 			{
@@ -150,8 +154,13 @@ sharing.shareLists = function()
  *
  * @author Dennis Schneider
  */
-sharing.sendSharedList = function(list_id)
+sharing.sendSharedList = function(list_id, type)
 {
+	if(type == undefined)
+	{
+		type = 'share';
+	}
+
 	var collected_emails = new Array();
 	var emails           = $('#share-list-email').val().split(',');
 
@@ -199,7 +208,6 @@ sharing.sendSharedList = function(list_id)
 		},
 		success: function(response_data, text, xhrobject)
 		{
-			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -209,7 +217,14 @@ sharing.sendSharedList = function(list_id)
 					switch(response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
-							showOKDialog(language.data.shared_successfully);
+							if(type == 'share')
+							{
+								showOKDialog(language.data.shared_successfully);
+							}
+							else
+							{
+								showOKDialog(language.data.shared_deleted_successfully);
+							}
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
@@ -263,7 +278,6 @@ sharing.getSharedEmails = function(list_id)
 		},
 		success: function(response_data, text, xhrobject)
 		{
-			console.log(response_data);
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)
@@ -278,8 +292,6 @@ sharing.getSharedEmails = function(list_id)
 							var shareList      = $('.sharelistusers');
 							var shareListItems = shareList.children('li');
 							shareListItems = shareList.children('li');
-
-							console.log(shareListItems.length);
 
 							if(response.emails != undefined && response.emails.length > 0)
 							{
@@ -334,7 +346,7 @@ sharing.openShareListDialog = function()
 {
 	if(sharing.shareListDialog == undefined)
 	{
-		sharing.shareListDialog = generateDialog('Share List', generateShareListDialogHTML(), 'dialog-sharelist')
+		sharing.shareListDialog = generateDialog('Sharing is caring!', generateShareListDialogHTML(), 'dialog-sharelist')
 	}
 	openDialog(sharing.shareListDialog);
 }
@@ -346,7 +358,12 @@ sharing.openShareListDialog = function()
  */
 sharing.openNoInternetShareDialog = function()
 {
-	showErrorDialog('Sharing is only possible if you have an active internet connection');
+	if(sharing.openedNoInternetDialog == false)
+	{
+		sharing.openedNoInternetDialog = true;
+		showErrorDialog('Sharing is only possible if you have an active internet connection');
+		setTimeout(function() {sharing.openedNoInternetDialog = false}, 1000);
+	}
 }
 
 // Load on start
