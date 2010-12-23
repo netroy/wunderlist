@@ -145,7 +145,7 @@ wunderlist.truncateDatabase = function()
  */
 wunderlist.initLists = function()
 {
-	var listsResultSet = this.database.execute("SELECT lists.id, lists.name, lists.inbox, (SELECT COUNT(tasks.id) FROM tasks WHERE tasks.list_id = lists.id AND deleted = 0 AND done = 0) as taskCount FROM lists WHERE lists.deleted = 0 ORDER BY lists.inbox DESC, lists.position ASC");
+	var listsResultSet = this.database.execute("SELECT lists.id, lists.name, lists.inbox, (SELECT COUNT(tasks.id) FROM tasks WHERE tasks.list_id = lists.id AND deleted = 0 AND done = 0) as taskCount, shared FROM lists WHERE lists.deleted = 0 ORDER BY lists.inbox DESC, lists.position ASC");
 
 	 $('div#lists').html('');
 
@@ -155,15 +155,27 @@ wunderlist.initLists = function()
 			'id':			listsResultSet.field(0),
 			'name':			unescape(listsResultSet.field(1)),
 			'inbox':		listsResultSet.field(2),
-			'taskCount':	listsResultSet.field(3)
+			'taskCount':	listsResultSet.field(3),
+			'shared':       listsResultSet.field(4)
 		};
 
 		var html = '';
 
 		if(list['inbox'] == 1)
+		{
  			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='editp'></div></div><b class='inbox'>" + list['name'] + "</b></a>";
+		}
  		else
- 			html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b>" + list['name'] + "</b></a>";
+		{
+			if(list['shared'] == 0)
+			{
+				html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b>" + list['name'] + "</b></a>";
+			}
+			else
+			{
+				html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b class='shared'>" + list['name'] + "</b></a>";
+			}
+		}
 
 		$("#lists").append(html);
 
