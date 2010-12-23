@@ -213,6 +213,8 @@ sharing.sendSharedList = function(list_id, type)
 		}
 	}
 
+	offline_list_id = list_id;
+
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
 	data['email']    = user_credentials['email'];
@@ -242,11 +244,17 @@ sharing.sendSharedList = function(list_id, type)
 						case sharing.status_codes.SHARE_SUCCESS:
 							if(type == 'share')
 							{
+								$('div#lists a#' + offline_list_id + ' b').addClass('shared');
 								showOKDialog(language.data.shared_successfully);
 							}
 							else
 							{
 								$('.dialog-sharelist li span').parent().remove();
+								if($('.sharelistusers').children('li').length == 0)
+								{
+									$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
+									wunderlist.setListToUnShared(offline_list_id);
+								}
 								showDeletedDialog(language.data.shared_delete_success);
 							}
 							break;

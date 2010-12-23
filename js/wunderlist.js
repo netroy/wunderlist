@@ -595,6 +595,23 @@ wunderlist.setListToShared = function(list_id)
 }
 
 /**
+ * Set the list to unshared
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.setListToUnShared = function(list_id)
+{
+	var resultSet = this.database.execute("UPDATE lists SET shared = 0, version = version + 1 WHERE id = ?", list_id);
+
+	if(resultSet.isValidRow())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+/**
  * Set a task to done
  *
  * @author Dennis Schneider
