@@ -145,7 +145,16 @@ function saveList(listElement)
 	if(listElement.attr('id') == 1)
 		html = '<b class="inbox">' + unescape(listElementName) + '</b>';
 	else
-		html = '<b>' + unescape(listElementName) + '</b>';
+	{
+		if(wunderlist.listIsAlreadyShared(listElement.attr('id')))
+		{
+			html = '<b class="shared">' + unescape(listElementName) + '</b>';
+		}
+		else
+		{
+			html = '<b>' + unescape(listElementName) + '</b>';
+		}
+	}
 
 	listElement.children('.savep').hide();
 	listElement.children('.deletep').hide();

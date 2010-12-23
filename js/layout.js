@@ -225,7 +225,7 @@ $(document).ready(function() {
 
 	// For removing select all
 	$(document).bind('keydown', shortcutkey + '+a', function (evt) {
-		if ($('#note textarea:focus').length == 0)
+		if ($('#note textarea:focus').length == 0 && $('input:focus').length == 0)
 			return false;
 	});
 });

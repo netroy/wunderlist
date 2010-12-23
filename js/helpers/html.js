@@ -53,7 +53,7 @@ generateListContentHTML = function(list_id, list_name)
 {
 	var html = '';
 
-	if(list_id != 1)
+	if(list_id != 1 && wunderlist.isUserLoggedIn() == true)
 	{
 		html +=  "<div id='listfunctions'><a rel='share this list' class='list-share'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
 	}

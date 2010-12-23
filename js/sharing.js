@@ -35,7 +35,7 @@ sharing.init = function()
 	// Hitting Enter on Input Field
 	$('.input-sharelist').live('keydown', function(event)
 	{
-		if(event.keyCode == 29)
+		if(event.keyCode == 13)
 		{
 			if(sharing.addedEmail == false)
 			{
@@ -76,6 +76,7 @@ sharing.init = function()
 					sharing.openShareListDialog();
 				}
 
+				$('#share-list-email').blur();
 				setTimeout(function() {sharing.clickedSharingButton = false}, 1000);
 			}
 		}
@@ -193,6 +194,8 @@ sharing.sendSharedList = function(list_id, type)
 		for(value in emails)
 		{
 			var email = $.trim(emails[value]);
+
+			// If the email is valid
 			if(sync.validateEmail(email))
 			{
 				collected_emails.push(email);
@@ -200,15 +203,26 @@ sharing.sendSharedList = function(list_id, type)
 			else
 			{
 				showErrorDialog(language.data.invalid_email);
+				if($('.sharelistusers').children('li').length == 0)
+				{
+					$('div#lists a#' + list_id + ' b').removeClass('shared');
+					wunderlist.setListToUnShared(list_id);
+				}
 				return false;
 			}
 		}
 	}
+	// If no emails are available
 	else
 	{
 		if(sharing.deletedMails.length == 0)
 		{
 			showErrorDialog(language.data.shared_not_changed);
+			if($('.sharelistusers').children('li').length == 0)
+			{
+				$('div#lists a#' + list_id + ' b').removeClass('shared');
+				wunderlist.setListToUnShared(list_id);
+			}
 			return false;
 		}
 	}
