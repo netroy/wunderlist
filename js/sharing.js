@@ -27,7 +27,8 @@ sharing.init = function()
         'SHARE_FAILURE':    801,
         'SHARE_DENIED':     802,
         'SHARE_NOT_EXISTS': 803,
-		'SHARE_NOT_SHARED': 804
+		'SHARE_NOT_SHARED': 804,
+		'SHARE_OWN_EMAIL':  805
     };
 
 	sharing.addedEmail = false;
@@ -264,7 +265,24 @@ sharing.sendSharedList = function(list_id, type)
 							if(type == 'share')
 							{
 								$('div#lists a#' + offline_list_id + ' b').addClass('shared');
-								showOKDialog(language.data.shared_successfully);
+								if(response.email != undefined && data['email'] == response.email)
+								{
+									showShareOwnEmailDialog();
+									// If there was only the own email shared, remove shared symbol
+									if(collected_emails.length == 1)
+									{
+										$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
+										wunderlist.setListToUnShared(offline_list_id);
+									}
+									else
+									{
+										showOKDialog(language.data.shared_successfully);
+									}
+								}
+								else
+								{
+									showOKDialog(language.data.shared_successfully);
+								}
 							}
 							else
 							{
