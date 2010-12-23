@@ -138,9 +138,6 @@ height:26px}
 #sidebar div.savep { background:url(/icons/editdone_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; opacity:0.5}
 #sidebar div.savep:hover {opacity:1.0}
 
-#sidebar div.sharep { background:url(/icons/sharelist_active.png); cursor:pointer; margin-right:4px; width:16px; height:14px; float:right; display:none; opacity:0.5}
-#sidebar div.sharep:hover {opacity:1.0}
-
 #sidebar b.inbox {padding-left:24px; background:url(/icons/inbox.png) no-repeat; background-position:0px 0px;}
 
 #sidebar .list {
@@ -186,7 +183,6 @@ font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
 #sidebar .ui-state-disabled div.deletep , #sidebar .ui-dropped-disabled div.deletep {background:url(/icons/delete_white.png)}
 #sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/edit_white.png)}
 #sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/icons/editdone_white.png)}
-#sidebar .ui-state-disabled div.sharep , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/sharelist_white.png)}
 #sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-position:0px -14px}
 
 #sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {opacity:0.5}
@@ -494,7 +490,7 @@ font-size:13px}
 
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 
-#listfunctions {position:absolute; right:20px; height:17px; top:10px; z-index:999; width:81px}
+#listfunctions {position:absolute; right:20px; height:17px; top:10px; z-index:999; width:111px}
 
 	#listfunctions a { width:17px; height:17px; background:#000; display:block; float:left; opacity:0.5; cursor:pointer; margin-left:10px}
 	#listfunctions a:hover { opacity:1.0}
@@ -502,6 +498,7 @@ font-size:13px}
 	#listfunctions .list-print {background:url(/icons/print.png) no-repeat}
 	#listfunctions .list-email {background:url(/icons/sendmail.png) no-repeat}
 	#listfunctions .list-cloud {background:url(/icons/cloudapp.png) no-repeat}
+	#listfunctions .list-share {background:url(/icons/sharelist_white.png) no-repeat}
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 

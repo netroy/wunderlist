@@ -5,7 +5,8 @@
  */
 function generateShareListDialogHTML()
 {
-	html =  '<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
+	html =  '<p>Sharing is caring! Now you can share any list for collaboration with collegues or friends. Just add their email address to send an invitation to them. You can change the access to your list at any time on this screen. Have fun!</p>'+
+			'<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
 			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="send / save invitation" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
 
@@ -51,7 +52,7 @@ generateListContentHTML = function(list_id, list_name)
 {
 	var html = '';
 
-	html +=  "<div id='listfunctions'><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
+	html +=  "<div id='listfunctions'><a rel='share this list' class='list-share'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
 	html += "<h1>" + unescape(list_name) + "</h1>";
 	html += "<div class='add'>";
 	html += "<input type='text' class='input-add' placeholder='" + language.data.add_task + "' />";
@@ -134,7 +135,6 @@ function generateNewListElementHTML(listId, listElementName, listElementInputCla
 
 	var html  = "<a id='" + listId + "' class='list sortablelist'>";
     	html += "<span>0</span>";
-		html += "<div class='sharep'></div>";
     	html += "<div class='deletep'></div>";
     	html += "<div class='savep'></div>";
     	html += "<div class='editp'></div>";

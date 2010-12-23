@@ -158,67 +158,29 @@ $(document).ready(function() {
 	 * @author Daniel Marschner
 	 */
 	sidebar.init();
-
+	
+	/**
+	 * Init the tooltips
+	 *
+	 * @author Daniel Marschner
+	 */
 	tooltip();
 
 	/**
 	 * Printing with Ctrl / Command + P
-	 * DEACTIVATED - Printing dialog doesn't work stable in Titanium 1.0.0 and 1.1.0
 	 *
 	 * @author Christian Reber,  Daniel Marschner, Dennis Schneider
 	 */
-	/*$(document).bind('keydown', shortcutkey + '+p', function (evt) {
+	$(document).bind('keydown', shortcutkey + '+p', function (evt) {
 		if(printShortcutListener == 0)
 		{
-			window.print();
+			share.print();
 		}
 
 		printShortcutListener++;
 
 		setTimeout(function() { printShortcutListener = 0 }, 50);
-	});*/
-
-/*
-	var taskTooltipTimer = 0;
-
-	$('.mainlist li, .donelist li').live('mouseenter', function() {
-		var li = $(this);
-
-		taskTooltipTimer = setTimeout(function() {
-
-			var content = li.attr("lang");
-			var offset  = li.offset();
-			var width   = li.width();
-			var height   = li.height();
-			var docHeight = $(document).height();
-			var halfdocHeight = $(document).height()/2;
-			var bottomMargin = $(document).height() - offset.top;
-
-			$("body").append("<p id='taskTooltip'><span></span>" + content + "</p>");
-			$("#taskTooltip")
-				.css("left", (offset.left + width - 256) + "px")
-				.fadeIn("fast");
-
-			if(halfdocHeight <= offset.top) {
-				$("#taskTooltip").css("bottom", (bottomMargin + 4)+ "px");
-				$("#taskTooltip span").removeClass("top").addClass("bottom");
-			}
-
-			else {
-				$("#taskTooltip").css("top", (offset.top + 30)+ "px");
-				$("#taskTooltip span").addClass("top").removeClass("bottom");
-			}
-
-		}, 1200);
 	});
-
-	$('.mainlist li, .donelist li').live('mouseleave', function() {
-		clearTimeout(taskTooltipTimer);
-
-		if($('#taskTooltip').is('p'))
-			$('#taskTooltip').remove();
-	});
-*/
 
 	/**
 	 * Sync with Ctrl + S
