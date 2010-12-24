@@ -8,6 +8,9 @@ var updater = updater || {};
 updater.init = function() {
 	// Update to version 1.1.0
 	updater.to_110();
+	
+	// Update to version 1.1.0
+	updater.to_111();
 };
 
 /**
@@ -22,3 +25,16 @@ updater.to_110 = function() {
 		wunderlist.update_110();	
 	}
 };
+
+/**
+ * Check the version for doing the update to version 1.1.1
+ *
+ * @author Daniel Marschner
+ */
+updater.to_111 = function() {
+	if (Titanium.App.Properties.hasProperty('version') == false || parseInt(Titanium.App.Properties.getString('version')) < 111)
+	{
+		Titanium.App.Properties.setString('version', Titanium.App.version.toString().split('.').join(''));	
+		wunderlist.update_111();	
+	}
+}

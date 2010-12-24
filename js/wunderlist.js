@@ -4,6 +4,7 @@ $(function()
 {
 	wunderlist.initAppTitle();
 	wunderlist.initDatabase();
+	
 	language.init();
 	account.init();
 	timer.init();
@@ -12,8 +13,7 @@ $(function()
 	notifications.init();
 	share.init();
 	
-	// Start the neccessary updates
-	updater.init();
+	
 });
 
 /**
@@ -55,7 +55,22 @@ wunderlist.initDatabase = function()
  * @author Daniel Marschner
  */
 wunderlist.update_110 = function() {
-	this.database.execute('ALTER TABLE "main"."lists" ADD COLUMN "shared" INTEGER DEFAULT 0');
+	try {
+		this.database.execute('ALTER TABLE "main"."lists" ADD COLUMN "shared" INTEGER DEFAULT 0');
+	}
+	catch(err) {}
+};
+
+/**
+ * Is needed for the new update (shared lists) 24.12.2010
+ *
+ * @author Daniel Marschner
+ */
+wunderlist.update_111 = function() {
+	try {
+		this.database.execute('ALTER TABLE "main"."lists" ADD COLUMN "shared" INTEGER DEFAULT 0');
+	}
+	catch(err) {}
 };
 
 /**
