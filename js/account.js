@@ -75,8 +75,6 @@ account.load = function() {
 account.loadInterface = function() {
 	if (register_dialog != undefined) $(register_dialog).dialog('close');
 	
-	console.log('#2');
-
 	Menu.initialize();
 	wunderlist.initLists();
 	filters.init();

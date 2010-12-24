@@ -2,8 +2,6 @@ var wunderlist = wunderlist || {};
 
 $(function()
 {
-	console.log('#1');
-	
 	wunderlist.initAppTitle();
 	wunderlist.initDatabase();
 	
