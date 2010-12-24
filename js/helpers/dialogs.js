@@ -1,5 +1,6 @@
 var confirmationDialog;
 var okDialog;
+var shareOwnEmailDialog;
 var deleteDialog;
 var whileSyncDialog;
 var cloudAppDialog;
@@ -59,6 +60,26 @@ function showConfirmationDialog() {
 	confirmationDialog = generateDialog(language.data.account_deleted, '<p>' + language.data.account_del_successful + '</p><input class="input-button" type="submit" id="okay" value="' + language.data.okay + '" />');
 	openDialog(confirmationDialog);
 	$('input#okay').click(function() {closeDialog(confirmationDialog);});
+}
+
+function showShareOwnEmailDialog() {
+
+	if(shareOwnEmailDialog == undefined)
+	{
+		shareOwnEmailDialog = $('<div></div>').dialog({
+			autoOpen: true,
+			draggable: false,
+			modal: false,
+			title: language.data.share_own_email,
+			buttons: {
+				'OK': function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+	}
+	else
+		openDialog(shareOwnEmailDialog);
 }
 
 /**
