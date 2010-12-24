@@ -11,6 +11,8 @@ updater.init = function() {
 	
 	// Update to version 1.1.0
 	updater.to_111();
+	
+	console.log('#3');
 };
 
 /**

@@ -2,8 +2,13 @@ var wunderlist = wunderlist || {};
 
 $(function()
 {
+	console.log('#1');
+	
 	wunderlist.initAppTitle();
 	wunderlist.initDatabase();
+	
+	// Start the neccessary updates
+	updater.init();
 	
 	language.init();
 	account.init();
@@ -12,8 +17,6 @@ $(function()
 	sharing.init();
 	notifications.init();
 	share.init();
-	
-	
 });
 
 /**
