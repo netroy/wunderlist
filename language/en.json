@@ -165,7 +165,7 @@
 	"exit_wunderlist":			"Exit wunderlist",
 	"empty_list":				"It is not possible to send or share an empty list",
 	"try_again_later":			"Mmmh, something went wrong. Maybe you try it again in a few minutes?",
-	"share_denied":				"The sharing of the list was denied. Maybe you are not the owner of the list.",
+	"share_denied":				"You are not able to share this list, because you are not the owner.",
 	"share_failure":			"The sharing of the list failed",
 	"share_list_with_cloudapp": "Share this list with other with CloudApp",
 	"newsletter":               "Sign me up for the 6 Wunderkinder newsletter",
