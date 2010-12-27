@@ -74,7 +74,7 @@ account.load = function() {
  */
 account.loadInterface = function() {
 	if (register_dialog != undefined) $(register_dialog).dialog('close');
-
+	
 	Menu.initialize();
 	wunderlist.initLists();
 	filters.init();
@@ -178,6 +178,11 @@ account.login = function() {
 	var data         = {};
  	data['email'] 	 = $('input#login-email').val().toLowerCase();
 	data['password'] = $.md5($('input#login-password').val());
+	
+	var newsletter = $('input#login-newsletter').attr('checked');
+	
+	if (newsletter == true)
+		data['newsletter'] = 1;
 
 	if(sync.validateEmail(data['email']))
 	{
