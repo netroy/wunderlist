@@ -243,6 +243,9 @@ sharing.sendSharedList = function(list_id, type)
 	data['add']	     = collected_emails;
 	data['delete']   = sharing.deletedMails;
 
+	// @TODO Vor dem Abschicken der Liste bereits prüfen, ob eigene E-Mail-Adresse
+	// mitgeschickt wird und dann einfach entfernen - dann kann der Fehler erst gar nicht entstehen
+
 	$.ajax({
 		url: sharing.shareUrl,
 		type: 'POST',
@@ -290,11 +293,7 @@ sharing.sendSharedList = function(list_id, type)
 							else
 							{
 								$('.dialog-sharelist li span').parent().remove();
-								if($('.sharelistusers').children('li').length == 0)
-								{
-									$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
-									wunderlist.setListToUnShared(offline_list_id);
-								}
+								sharing.unshareList(offline_list_id);
 								showDeletedDialog(language.data.shared_delete_success);
 							}
 							break;
@@ -304,10 +303,12 @@ sharing.sendSharedList = function(list_id, type)
 							break;
 
 						case sharing.status_codes.SHARE_DENIED:
+							sharing.unshareList(offline_list_id);
 							showErrorDialog(language.data.share_denied);
 							break;
 
 						case sharing.status_codes.SHARE_NOT_EXIST:
+							sharing.unshareList(offline_list_id);
 							showErrorDialog(language.data.sync_not_exist);
 							break;
 
@@ -323,6 +324,19 @@ sharing.sendSharedList = function(list_id, type)
 			showErrorDialog(language.data.sync_error);
 		}
 	});
+}
+
+/**
+ * Set the list to unshared locally
+ *
+ * @author Dennis Schneider
+ */
+sharing.unshareList = function(offline_list_id)
+{	if($('.sharelistusers').children('li').length == 0)
+	{
+		$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
+		wunderlist.setListToUnShared(offline_list_id);
+	}
 }
 
 /**
