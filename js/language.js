@@ -10,7 +10,8 @@ language.availableLang = new Array(
 	'pl', 'pt', 'it', 'sk',
 	'ca', 'nl', 'da', 'uk',
 	'ru', 'cs', 'zh', 'tr',
-	'ar', 'se', 'ja', 'hu'
+	'ar', 'se', 'ja', 'hu',
+	'ko'
 );
 
 /**
