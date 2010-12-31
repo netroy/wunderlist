@@ -1,3 +1,97 @@
+31.12.2010
+
+New: Korean translation
+Fix: Tray icon is now removed when closing application
+
+28.12.2010
+
+Fix: Updated French translation
+Fix: List is now set to unshared on some errors
+
+24.12.2010
+
+New: Newsletter subscription on login
+Fix: Updater modified for 1.1.1
+
+23.12.2010
+
+New: Share list icon
+New: Shortcut for printing list
+New: Translation for new functionality
+New: Newsletter registration
+Fix: Optimized CloudApp process
+Fix: jQuery live bug with notes
+Fix: Change notes behaviour
+Fix: Sharing error dialog is now correct
+Fix: Renaming of lists corrected
+Fix: Improved Sharing
+Fix: Printing bug on windows
+Fix: Inbox can not be shared
+Fix: 'Undefined' bug in notifications
+Fix: Button position on login screen
+Fix: Sync shortcut can only be used when currently not syncing
+Fix: Improved sharing process
+
+22.12.2010
+
+New: Printing functionality
+New: Updater for database
+Fix: Improved Sharing functionality
+Fix: Improved notes styling
+Fix: Improved notifications
+Fix: Printing bug
+
+21.12.2010
+
+New: Sharing functionality
+Fix: Icons / positioning improvements
+Fix: CSS refactoring
+Fix: Improved notes
+
+20.12.2010
+
+New: Swedish and Japanese language
+New: Database fields for shared lists
+New: Notes
+New: "Knowledge Base" Link in menu
+New: Send by mail
+New: Sidebar can now be toggled with shortcut
+New: Shortcut for stepping through lists
+New: Notifications for sync
+Fix: Updated Catalan language
+
+19.12.2010
+
+New: New sidebar design
+
+17.12.2010
+
+New: New icons for sidebar
+
+16.12.2010
+
+New: Arabic, Turkish and Chinese language
+Fix: Improved Portuguese language
+Fix: Improved French language
+Fix: Removed overdue tasks from today filter
+Fix: Improved sidebar
+
+13.12.2010
+
+Fix: Email validation function updated, it supports the "+"
+
+26.11.2010
+
+New: Tray icon
+New: Auto-Sync on Logout / App exit
+New: Czech translation
+New: Current task date is now selected when opening the datepicker
+Fix: Improved search, unchecked tasks are now appended to the end of the list
+Fix: Tabulator on checkboxes is not possible anymore
+Fix: Improved English, Russian, Italian and Spanish language files
+Fix: Badges now show today and overdue 
+Fix: Login / Logout Bug
+
 23.11.2010
 
 New: Russian Translation
