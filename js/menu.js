@@ -104,11 +104,11 @@ Menu.initializeTrayIcon = function() {
 
 		if (os != 'darwin')
 		{
-			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traymac.png';
+			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
 		} 
 		else
 		{
-			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
+			var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traymac.png';
 		}
 
 		var trayIcon     = Titanium.UI.addTray(trayIconPath, function () {
@@ -137,6 +137,8 @@ Menu.exitWunderlist = function() {
 	{
 		Titanium.App.exit()
 	}
+
+	Titanium.UI.Tray.remove();
 }
  
 
