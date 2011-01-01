@@ -50,7 +50,7 @@ Fix: Improved notes
 
 20.12.2010
 
-New: Swedish and Japanese language
+New: Swedish and Japanese translation
 New: Database fields for shared lists
 New: Notes
 New: "Knowledge Base" Link in menu
@@ -58,7 +58,7 @@ New: Send by mail
 New: Sidebar can now be toggled with shortcut
 New: Shortcut for stepping through lists
 New: Notifications for sync
-Fix: Updated Catalan language
+Fix: Updated Catalan translation
 
 19.12.2010
 
@@ -70,9 +70,9 @@ New: New icons for sidebar
 
 16.12.2010
 
-New: Arabic, Turkish and Chinese language
-Fix: Improved Portuguese language
-Fix: Improved French language
+New: Arabic, Turkish and Chinese translation
+Fix: Improved Portuguese translation
+Fix: Improved French translation
 Fix: Removed overdue tasks from today filter
 Fix: Improved sidebar
 
@@ -88,7 +88,7 @@ New: Czech translation
 New: Current task date is now selected when opening the datepicker
 Fix: Improved search, unchecked tasks are now appended to the end of the list
 Fix: Tabulator on checkboxes is not possible anymore
-Fix: Improved English, Russian, Italian and Spanish language files
+Fix: Improved English, Russian, Italian and Spanish translation files
 Fix: Badges now show today and overdue 
 Fix: Login / Logout Bug
 
