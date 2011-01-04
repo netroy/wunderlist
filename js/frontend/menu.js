@@ -47,9 +47,11 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Türkçe',     function() { Menu.switch_language('tr') });
 	languageMenuItem.addItem('ألماني',        function() { Menu.switch_language('ar') });
 	languageMenuItem.addItem('Svenska',    function() { Menu.switch_language('se') });
-	languageMenuItem.addItem('日本人',      function() { Menu.switch_language('ja') });
+	languageMenuItem.addItem('日本語',      function() { Menu.switch_language('ja') });
 	languageMenuItem.addItem('Magyar',     function() { Menu.switch_language('hu') });
 	languageMenuItem.addItem('한국어',      function() { Menu.switch_language('ko') });
+	languageMenuItem.addItem('Hrvatski',   function() { Menu.switch_language('hr') });
+	languageMenuItem.addItem('Norsk',      function() { Menu.switch_language('no') });
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);

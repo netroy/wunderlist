@@ -201,7 +201,7 @@ function generateSocialDialogHTML()
 		'<p class="invitefriends">' + language.data.invite + ':</p>' +
 		'<textarea class="textarea-dialog" id="invite-text" maxlength="140">'+ language.data.invitetextarea +'</textarea>' +
 		'<p><input class="input-login input-social" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
-		'<input id="send_invitation" class="input-button button-social" type="submit" value="send" /></p>' +
+		'<input id="send_invitation" class="input-button button-social" type="submit" value="' + language.data.send + '" /></p>' +
 
 
 		'<p class="socialmedia"><span class="icons">' +

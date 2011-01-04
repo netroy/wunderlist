@@ -178,5 +178,6 @@
 	"sharelist_button":			"send invitation",
 	"shared_delete_success":	"The user was successfully deleted from the list",
 	"delete_shared_email":		"Do you really want to delete the email from your shared list?",
-	"share_own_email":			"It's not possible to share this list with your own email address"
+	"share_own_email":			"It's not possible to share this list with your own email address",
+	"send":						"Send"
 }
