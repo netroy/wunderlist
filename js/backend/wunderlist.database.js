@@ -1015,7 +1015,6 @@ wunderlist.getFilteredTasks = function(type, date_type, printing)
 				date      = 0;
 				date_type = '=';
 				title     = language.data.all_someday_tasks;
-
 			}
 			else
 			{
@@ -1034,7 +1033,7 @@ wunderlist.getFilteredTasks = function(type, date_type, printing)
 	if (printing == false)
 	{
 		content.html('').hide();
-		content.prepend("<div id='listfunctions'><a rel='share this list' class='list-share'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>");
+		content.prepend("<div id='listfunctions'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>");
 		content.append('<h1>' + title + '</h1><ul id="list" type="' + ((temp_date_type != undefined) ? temp_date_type : type) + '" class="filterlist ' + listClass + '"></ul>');
 	}
 

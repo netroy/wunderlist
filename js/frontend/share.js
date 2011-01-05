@@ -27,14 +27,15 @@ share.share_by_email = function()
 	// Get All Tasks
 	var j_tasks = $('ul.mainlist span.description');
 	
-	
 	if (j_tasks.length > 0)
 	{
 		// Generate List Name
 		var name = encodeURI('wunderlist - ' + $('#content h1:first').text());
-		
-		// Get all tasks from database within the current list
-		tasks = wunderlist.getTasksByListId($('ul#list').attr('rel'));
+
+		var list_id        = $('ul#list').attr('rel');
+		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
+
+		var tasks = share.getTasksForSharing(is_filter_list, list_id);
 		
 		// Build tasks html
 		var body = '';
@@ -42,15 +43,26 @@ share.share_by_email = function()
 		$.each(tasks, function(key, value)
 		{
 			// Add task
-			body += encodeURI('• ' + value.name)
-			
+			if (is_filter_list == false)
+			{
+				body += encodeURI('• ' + value.name);
+			}
+			else
+			{
+				body += encodeURI('• ' + value.task_name);
+			}
+
 			// Add date
 			if (value.date != '')
+			{
 				body += '%20(' + convert_timestamp_into_date(value.date) + ')';
+			}
 			
 			// Add note
 			if (value.note != '')
+			{
 				body += '%0A%0A' + encodeURI(value.note) + '%0A';
+			}
 			
 			body += '%0A';
 		});
@@ -62,7 +74,7 @@ share.share_by_email = function()
 		alert(language.data.empty_list)
 	}
 }
-	
+
 /**
  * Send lists to Cloudapp
  *
@@ -83,8 +95,10 @@ share.share_with_cloudapp = function()
 		data['password'] = user_credentials['password'];
 		data['list']     = $('#content h1:first').text();
 
-		// Get all tasks from database within the current list
-		tasks = wunderlist.getTasksByListId($('ul#list').attr('rel'));
+		var list_id        = $('ul#list').attr('rel');
+		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
+
+		var tasks = share.getTasksForSharing(is_filter_list, list_id);
 		
 		// Build tasks html
 		data['tasks'] = new Array();
@@ -94,8 +108,15 @@ share.share_with_cloudapp = function()
 			var new_task = new Array();
 			
 			// Add name
-			new_task.push(unescape(value.name));
-			
+			if (is_filter_list == false)
+			{
+				new_task.push(unescape(value.name));
+			}
+			else
+			{
+				new_task.push(unescape(value.task_name));
+			}
+
 			// Add date
 			new_task.push(value.date);
 			
@@ -159,30 +180,8 @@ share.print = function()
 
 		var list_id        = $('ul#list').attr('rel');
 		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
-		
-		// Is it a filterlist or a normal list?
-		if (is_filter_list == false)
-		{
-			// Get all tasks from database within the current list
-			var tasks = wunderlist.getTasksByListId(list_id);
-		}
-		else
-		{
-			var type = $('ul#list').attr('type');
 
-			if (type == 'withdate')
-			{
-				var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
-			}
-			else if (type == 'nodate')
-			{
-				var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
-			}
-			else
-			{
-				var tasks = wunderlist.getFilteredTasksForPrinting(type);
-			}			
-		}
+		var tasks = share.getTasksForSharing(is_filter_list, list_id);
 		
 		// Build tasks html
 		var html = '';
@@ -232,6 +231,40 @@ share.print = function()
 	{
 		alert(language.data.empty_list);
 	}
+}
+
+/**
+ * Get the tasks for the according shared list
+ *
+ * @author Dennis Schneider
+ */
+share.getTasksForSharing = function(is_filter_list, list_id)
+{
+	// Is it a filterlist or a normal list?
+	if (is_filter_list == false)
+	{
+		// Get all tasks from database within the current list
+		var tasks = wunderlist.getTasksByListId(list_id);
+	}
+	else
+	{
+		var type = $('ul#list').attr('type');
+
+		if (type == 'withdate')
+		{
+			var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
+		}
+		else if (type == 'nodate')
+		{
+			var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
+		}
+		else
+		{
+			var tasks = wunderlist.getFilteredTasksForPrinting(type);
+		}
+	}
+
+	return tasks;
 }
 
 /**
