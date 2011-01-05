@@ -293,7 +293,7 @@ wunderlist.liveSearch = function(search)
 {
     $("#content").html("");
 
-	var resultSet = this.query("SELECT * FROM tasks WHERE name LIKE '%" + search + "%' AND tasks.deleted = 0 ORDER BY done ASC, important DESC, date DESC");
+	var resultSet = this.query("SELECT * FROM tasks WHERE (name LIKE '%" + search + "%' OR note LIKE '%" + search + "%') AND tasks.deleted = 0 ORDER BY done ASC, important DESC, date DESC");
 
 	if (resultSet.rowCount() > 0)
 	{

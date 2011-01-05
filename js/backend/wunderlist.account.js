@@ -177,8 +177,8 @@ account.showRegisterDialog = function() {
  */
 account.login = function() {
 	var data         = {};
- 	data['email'] 	 = $('input#login-email').val().toLowerCase();
-	data['password'] = $.md5($('input#login-password').val());
+ 	data['email'] 	 = $.trim($('input#login-email').val().toLowerCase());
+	data['password'] = $.md5($.trim($('input#login-password').val()));
 	
 	var newsletter = $('input#login-newsletter').attr('checked');
 	
