@@ -148,17 +148,41 @@ share.print = function()
 	{
 		// Create the temporary printfile
 		var file = Titanium.Filesystem.getApplicationDataDirectory() + '/print.htm';
-		file = Titanium.Filesystem.getFile(file);
+		file     = Titanium.Filesystem.getFile(file);
 
 		// Load template
 		var template = Titanium.Filesystem.getApplicationDirectory() + '/Resources/print.html';
-		template = Titanium.Filesystem.getFile(template).read().toString();
+		template     = Titanium.Filesystem.getFile(template).read().toString();
 
 		// Replace List Title
 		template = template.replace(/####LIST####/g, $('#content h1:first').text());
 
-		// Get all tasks from database within the current list
-		tasks = wunderlist.getTasksByListId($('ul#list').attr('rel'));
+		var list_id        = $('ul#list').attr('rel');
+		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
+		
+		// Is it a filterlist or a normal list?
+		if (is_filter_list == false)
+		{
+			// Get all tasks from database within the current list
+			var tasks = wunderlist.getTasksByListId(list_id);
+		}
+		else
+		{
+			var type = $('ul#list').attr('type');
+
+			if (type == 'withdate')
+			{
+				var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
+			}
+			else if (type == 'nodate')
+			{
+				var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
+			}
+			else
+			{
+				var tasks = wunderlist.getFilteredTasksForPrinting(type);
+			}			
+		}
 		
 		// Build tasks html
 		var html = '';
@@ -166,15 +190,28 @@ share.print = function()
 		$.each(tasks, function(key, value)
 		{
 			// Add task
-			html += '<li><span></span>' + unescape(value.name);
+			if (is_filter_list == false)
+			{
+				// If is normal list
+				html += '<li><span></span>' + unescape(value.name);
+			}
+			else
+			{
+				// If is filter list
+				html += '<li><span></span>' + unescape(value.task_name);
+			}
 			
 			// Add date
 			if (value.date != '')
+			{
 				html += ' (<b>' + convert_timestamp_into_date(value.date) + '</b>)';
+			}
 			
 			// Add note
 			if (value.note != '')
+			{
 				html += '<p>' + unescape(value.note.replace(/\n/g,'<br/>')) + '</p>';
+			}
 			
 			html += '</li>';
 		});
