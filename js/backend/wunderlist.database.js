@@ -1059,6 +1059,7 @@ wunderlist.createUser = function(email, password)
 wunderlist.logUserOut = function()
 {
 	Titanium.App.Properties.setString('logged_in', 'false');
+	wunderlist.deleteUserCredentials();
 }
 
 /**
@@ -1088,6 +1089,18 @@ wunderlist.getUserCredentials = function()
 	};
 
  	return values;
+}
+
+
+/**
+ * Removes the user credentials
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.deleteUserCredentials = function()
+{
+	Titanium.App.Properties.setString('email', '');
+	Titanium.App.Properties.setString('password', '');
 }
 
 /**

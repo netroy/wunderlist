@@ -40,6 +40,7 @@ account.init = function() {
 		'EDIT_PROFILE_AUTHENTICATION_FAILED': 601,
 		'EDIT_PROFILE_EMAIL_ALREADY_EXISTS':  602,
 		'EDIT_PROFILE_INVALID_EMAIL_ADDRESS': 603,
+		'EDIT_PROFILE_FAILURE':               604,
 
 		'DELETE_ACCOUNT_SUCCESS':             700,
 		'DELETE_ACCOUNT_FAILURE':             701,
@@ -743,6 +744,8 @@ account.logout = function()
 
 		// Show register Dialog
 		account.showRegisterDialog();
+
+		Titanium.UI.setBadge(null);
 	}
 	else
 	{
