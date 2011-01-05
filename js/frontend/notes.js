@@ -90,7 +90,9 @@ $(function()
 
 		notes.note.val(unescape(noteContent));
 		notes.showNoteElements();
-		
+
+		notes.note.focus();
+
 		$(this).addClass("activenote");
 	});
 
