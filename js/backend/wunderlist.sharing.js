@@ -60,11 +60,13 @@ sharing.init = function()
 
 				$('#share-list-email').val('');
 
-				var shareList      = $('.sharelistusers');
+				var shareList = $('.sharelistusers');
 				shareList.empty();
 				$('.invitedpeople').remove();
 
 				var list_id = $('div#lists a.ui-state-disabled').attr('id');
+				$('input#share-list-id').attr('rel', list_id);
+
 				sharing.deletedMails = new Array();
 
 				// Only request shared emails, if list is already shared
@@ -96,7 +98,7 @@ sharing.init = function()
 		{
 			sharing.deletedEmail = true;
 
-			var shareListItems      = $('.sharelistusers').children('li');
+			var shareListItems = $('.sharelistusers').children('li');
 
 			if(sharing.deleteSharedEmail == undefined)
 			{
@@ -112,7 +114,7 @@ sharing.init = function()
 						'Yes' : function() {
 							var email = $.trim($('.dialog-sharelist li span').parent().text());
 							sharing.deletedMails.push(email);
-							var list_id = $('div#lists a.ui-state-disabled').attr('id');
+							var list_id = $('input#share-list-id').attr('rel');
 							sharing.sendSharedList(list_id, 'delete');
 							sharing.deletedMails = new Array();
 							if($('.sharelistusers').children('li').length == 0)
@@ -165,7 +167,7 @@ sharing.shareLists = function()
 		return false;
 	}
 
-	list_id = $('div#lists a.ui-state-disabled').attr('id');
+	list_id = $('input#share-list-id').attr('rel');
 	
 	// If list is not shared, set it to shared and sync it
 	if(wunderlist.listIsAlreadyShared(list_id) == false)
