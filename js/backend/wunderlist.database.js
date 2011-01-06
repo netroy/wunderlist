@@ -97,7 +97,11 @@ wunderlist.createDatabaseStandardElements = function(only_tutorials)
 
 		// Generate Default Tasks
 		this.database.execute("INSERT INTO tasks (name, list_id, position, important) VALUES ('" + language.data.default_task_1 + "', '" + tutorials_list_id + "', '0', '1')");
-
+		
+		// Check if var os is set
+		if (os == undefined)
+			var os = Titanium.Platform.name.toLowerCase();
+		
 		// Default Tasks for Mac
 		if (os == 'darwin')
 		{
