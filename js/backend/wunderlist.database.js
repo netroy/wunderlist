@@ -97,24 +97,28 @@ wunderlist.createDatabaseStandardElements = function(only_tutorials)
 
 		// Generate Default Tasks
 		this.database.execute("INSERT INTO tasks (name, list_id, position, important) VALUES ('" + language.data.default_task_1 + "', '" + tutorials_list_id + "', '0', '1')");
-
+		
+		// Check if var os is set
+		if (os == undefined)
+			var os = Titanium.Platform.name.toLowerCase();
+		
 		// Default Tasks for Mac
 		if (os == 'darwin')
 		{
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_2_mac + "', '" + tutorials_list_id + "', '1')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_5_mac + "', '" + tutorials_list_id + "', '4')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_6_mac + "', '" + tutorials_list_id + "', '5')");
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_2_mac, tutorials_list_id, '1');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_5_mac, tutorials_list_id, '4');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_6_mac, tutorials_list_id, '5');
 		}
 		// Default Tasks for other operating systems
 		else
 		{
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_2 + "', '" + tutorials_list_id + "', '1')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_5 + "', '" + tutorials_list_id + "', '4')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_6 + "', '" + tutorials_list_id + "', '5')");
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_2, tutorials_list_id, '1');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_5, tutorials_list_id, '4');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_6, tutorials_list_id, '5');
 		}
 
-		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_4 + "', '" + tutorials_list_id + "', '2')");
-		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_8 + "', '" + tutorials_list_id + "', '3')");
+		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_4, tutorials_list_id, '2');
+		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_8, tutorials_list_id, '3');
 
 		done_date = new Date().getTime() / 1000;
 		this.database.execute("INSERT INTO tasks (name, list_id, position, done, done_date) VALUES (?, ?, ?, ?, ?)", language.data.default_task_7, tutorials_list_id, '4', '1', done_date);
@@ -293,7 +297,7 @@ wunderlist.liveSearch = function(search)
 {
     $("#content").html("");
 
-	var resultSet = this.query("SELECT * FROM tasks WHERE name LIKE '%" + search + "%' AND tasks.deleted = 0 ORDER BY done ASC, important DESC, date DESC");
+	var resultSet = this.query("SELECT * FROM tasks WHERE (name LIKE '%" + search + "%' OR note LIKE '%" + search + "%') AND tasks.deleted = 0 ORDER BY done ASC, important DESC, date DESC");
 
 	if (resultSet.rowCount() > 0)
 	{
@@ -594,13 +598,13 @@ wunderlist.listIsAlreadyShared = function(list_id)
 }
 
 /**
- * Set the list to shared
+ * Checks if the list has an online id
  *
  * @author Dennis Schneider
  */
-wunderlist.setListToShared = function(list_id)
+wunderlist.isAlreadySynced = function(list_id)
 {
-	var resultSet = this.database.execute("UPDATE lists SET shared = 1, version = version + 1 WHERE id = ?", list_id);
+	var resultSet = this.database.execute("SELECT online_id FROM lists WHERE online_id != 0 AND id = ?", list_id);
 
 	if(resultSet.isValidRow())
 	{
@@ -608,6 +612,17 @@ wunderlist.setListToShared = function(list_id)
 	}
 
 	return false;
+}
+
+/**
+ * Set the list to shared
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.setListToShared = function(list_id)
+{
+	var resultSet = wunderlist.database.execute("UPDATE lists SET shared = 1, version = version + 1 WHERE id = ?", list_id);
+	return true;
 }
 
 /**
@@ -951,9 +966,14 @@ wunderlist.getListNameById = function(list_id)
  *
  * @author Dennis Schneider
  */
-wunderlist.getFilteredTasks = function(type, date_type)
+wunderlist.getFilteredTasks = function(type, date_type, printing)
 {
-	var sql  = "SELECT tasks.id AS task_id, tasks.online_id AS online_id, tasks.name AS task_name, tasks.done, tasks.important, tasks.position, tasks.date, tasks.list_id ";
+	if (printing == undefined)
+	{
+		printing = false;
+	}
+
+	var sql  = "SELECT tasks.id AS task_id, tasks.online_id AS online_id, tasks.name AS task_name, tasks.note, tasks.done, tasks.important, tasks.position, tasks.date, tasks.list_id ";
 		sql += "FROM tasks ";
 
 	current_date = getWorldWideDate();
@@ -1004,12 +1024,12 @@ wunderlist.getFilteredTasks = function(type, date_type)
 
 		case 'date':
 			var listClass = "mainlist";
-			if(date_type == 'nodate')
+			var temp_date_type = date_type;
+			if (date_type == 'nodate')
 			{
 				date      = 0;
 				date_type = '=';
 				title     = language.data.all_someday_tasks;
-
 			}
 			else
 			{
@@ -1025,11 +1045,19 @@ wunderlist.getFilteredTasks = function(type, date_type)
 
 	var content = $("#content");
 
-	content.html('').hide();
-	content.prepend("<div id='listfunctions'><a rel='share this list' class='list-share'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>");
-	content.append('<h1>' + title + '</h1><ul id="list" class="filterlist ' + listClass + '"></ul>');
+	if (printing == false)
+	{
+		content.html('').hide();
+		content.prepend("<div id='listfunctions'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>");
+		content.append('<h1>' + title + '</h1><ul id="list" type="' + ((temp_date_type != undefined) ? temp_date_type : type) + '" class="filterlist ' + listClass + '"></ul>');
+	}
 
 	var resultSet = this.database.execute(sql);
+
+	if (printing == true)
+	{
+		return resultSet;
+	}
 
 	$("#list").append(wunderlist.fetchData(resultSet));
 
@@ -1037,6 +1065,33 @@ wunderlist.getFilteredTasks = function(type, date_type)
 		content.append("<h3>" + language.data.no_results + "</h3>");
 
 	content.fadeIn('fast');
+}
+
+/**
+ * Get filtered tasks for printing
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.getFilteredTasksForPrinting = function(type, date_type)
+{
+	var resultSet = wunderlist.getFilteredTasks(type, date_type, true);
+
+	var tasks = {};
+	var k     = 0;
+	
+	while(resultSet.isValidRow())
+	{
+		tasks[k] = {};
+		for(var i = 0; i < resultSet.fieldCount(); i++)
+		{
+
+			tasks[k][resultSet.fieldName(i)] = resultSet.field(i);
+		}
+		resultSet.next();
+		k++;
+	}
+
+	return tasks;
 }
 
 /**
@@ -1059,6 +1114,7 @@ wunderlist.createUser = function(email, password)
 wunderlist.logUserOut = function()
 {
 	Titanium.App.Properties.setString('logged_in', 'false');
+	wunderlist.deleteUserCredentials();
 }
 
 /**
@@ -1088,6 +1144,18 @@ wunderlist.getUserCredentials = function()
 	};
 
  	return values;
+}
+
+
+/**
+ * Removes the user credentials
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.deleteUserCredentials = function()
+{
+	Titanium.App.Properties.setString('email', '');
+	Titanium.App.Properties.setString('password', '');
 }
 
 /**

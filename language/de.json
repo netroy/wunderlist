@@ -173,5 +173,11 @@
 	"sharelist_button":			"Einladung verschicken",
 	"shared_delete_success":	"Der Benutzer wurde erfolgreich aus der Liste entfernt",
 	"delete_shared_email":		"Willst du diese E-Mail-Adresse wirklich von deiner geteilten Liste entfernen?",
-	"share_own_email":			"Es ist nicht möglich, eine Liste mit der eigenen E-Mail-Adresse zu teilen"
+	"share_own_email":			"Es ist nicht möglich, eine Liste mit der eigenen E-Mail-Adresse zu teilen",
+	"send":						"Send",
+	"share_this_list":			"Diese Liste teilen",
+	"print_tasks":				"Aufgaben drucken",
+	"send_by_mail":				"Per E-mail senden",
+	"share_with_cloud":			"Per Cloud App teilen",
+	"copy_link":				"LINK KOPIEREN"
 }

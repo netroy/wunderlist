@@ -224,6 +224,8 @@ function deleteList() {
 
 	openList(1);
 
+	closeDialog(sharing.shareListDialog);
+
 	$('h3 .add').show();
 }
 

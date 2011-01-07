@@ -60,12 +60,11 @@ sharing.init = function()
 
 				$('#share-list-email').val('');
 
-				var shareList      = $('.sharelistusers');
+				var shareList = $('.sharelistusers');
 				shareList.empty();
 				$('.invitedpeople').remove();
 
-				var list_id = $('div#lists a.ui-state-disabled').attr('id');
-				sharing.deletedMails = new Array();
+				sharing.deletedMails = [];
 
 				// Only request shared emails, if list is already shared
 				if(wunderlist.listIsAlreadyShared(list_id) == true)
@@ -76,6 +75,9 @@ sharing.init = function()
 				{
 					sharing.openShareListDialog();
 				}
+
+				var list_id = $('div#lists a.ui-state-disabled').attr('id');
+				$('input#share-list-id').attr('rel', list_id);
 
 				$('#share-list-email').blur();
 				setTimeout(function() {sharing.clickedSharingButton = false}, 300);
@@ -96,7 +98,7 @@ sharing.init = function()
 		{
 			sharing.deletedEmail = true;
 
-			var shareListItems      = $('.sharelistusers').children('li');
+			var shareListItems = $('.sharelistusers').children('li');
 
 			if(sharing.deleteSharedEmail == undefined)
 			{
@@ -112,9 +114,9 @@ sharing.init = function()
 						'Yes' : function() {
 							var email = $.trim($('.dialog-sharelist li span').parent().text());
 							sharing.deletedMails.push(email);
-							var list_id = $('div#lists a.ui-state-disabled').attr('id');
+							var list_id = $('input#share-list-id').attr('rel');
 							sharing.sendSharedList(list_id, 'delete');
-							sharing.deletedMails = new Array();
+							sharing.deletedMails = [];
 							if($('.sharelistusers').children('li').length == 0)
 							{
 								$('.invitedpeople').remove();
@@ -125,7 +127,9 @@ sharing.init = function()
 				});
 			}
 			else
+			{
 				openDialog(sharing.deleteSharedEmail);
+			}
 
 			if(shareListItems.length == 0)
 			{
@@ -144,7 +148,9 @@ sharing.init = function()
 		if(sharing.sendInvitation == false)
 		{
 			sharing.sendInvitation = true;
-			sharing.shareLists();
+
+			var list_id = $('input#share-list-id').attr('rel');
+			sharing.shareLists(list_id);
 			closeDialog(sharing.shareListDialog);
 			
 			setTimeout(function() {sharing.sendInvitation = false}, 2000);
@@ -157,7 +163,7 @@ sharing.init = function()
  *
  * @author Dennis Schneider
  */
-sharing.shareLists = function()
+sharing.shareLists = function(list_id)
 {
 	if($('#share-list-email').val() == '')
 	{
@@ -165,15 +171,16 @@ sharing.shareLists = function()
 		return false;
 	}
 
-	list_id = $('div#lists a.ui-state-disabled').attr('id');
-	
-	// If list is not shared, set it to shared and sync it
-	if(wunderlist.listIsAlreadyShared(list_id) == false)
+	// Set list to shared
+	wunderlist.setListToShared(list_id);
+
+	if(wunderlist.isAlreadySynced(list_id) == false)
 	{
-		wunderlist.setListToShared(list_id);
-		sync.fireSync(false, false, list_id);
+		sync.fireSync();
+		timer.stop().set(15);
 	}
-	else
+
+	if(wunderlist.listIsAlreadyShared(list_id) == true)
 	{
 		sharing.sendSharedList(list_id);
 	}
@@ -191,7 +198,7 @@ sharing.sendSharedList = function(list_id, type)
 		type = 'share';
 	}
 
-	var collected_emails = new Array();
+	var collected_emails = [];
 	var emails           = $('#share-list-email').val().split(',');
 
 	// Collect the entered emails
@@ -255,7 +262,7 @@ sharing.sendSharedList = function(list_id, type)
 			// @TODO Show loading indicator on invitation dialog
 		},
 		success: function(response_data, text, xhrobject)
-		{
+		{			
 			if(response_data != '' && text != '' && xhrobject != undefined)
 			{
 				if(xhrobject.status == 200)

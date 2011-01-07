@@ -67,13 +67,8 @@ sync.validateEmail = function(email)
  *
  * @author Dennis Schneider
  */
-sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
+sync.fireSync = function(logOutAfterSync, exitAfterSync)
 {
-	if(list_id == undefined)
-	{
-		list_id = 0;
-	}
-
 	// Should the user be logged out after sync?
 	if(logOutAfterSync == undefined)
 	{
@@ -129,8 +124,8 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 		data['sync_table']['tasks']		= wunderlist.getDataForSync('tasks', 'online_id, version', 'online_id != 0');
 		data['sync_table']['new_lists']	= wunderlist.getDataForSync('lists', '*', 'online_id = 0 AND deleted = 0');
 
-		var syncSuccessful  = false;
-		this.isSyncing		= true;
+		var syncSuccessful = false;
+		this.isSyncing     = true;
 
 		$.ajax({
 			url: this.syncDomain,
@@ -153,7 +148,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 						switch(response.code)
 						{
 							case sync.status_codes.SYNC_SUCCESS:
-								sync.syncSuccess(response, logOutAfterSync, exitAfterSync, list_id);
+								sync.syncSuccess(response, logOutAfterSync, exitAfterSync);
 								syncSuccessful = true;
 								clearInterval(sync.timeOutInterval);
 								sync.timeOutInterval = '';
@@ -227,13 +222,8 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
  *
  * @author Dennis Schneider
  */
-sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list_id)
+sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
 {
-	if(list_id == undefined)
-	{
-		list_id = 0;
-	}
-
 	// SYNC STEP 2
 	if(response_step1.sync_table != undefined)
 	{
@@ -422,11 +412,6 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list
 
 	setTimeout(function() { sync.isSyncing = false; }, 2000);	
 	stopSyncAnimation();
-
-	if(list_id > 0)
-	{
-		sharing.sendSharedList(list_id);
-	}
 
 	if(logOutAfterSync == true)
 	{

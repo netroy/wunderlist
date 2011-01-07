@@ -48,7 +48,7 @@ $(function()
 	notes.note.hide();
 	notes.cellotape.hide();
 
-	// Click on Note Icon
+	// Click on note icon
 	$('ul#list li span.note').live('click', function()
 	{
 		// If the textarea is displayed right now
@@ -88,9 +88,11 @@ $(function()
 		notes.note.attr('id', task_id);
 		var noteContent = wunderlist.getNoteForTask(task_id);
 
-		notes.note.val(noteContent);
+		notes.note.val(unescape(noteContent));
 		notes.showNoteElements();
-		
+
+		notes.note.focus();
+
 		$(this).addClass("activenote");
 	});
 
@@ -106,7 +108,7 @@ $(function()
 
 		if(note_text != '')
 		{
-			wunderlist.saveNoteForTask(note_text, task_id);
+			wunderlist.saveNoteForTask(convertStringForDB(note_text), task_id);
 		}
 		else
 		{
@@ -118,7 +120,7 @@ $(function()
 		timer.resume();
 	});
 
-	// Save the note
+	// Cancel the note
 	$('div#note a#cancel-note').live('click', function()
 	{
 		notes.noteIcons = $('ul#list li span.note');
