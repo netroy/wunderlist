@@ -56,11 +56,11 @@ generateListContentHTML = function(list_id, list_name)
 
 	if(list_id != 1 && wunderlist.isUserLoggedIn() == true)
 	{
-		html +=  "<div id='listfunctions'><a rel='share this list' class='list-share'></a><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
+		html +=  "<div id='listfunctions'><a rel='" + language.data.share_this_list + "' class='list-share'></a><a rel='" + language.data.print_tasks + "' class='list-print'></a><a rel='" + language.data.send_by_mail + "' class='list-email'></a><a rel='" + language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + language.data.copy_link + "</span><span class='link'></span></div></div>";
 	}
 	else
 	{
-		html +=  "<div id='listfunctions'><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>";
+		html +=  "<div id='listfunctions'><a rel='" + language.data.print_tasks + "' class='list-print'></a><a rel='" + language.data.send_by_mail + "' class='list-email'></a><a rel='" + language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + language.data.copy_link + "</span><span class='link'></span></div></div>";
 	}
 	html += "<h1>" + unescape(list_name) + "</h1>";
 	html += "<div class='add'>";

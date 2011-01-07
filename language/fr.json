@@ -7,7 +7,7 @@
 	"delete_list_yes":		    "Oui, supprimer cette liste.",
 	"delete_task_question":	    "Voulez-vous vraiment supprimer cette tâche?",
 	"delete_task_no":		    "Non, désolé",
-	"delete_task_yes":		    "Oui, supprimer cette liste",
+	"delete_task_yes":		    "Oui, supprimer cette tâche",
 	"search":   			    "Recherche partout...",
 	"add_task":  			    "Ajouter une tâche ici",
 	"delete_task":  		    "Supprimer la tâche",
@@ -178,5 +178,9 @@
 	"sharelist_button":			"envoyer une invitation",
 	"shared_delete_success":	"L'utilisateur a bien été supprimé de la liste.",
 	"delete_shared_email":		"Voulez-vous vraiment supprimer l'email de votre liste partagée?",
-	"share_own_email":			"Ce n'est pas possible de partager la liste avec votre propre email."
+	"share_own_email":			"Ce n'est pas possible de partager la liste avec votre propre email.",
+	"share_this_list":			"partager cette liste",
+	"print_tasks":				"imprimer les tâches",
+	"send_by_mail":				"envoyer par email",
+	"share_with_cloud":			"partager avec l'application cloud"
 }
