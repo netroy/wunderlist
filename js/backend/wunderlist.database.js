@@ -598,13 +598,13 @@ wunderlist.listIsAlreadyShared = function(list_id)
 }
 
 /**
- * Set the list to shared
+ * Checks if the list has an online id
  *
  * @author Dennis Schneider
  */
-wunderlist.setListToShared = function(list_id)
+wunderlist.isAlreadySynced = function(list_id)
 {
-	var resultSet = this.database.execute("UPDATE lists SET shared = 1, version = version + 1 WHERE id = ?", list_id);
+	var resultSet = this.database.execute("SELECT online_id FROM lists WHERE online_id != 0 AND id = ?", list_id);
 
 	if(resultSet.isValidRow())
 	{
@@ -612,6 +612,17 @@ wunderlist.setListToShared = function(list_id)
 	}
 
 	return false;
+}
+
+/**
+ * Set the list to shared
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.setListToShared = function(list_id)
+{
+	var resultSet = wunderlist.database.execute("UPDATE lists SET shared = 1, version = version + 1 WHERE id = ?", list_id);
+	return true;
 }
 
 /**
