@@ -18,12 +18,10 @@ function saveTask()
 	$datepicker_image = $('#task-edit').parent().find('img.ui-datepicker-trigger');
 	$date             = $('#task-edit').parent().find('span.timestamp').attr('rel');
 
-	if($date == undefined) $date = 0;
+	if($date == undefined || $date == '') $date = 0;
 
 	$('#task-edit').parent().find('.description').html(unescape($newtitle));
 	$('#task-edit').parent().find('.description').show();
-
-	if($date == '') $date = 0;
 
 	$("span.fav").show();
 	$("span.favina").show();
@@ -97,12 +95,16 @@ $(function()
 			titleText = spanElement.text();
             spanElement.hide();
 
-			html  = '<input type="text" id="task-edit" value="' + titleText + '" />';
+			console.log(titleText);
+
+			html  = '<input type="text" id="task-edit" value="" />';
 			html += '<input type="hidden" class="datepicker title="' + language.data.choose_date + '" />';
 
 			// Edit the Actual task into an edit task
 			liElement.children(".checkboxcon").after(html);
-			$("input#task-edit").focus();
+
+			$('input#task-edit').val(titleText);
+			$("input#task-edit").select();
 
 			createDatepicker();
 

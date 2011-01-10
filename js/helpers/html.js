@@ -273,8 +273,8 @@ str_replace = function(search, replace, subject) {
  */
 function convertStringForDB(string) {
 	//string = strip_tags(string);
-	string = string.split('<').join('');
-	string = string.split('>').join('');
+	string = string.split('<').join(escape('<'));
+	string = string.split('>').join(escape('>'));
 	string = string.split("'").join(escape("'"));
 
 	return string;
