@@ -20,7 +20,7 @@ function saveTask()
 
 	if($date == undefined || $date == '') $date = 0;
 
-	$('#task-edit').parent().find('.description').html(unescape($newtitle));
+	$('#task-edit').parent().find('.description').html(replace_http_link(unescape($newtitle)));
 	$('#task-edit').parent().find('.description').show();
 
 	$("span.fav").show();
@@ -31,6 +31,7 @@ function saveTask()
 	$('#task-edit').remove();
 
 	wunderlist.updateTask($task_id, $newtitle, $date);
+
 	filters.updateBadges();
 
     focusOutEnabled = true;
@@ -59,6 +60,25 @@ function cancelSaveTask()
     listElement.children('span.description').show();
 
     focusOutEnabled = true;
+}
+
+/**
+ * Filter the given jquery object for link elements
+ *
+ * @author Dennis Schneider
+ */
+function filterLinks(element, text)
+{
+	var linkElements = element.find('a');
+
+	if (linkElements.length > 0)
+	{
+		$.each(linkElements, function() {
+			text = text.replace(/LINK/, linkElements.attr('href'));
+		});
+	}
+
+	return text;
 }
 
 /**
@@ -95,7 +115,14 @@ $(function()
 			titleText = spanElement.text();
             spanElement.hide();
 
-			console.log(titleText);
+			var linkElements = spanElement.find('a');
+
+			if (linkElements.length > 0)
+			{
+				$.each(linkElements, function() {
+					titleText = titleText.replace(/LINK/, linkElements.attr('href'));
+				});
+			}
 
 			html  = '<input type="text" id="task-edit" value="" />';
 			html += '<input type="hidden" class="datepicker title="' + language.data.choose_date + '" />';
@@ -119,9 +146,12 @@ $(function()
         {
             var clickedElement = $(event.target);
 
-            if(clickedElement.attr('id') != 'task-edit' && datePickerOpen == false) {
+            if(clickedElement.attr('id') != 'task-edit' && datePickerOpen == false)
+			{
                 if(editInput.val().length > 0)
+				{
                     saveTask();
+				}
             }
         }
     });

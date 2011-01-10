@@ -1,3 +1,13 @@
+$(function() {
+
+	// Open every link in the browser
+	$('a[href^=http]').live('click', function() {
+		Titanium.Desktop.openURL(this.href);
+		return false;
+	});
+
+});
+
 /**
  * Returns the HTML structure of the login/register Dialog
  *
@@ -107,7 +117,7 @@ generateTaskHTML = function(id, name, list_id, done, important, date, note)
 
 	html += '</div>';
 	html += '<span class="icon ' + favourite + '></span>';
-	html += '<span class="description">' + unescape(name) + '</span>';
+	html += '<span class="description">' + replace_http_link(unescape(name)) + '</span>';
 
 	if(date != '' && date != '0')
 		html += '<span class="showdate timestamp" rel="' + date + '"></span>';
@@ -258,6 +268,16 @@ function strip_tags (input, allowed)
 }
 
 /**
+ * Replace a link in a given text with a clickable link
+ *
+ * @author Dennis Schneider
+ */
+function replace_http_link(text) {
+  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  return text.replace(exp,"<a href='$1'>LINK</a>");
+}
+
+/**
  * Replace the search string with the given string
  *
  * @author Daniel Marschner
@@ -332,8 +352,8 @@ function make_timestamp_to_string() {
 		var month = selected_date.getMonth() + 1; //January is 0!
 		var year  = selected_date.getFullYear();
 
-		if(day < 10) { day = '0' + day }
-		if(month < 10) { month = '0' + month }
+		if(day < 10) {day = '0' + day}
+		if(month < 10) {month = '0' + month}
 
 		var today = new Date();
 
@@ -460,7 +480,7 @@ function addRemoveDateButton(object)
 		object.children('input#task-edit').focus();
 		object.children('.timestamp').attr('rel', '0');
 
-        setTimeout(function() { datePickerOpen = false }, 10);
+        setTimeout(function() {datePickerOpen = false}, 10);
 	});
 }
 
@@ -565,13 +585,13 @@ function createDatepicker()
             {
 				$("#task-edit").focus();
 
-                setTimeout(function() { datePickerOpen = false }, 10);
+                setTimeout(function() {datePickerOpen = false}, 10);
             }
 			else
 				$(".input-add").focus();
 		},
 		onSelect: function(dateText, inst) {
-            setTimeout(function() { datePickerOpen = false }, 10);
+            setTimeout(function() {datePickerOpen = false}, 10);
 
             // Get timestamp (in seconds) for database
 			var date       = new Date(dateText);

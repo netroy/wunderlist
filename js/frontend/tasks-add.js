@@ -44,10 +44,6 @@ function saveNewTask()
 			// Reset DatePicker
 			$('.datepicker').val('');
 			make_timestamp_to_string();
-
-			Titanium.Analytics.featureEvent('task.added', {
-				'time':(new Date()).toString()
-			});
 		}
 		else
 		{
