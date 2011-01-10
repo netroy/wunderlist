@@ -39,7 +39,7 @@ function bindListAddMode()
 function addList()
 {
 	// Add new list
-    $('#lists').append(generateNewListElementHTML());
+    $('div#lists').append(generateNewListElementHTML());
 
     // Hide add button
     $('h3 .add').hide();
@@ -164,6 +164,16 @@ function saveList(listElement)
 		listElement.children('b').attr('title', unescape(listElementName));
 
 	listElement.click();
+}
+
+/**
+ * Cancel adding a new list
+ *
+ * @author Dennis Schneider
+ */
+function cancelSaveList()
+{
+	$('div#lists a#x:last').remove();
 }
 
 /**

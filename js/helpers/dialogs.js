@@ -4,6 +4,7 @@ var shareOwnEmailDialog;
 var deleteDialog;
 var whileSyncDialog;
 var cloudAppDialog;
+var shareSuccessDialog;
 
 /**
  * Generates a dialog window
@@ -105,6 +106,28 @@ function showOKDialog(title) {
 	}
 	else
 		openDialog(okDialog);
+}
+
+function showSharedSuccessDialog(title) {
+	
+	if(shareSuccessDialog == undefined)
+	{
+		shareSuccessDialog = $('<div></div>').dialog({
+			autoOpen: true,
+			draggable: false,
+			modal: false,
+			title: title,
+			buttons: {
+				'OK': function() {
+					$(this).dialog('close');
+				}
+			}
+		});
+	}
+	else
+	{
+		openDialog(shareSuccessDialog);
+	}
 }
 
 /**

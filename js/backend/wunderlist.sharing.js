@@ -295,7 +295,9 @@ sharing.sendSharedList = function(list_id, type)
 								}
 
 								if(show_ok == true)
-									showOKDialog(language.data.shared_successfully);
+								{
+									showSharedSuccessDialog(language.data.shared_successfully);
+								}
 							}
 							else
 							{

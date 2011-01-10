@@ -76,6 +76,10 @@ $(document).ready(function() {
 			{
 				$('div#note a#cancel-note').click();
 			}
+			else if($('div#lists a#x:last').length > 0)
+			{
+				cancelSaveList();
+			}
 			else
 			{
 				cancelSaveTask();
