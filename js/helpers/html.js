@@ -15,7 +15,7 @@ $(function() {
  */
 function generateShareListDialogHTML()
 {
-	html =  '<p>' + language.data.sharelist_info +'</p>' +
+	var html =  '<p>' + language.data.sharelist_info +'</p>' +
 			'<p class="small"><b>' + language.data.sharelist_hint + '</b>: ' + language.data.sharelist_hint_text + '</p>' +
 			'<input type="hidden" id="share-list-id" rel="" />' +
 			'<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
@@ -32,7 +32,7 @@ function generateShareListDialogHTML()
  */
 function generateLoginRegisterDialogHTML()
 {
-	html = '<p class="pl8">' + language.data.login_hint + '</p><br />' +
+	var html = '<p class="pl8">' + language.data.login_hint + '</p><br />' +
 		'<div class="wunderlistlogo"></div>' +
 		'<input class="input-login" type="text" id="login-email" name="email" placeholder="' + language.data.email + '" />' +
 		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + language.data.password + '" />' +
@@ -170,7 +170,7 @@ function generateNewListElementHTML(listId, listElementName, listElementInputCla
  */
 function generateCreditsDialogHTML()
 {
-	html = '<p><b>wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your wunderlists follows you.<br /><br />' +
+	var html = '<p><b>wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your wunderlists follows you.<br /><br />' +
 		'<b>What´s next?</b><br><br>' +
 		'We are currently working on something pretty big. We call it <b>wunderkit</b>, an online business platform that will change the way you look at corporate software products.<br /><br />' +
 		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.<br /><br /></p>' +
@@ -181,14 +181,39 @@ function generateCreditsDialogHTML()
 }
 
 function generateBackgroundsDialogHTML() {
-	html =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
+	var html =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
 			'<a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a> (Artcore)<br/>' +
 			'<a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a> (Galaxgui)</p>';
 	return html;
 }
 
+/**
+ * Generates the HTML structure for the settings dialog
+ *
+ * @author Dennis Schneider
+ */
+function generateSettingsHTML()
+{
+	var html =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
+    		'<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
+       		'<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p></div>' +
+       		'<div id="week-start-day-radios" class="radios">' +
+       		'<span class="ui-widget-header custom-dialog-headline">' + language.data.startday + '</span>' +
+			'<p><input id="startday_1" type="radio" name="startDay" value="1" /><span>' + language.data.monday + '</span></p>' +
+			'<p><input id="startday_6" type="radio" name="startDay" value="6" /><span>' + language.data.saturday + '</span></p>' +
+			'<p><input id="startday_0" type="radio" name="startDay" value="0" /><span>' + language.data.sunday + '</span></p>' +
+ 			'</div>' +
+    		'<p><input id="cancel-dateformat" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
+	return html;
+}
+
+/**
+ * Generates the HTML structure for the date format dialog
+ *
+ * @author Dennis Schneider
+ */
 function generateSwitchDateFormatHTML() {
-	html =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
+	var html =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
     		'<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
        		'<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p></div>' +
        		'<div id="week-start-day-radios" class="radios">' +
@@ -208,7 +233,7 @@ function generateSwitchDateFormatHTML() {
  */
 function generateSocialDialogHTML()
 {
-	html = '<div id="invitebox"><div class="wunderlistlogo"></div>'+
+	var html = '<div id="invitebox"><div class="wunderlistlogo"></div>'+
 
 		'<p class="invitefriends">' + language.data.invite + ':</p>' +
 		'<textarea class="textarea-dialog" id="invite-text" maxlength="140">'+ language.data.invitetextarea +'</textarea>' +
@@ -235,7 +260,7 @@ function generateSocialDialogHTML()
  */
 function generateEditProfileDialogHTML()
 {
-	html =
+	var html =
 		'<p>' + language.data.edit_profile_desc + '</p>' +
 		'<input class="input-normal"          type="text"     id="new_email"    name="new_email" placeholder="'+language.data.new_email_address+'" />' +
 		'<input class="input-normal"          type="password" id="new_password" name="new_password" placeholder="'+language.data.new_password+'" />' +

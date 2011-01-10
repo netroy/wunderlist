@@ -185,5 +185,6 @@
 	"send_by_mail":				"send by email",
 	"share_with_cloud":			"share with cloud app",
 	"copy_link":				"COPY LINK",
-	"saturday":					"Saturday"
+	"saturday":					"Saturday",
+	"settings":					"Settings"
 }

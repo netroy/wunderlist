@@ -56,6 +56,8 @@ Menu.initialize = function() {
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
 
+	extraMenuItem.addItem(language.data.settings, openSettingsDialog);
+
 	// Extras Menu
 	extraMenuItem.addItem(language.data.reset_window_size, reset_window_size); // Reset Window Size
 
@@ -207,9 +209,55 @@ function openBackgroundsDialog() {
 
 var switchDateFormatDialog;
 
+/**
+ * Open the switch date format dialog
+ *
+ * @author Dennis Schneider
+ */
 function openSwitchDateFormatDialog() {
 	if(switchDateFormatDialog == undefined || $(switchDateFormatDialog).dialog('isOpen') == false)
 		switchDateFormatDialog = generateDialog(language.data.switchdateformat, generateSwitchDateFormatHTML());
+
+	openDialog(switchDateFormatDialog, 'switchdateformat-credits');
+
+	$('input#cancel-dateformat').die();
+	$('input#confirm-dateformat').die();
+
+	var dateformat = Titanium.App.Properties.getString('dateformat', language.code);
+	$('div.radios#date-format-radios input#date_' + dateformat).attr('checked', 'checked');
+
+	var weekstart_day = Titanium.App.Properties.getString('weekstartday', '1');
+	$('div.radios#week-start-day-radios input#startday_' + weekstart_day).attr('checked', 'checked');
+
+	$('input#cancel-dateformat').live('click', function() {
+		$(switchDateFormatDialog).dialog('close')
+	});
+
+	$('input#confirm-dateformat').live('click', function() {
+		var new_dateformat = $('div.radios#date-format-radios input:checked').val();
+		var weekstart_day  = $('div.radios#week-start-day-radios input:checked').val();
+
+		Titanium.App.Properties.setString('weekstartday', weekstart_day.toString());
+		Titanium.App.Properties.setString('dateformat', new_dateformat);
+
+		$('div.add input.datepicker').datepicker('destroy');
+		createDatepicker();
+		make_timestamp_to_string();
+
+		$(switchDateFormatDialog).dialog('close')
+	});
+}
+
+var settingsDialog;
+
+/**
+ * Open the switch date format dialog
+ *
+ * @author Dennis Schneider
+ */
+function openSettingsDialog() {
+	if(settingsDialog == undefined || $(settingsDialog).dialog('isOpen') == false)
+		settingsDialog = generateDialog(language.data.settings, generateSettingsHTML());
 
 	openDialog(switchDateFormatDialog, 'switchdateformat-credits');
 
