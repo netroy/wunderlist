@@ -179,5 +179,6 @@
 	"print_tasks":				"Aufgaben drucken",
 	"send_by_mail":				"Per E-mail senden",
 	"share_with_cloud":			"Per Cloud App teilen",
-	"copy_link":				"LINK KOPIEREN"
+	"copy_link":				"LINK KOPIEREN",
+	"saturday":					"Samstag"
 }

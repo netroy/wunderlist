@@ -194,6 +194,7 @@ function generateSwitchDateFormatHTML() {
        		'<div id="week-start-day-radios" class="radios">' +
        		'<span class="ui-widget-header custom-dialog-headline">' + language.data.startday + '</span>' +
 			'<p><input id="startday_1" type="radio" name="startDay" value="1" /><span>' + language.data.monday + '</span></p>' +
+			'<p><input id="startday_6" type="radio" name="startDay" value="6" /><span>' + language.data.saturday + '</span></p>' +
 			'<p><input id="startday_0" type="radio" name="startDay" value="0" /><span>' + language.data.sunday + '</span></p>' +
  			'</div>' +
     		'<p><input id="cancel-dateformat" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
@@ -511,13 +512,19 @@ function createDatepicker()
 
 	// Check for starting day of the week
 	if(Titanium.App.Properties.hasProperty('weekstartday') == true)
+	{
 		var firstDay = Titanium.App.Properties.getString('weekstartday', '1');
+	}
 	else
 	{
 		if(language.code == 'de' || language.code == 'en')
+		{
 			var firstDay = 1;
+		}
 		else
+		{
 			var firstDay = 0;
+		}
 
 		Titanium.App.Properties.setString('weekstartday', firstDay.toString());
 	}
