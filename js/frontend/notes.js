@@ -106,14 +106,12 @@ $(function()
 		var note_text = notes.note.val();
 		var task_id   = notes.note.attr('id');
 
-		if(note_text != '')
-		{
-			wunderlist.saveNoteForTask(convertStringForDB(note_text), task_id);
-		}
-		else
+		if(note_text == '')
 		{
 			notes.currentNoteIcon.removeClass('activenote');
 		}
+
+		wunderlist.saveNoteForTask(convertStringForDB(note_text), task_id);
 
 		notes.hideNoteElements();
 
