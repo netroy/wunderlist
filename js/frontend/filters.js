@@ -8,19 +8,19 @@ var filters = filters || {};
 filters.init = function() {
 
 	$('.list').click(filters.clearActiveStates);
-	$('a#someday').click(function() { wunderlist.getFilteredTasks('date', 'withdate') });
-	$('a#withoutdate').click(function() { wunderlist.getFilteredTasks('date', 'nodate') });
-	$('a#all').click(function() { wunderlist.getFilteredTasks('all') });
-	$('a#starred').click(function() { wunderlist.getFilteredTasks('starred') });
-	$('a#today').click(function() { wunderlist.getFilteredTasks('today') });
-	$('a#tomorrow').click(function() { wunderlist.getFilteredTasks('tomorrow') });
-	$('a#thisweek').click(function() { wunderlist.getFilteredTasks('thisweek') });
-	$('a#done').click(function() { wunderlist.getFilteredTasks('done') });
+	$('a#someday').click(function() {wunderlist.getFilteredTasks('date', 'withdate')});
+	$('a#withoutdate').click(function() {wunderlist.getFilteredTasks('date', 'nodate')});
+	$('a#all').click(function() {wunderlist.getFilteredTasks('all')});
+	$('a#starred').click(function() {wunderlist.getFilteredTasks('starred')});
+	$('a#today').click(function() {wunderlist.getFilteredTasks('today')});
+	$('a#tomorrow').click(function() {wunderlist.getFilteredTasks('tomorrow')});
+	$('a#thisweek').click(function() {wunderlist.getFilteredTasks('thisweek')});
+	$('a#done').click(function() {wunderlist.getFilteredTasks('done')});
 
 	// Activates a filter
 	$('#bottombar #left a').click(function() {
 		filters.setActiveState(this);
-		$("a.list").droppable({ disabled: false });
+		$("a.list").droppable({disabled: false});
 		make_timestamp_to_string();
 		//makeFilterListSortable();
 	});
@@ -29,12 +29,53 @@ filters.init = function() {
 	$('div#sidebar div#notification div').click(function() {
 		wunderlist.getFilteredTasks('overdue');
 		make_timestamp_to_string();
-		$("a.list").droppable({ disabled: false });
+		$("a.list").droppable({disabled: false});
 		//makeFilterListSortable();
 		$('#bottombar #left a').removeClass('active');
 	});
 
 	setTimeout(filters.updateBadges, 10);
+
+	// Shortcut Bind Command(or Ctrl)+1 - go to filter list all
+	$(document).bind('keydown', shortcutkey + '+1', function (evt) {
+		$('a#all').click();
+	});
+
+	// Shortcut Bind Command(or Ctrl)+2 - go to filter list starred
+	$(document).bind('keydown', shortcutkey + '+2', function (evt) {
+		$('a#starred').click();
+	});
+
+	// Shortcut Bind Command(or Ctrl)+3 - go to filter list done
+	$(document).bind('keydown', shortcutkey + '+3', function (evt) {
+		$('a#done').click();
+	});
+
+	// Shortcut Bind Command(or Ctrl)+4 - go to filter list today
+	$(document).bind('keydown', shortcutkey + '+4', function (evt) {
+		$('a#today').click();
+	});
+
+	// Shortcut Bind Command(or Ctrl)+5 - go to filter list tomorrow
+	$(document).bind('keydown', shortcutkey + '+5', function (evt) {
+		$('a#tomorrow').click();
+	});
+
+	// Shortcut Bind Command(or Ctrl)+6 - go to filter list next 7 days
+	$(document).bind('keydown', shortcutkey + '+6', function (evt) {
+		$('a#thisweek').click();
+	});
+
+	// Shortcut Bind Command(or Ctrl)+7 - go to filter list later
+	$(document).bind('keydown', shortcutkey + '+7', function (evt) {
+		$('a#someday').click();
+	});
+
+	// Shortcut Bind Command(or Ctrl)+8 - go to filter list without date
+	$(document).bind('keydown', shortcutkey + '+8', function (evt) {
+		$('a#withoutdate').click();
+	});
+
 }
 
 /**

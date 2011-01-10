@@ -18,7 +18,7 @@ sharing.init = function()
 	sharing.shareUrl               = 'https://sync.wunderlist.net/share';
 	sharing.sharedEmailsUrl        = 'https://sync.wunderlist.net/share/emails';
 	sharing.shareListDialog        = null;
-	sharing.deletedMails           = new Array();
+	sharing.deletedMails           = [];
 	sharing.openedNoInternetDialog = false;
 
 	sharing.status_codes =
