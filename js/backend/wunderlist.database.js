@@ -97,24 +97,28 @@ wunderlist.createDatabaseStandardElements = function(only_tutorials)
 
 		// Generate Default Tasks
 		this.database.execute("INSERT INTO tasks (name, list_id, position, important) VALUES ('" + language.data.default_task_1 + "', '" + tutorials_list_id + "', '0', '1')");
-
+		
+		// Check if var os is set
+		if (os == undefined)
+			var os = Titanium.Platform.name.toLowerCase();
+		
 		// Default Tasks for Mac
 		if (os == 'darwin')
 		{
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_2_mac + "', '" + tutorials_list_id + "', '1')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_5_mac + "', '" + tutorials_list_id + "', '4')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_6_mac + "', '" + tutorials_list_id + "', '5')");
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_2_mac, tutorials_list_id, '1');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_5_mac, tutorials_list_id, '4');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_6_mac, tutorials_list_id, '5');
 		}
 		// Default Tasks for other operating systems
 		else
 		{
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_2 + "', '" + tutorials_list_id + "', '1')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_5 + "', '" + tutorials_list_id + "', '4')");
-			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_6 + "', '" + tutorials_list_id + "', '5')");
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_2, tutorials_list_id, '1');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_5, tutorials_list_id, '4');
+			this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_6, tutorials_list_id, '5');
 		}
 
-		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_4 + "', '" + tutorials_list_id + "', '2')");
-		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES ('" + language.data.default_task_8 + "', '" + tutorials_list_id + "', '3')");
+		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_4, tutorials_list_id, '2');
+		this.database.execute("INSERT INTO tasks (name, list_id, position) VALUES (?, ?, ?)", language.data.default_task_8, tutorials_list_id, '3');
 
 		done_date = new Date().getTime() / 1000;
 		this.database.execute("INSERT INTO tasks (name, list_id, position, done, done_date) VALUES (?, ?, ?, ?, ?)", language.data.default_task_7, tutorials_list_id, '4', '1', done_date);
