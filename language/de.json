@@ -181,5 +181,8 @@
 	"share_with_cloud":			"Per Cloud App teilen",
 	"copy_link":				"LINK KOPIEREN",
 	"saturday":					"Samstag",
-	"settings":					"Einstellungen"
+	"settings":					"Einstellungen",
+	"delete_task_prompt":		"Bestätigungsdialog zeigen, wenn Aufgaben gelöscht werden?",
+	"yes":						"Ja",
+	"no":						"Nein"
 }

@@ -186,5 +186,8 @@
 	"share_with_cloud":			"share with cloud app",
 	"copy_link":				"COPY LINK",
 	"saturday":					"Saturday",
-	"settings":					"Settings"
+	"settings":					"Settings",
+	"delete_task_prompt":		"Show confirmation prompt on deleting tasks?",
+	"yes":						"Yes",
+	"no":						"No"
 }

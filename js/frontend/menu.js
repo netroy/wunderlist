@@ -29,29 +29,29 @@ Menu.initialize = function() {
 	accountMenuItem.addSeparatorItem();
 
 	// Language Menu
-	languageMenuItem.addItem('Deutsch',    function() { Menu.switch_language('de') });
-	languageMenuItem.addItem('English',    function() { Menu.switch_language('en') });
-	languageMenuItem.addItem('Español',    function() { Menu.switch_language('es') });
-	languageMenuItem.addItem('Català',     function() { Menu.switch_language('ca') });
-	languageMenuItem.addItem('Français',   function() { Menu.switch_language('fr') });
-	languageMenuItem.addItem('Polski',     function() { Menu.switch_language('pl') });
-	languageMenuItem.addItem('Português',  function() { Menu.switch_language('pt') });
-	languageMenuItem.addItem('Italiano',   function() { Menu.switch_language('it') });
-	languageMenuItem.addItem('Slovensky',  function() { Menu.switch_language('sk') });
-	languageMenuItem.addItem('Nederlands', function() { Menu.switch_language('nl') });
-	languageMenuItem.addItem('Pусский',    function() { Menu.switch_language('ru') });
-	languageMenuItem.addItem('Українське', function() { Menu.switch_language('uk') });
-	languageMenuItem.addItem('Dansk',      function() { Menu.switch_language('da') });
-	languageMenuItem.addItem('České',      function() { Menu.switch_language('cs') });
-	languageMenuItem.addItem('中文',        function() { Menu.switch_language('zh') });
-	languageMenuItem.addItem('Türkçe',     function() { Menu.switch_language('tr') });
-	languageMenuItem.addItem('ألماني',        function() { Menu.switch_language('ar') });
-	languageMenuItem.addItem('Svenska',    function() { Menu.switch_language('se') });
-	languageMenuItem.addItem('日本語',      function() { Menu.switch_language('ja') });
-	languageMenuItem.addItem('Magyar',     function() { Menu.switch_language('hu') });
-	languageMenuItem.addItem('한국어',      function() { Menu.switch_language('ko') });
-	languageMenuItem.addItem('Hrvatski',   function() { Menu.switch_language('hr') });
-	languageMenuItem.addItem('Norsk',      function() { Menu.switch_language('no') });
+	languageMenuItem.addItem('Deutsch',    function() {Menu.switch_language('de')});
+	languageMenuItem.addItem('English',    function() {Menu.switch_language('en')});
+	languageMenuItem.addItem('Español',    function() {Menu.switch_language('es')});
+	languageMenuItem.addItem('Català',     function() {Menu.switch_language('ca')});
+	languageMenuItem.addItem('Français',   function() {Menu.switch_language('fr')});
+	languageMenuItem.addItem('Polski',     function() {Menu.switch_language('pl')});
+	languageMenuItem.addItem('Português',  function() {Menu.switch_language('pt')});
+	languageMenuItem.addItem('Italiano',   function() {Menu.switch_language('it')});
+	languageMenuItem.addItem('Slovensky',  function() {Menu.switch_language('sk')});
+	languageMenuItem.addItem('Nederlands', function() {Menu.switch_language('nl')});
+	languageMenuItem.addItem('Pусский',    function() {Menu.switch_language('ru')});
+	languageMenuItem.addItem('Українське', function() {Menu.switch_language('uk')});
+	languageMenuItem.addItem('Dansk',      function() {Menu.switch_language('da')});
+	languageMenuItem.addItem('České',      function() {Menu.switch_language('cs')});
+	languageMenuItem.addItem('中文',        function() {Menu.switch_language('zh')});
+	languageMenuItem.addItem('Türkçe',     function() {Menu.switch_language('tr')});
+	languageMenuItem.addItem('ألماني',        function() {Menu.switch_language('ar')});
+	languageMenuItem.addItem('Svenska',    function() {Menu.switch_language('se')});
+	languageMenuItem.addItem('日本語',      function() {Menu.switch_language('ja')});
+	languageMenuItem.addItem('Magyar',     function() {Menu.switch_language('hu')});
+	languageMenuItem.addItem('한국어',      function() {Menu.switch_language('ko')});
+	languageMenuItem.addItem('Hrvatski',   function() {Menu.switch_language('hr')});
+	languageMenuItem.addItem('Norsk',      function() {Menu.switch_language('no')});
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
@@ -65,19 +65,19 @@ Menu.initialize = function() {
 	extraMenuItem.addItem(language.data.create_tutorials, wunderlist.recreateTutorials);
 
 	extraMenuItem.addSeparatorItem();
-	extraMenuItem.addItem('Knowledge Base',    function() { Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb') });
+	extraMenuItem.addItem('Knowledge Base',    function() {Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb')});
 	extraMenuItem.addItem(language.data.credits,         openCreditsDialog);  // About Us Dialog
 	extraMenuItem.addItem(language.data.backgrounds,     openBackgroundsDialog);  // Background Credits
-	extraMenuItem.addItem(language.data.wunderkinder,    function() { Titanium.Desktop.openURL('http://www.6wunderkinder.com') });
-	extraMenuItem.addItem(language.data.wunderkinder_tw, function() { Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder') });
-	extraMenuItem.addItem(language.data.wunderkinder_fb, function() { Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder') });
+	extraMenuItem.addItem(language.data.wunderkinder,    function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
+	extraMenuItem.addItem(language.data.wunderkinder_tw, function() {Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder')});
+	extraMenuItem.addItem(language.data.wunderkinder_fb, function() {Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder')});
 	extraMenuItem.addSeparatorItem();
-	extraMenuItem.addItem(language.data.changelog, function() { Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist/changelog') });
+	extraMenuItem.addItem(language.data.changelog, function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist/changelog')});
 
 	if(wunderlist.isUserLoggedIn())
 	{
 		accountMenuItem.addItem(language.data.change_login_data, account.editProfile)
-		accountMenuItem.addItem(language.data.delete_account, function() { account.deleteAccount() });
+		accountMenuItem.addItem(language.data.delete_account, function() {account.deleteAccount()});
 		accountMenuItem.addSeparatorItem();
 		accountMenuItem.addItem(language.data.logout, function() {
 			sync.fireSync(true);
@@ -256,35 +256,27 @@ var settingsDialog;
  * @author Dennis Schneider
  */
 function openSettingsDialog() {
+
 	if(settingsDialog == undefined || $(settingsDialog).dialog('isOpen') == false)
+	{
 		settingsDialog = generateDialog(language.data.settings, generateSettingsHTML());
+	}
 
-	openDialog(switchDateFormatDialog, 'switchdateformat-credits');
+	openDialog(settingsDialog);
 
-	$('input#cancel-dateformat').die();
-	$('input#confirm-dateformat').die();
+	$('input#cancel-settings').die();
+	$('input#confirm-settings').die();
 
-	var dateformat = Titanium.App.Properties.getString('dateformat', language.code);
-	$('div.radios#date-format-radios input#date_' + dateformat).attr('checked', 'checked');
+	var task_delete = Titanium.App.Properties.getString('task_delete', '1');
+	$('div.radios#task-delete-radios input#task_delete_' + task_delete).attr('checked', 'checked');
 
-	var weekstart_day = Titanium.App.Properties.getString('weekstartday', '1');
-	$('div.radios#week-start-day-radios input#startday_' + weekstart_day).attr('checked', 'checked');
-
-	$('input#cancel-dateformat').live('click', function() {
-		$(switchDateFormatDialog).dialog('close')
+	$('input#cancel-settings').live('click', function() {
+		$(settingsDialog).dialog('close')
 	});
 
-	$('input#confirm-dateformat').live('click', function() {
-		var new_dateformat = $('div.radios#date-format-radios input:checked').val();
-		var weekstart_day  = $('div.radios#week-start-day-radios input:checked').val();
-
-		Titanium.App.Properties.setString('weekstartday', weekstart_day.toString());
-		Titanium.App.Properties.setString('dateformat', new_dateformat);
-
-		$('div.add input.datepicker').datepicker('destroy');
-		createDatepicker();
-		make_timestamp_to_string();
-
-		$(switchDateFormatDialog).dialog('close')
+	$('input#confirm-settings').live('click', function() {
+		var new_task_delete = $('div.radios#task-delete-radios input:checked').val();
+		Titanium.App.Properties.setString('task_delete', new_task_delete.toString());
+		$(settingsDialog).dialog('close')
 	});
 }

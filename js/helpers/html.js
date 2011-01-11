@@ -194,16 +194,12 @@ function generateBackgroundsDialogHTML() {
  */
 function generateSettingsHTML()
 {
-	var html =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
-    		'<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
-       		'<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p></div>' +
-       		'<div id="week-start-day-radios" class="radios">' +
-       		'<span class="ui-widget-header custom-dialog-headline">' + language.data.startday + '</span>' +
-			'<p><input id="startday_1" type="radio" name="startDay" value="1" /><span>' + language.data.monday + '</span></p>' +
-			'<p><input id="startday_6" type="radio" name="startDay" value="6" /><span>' + language.data.saturday + '</span></p>' +
-			'<p><input id="startday_0" type="radio" name="startDay" value="0" /><span>' + language.data.sunday + '</span></p>' +
+    var html = '<div id="task-delete-radios" class="radios">' +
+       		'<span class="ui-widget-header custom-dialog-headline">' + language.data.delete_task_prompt + '</span>' +
+			'<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /><span>' + language.data.yes + '</span></p>' +
+			'<p><input id="task_delete_0" type="radio" name="taskDelete" value="0" /><span>' + language.data.no + '</span></p>' +
  			'</div>' +
-    		'<p><input id="cancel-dateformat" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
+    		'<p><input id="cancel-settings" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
 	return html;
 }
 
