@@ -1246,23 +1246,45 @@ wunderlist.getLastDoneTasks = function(list_id)
 			var day_string = language.data.day_ago;
 			var heading    = '<h3>';
 
-			if (listId == 0) {day_string = language.data.done_today;days_text = '';heading = '<h3 class="head_today">';}
-			else if (listId == 1) {day_string = language.data.done_yesterday;days_text = '';}
-			else {day_string = language.data.days_ago;days_text = listId;};
+			if (listId == 0) 
+			{
+				day_string = language.data.done_today;days_text = '';
+				heading = '<h3 class="head_today">';
+			}
+			else if (listId == 1)
+			{
+				day_string = language.data.done_yesterday;days_text = '';
+			}
+			else 
+			{
+				day_string = language.data.days_ago;days_text = listId;
+			}
 
 			// Check for older tasks and append new div
 			if (listId > 1 && ($('#older_tasks').length == 0))
+			{
 				$('#content').append('<button id="older_tasks_head">' + language.data.older_tasks + '</button><div id="older_tasks"></div>');
+			}
 
 			if ($('ul#donelist_' + listId).length == 0)
 			{
 				var appendHTML = heading + days_text + ' ' + day_string + '</h3><ul id="donelist_' + (listId == 0 ? 'list_today' : listId) + '" class="donelist">' + doneListsTasks[listId].join('') + '</ul>';
 
 				if ($('#older_tasks').length == 0)
+				{
 					$('#content').append(appendHTML);
+				}
 				else
+				{
 					$('#older_tasks').append(appendHTML);
+				}
 			}
+		}
+
+		// If there are older tasks, then append a hide button
+		if ($('#older_tasks ul').length > 0)
+		{
+			$('#content').append('<button id="hide_older_tasks">' + language.data.hide_older_tasks + '</button>');
 		}
 	}
 }

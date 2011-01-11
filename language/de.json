@@ -184,5 +184,6 @@
 	"settings":					"Einstellungen",
 	"delete_task_prompt":		"Bestätigungsdialog zeigen, wenn Aufgaben gelöscht werden?",
 	"yes":						"Ja",
-	"no":						"Nein"
+	"no":						"Nein",
+	"hide_older_tasks":			"Erledigte Aufgaben verstecken"
 }

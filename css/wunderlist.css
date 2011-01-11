@@ -387,13 +387,16 @@ background:url(/images/dragging.png) !important}
 #content .addhere a { color:#fff}
 #content .addhere a:hover { cursor:pointer}
 
-#content button#older_tasks_head {
-cursor:pointer; width: 170px; margin:30px auto 0px auto;
+#content button#older_tasks_head, #content button#hide_older_tasks {
+cursor:pointer; width: 175px; margin:30px auto 0px auto;
 display:block; float:none;
 background:url(/images/task.jpg) repeat-x;
 -webkit-box-shadow:0px 1px 3px #333; -moz-gradient:none;
 border:none;
 opacity:0.6}
+
+#content button#hide_older_tasks {
+display: none}
 
 #content button#older_tasks_head:hover {opacity:1.0}
 

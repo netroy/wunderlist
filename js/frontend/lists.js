@@ -510,8 +510,20 @@ $(function() {
 	 *
 	 * @author Marvin Labod
 	 */
-	$('#older_tasks_head').live('click', function() {
-		$('#older_tasks').slideDown();
-		$(this).remove();
+	$('button#older_tasks_head').live('click', function() {
+		$('#older_tasks').slideDown(function() {
+			$('button#hide_older_tasks').fadeIn();
+		});
+		
+		$(this).hide();
+	});
+
+
+	$('button#hide_older_tasks').live('click', function() {
+		$('#older_tasks').slideUp(function() {
+			$('button#older_tasks_head').fadeIn();
+		});
+		
+		$(this).hide();
 	});
 });

@@ -189,5 +189,6 @@
 	"settings":					"Settings",
 	"delete_task_prompt":		"Show confirmation prompt on deleting tasks?",
 	"yes":						"Yes",
-	"no":						"No"
+	"no":						"No",
+	"hide_older_tasks":			"Hide done tasks"
 }
