@@ -1,5 +1,10 @@
 var deleteTaskDialog;
 
+/**
+ * Delete a task from the list
+ *
+ * @author Dennis Schneider
+ */
 function deleteTask(deleteElement)
 {
 	var liElement = deleteElement.parent();
@@ -26,10 +31,15 @@ function deleteTask(deleteElement)
 	filters.updateBadges();
 }
 
+/**
+ * Open a prompt asking for the deletion of a task
+ *
+ * @author Dennis Schneider
+ */
 function openTaskDeletePrompt(deleteElement)
 {
 	var buttonsDeleteTask = {};
-	buttonsDeleteTask[language.data.delete_task_no]  = function() { $(this).dialog('close') };
+	buttonsDeleteTask[language.data.delete_task_no]  = function() {$(this).dialog('close')};
 	buttonsDeleteTask[language.data.delete_task_yes] = function() {
 
 		deleteTask(deleteElement);

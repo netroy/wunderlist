@@ -621,7 +621,7 @@ wunderlist.isAlreadySynced = function(list_id)
  */
 wunderlist.setListToShared = function(list_id)
 {
-	var resultSet = wunderlist.database.execute("UPDATE lists SET shared = 1, version = version + 1 WHERE id = ?", list_id);
+	var resultSet = this.database.execute("UPDATE lists SET shared = 1, version = version + 1 WHERE id = ?", list_id);
 	return true;
 }
 

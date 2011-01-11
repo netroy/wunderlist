@@ -67,8 +67,13 @@ sync.validateEmail = function(email)
  *
  * @author Dennis Schneider
  */
-sync.fireSync = function(logOutAfterSync, exitAfterSync)
+sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 {
+	if (list_id == undefined)
+	{
+		list_id = 0;
+	}
+
 	// Should the user be logged out after sync?
 	if(logOutAfterSync == undefined)
 	{
@@ -148,7 +153,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
 						switch(response.code)
 						{
 							case sync.status_codes.SYNC_SUCCESS:
-								sync.syncSuccess(response, logOutAfterSync, exitAfterSync);
+								sync.syncSuccess(response, logOutAfterSync, exitAfterSync, list_id);
 								syncSuccessful = true;
 								clearInterval(sync.timeOutInterval);
 								sync.timeOutInterval = '';
@@ -222,7 +227,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync)
  *
  * @author Dennis Schneider
  */
-sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
+sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list_id)
 {
 	// SYNC STEP 2
 	if(response_step1.sync_table != undefined)
@@ -413,13 +418,27 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync)
 	setTimeout(function() { sync.isSyncing = false; }, 2000);	
 	stopSyncAnimation();
 
-	if(logOutAfterSync == true)
+	// The callback for the sharing functionality
+	if (list_id > 0)
+	{
+		// Only share the list, if it is already shared and already synced
+		if(wunderlist.listIsAlreadyShared(list_id) == true && wunderlist.isAlreadySynced(list_id) == true)
+		{
+			setTimeout(function() {
+				sharing.sendSharedList(list_id);
+			}, 100);
+		}
+	}
+
+	// Log out after sync callback
+	if (logOutAfterSync == true)
 	{
 		sync.isSyncing = false;
 		account.logout();
 	}
 
-	if(exitAfterSync == true)
+	// Exit after sync callback
+	if (exitAfterSync == true)
 	{
 		Titanium.App.exit();
 	}
