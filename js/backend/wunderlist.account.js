@@ -636,9 +636,7 @@ account.change_profile_data = function() {
 account.deleteAccount = function() {
 	if(delete_account_dialog == undefined)
 	{
-		var html =
-
-		'<p>' + language.data.delete_account_desc + '</p>' +
+		var html_code =	'<p>' + language.data.delete_account_desc + '</p>' +
 		'<input class="input-normal"          type="text"     id="delete_email" name="delete_email" placeholder="' + language.data.email + '" />' +
 		'<input class="input-normal"          type="password" id="delete_password" name="delete_password" placeholder="'+ language.data.password + '" />' +
 		'<input class="input-button register" type="submit"   id="submit_delete_profile" value="' + language.data.delete_account + '" />'+
@@ -647,7 +645,7 @@ account.deleteAccount = function() {
 		'<span class="error"></div>';
 
 		delete_account_dialog = $('<div></div>')
-			.html(html)
+			.html(html_code)
 			.dialog({
 				autoOpen: false,
 				draggable: false,

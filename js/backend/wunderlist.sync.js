@@ -97,11 +97,11 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 	if(wunderlist.isUserLoggedIn() == false)
 	{
 		setTimeout(stopSyncAnimation, 10);
-		var html  = '<div>' + language.data.sync_not_logged_in + '</div>';
-			html += '<input class="input-button register" type="submit" id="notloggedin-yes" value="' + language.data.sync_not_logged_in_yes + '" />' +
+		var html_code  = '<div>' + language.data.sync_not_logged_in + '</div>';
+			html_code += '<input class="input-button register" type="submit" id="notloggedin-yes" value="' + language.data.sync_not_logged_in_yes + '" />' +
 					'<input class="input-button" type="submit" id="notloggedin-cancel" value="' + language.data.sync_not_logged_in_no + '" />';
 
-	  	var notloggedin_dialog = dialogs.generateDialog(language.data.sync_not_logged_in_title, html, 'dialog-login');
+	  	var notloggedin_dialog = dialogs.generateDialog(language.data.sync_not_logged_in_title, html_code, 'dialog-login');
 
 		$(notloggedin_dialog).dialog('open');
 

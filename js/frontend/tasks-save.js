@@ -117,11 +117,11 @@ $(function()
 
 			titleText = filterLinks(spanElement, titleText);
 
-			html  = '<input type="text" id="task-edit" value="" />';
-			html += '<input type="hidden" class="datepicker title="' + language.data.choose_date + '" />';
+			var html_code  = '<input type="text" id="task-edit" value="" />';
+			html_code += '<input type="hidden" class="datepicker title="' + language.data.choose_date + '" />';
 
 			// Edit the Actual task into an edit task
-			liElement.children(".checkboxcon").after(html);
+			liElement.children(".checkboxcon").after(html_code);
 
 			$('input#task-edit').val(titleText);
 			$("input#task-edit").select();

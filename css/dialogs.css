@@ -16,7 +16,7 @@ a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important;
 #account-buttons #account-loader { display: none; position: absolute; z-index: 100; bottom: 6px; right: 140px; }
 
 .ui-widget-overlay {
-background: #000 !important; opacity:0.3 !important;
+background: #000 !important; opacity:0.5 !important;
 overflow:visible}
 
 .ui-widget-overlay-wood {

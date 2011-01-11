@@ -179,28 +179,30 @@ wunderlist.initLists = function()
 			'shared':       listsResultSet.field(4)
 		};
 
-		var html = '';
+		var html_code = '';
 
 		if(list['inbox'] == 1)
 		{
- 			html = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='editp'></div></div><b class='inbox'>" + list['name'] + "</b></a>";
+ 			html_code = "<a id='" + list['id'] + "' class='list'><span>" + list.taskCount + "</span><div class='editp'></div></div><b class='inbox'>" + list['name'] + "</b></a>";
 		}
  		else
 		{
 			if(list['shared'] == 0)
 			{
-				html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b>" + list['name'] + "</b></a>";
+				html_code = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b>" + list['name'] + "</b></a>";
 			}
 			else
 			{
-				html = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b class='shared'>" + list['name'] + "</b></a>";
+				html_code = "<a id='" + list['id'] + "' class='list sortablelist'><span>" + list.taskCount + "</span><div class='deletep'></div><div class='editp'></div><div class='savep'></div><b class='shared'>" + list['name'] + "</b></a>";
 			}
 		}
 
-		$("#lists").append(html);
+		$("#lists").append(html_code);
 
-		if(list['name'].length > 30)
+		if (list['name'].length > 30)
+		{
 			$('div#sidebar a#' + list['id']).children('b').attr('title', list['name']);
+		}
 
 		listsResultSet.next();
     }

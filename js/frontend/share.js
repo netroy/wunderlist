@@ -184,7 +184,7 @@ share.print = function()
 		var tasks = share.getTasksForSharing(is_filter_list, list_id);
 		
 		// Build tasks html
-		var html = '';
+		var html_code = '';
 		
 		$.each(tasks, function(key, value)
 		{
@@ -192,27 +192,27 @@ share.print = function()
 			if (is_filter_list == false)
 			{
 				// If is normal list
-				html += '<li><span></span>' + unescape(value.name);
+				html_code += '<li><span></span>' + unescape(value.name);
 			}
 			else
 			{
 				// If is filter list
-				html += '<li><span></span>' + unescape(value.task_name);
+				html_code += '<li><span></span>' + unescape(value.task_name);
 			}
 			
 			// Add date
 			if (value.date != '')
 			{
-				html += ' (<b>' + convert_timestamp_into_date(value.date) + '</b>)';
+				html_code += ' (<b>' + convert_timestamp_into_date(value.date) + '</b>)';
 			}
 			
 			// Add note
 			if (value.note != '')
 			{
-				html += '<p>' + unescape(value.note.replace(/\n/g,'<br/>')) + '</p>';
+				html_code += '<p>' + unescape(value.note.replace(/\n/g,'<br/>')) + '</p>';
 			}
 			
-			html += '</li>';
+			html_code += '</li>';
 		});
 		
 		// Replace Tasks
