@@ -154,7 +154,26 @@ sharing.init = function()
 			sharing.sendInvitation = true;
 
 			var list_id = $('input#share-list-id').attr('rel');
-			sharing.shareLists(list_id);
+			
+			// If sync is active at the moment, wait until it is finished and then
+			// execute the sharing method
+			if (sync.isSyncing == true)
+			{
+				sharing.syncShareInterval = setInterval(function() {
+
+					if (sync.isSyncing == false)
+					{
+						sharing.shareLists(list_id);
+						clearInterval(sharing.syncShareInterval);
+					}
+
+				}, 100);
+			}
+			else
+			{
+				sharing.shareLists(list_id);
+			}
+
 			closeDialog(sharing.shareListDialog);
 			
 			setTimeout(function() {sharing.sendInvitation = false}, 2000);
