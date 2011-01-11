@@ -88,7 +88,7 @@ $(function()
 		notes.note.attr('id', task_id);
 		var noteContent = wunderlist.getNoteForTask(task_id);
 
-		notes.note.val(unescape(noteContent));
+		notes.note.val(replace_http_link(unescape(noteContent)));
 		notes.showNoteElements();
 
 		notes.note.focus();

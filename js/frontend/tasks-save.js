@@ -38,6 +38,25 @@ function saveTask()
 }
 
 /**
+ * Replace all LINK tags with external hyperlinks
+ *
+ * @author Dennis Schneider
+ */
+function filterLinks(spanElement, text)
+{
+	var linkElements = spanElement.find('a');
+
+	if (linkElements.length > 0)
+	{
+		$.each(linkElements, function() {
+			text = text.replace(/LINK/, linkElements.attr('href'));
+		});
+	}
+
+	return text;
+}
+
+/**
  * Cancel saving the task
  *
  * @author Dennis Schneider, Christian Reber, Daniel Marschner
@@ -60,25 +79,6 @@ function cancelSaveTask()
     listElement.children('span.description').show();
 
     focusOutEnabled = true;
-}
-
-/**
- * Filter the given jquery object for link elements
- *
- * @author Dennis Schneider
- */
-function filterLinks(element, text)
-{
-	var linkElements = element.find('a');
-
-	if (linkElements.length > 0)
-	{
-		$.each(linkElements, function() {
-			text = text.replace(/LINK/, linkElements.attr('href'));
-		});
-	}
-
-	return text;
 }
 
 /**
@@ -115,14 +115,7 @@ $(function()
 			titleText = spanElement.text();
             spanElement.hide();
 
-			var linkElements = spanElement.find('a');
-
-			if (linkElements.length > 0)
-			{
-				$.each(linkElements, function() {
-					titleText = titleText.replace(/LINK/, linkElements.attr('href'));
-				});
-			}
+			titleText = filterLinks(spanElement, titleText);
 
 			html  = '<input type="text" id="task-edit" value="" />';
 			html += '<input type="hidden" class="datepicker title="' + language.data.choose_date + '" />';

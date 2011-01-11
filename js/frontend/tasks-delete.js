@@ -20,6 +20,9 @@ function deleteTask(deleteElement)
 	liElement.remove();
 
 	wunderlist.deleteTaskById(taskId, listId);
+
+	$('div#note a#cancel-note').click();
+
 	filters.updateBadges();
 }
 
