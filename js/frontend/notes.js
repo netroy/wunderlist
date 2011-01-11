@@ -121,23 +121,26 @@ $(function()
 	// Cancel the note
 	$('div#note a#cancel-note').live('click', function()
 	{
-		notes.noteIcons = $('ul#list li span.note');
-		notes.listItems = $('div#lists');
-		notes.note      = $('#note textarea');
-
-		var task_id     = notes.note.attr('id');
-		var noteContent = wunderlist.getNoteForTask(task_id);
-		var note_text   = notes.note.val();
-		
-		if(noteContent == '')
+		if (typeof notes.currentNoteIcon == 'object' && $('#note textarea').css('display') == 'block')
 		{
-			notes.currentNoteIcon.removeClass('activenote');
+			notes.noteIcons = $('ul#list li span.note');
+			notes.listItems = $('div#lists');
+			notes.note      = $('#note textarea');
+
+			var task_id     = notes.note.attr('id');
+			var noteContent = wunderlist.getNoteForTask(task_id);
+			var note_text   = notes.note.val();
+
+			if(noteContent == '')
+			{
+				notes.currentNoteIcon.removeClass('activenote');
+			}
+
+			notes.note.val(noteContent);
+			notes.hideNoteElements();
+
+			timer.resume();
 		}
-
-		notes.note.val(noteContent);
-		notes.hideNoteElements();
-
-		timer.resume();
 	});
 
 	$('#note textarea').live('keyup', function(e)

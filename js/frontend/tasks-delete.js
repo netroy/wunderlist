@@ -74,7 +74,7 @@ $(function() {
 	});
 
 	// Delete function for the clicked task
-    $(".delete").live('click', function() {
+    $("li span.delete").live('click', function() {
 		var deleteElement = $(this);
 
         if (deleteTaskDialog == undefined || deleteTaskDialog.dialog('isOpen') == false)
