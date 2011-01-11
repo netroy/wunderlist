@@ -21,14 +21,14 @@ filters.init = function() {
 	$('#bottombar #left a').click(function() {
 		filters.setActiveState(this);
 		$("a.list").droppable({disabled: false});
-		make_timestamp_to_string();
+		html.make_timestamp_to_string();
 		//makeFilterListSortable();
 	});
 
 	// Show overdue tasks if click on "overdue alert"
 	$('div#sidebar div#notification div').click(function() {
 		wunderlist.getFilteredTasks('overdue');
-		make_timestamp_to_string();
+		html.make_timestamp_to_string();
 		$("a.list").droppable({disabled: false});
 		//makeFilterListSortable();
 		$('#bottombar #left a').removeClass('active');

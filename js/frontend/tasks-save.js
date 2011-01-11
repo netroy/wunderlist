@@ -12,7 +12,7 @@ function saveTask()
 {
 	focusOutEnabled = false;
 
-    $newtitle         = convertStringForDB($('#task-edit').val());
+    $newtitle         = html.convertStringForDB($('#task-edit').val());
 	$task_id          = $('#task-edit').parent().attr("id");
 	$datepicker       = $('#task-edit').parent().find('.datepicker');
 	$datepicker_image = $('#task-edit').parent().find('img.ui-datepicker-trigger');
@@ -126,7 +126,7 @@ $(function()
 			$('input#task-edit').val(titleText);
 			$("input#task-edit").select();
 
-			createDatepicker();
+			html.createDatepicker();
 
 			totalFocusOut = false;
 		}

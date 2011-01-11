@@ -1,28 +1,20 @@
-$(function() {
-
-	// Open every link in the browser
-	$('a[href^=http]').live('click', function() {
-		Titanium.Desktop.openURL(this.href);
-		return false;
-	});
-
-});
+var html = html || {};
 
 /**
  * Returns the HTML structure of the login/register Dialog
  *
  * @author Marvin Labod
  */
-function generateShareListDialogHTML()
+html.generateShareListDialogHTML = function()
 {
-	var html =  '<p>' + language.data.sharelist_info +'</p>' +
+	var html_code =  '<p>' + language.data.sharelist_info +'</p>' +
 			'<p class="small"><b>' + language.data.sharelist_hint + '</b>: ' + language.data.sharelist_hint_text + '</p>' +
 			'<input type="hidden" id="share-list-id" rel="" />' +
 			'<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
 			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="'+ language.data.sharelist_button +'" /></p></div>' +
 			'<ul class="sharelistusers"></ul>';
 
-	return html;
+	return html_code;
 }
 
 /**
@@ -30,9 +22,9 @@ function generateShareListDialogHTML()
  *
  * @author Daniel Marschner
  */
-function generateLoginRegisterDialogHTML()
+html.generateLoginRegisterDialogHTML = function()
 {
-	var html = '<p class="pl8">' + language.data.login_hint + '</p><br />' +
+	var html_code = '<p class="pl8">' + language.data.login_hint + '</p><br />' +
 		'<div class="wunderlistlogo"></div>' +
 		'<input class="input-login" type="text" id="login-email" name="email" placeholder="' + language.data.email + '" />' +
 		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + language.data.password + '" />' +
@@ -51,7 +43,7 @@ function generateLoginRegisterDialogHTML()
 		'<a class="followtwitter" target="_blank" href="http://www.twitter.com/6wunderkinder"></a>' +
 		'<a class="followfacebook" target="_blank" href="http://www.facebook.com/6wunderkinder"></a></p></div>';
 
-	return html;
+	return html_code;
 }
 
 /**
@@ -60,26 +52,26 @@ function generateLoginRegisterDialogHTML()
  * @author Dennis Schneider
  * @author Daniel Marschner
  */
-generateListContentHTML = function(list_id, list_name)
+html.generateListContentHTML = function(list_id, list_name)
 {
-	var html = '';
+	var html_code = '';
 
 	if(list_id != 1 && wunderlist.isUserLoggedIn() == true)
 	{
-		html +=  "<div id='listfunctions'><a rel='" + language.data.share_this_list + "' class='list-share'></a><a rel='" + language.data.print_tasks + "' class='list-print'></a><a rel='" + language.data.send_by_mail + "' class='list-email'></a><a rel='" + language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + language.data.copy_link + "</span><span class='link'></span></div></div>";
+		html_code +=  "<div id='listfunctions'><a rel='" + language.data.share_this_list + "' class='list-share'></a><a rel='" + language.data.print_tasks + "' class='list-print'></a><a rel='" + language.data.send_by_mail + "' class='list-email'></a><a rel='" + language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + language.data.copy_link + "</span><span class='link'></span></div></div>";
 	}
 	else
 	{
-		html +=  "<div id='listfunctions'><a rel='" + language.data.print_tasks + "' class='list-print'></a><a rel='" + language.data.send_by_mail + "' class='list-email'></a><a rel='" + language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + language.data.copy_link + "</span><span class='link'></span></div></div>";
+		html_code +=  "<div id='listfunctions'><a rel='" + language.data.print_tasks + "' class='list-print'></a><a rel='" + language.data.send_by_mail + "' class='list-email'></a><a rel='" + language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + language.data.copy_link + "</span><span class='link'></span></div></div>";
 	}
-	html += "<h1>" + unescape(list_name) + "</h1>";
-	html += "<div class='add'>";
-	html += "<input type='text' class='input-add' placeholder='" + language.data.add_task + "' />";
-	html += "<input type='hidden' class='datepicker'/>";
-	html += "</div>";
-	html += "<ul id='list' rel='" + list_id + "' class='mainlist'></ul>";
+	html_code += "<h1>" + unescape(list_name) + "</h1>";
+	html_code += "<div class='add'>";
+	html_code += "<input type='text' class='input-add' placeholder='" + language.data.add_task + "' />";
+	html_code += "<input type='hidden' class='datepicker'/>";
+	html_code += "</div>";
+	html_code += "<ul id='list' rel='" + list_id + "' class='mainlist'></ul>";
 
-	return html;
+	return html_code;
 }
 
 /**
@@ -88,52 +80,53 @@ generateListContentHTML = function(list_id, list_name)
  * @author Dennis Schneider
  * @author Daniel Marschner
  */
-generateTaskHTML = function(id, name, list_id, done, important, date, note)
+html.generateTaskHTML = function(id, name, list_id, done, important, date, note)
 {
 	var favourite;
 
 	// Is the task due today?
-	if(important == 1)
+	if (important == 1)
 		favourite = 'fav" title="'+ language.data.fav + '"';
 	else
 		favourite = 'favina" title="'+ language.data.favina + '"';
 
-	if(done == 1)
+	if (done == 1)
 		check = " done";
 	else
 		check = "";
 
-	var html = "<li class='more" + check + "' rel='" + list_id + "' id='" + id + "'>";
-	if(done == 1)
-	{
-		html += "<div class='checkboxcon checked'>";
-		html += "<input tabIndex='-1' class='input-checked' type='checkbox' checked='checked' />";
-	}
-	else
-	{
-		html += "<div class='checkboxcon'>";
-		html += "<input tabIndex='-1' class='input-checked' type='checkbox' />";
-	}
-
-	html += '</div>';
-	html += '<span class="icon ' + favourite + '></span>';
-	html += '<span class="description">' + replace_http_link(unescape(name)) + '</span>';
-
-	if(date != '' && date != '0')
-		html += '<span class="showdate timestamp" rel="' + date + '"></span>';
-	else
-		html += '<span class="showdate"></span>';
-
-	html += '<span class="icon delete" title="' + language.data.delete_task + '"></span>';
-
-	if(note != '' && note != undefined)
-		html += '<span class="icon note activenote" title="note"></span>';
-	else
-		html += '<span class="icon note" title="note"></span>';
+	var html_code = "<li class='more" + check + "' rel='" + list_id + "' id='" + id + "'>";
 	
-	html += '</li>';
+	if (done == 1)
+	{
+		html_code += "<div class='checkboxcon checked'>";
+		html_code += "<input tabIndex='-1' class='input-checked' type='checkbox' checked='checked' />";
+	}
+	else
+	{
+		html_code += "<div class='checkboxcon'>";
+		html_code += "<input tabIndex='-1' class='input-checked' type='checkbox' />";
+	}
 
-	return html;
+	html_code += '</div>';
+	html_code += '<span class="icon ' + favourite + '></span>';
+	html_code += '<span class="description">' + html.replace_http_link(unescape(name)) + '</span>';
+
+	if (date != '' && date != '0')
+		html_code += '<span class="showdate timestamp" rel="' + date + '"></span>';
+	else
+		html_code += '<span class="showdate"></span>';
+
+	html_code += '<span class="icon delete" title="' + language.data.delete_task + '"></span>';
+
+	if (note != '' && note != undefined)
+		html_code += '<span class="icon note activenote" title="note"></span>';
+	else
+		html_code += '<span class="icon note" title="note"></span>';
+	
+	html_code += '</li>';
+
+	return html_code;
 }
 
 /**
@@ -141,7 +134,7 @@ generateTaskHTML = function(id, name, list_id, done, important, date, note)
  *
  * @author Daniel Marschner
  */
-function generateNewListElementHTML(listId, listElementName, listElementInputClass)
+html.generateNewListElementHTML = function(listId, listElementName, listElementInputClass)
 {
 	if(listId == undefined || listId == '')
 		listId = 'x';
@@ -152,15 +145,15 @@ function generateNewListElementHTML(listId, listElementName, listElementInputCla
 	if(listElementInputClass == undefined || listElementInputClass == '')
 		listElementInputClass = 'input-list';
 
-	var html  = "<a id='" + listId + "' class='list sortablelist'>";
-    	html += "<span>0</span>";
-    	html += "<div class='deletep'></div>";
-    	html += "<div class='savep'></div>";
-    	html += "<div class='editp'></div>";
-    	html += "<input class='" + listElementInputClass + "' maxlength='50' type='text' value='" + listElementName + "' />";
-    	html += "</a>";
+	var html_code  = "<a id='" + listId + "' class='list sortablelist'>";
+    	html_code += "<span>0</span>";
+    	html_code += "<div class='deletep'></div>";
+    	html_code += "<div class='savep'></div>";
+    	html_code += "<div class='editp'></div>";
+    	html_code += "<input class='" + listElementInputClass + "' maxlength='50' type='text' value='" + listElementName + "' />";
+    	html_code += "</a>";
 
-	return html;
+	return html_code;
 }
 
 /**
@@ -168,23 +161,28 @@ function generateNewListElementHTML(listId, listElementName, listElementInputCla
  *
  * @author Daniel Marschner
  */
-function generateCreditsDialogHTML()
+html.generateCreditsDialogHTML = function()
 {
-	var html = '<p><b>wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your wunderlists follows you.<br /><br />' +
+	var html_code = '<p><b>wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your wunderlists follows you.<br /><br />' +
 		'<b>What´s next?</b><br><br>' +
 		'We are currently working on something pretty big. We call it <b>wunderkit</b>, an online business platform that will change the way you look at corporate software products.<br /><br />' +
 		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.<br /><br /></p>' +
 
 		'<p class="logo"><img src="images/logo.png"></p>';
 
-		return html;
+		return html_code;
 }
 
-function generateBackgroundsDialogHTML() {
-	var html =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
+/**
+ * Generate the HTML structure for the backgrounds dialog
+ *
+ * @author Daniel Marschner
+ */
+html.generateBackgroundsDialogHTML = function() {
+	var html_code =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
 			'<a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a> (Artcore)<br/>' +
 			'<a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a> (Galaxgui)</p>';
-	return html;
+	return html_code;
 }
 
 /**
@@ -192,15 +190,15 @@ function generateBackgroundsDialogHTML() {
  *
  * @author Dennis Schneider
  */
-function generateSettingsHTML()
+html.generateSettingsHTML = function()
 {
-    var html = '<div id="task-delete-radios" class="radios">' +
+    var html_code = '<div id="task-delete-radios" class="radios">' +
        		'<span class="ui-widget-header custom-dialog-headline">' + language.data.delete_task_prompt + '</span>' +
 			'<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /><span>' + language.data.yes + '</span></p>' +
 			'<p><input id="task_delete_0" type="radio" name="taskDelete" value="0" /><span>' + language.data.no + '</span></p>' +
  			'</div>' +
     		'<p><input id="cancel-settings" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
-	return html;
+	return html_code;
 }
 
 /**
@@ -208,8 +206,8 @@ function generateSettingsHTML()
  *
  * @author Dennis Schneider
  */
-function generateSwitchDateFormatHTML() {
-	var html =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
+html.generateSwitchDateFormatHTML = function() {
+	var html_code =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
     		'<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
        		'<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p></div>' +
        		'<div id="week-start-day-radios" class="radios">' +
@@ -219,7 +217,7 @@ function generateSwitchDateFormatHTML() {
 			'<p><input id="startday_0" type="radio" name="startDay" value="0" /><span>' + language.data.sunday + '</span></p>' +
  			'</div>' +
     		'<p><input id="cancel-dateformat" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
-	return html;
+	return html_code;
 }
 
 /**
@@ -227,9 +225,9 @@ function generateSwitchDateFormatHTML() {
  *
  * @author Daniel Marschner
  */
-function generateSocialDialogHTML()
+html.generateSocialDialogHTML = function()
 {
-	var html = '<div id="invitebox"><div class="wunderlistlogo"></div>'+
+	var html_code = '<div id="invitebox"><div class="wunderlistlogo"></div>'+
 
 		'<p class="invitefriends">' + language.data.invite + ':</p>' +
 		'<textarea class="textarea-dialog" id="invite-text" maxlength="140">'+ language.data.invitetextarea +'</textarea>' +
@@ -246,7 +244,7 @@ function generateSocialDialogHTML()
 		language.data.invite_without_email +
 		'<span>' + language.data.invite_spread_word + '</span></p></div>';
 
-	return html;
+	return html_code;
 }
 
 /**
@@ -254,9 +252,9 @@ function generateSocialDialogHTML()
  *
  * @author Daniel Marschner
  */
-function generateEditProfileDialogHTML()
+html.generateEditProfileDialogHTML = function()
 {
-	var html =
+	var html_code =
 		'<p>' + language.data.edit_profile_desc + '</p>' +
 		'<input class="input-normal"          type="text"     id="new_email"    name="new_email" placeholder="'+language.data.new_email_address+'" />' +
 		'<input class="input-normal"          type="password" id="new_password" name="new_password" placeholder="'+language.data.new_password+'" />' +
@@ -267,7 +265,7 @@ function generateEditProfileDialogHTML()
 
 		'<span class="error"></div>';
 
-	return html;
+	return html_code;
 }
 
 /**
@@ -275,7 +273,7 @@ function generateEditProfileDialogHTML()
  *
  * @author Dennis Schneider
  */
-function strip_tags (input, allowed)
+html.strip_tags = function(input, allowed)
 {
 	allowed = (((allowed || "") + "")
 		.toLowerCase()
@@ -294,7 +292,7 @@ function strip_tags (input, allowed)
  *
  * @author Dennis Schneider
  */
-function replace_http_link(text) {
+html.replace_http_link = function(text) {
   var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
   return text.replace(exp,"<a href='$1'>LINK</a>");
 }
@@ -304,7 +302,7 @@ function replace_http_link(text) {
  *
  * @author Daniel Marschner
  */
-str_replace = function(search, replace, subject) {
+html.str_replace = function(search, replace, subject) {
 	return subject.split(search).join(replace);
 };
 
@@ -313,7 +311,7 @@ str_replace = function(search, replace, subject) {
  *
  * @author Daniel Marschner
  */
-function convertStringForDB(string) {
+html.convertStringForDB = function(string) {
 	//string = strip_tags(string);
 	string = string.split('<').join(escape('<'));
 	string = string.split('>').join(escape('>'));
@@ -327,7 +325,7 @@ function convertStringForDB(string) {
  *
  * @author Christian Reber
  */
-function isInteger(s) {
+html.isInteger = function(s) {
 	return (s.toString().search(/^-?[0-9]+$/) == 0);
 }
 
@@ -336,7 +334,7 @@ function isInteger(s) {
  *
  * @author Christian Reber
  */
-function showDateByLanguage(object, day, month, year) {
+html.showDateByLanguage = function(object, day, month, year) {
 	if(Titanium.App.Properties.hasProperty('dateformat') == true)
 		var dateformat = Titanium.App.Properties.getString('dateformat');
 	else
@@ -363,7 +361,7 @@ function showDateByLanguage(object, day, month, year) {
  *
  * @author Christian Reber, Dennis Schneider
  */
-function make_timestamp_to_string() {
+html.make_timestamp_to_string = function() {
 	$('.timestamp').each(function(intIndex) {
 
 		// Convert Timestamp to normal date
@@ -385,7 +383,7 @@ function make_timestamp_to_string() {
 		// If older then yesterday, mark red and show the date
 		if(selected_date.getDate() < today.getDate() - 2 && selected_date.getMonth() <= today.getMonth()) {
 			$(this).addClass('red');
-			showDateByLanguage(this, day, month, year);
+			html.showDateByLanguage(this, day, month, year);
 		}
 		// If yesterday, mark red and show "yesterday"
 		else if((selected_date.getDate() < today.getDate() && selected_date.getDate() > today.getDate() - 2) && selected_date.getMonth() == today.getMonth()) {
@@ -401,7 +399,7 @@ function make_timestamp_to_string() {
 			$(this).html(language.data.tomorrow);
 		}
 		else {
-			showDateByLanguage(this, day, month, year);
+			html.showDateByLanguage(this, day, month, year);
 		}
 
 	});
@@ -412,7 +410,7 @@ function make_timestamp_to_string() {
  *
  * @author Dennis Schneider
  */
-function getWorldWideDate(date)
+html.getWorldWideDate = function(date)
 {
     // create Date object for current location
 	if(date == undefined)
@@ -448,7 +446,7 @@ function getWorldWideDate(date)
  *
  * @author Dennis Schneider
  */
-function getMonthName(month_number)
+html.getMonthName = function(month_number)
 {
 	var month = new Array(12);
 	month[0]  = "January";
@@ -472,7 +470,7 @@ function getMonthName(month_number)
  *
  * @author Dennis Schneider
  */
-function getDayName(day_number)
+html.getDayName = function(day_number)
 {
 	var day = new Array(7);
 	day[0] = 'Sunday';
@@ -491,7 +489,7 @@ function getDayName(day_number)
  *
  * @author Dennis Schneider
  */
-function addRemoveDateButton(object)
+html.addRemoveDateButton = function(object)
 {
 	$('#ui-datepicker-div').append("<div class='remove_date'>" + language.data.no_date + "</div>");
 	$('#ui-datepicker-div div.remove_date').die();
@@ -511,7 +509,7 @@ function addRemoveDateButton(object)
  *
  * @author Marvin Labod
  */
-function createDatepicker()
+html.createDatepicker = function()
 {
 	var dayNamesEN        = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	var dayNamesMinEN     = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -532,13 +530,13 @@ function createDatepicker()
 	var monthNamesShortDE = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 
 	// Check for starting day of the week
-	if(Titanium.App.Properties.hasProperty('weekstartday') == true)
+	if (Titanium.App.Properties.hasProperty('weekstartday') == true)
 	{
 		var firstDay = Titanium.App.Properties.getString('weekstartday', '1');
 	}
 	else
 	{
-		if(language.code == 'de' || language.code == 'en')
+		if (language.code == 'de' || language.code == 'en')
 		{
 			var firstDay = 1;
 		}
@@ -550,7 +548,7 @@ function createDatepicker()
 		Titanium.App.Properties.setString('weekstartday', firstDay.toString());
 	}
 
-	if(language.code == 'de')
+	if (language.code == 'de')
 	{
   		var dayNamesLang        = dayNamesDE;
   		var dayNamesMinLang     = dayNamesMinDE;
@@ -558,7 +556,7 @@ function createDatepicker()
   		var monthNamesLang      = monthNamesDE;
   		var monthNamesShortLang = monthNamesShortDE;
 	}
-	else if(language.code == 'fr')
+	else if (language.code == 'fr')
 	{
   		var dayNamesLang        = dayNamesFR;
   		var dayNamesMinLang     = dayNamesMinFR;
@@ -592,12 +590,12 @@ function createDatepicker()
 
 			setTimeout(function() {
 				var timestamp = $edit_li.children('.timestamp').attr('rel');
-				if(timestamp != undefined && timestamp != 0)
+				if (timestamp != undefined && timestamp != 0)
 				{
 					var currentDate = new Date(timestamp * 1000);
 					$edit_li.find('.datepicker').datepicker("setDate" , currentDate);
 				}
-				addRemoveDateButton($edit_li);
+				html.addRemoveDateButton($edit_li);
 			}, 5);
 
             datePickerOpen = true;
@@ -605,11 +603,11 @@ function createDatepicker()
 		onChangeMonthYear: function(year, month, inst) {
 			var $edit_li = $(this).parent();
 			setTimeout(function() {
-				addRemoveDateButton($edit_li);
+				html.addRemoveDateButton($edit_li);
 			}, 5);
 		},
 		onClose: function() {
-			if($(this).parent().children("#task-edit").length == 1)
+			if ($(this).parent().children("#task-edit").length == 1)
             {
 				$("#task-edit").focus();
 
@@ -623,9 +621,9 @@ function createDatepicker()
 
             // Get timestamp (in seconds) for database
 			var date       = new Date(dateText);
-			var timestamp  = getWorldWideDate(date);
+			var timestamp  = html.getWorldWideDate(date);
 
-			if($(this).parent().find('.input-add').length == 1)
+			if ($(this).parent().find('.input-add').length == 1)
 			{
 				var $date = $(".add input.datepicker").val();
 				var $html = '<span class="showdate timestamp" rel="' + timestamp + '">&nbsp;</span>';
@@ -646,7 +644,17 @@ function createDatepicker()
 				$('#task-edit').select();
 			}
 
-			make_timestamp_to_string();
+			html.make_timestamp_to_string();
 		}
 	});
 }
+
+$(function() {
+
+	// Open every link in the browser
+	$('a[href^=http]').live('click', function() {
+		Titanium.Desktop.openURL(this.href);
+		return false;
+	});
+
+});

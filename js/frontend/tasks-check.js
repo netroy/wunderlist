@@ -58,7 +58,7 @@ $(function()
 					wunderlist.taskUndone($task_id, $list_id, true);
 				}
 
-                make_timestamp_to_string();
+                html.make_timestamp_to_string();
 
                 $countli = $(this).parent().parent(".donelist").find("li");
 

@@ -250,21 +250,23 @@ wunderlist.listExistsById = function(list_id)
  */
 wunderlist.fetchData = function(resultTaskSet)
 {
-	var html = '';
+	var html_code = '';
 
 	while(resultTaskSet.isValidRow())
 	{
 		var task = {};
 
 		for(var i = 0; i < resultTaskSet.fieldCount(); i++)
+		{
 			task[resultTaskSet.fieldName(i)] = resultTaskSet.field(i);
+		}
 
-		html += generateTaskHTML(task['task_id'], task['task_name'], task['list_id'], task['done'], task['important'], task['date'], task['note']);
+		html_code += html.generateTaskHTML(task['task_id'], task['task_name'], task['list_id'], task['done'], task['important'], task['date'], task['note']);
 
 		resultTaskSet.next();
 	}
 
-	return html;
+	return html_code;
 }
 
 /**
@@ -870,7 +872,7 @@ wunderlist.getBadgeCount = function(filter_name)
 {
 	var sql = "SELECT id AS count FROM tasks WHERE ";
 
-	var current_date  = getWorldWideDate();
+	var current_date  = html.getWorldWideDate();
 
 	switch(filter_name)
 	{
@@ -898,7 +900,6 @@ wunderlist.getBadgeCount = function(filter_name)
 wunderlist.getListById = function(list_id)
 {
 	var resultListSet = wunderlist.query("SELECT id, name FROM lists WHERE id = '" + list_id + "' AND lists.deleted = 0");
-	var html = '';
 
 	var list = {
 		'id':   resultListSet.field(0),
@@ -913,7 +914,7 @@ wunderlist.getListById = function(list_id)
 
 	var resultTaskSet = wunderlist.database.execute(sql);
 
-	$('#content').append(generateListContentHTML(list['id'], list['name']));
+	$('#content').append(html.generateListContentHTML(list['id'], list['name']));
 	$("#list").append(wunderlist.fetchData(resultTaskSet));
 }
 
@@ -1236,7 +1237,7 @@ wunderlist.getLastDoneTasks = function(list_id)
 			if (wunderlist.isArray(doneListsTasks[htmlId]) == false)
 				doneListsTasks[htmlId] = [];
 
-	        doneListsTasks[htmlId].push(generateTaskHTML(values['task_id'], values['task_name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
+	        doneListsTasks[htmlId].push(html.generateTaskHTML(values['task_id'], values['task_name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
 
 	        resultSet.next();
 		}

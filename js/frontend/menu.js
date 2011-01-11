@@ -200,11 +200,11 @@ Menu.remove = function() {
  * @author Daniel Marschner
  */
 function openCreditsDialog() {
-	dialogs.openDialog(dialogs.generateDialog('What is wunderlist?', generateCreditsDialogHTML(), 'dialog-credits'));
+	dialogs.openDialog(dialogs.generateDialog('What is wunderlist?', html.generateCreditsDialogHTML(), 'dialog-credits'));
 }
 
 function openBackgroundsDialog() {
-	dialogs.openDialog(dialogs.generateDialog('Background Credits', generateBackgroundsDialogHTML(), 'background-credits'));
+	dialogs.openDialog(dialogs.generateDialog('Background Credits', html.generateBackgroundsDialogHTML(), 'background-credits'));
 }
 
 var switchDateFormatDialog;
@@ -216,7 +216,7 @@ var switchDateFormatDialog;
  */
 function openSwitchDateFormatDialog() {
 	if(switchDateFormatDialog == undefined || $(switchDateFormatDialog).dialog('isOpen') == false)
-		switchDateFormatDialog = dialogs.generateDialog(language.data.switchdateformat, generateSwitchDateFormatHTML());
+		switchDateFormatDialog = dialogs.generateDialog(language.data.switchdateformat, html.generateSwitchDateFormatHTML());
 
 	dialogs.openDialog(switchDateFormatDialog, 'switchdateformat-credits');
 
@@ -241,8 +241,8 @@ function openSwitchDateFormatDialog() {
 		Titanium.App.Properties.setString('dateformat', new_dateformat);
 
 		$('div.add input.datepicker').datepicker('destroy');
-		createDatepicker();
-		make_timestamp_to_string();
+		html.createDatepicker();
+		html.make_timestamp_to_string();
 
 		$(switchDateFormatDialog).dialog('close')
 	});
@@ -259,7 +259,7 @@ function openSettingsDialog() {
 
 	if(settingsDialog == undefined || $(settingsDialog).dialog('isOpen') == false)
 	{
-		settingsDialog = dialogs.generateDialog(language.data.settings, generateSettingsHTML());
+		settingsDialog = dialogs.generateDialog(language.data.settings, html.generateSettingsHTML());
 	}
 
 	dialogs.openDialog(settingsDialog);

@@ -19,7 +19,7 @@ $(document).ready(function() {
 			{
 				$value = $(this).val();
 				wunderlist.liveSearch($value);
-				make_timestamp_to_string();
+				html.make_timestamp_to_string();
 			}
 			else
 			{
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 			$value = $(this).val();
 			wunderlist.liveSearch($value);
-			make_timestamp_to_string();
+			html.make_timestamp_to_string();
 		}
 		else
 		{

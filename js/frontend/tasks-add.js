@@ -7,7 +7,7 @@ function saveNewTask()
 	{
 		// Add Task to List
 		list_id   = $(".mainlist").attr("rel");
-		task_text = convertStringForDB($("input.input-add").val()); // TODO: Hier muss escaped werden z.b. '' oder ""
+		task_text = html.convertStringForDB($("input.input-add").val()); // TODO: Hier muss escaped werden z.b. '' oder ""
 		
 		if(task_text != '')
 		{
@@ -43,7 +43,7 @@ function saveNewTask()
 
 			// Reset DatePicker
 			$('.datepicker').val('');
-			make_timestamp_to_string();
+			html.make_timestamp_to_string();
 		}
 		else
 		{

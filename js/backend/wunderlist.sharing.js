@@ -526,7 +526,7 @@ sharing.openShareListDialog = function()
 {
 	if(sharing.shareListDialog == undefined)
 	{
-		sharing.shareListDialog = dialogs.generateDialog('Sharing is caring!', generateShareListDialogHTML(), 'dialog-sharelist')
+		sharing.shareListDialog = dialogs.generateDialog('Sharing is caring!', html.generateShareListDialogHTML(), 'dialog-sharelist')
 	}
 	dialogs.openDialog(sharing.shareListDialog);
 }

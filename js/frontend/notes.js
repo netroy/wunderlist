@@ -111,7 +111,7 @@ $(function()
 			notes.currentNoteIcon.removeClass('activenote');
 		}
 
-		wunderlist.saveNoteForTask(convertStringForDB(note_text), task_id);
+		wunderlist.saveNoteForTask(html.convertStringForDB(note_text), task_id);
 
 		notes.hideNoteElements();
 

@@ -96,7 +96,7 @@ account.showRegisterDialog = function() {
 	if(register_dialog == undefined)
 	{
 		register_dialog = $('<div></div>')
-			.html(generateLoginRegisterDialogHTML())
+			.html(html.generateLoginRegisterDialogHTML())
 			.dialog({
 				autoOpen: false,
 				draggable: false,
@@ -452,7 +452,7 @@ account.editProfile = function() {
 	if(edit_profile_dialog == undefined)
 	{
 		edit_profile_dialog = $('<div></div>')
-			.html(generateEditProfileDialogHTML())
+			.html(html.generateEditProfileDialogHTML())
 			.dialog({
 				autoOpen: false,
 				draggable: false,
@@ -763,7 +763,7 @@ account.showInviteDialog = function()
 	var inviteEventListener = 0;
 
 	if(invite_dialog == undefined)
-		invite_dialog = dialogs.generateDialog('', generateSocialDialogHTML(), 'dialog-social');
+		invite_dialog = dialogs.generateDialog('', html.generateSocialDialogHTML(), 'dialog-social');
 
 	dialogs.openDialog(invite_dialog);
 

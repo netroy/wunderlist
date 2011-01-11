@@ -39,7 +39,7 @@ function bindListAddMode()
 function addList()
 {
 	// Add new list
-    $('div#lists').append(generateNewListElementHTML());
+    $('div#lists').append(html.generateNewListElementHTML());
 
     // Hide add button
     $('h3 .add').hide();
@@ -130,7 +130,7 @@ function bindListSaveMode()
 function saveList(listElement)
 {
 	var listElementInput = listElement.children('input');
-    var listElementName  = convertStringForDB(listElementInput.val());
+    var listElementName  = html.convertStringForDB(listElementInput.val());
 
 	if(listElementName == '')
 		listElementName = language.data.new_list;
@@ -184,7 +184,7 @@ function cancelSaveList()
 function saveNewList(listElement)
 {
     var listElementInput = listElement.children('input');
-	var listElementName  = convertStringForDB(listElementInput.val());
+	var listElementName  = html.convertStringForDB(listElementInput.val());
 
 	if(listElementName == '')
 		listElementName = language.data.new_list;
@@ -292,10 +292,10 @@ function openList(list_id)
 	makeSortable();
 	wunderlist.getLastDoneTasks(list_id);
 
-	make_timestamp_to_string();
+	html.make_timestamp_to_string();
 
 	save_last_opened_list(list_id);
-	createDatepicker();
+	html.createDatepicker();
 	timer.resume();
 	Search.clear();
 
