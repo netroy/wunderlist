@@ -15,8 +15,9 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl               = 'https://sync.wunderlist.net/share';
-	sharing.sharedEmailsUrl        = 'https://sync.wunderlist.net/share/emails';
+	sharing.shareUrl               = 'https://sync.wunderlist.net/share/1.1.2';
+	sharing.sharedEmailsUrl        = 'https://sync.wunderlist.net/share/1.1.2/emails';
+	sharing.deleteSharedEmailUrl   = 'https://sync.wunderlist.net/share/1.1.2/delete';
 	sharing.shareListDialog        = null;
 	sharing.deletedMails           = [];
 	sharing.openedNoInternetDialog = false;
@@ -103,9 +104,9 @@ sharing.init = function()
 
 			var shareListItems = $('.sharelistusers').children('li');
 
-			if (sharing.deleteSharedEmail == undefined)
+			if (sharing.deleteSharedEmailDialog == undefined)
 			{
-				sharing.deleteSharedEmail = $('<div></div>').dialog({
+				sharing.deleteSharedEmailDialog = $('<div></div>').dialog({
 					autoOpen  : true,
 					draggable : false,
 					modal     : false,
@@ -118,7 +119,7 @@ sharing.init = function()
 							var email = $.trim($deleteButton.parent().text());
 							sharing.deletedMails.push(email);
 							var list_id = $('input#share-list-id').attr('rel');
-							sharing.sendSharedList(list_id, 'delete', $deleteButton.parent());
+							sharing.deleteSharedEmail(list_id, $deleteButton.parent());
 							sharing.deletedMails = [];
 							if ($('.sharelistusers').children('li').length == 0)
 							{
@@ -131,7 +132,7 @@ sharing.init = function()
 			}
 			else
 			{
-				openDialog(sharing.deleteSharedEmail);
+				openDialog(sharing.deleteSharedEmailDialog);
 			}
 
 			if (shareListItems.length == 0)
@@ -193,22 +194,84 @@ sharing.shareLists = function(list_id)
 }
 
 /**
+ * Deletes an user from a shared list
+ *
+ * @author Dennis Schneider
+ */
+sharing.deleteSharedEmail = function(list_id, deletedElement)
+{
+	var offline_list_id = list_id;
+
+	var data         = {};
+	user_credentials = wunderlist.getUserCredentials();
+	data['email']    = user_credentials['email'];
+	data['password'] = user_credentials['password'];
+	data['list_id']  = wunderlist.getOnlineIdByListId(list_id);
+	data['delete']   = sharing.deletedMails;
+
+	console.log(data);
+
+	$.ajax({
+		url: sharing.deleteSharedEmailUrl,
+		type: 'POST',
+		data: data,
+		beforeSend: function()
+		{
+			// @TODO Show loading indicator on invitation dialog
+		},
+		success: function(response_data, text, xhrobject)
+		{
+			if(response_data != '' && text != '' && xhrobject != undefined)
+			{
+				if(xhrobject.status == 200)
+				{
+					console.log(response_data);
+			
+					var response = eval('(' + response_data + ')');
+
+					switch(response.code)
+					{
+						case sharing.status_codes.SHARE_SUCCESS:
+							deletedElement.remove();
+							sharing.unshareList(offline_list_id);
+							showDeletedDialog(language.data.shared_delete_success);
+							break;
+
+						case sharing.status_codes.SHARE_FAILURE:
+							showErrorDialog(language.data.share_failure);
+							break;
+
+						case sharing.status_codes.SHARE_DENIED:
+							sharing.unshareList(offline_list_id);
+							showErrorDialog(language.data.share_denied);
+							break;
+
+						case sharing.status_codes.SHARE_NOT_EXIST:
+							sharing.unshareList(offline_list_id);
+							showErrorDialog(language.data.sync_not_exist);
+							break;
+
+						default:
+							showErrorDialog(language.data.error_occurred);
+							break;
+					}
+				}
+			}
+		},
+		error: function(xhrobject)
+		{
+			showErrorDialog(language.data.sync_error);
+		}
+	});
+}
+
+/**
  * Collect the entered emails and share the list
  *
  * @author Dennis Schneider
  */
-sharing.sendSharedList = function(list_id, type, deletedElement)
+sharing.sendSharedList = function(list_id)
 {
-	if (type == undefined)
-	{
-		type = 'share';
-	}
-
-	if (deletedElement == undefined)
-	{
-		deletedElement = 0;
-	}
-
 	var collected_emails = [];
 	var emails           = $('#share-list-email').val().split(',');
 
@@ -251,7 +314,7 @@ sharing.sendSharedList = function(list_id, type, deletedElement)
 		}
 	}
 
-	offline_list_id = list_id;
+	var offline_list_id = list_id;
 
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
@@ -259,7 +322,6 @@ sharing.sendSharedList = function(list_id, type, deletedElement)
 	data['password'] = user_credentials['password'];
 	data['list_id']  = wunderlist.getOnlineIdByListId(list_id);
 	data['add']	     = collected_emails;
-	data['delete']   = sharing.deletedMails;
 
 	// @TODO Vor dem Abschicken der Liste bereits prüfen, ob eigene E-Mail-Adresse
 	// mitgeschickt wird und dann einfach entfernen - dann kann der Fehler erst gar nicht entstehen
@@ -274,48 +336,39 @@ sharing.sendSharedList = function(list_id, type, deletedElement)
 		},
 		success: function(response_data, text, xhrobject)
 		{			
-			if(response_data != '' && text != '' && xhrobject != undefined)
+			if (response_data != '' && text != '' && xhrobject != undefined)
 			{
-				if(xhrobject.status == 200)
+				if (xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
-					switch(response.code)
+					switch (response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
-							if (type == 'share')
+							$('div#lists a#' + offline_list_id + ' b').addClass('shared');
+
+							var show_ok = true;
+
+							for (var i = 0; i < collected_emails.length; i++)
 							{
-								$('div#lists a#' + offline_list_id + ' b').addClass('shared');
-
-								var show_ok = true;
-
-								for (var i = 0; i < collected_emails.length; i++)
+								if (collected_emails[i] == data['email'])
 								{
-									if (collected_emails[i] == data['email'])
+									showShareOwnEmailDialog();
+									// If there was only the own email shared, remove shared symbol
+									if (collected_emails.length == 1)
 									{
-										showShareOwnEmailDialog();
-										// If there was only the own email shared, remove shared symbol
-										if (collected_emails.length == 1)
-										{
-											show_ok = false;
-											$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
-											wunderlist.setListToUnShared(offline_list_id);
-											sync.fireSync();
-										}
-										break;			
+										show_ok = false;
+										$('div#lists a#' + offline_list_id + ' b').removeClass('shared');
+										wunderlist.setListToUnShared(offline_list_id);
+										sync.fireSync();
 									}
-								}
-
-								if (show_ok == true)
-								{
-									showSharedSuccessDialog(language.data.shared_successfully);
+									break;
 								}
 							}
-							else
+
+							if (show_ok == true)
 							{
-								deletedElement.remove();
-								sharing.unshareList(offline_list_id);
-								showDeletedDialog(language.data.shared_delete_success);
+								showSharedSuccessDialog(language.data.shared_successfully);
 							}
 							break;
 
@@ -375,8 +428,6 @@ sharing.getSharedEmails = function(list_id)
 	data['email']    = user_credentials['email'];
 	data['password'] = user_credentials['password'];
 	data['list_id']  = list_id;
-
-	console.log(data);
 
 	$.ajax({
 		url: sharing.sharedEmailsUrl,
