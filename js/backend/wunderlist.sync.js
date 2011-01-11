@@ -19,7 +19,7 @@ $(function()
  */
 sync.init = function()
 {
-	this.syncDomain 		= 'https://sync.wunderlist.net/1.1.0';
+	this.syncDomain 		= 'http://stagesync.wunderlist.net/1.1.0'; //'https://sync.wunderlist.net/1.1.0';
 	this.syncUrl			= this.syncDomain;
 	this.alreadyRegistered 	= false;
 	this.timeOutInterval 	= '';
@@ -161,23 +161,23 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 
 							case sync.status_codes.SYNC_FAILURE:
 								sync.isSyncing = false;
-								showErrorDialog(language.data.sync_failure);
+								dialogs.showErrorDialog(language.data.sync_failure);
 								break;
 
 							case sync.status_codes.SYNC_DENIED:
 								sync.isSyncing = false;
-								showErrorDialog(language.data.sync_denied);
+								dialogs.showErrorDialog(language.data.sync_denied);
 								break;
 
 							case sync.status_codes.SYNC_NOT_EXIST:
 								sync.isSyncing = false;
-								showErrorDialog(language.data.sync_not_exist);
+								dialogs.showErrorDialog(language.data.sync_not_exist);
 								account.logout();
 								break;
 
 							default:
 								sync.isSyncing = false;
-								showErrorDialog(language.data.error_occurred);
+								dialogs.showErrorDialog(language.data.error_occurred);
 								break;
 						}
 					}
@@ -189,7 +189,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 			},
 			error: function(xhrobject)
 			{
-				showErrorDialog(language.data.sync_error);
+				dialogs.showErrorDialog(language.data.sync_error);
 				switchSyncSymbol(0);
 				sync.isSyncing = false;
 			}
@@ -367,7 +367,7 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list
 			},
 			error: function(xhrobject)
 			{
-				showErrorDialog(language.data.sync_error);
+				dialogs.showErrorDialog(language.data.sync_error);
 			}
 		});
 

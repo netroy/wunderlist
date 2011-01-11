@@ -190,7 +190,7 @@ sharing.shareLists = function(list_id)
 {
 	if ($('#share-list-email').val() == '')
 	{
-		showErrorDialog(language.data.invalid_email);
+		dialogs.showErrorDialog(language.data.invalid_email);
 		return false;
 	}
 
@@ -279,7 +279,7 @@ sharing.deleteSharedEmail = function(list_id, deletedElement)
 		},
 		error: function(xhrobject)
 		{
-			showErrorDialog(language.data.sync_error);
+			dialogs.showErrorDialog(language.data.sync_error);
 		}
 	});
 }
@@ -308,7 +308,7 @@ sharing.sendSharedList = function(list_id)
 			}
 			else
 			{
-				showErrorDialog(language.data.invalid_email);
+				dialogs.showErrorDialog(language.data.invalid_email);
 				if ($('.sharelistusers').children('li').length == 0)
 				{
 					$('div#lists a#' + list_id + ' b').removeClass('shared');
@@ -323,7 +323,7 @@ sharing.sendSharedList = function(list_id)
 	{
 		if (sharing.deletedMails.length == 0)
 		{
-			showErrorDialog(language.data.shared_not_changed);
+			dialogs.showErrorDialog(language.data.shared_not_changed);
 			if ($('.sharelistusers').children('li').length == 0)
 			{
 				$('div#lists a#' + list_id + ' b').removeClass('shared');
@@ -488,15 +488,15 @@ sharing.getSharedEmails = function(list_id)
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
-							showErrorDialog(language.data.share_failure);
+							dialogs.showErrorDialog(language.data.share_failure);
 							break;
 
 						case sharing.status_codes.SHARE_DENIED:
-							showErrorDialog(language.data.share_denied);
+							dialogs.showErrorDialog(language.data.share_denied);
 							break;
 
 						case sharing.status_codes.SHARE_NOT_EXIST:
-							showErrorDialog(language.data.sync_not_exist);
+							dialogs.showErrorDialog(language.data.sync_not_exist);
 							break;
 
 						case sharing.status_codes.SHARE_NOT_SHARED:
@@ -504,7 +504,7 @@ sharing.getSharedEmails = function(list_id)
 							break;
 
 						default:
-							showErrorDialog(language.data.error_occurred);
+							dialogs.showErrorDialog(language.data.error_occurred);
 							break;
 					}
 				}
@@ -512,7 +512,7 @@ sharing.getSharedEmails = function(list_id)
 		},
 		error: function(xhrobject)
 		{
-			showErrorDialog(language.data.sync_error);
+			dialogs.showErrorDialog(language.data.sync_error);
 		}
 	});
 }
@@ -541,7 +541,7 @@ sharing.openNoInternetShareDialog = function()
 	if(sharing.openedNoInternetDialog == false)
 	{
 		sharing.openedNoInternetDialog = true;
-		showErrorDialog('Sharing is only possible if you have an active internet connection');
+		dialogs.showErrorDialog('Sharing is only possible if you have an active internet connection');
 		setTimeout(function() {sharing.openedNoInternetDialog = false}, 1000);
 	}
 }
