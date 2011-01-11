@@ -8,6 +8,7 @@ dialogs.deleteDialog        = null;
 dialogs.whileSyncDialog     = null;
 dialogs.cloudAppDialog      = null;
 dialogs.shareSuccessDialog  = null;
+dialogs.modalDialog         = false;
 
 /**
  * Generates a dialog window
@@ -35,6 +36,7 @@ dialogs.generateDialog = function(title, html_code, dialogClass) {
  */
 dialogs.openDialog = function(customDialog) {
 	$(customDialog).dialog('open');
+	dialogs.modalDialog = true;
 }
 
 /**
@@ -44,6 +46,7 @@ dialogs.openDialog = function(customDialog) {
  */
 dialogs.closeDialog = function(customDialog) {
 	$(customDialog).dialog('close');
+	dialogs.modalDialog = false;
 }
 
 /**

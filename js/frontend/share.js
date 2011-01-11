@@ -101,11 +101,11 @@ share.share_with_cloudapp = function()
 		var tasks = share.getTasksForSharing(is_filter_list, list_id);
 		
 		// Build tasks html
-		data['tasks'] = new Array();
+		data['tasks'] = [];
 		
 		$.each(tasks, function(key, value)
 		{
-			var new_task = new Array();
+			var new_task = [];
 			
 			// Add name
 			if (is_filter_list == false)
@@ -216,7 +216,7 @@ share.print = function()
 		});
 		
 		// Replace Tasks
-		template = template.replace(/####TASKS####/g, html);
+		template = template.replace(/####TASKS####/g, html_code);
 
 		file.write(template);
 		

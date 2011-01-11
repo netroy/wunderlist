@@ -199,7 +199,7 @@ wunderlist.initLists = function()
 
 		$("#lists").append(html_code);
 
-		if (list['name'].length > 30)
+		if(list['name'].length > 30)
 		{
 			$('div#sidebar a#' + list['id']).children('b').attr('title', list['name']);
 		}
@@ -979,7 +979,7 @@ wunderlist.getFilteredTasks = function(type, date_type, printing)
 	var sql  = "SELECT tasks.id AS task_id, tasks.online_id AS online_id, tasks.name AS task_name, tasks.note, tasks.done, tasks.important, tasks.position, tasks.date, tasks.list_id ";
 		sql += "FROM tasks ";
 
-	current_date = getWorldWideDate();
+	current_date = html.getWorldWideDate();
 
 	switch(type)
 	{
