@@ -101,7 +101,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 			html += '<input class="input-button register" type="submit" id="notloggedin-yes" value="' + language.data.sync_not_logged_in_yes + '" />' +
 					'<input class="input-button" type="submit" id="notloggedin-cancel" value="' + language.data.sync_not_logged_in_no + '" />';
 
-	  	var notloggedin_dialog = generateDialog(language.data.sync_not_logged_in_title, html, 'dialog-login');
+	  	var notloggedin_dialog = dialogs.generateDialog(language.data.sync_not_logged_in_title, html, 'dialog-login');
 
 		$(notloggedin_dialog).dialog('open');
 

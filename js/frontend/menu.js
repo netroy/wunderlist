@@ -200,11 +200,11 @@ Menu.remove = function() {
  * @author Daniel Marschner
  */
 function openCreditsDialog() {
-	openDialog(generateDialog('What is wunderlist?', generateCreditsDialogHTML(), 'dialog-credits'));
+	dialogs.openDialog(dialogs.generateDialog('What is wunderlist?', generateCreditsDialogHTML(), 'dialog-credits'));
 }
 
 function openBackgroundsDialog() {
-	openDialog(generateDialog('Background Credits', generateBackgroundsDialogHTML(), 'background-credits'));
+	dialogs.openDialog(dialogs.generateDialog('Background Credits', generateBackgroundsDialogHTML(), 'background-credits'));
 }
 
 var switchDateFormatDialog;
@@ -216,9 +216,9 @@ var switchDateFormatDialog;
  */
 function openSwitchDateFormatDialog() {
 	if(switchDateFormatDialog == undefined || $(switchDateFormatDialog).dialog('isOpen') == false)
-		switchDateFormatDialog = generateDialog(language.data.switchdateformat, generateSwitchDateFormatHTML());
+		switchDateFormatDialog = dialogs.generateDialog(language.data.switchdateformat, generateSwitchDateFormatHTML());
 
-	openDialog(switchDateFormatDialog, 'switchdateformat-credits');
+	dialogs.openDialog(switchDateFormatDialog, 'switchdateformat-credits');
 
 	$('input#cancel-dateformat').die();
 	$('input#confirm-dateformat').die();
@@ -259,10 +259,10 @@ function openSettingsDialog() {
 
 	if(settingsDialog == undefined || $(settingsDialog).dialog('isOpen') == false)
 	{
-		settingsDialog = generateDialog(language.data.settings, generateSettingsHTML());
+		settingsDialog = dialogs.generateDialog(language.data.settings, generateSettingsHTML());
 	}
 
-	openDialog(settingsDialog);
+	dialogs.openDialog(settingsDialog);
 
 	$('input#cancel-settings').die();
 	$('input#confirm-settings').die();

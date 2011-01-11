@@ -132,7 +132,7 @@ sharing.init = function()
 			}
 			else
 			{
-				openDialog(sharing.deleteSharedEmailDialog);
+				dialogs.openDialog(sharing.deleteSharedEmailDialog);
 			}
 
 			if (shareListItems.length == 0)
@@ -174,7 +174,7 @@ sharing.init = function()
 				sharing.shareLists(list_id);
 			}
 
-			closeDialog(sharing.shareListDialog);
+			dialogs.closeDialog(sharing.shareListDialog);
 			
 			setTimeout(function() {sharing.sendInvitation = false}, 2000);
 		}
@@ -253,25 +253,25 @@ sharing.deleteSharedEmail = function(list_id, deletedElement)
 						case sharing.status_codes.SHARE_SUCCESS:
 							deletedElement.remove();
 							sharing.unshareList(offline_list_id);
-							showDeletedDialog(language.data.shared_delete_success);
+							dialogs.showDeletedDialog(language.data.shared_delete_success);
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
-							showErrorDialog(language.data.share_failure);
+							dialogs.showErrorDialog(language.data.share_failure);
 							break;
 
 						case sharing.status_codes.SHARE_DENIED:
 							sharing.unshareList(offline_list_id);
-							showErrorDialog(language.data.share_denied);
+							dialogs.showErrorDialog(language.data.share_denied);
 							break;
 
 						case sharing.status_codes.SHARE_NOT_EXIST:
 							sharing.unshareList(offline_list_id);
-							showErrorDialog(language.data.sync_not_exist);
+							dialogs.showErrorDialog(language.data.sync_not_exist);
 							break;
 
 						default:
-							showErrorDialog(language.data.error_occurred);
+							dialogs.showErrorDialog(language.data.error_occurred);
 							break;
 					}
 				}
@@ -372,7 +372,7 @@ sharing.sendSharedList = function(list_id)
 							{
 								if (collected_emails[i] == data['email'])
 								{
-									showShareOwnEmailDialog();
+									dialogs.showShareOwnEmailDialog();
 									// If there was only the own email shared, remove shared symbol
 									if (collected_emails.length == 1)
 									{
@@ -387,26 +387,26 @@ sharing.sendSharedList = function(list_id)
 
 							if (show_ok == true)
 							{
-								showSharedSuccessDialog(language.data.shared_successfully);
+								dialogs.showSharedSuccessDialog(language.data.shared_successfully);
 							}
 							break;
 
 						case sharing.status_codes.SHARE_FAILURE:
-							showErrorDialog(language.data.share_failure);
+							dialogs.showErrorDialog(language.data.share_failure);
 							break;
 
 						case sharing.status_codes.SHARE_DENIED:
 							sharing.unshareList(offline_list_id);
-							showErrorDialog(language.data.share_denied);
+							dialogs.showErrorDialog(language.data.share_denied);
 							break;
 
 						case sharing.status_codes.SHARE_NOT_EXIST:
 							sharing.unshareList(offline_list_id);
-							showErrorDialog(language.data.sync_not_exist);
+							dialogs.showErrorDialog(language.data.sync_not_exist);
 							break;
 
 						default:
-							showErrorDialog(language.data.error_occurred);
+							dialogs.showErrorDialog(language.data.error_occurred);
 							break;
 					}
 				}
@@ -414,7 +414,7 @@ sharing.sendSharedList = function(list_id)
 		},
 		error: function(xhrobject)
 		{
-			showErrorDialog(language.data.sync_error);
+			dialogs.showErrorDialog(language.data.sync_error);
 		}
 	});
 }
@@ -526,9 +526,9 @@ sharing.openShareListDialog = function()
 {
 	if(sharing.shareListDialog == undefined)
 	{
-		sharing.shareListDialog = generateDialog('Sharing is caring!', generateShareListDialogHTML(), 'dialog-sharelist')
+		sharing.shareListDialog = dialogs.generateDialog('Sharing is caring!', generateShareListDialogHTML(), 'dialog-sharelist')
 	}
-	openDialog(sharing.shareListDialog);
+	dialogs.openDialog(sharing.shareListDialog);
 }
 
 /**

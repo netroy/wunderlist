@@ -1,17 +1,20 @@
-var confirmationDialog;
-var okDialog;
-var shareOwnEmailDialog;
-var deleteDialog;
-var whileSyncDialog;
-var cloudAppDialog;
-var shareSuccessDialog;
+var dialogs = dialogs || {};
+
+// Dialogs
+dialogs.confirmationDialog  = null;
+dialogs.okDialog            = null;
+dialogs.shareOwnEmailDialog = null;
+dialogs.deleteDialog        = null;
+dialogs.whileSyncDialog     = null;
+dialogs.cloudAppDialog      = null;
+dialogs.shareSuccessDialog  = null;
 
 /**
  * Generates a dialog window
  *
  * @author Daniel Marschner
  */
-function generateDialog(title, html, dialogClass) {
+dialogs.generateDialog = function(title, html, dialogClass) {
 	if(title == undefined) title = '';
 	if(html == undefined) html = '';
 	if(dialogClass == undefined) dialogClass = '';
@@ -30,7 +33,7 @@ function generateDialog(title, html, dialogClass) {
  *
  * @author Daniel Marschner
  */
-function openDialog(customDialog) {
+dialogs.openDialog = function(customDialog) {
 	$(customDialog).dialog('open');
 }
 
@@ -39,7 +42,7 @@ function openDialog(customDialog) {
  *
  * @author Daniel Marschner
  */
-function closeDialog(customDialog) {
+dialogs.closeDialog = function(customDialog) {
 	$(customDialog).dialog('close');
 }
 
@@ -48,8 +51,8 @@ function closeDialog(customDialog) {
  *
  * @author Christian Reber
  */
-function showErrorDialog(message) {
-	openDialog(generateDialog(language.data.error_occurred, '<p class="pl8">' + message + '</p>'));
+dialogs.showErrorDialog = function(message) {
+	dialogs.openDialog(dialogs.generateDialog(language.data.error_occurred, '<p class="pl8">' + message + '</p>'));
 }
 
 /**
@@ -57,17 +60,17 @@ function showErrorDialog(message) {
  *
  * @author Dennis Schneider
  */
-function showConfirmationDialog() {
-	confirmationDialog = generateDialog(language.data.account_deleted, '<p>' + language.data.account_del_successful + '</p><input class="input-button" type="submit" id="okay" value="' + language.data.okay + '" />');
-	openDialog(confirmationDialog);
-	$('input#okay').click(function() {closeDialog(confirmationDialog);});
+dialogs.showConfirmationDialog = function() {
+	dialogs.confirmationDialog = dialogs.generateDialog(language.data.account_deleted, '<p>' + language.data.account_del_successful + '</p><input class="input-button" type="submit" id="okay" value="' + language.data.okay + '" />');
+	dialogs.openDialog(dialogs.confirmationDialog);
+	$('input#okay').click(function() {dialogs.closeDialog(confirmationDialog);});
 }
 
-function showShareOwnEmailDialog() {
+dialogs.showShareOwnEmailDialog = function() {
 
-	if(shareOwnEmailDialog == undefined)
+	if(dialogs.shareOwnEmailDialog == undefined)
 	{
-		shareOwnEmailDialog = $('<div></div>').dialog({
+		dialogs.shareOwnEmailDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
 			modal: false,
@@ -80,7 +83,9 @@ function showShareOwnEmailDialog() {
 		});
 	}
 	else
-		openDialog(shareOwnEmailDialog);
+	{
+		dialogs.openDialog(dialogs.shareOwnEmailDialog);
+	}
 }
 
 /**
@@ -88,11 +93,11 @@ function showShareOwnEmailDialog() {
  *
  * @author Dennis Schneider
  */
-function showOKDialog(title) {
+dialogs.showOKDialog = function(title) {
 
-	if(okDialog == undefined)
+	if(dialogs.okDialog == undefined)
 	{
-		okDialog = $('<div></div>').dialog({
+		dialogs.okDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
 			modal: false,
@@ -105,14 +110,21 @@ function showOKDialog(title) {
 		});
 	}
 	else
-		openDialog(okDialog);
+	{
+		dialogs.openDialog(dialogs.okDialog);
+	}
 }
 
-function showSharedSuccessDialog(title) {
+/**
+ * Show a dialog when sharing was successful
+ *
+ * @author Dennis Schneider
+ */
+dialogs.showSharedSuccessDialog = function(title) {
 	
-	if(shareSuccessDialog == undefined)
+	if(dialogs.shareSuccessDialog == undefined)
 	{
-		shareSuccessDialog = $('<div></div>').dialog({
+		dialogs.shareSuccessDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
 			modal: false,
@@ -126,7 +138,7 @@ function showSharedSuccessDialog(title) {
 	}
 	else
 	{
-		openDialog(shareSuccessDialog);
+		dialogs.openDialog(dialogs.shareSuccessDialog);
 	}
 }
 
@@ -135,11 +147,11 @@ function showSharedSuccessDialog(title) {
  *
  * @author Dennis Schneider
  */
-function showDeletedDialog(title) {
+dialogs.showDeletedDialog = function(title) {
 
-	if(deleteDialog == undefined)
+	if(dialogs.deleteDialog == undefined)
 	{
-		deleteDialog = $('<div></div>').dialog({
+		dialogs.deleteDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
 			modal: false,
@@ -152,7 +164,9 @@ function showDeletedDialog(title) {
 		});
 	}
 	else
-		openDialog(deleteDialog);
+	{
+		dialogs.openDialog(dialogs.deleteDialog);
+	}
 }
 
 /**
@@ -160,10 +174,10 @@ function showDeletedDialog(title) {
  *
  * @author Dennis Schneider
  */
-function showCloudAppDialog() {
-	if(cloudAppDialog == undefined)
+dialogs.showCloudAppDialog = function() {
+	if(dialogs.cloudAppDialog == undefined)
 	{
-		cloudAppDialog = $('<div><p>' + language.data.cloudapp_1 + '<br><br>' + language.data.cloudapp_2 + '</p></div>').dialog({
+		dialogs.cloudAppDialog = $('<div><p>' + language.data.cloudapp_1 + '<br><br>' + language.data.cloudapp_2 + '</p></div>').dialog({
 			autoOpen  : true,
 			draggable : false,
 			modal     : false,
@@ -180,7 +194,9 @@ function showCloudAppDialog() {
 		});
 	}
 	else
-		openDialog(cloudAppDialog);
+	{
+		dialogs.openDialog(dialogs.cloudAppDialog);
+	}
 }
 
 /**
@@ -188,10 +204,10 @@ function showCloudAppDialog() {
  *
  * @author Dennis Schneider
  */
-function showWhileSyncDialog(title) {
-	if(whileSyncDialog == undefined)
+dialogs.showWhileSyncDialog = function(title) {
+	if(dialogs.whileSyncDialog == undefined)
 	{
-		whileSyncDialog = $('<div></div>').dialog({
+		dialogs.whileSyncDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
 			modal: false,
@@ -204,5 +220,7 @@ function showWhileSyncDialog(title) {
 		});
 	}
 	else
-		openDialog(whileSyncDialog);
+	{
+		dialogs.openDialog(dialogs.whileSyncDialog);
+	}
 }

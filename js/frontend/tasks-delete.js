@@ -44,7 +44,7 @@ function openTaskDeletePrompt(deleteElement)
 
 		deleteTask(deleteElement);
 
-		closeDialog(deleteTaskDialog);
+		dialogs.closeDialog(deleteTaskDialog);
 	};
 
 	deleteTaskDialog = $('<div></div>')
@@ -59,7 +59,7 @@ function openTaskDeletePrompt(deleteElement)
 			}
 	});
 
-	openDialog(deleteTaskDialog);
+	dialogs.openDialog(deleteTaskDialog);
 }
 
 $(function() {

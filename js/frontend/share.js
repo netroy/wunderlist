@@ -3,7 +3,7 @@ var share = share || {};
 share.init = function()
 {
 	$('a.list-email').live("click", share.share_by_email);
-	$('a.list-cloud').live("click", showCloudAppDialog);
+	$('a.list-cloud').live("click", dialogs.showCloudAppDialog);
 	$('a.list-print').live("click", share.print);
 	
 	// Open URL on click

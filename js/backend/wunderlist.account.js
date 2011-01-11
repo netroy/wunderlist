@@ -113,7 +113,7 @@ account.showRegisterDialog = function() {
 		});
 	}
 
-	openDialog(register_dialog);
+	dialogs.openDialog(register_dialog);
 
 	Layout.stopLoginAnimation();
 
@@ -202,7 +202,7 @@ account.login = function() {
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)
-					showErrorDialog(language.data.no_internet);
+					dialogs.showErrorDialog(language.data.no_internet);
 				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
@@ -265,7 +265,7 @@ account.login = function() {
 
 						default:
 							Layout.stopLoginAnimation();
-							showErrorDialog(language.data.error_occurred);
+							dialogs.showErrorDialog(language.data.error_occurred);
 
 							break;
 					}
@@ -273,7 +273,7 @@ account.login = function() {
 			},
 			error: function(xhrobject)
 			{
-				showErrorDialog(language.data.error_occurred);
+				dialogs.showErrorDialog(language.data.error_occurred);
 				Layout.stopLoginAnimation();
 			}
 		});
@@ -326,7 +326,7 @@ account.forgotpw = function()
 
 						default:
 
-							showErrorDialog(language.data.error_occurred);
+							dialogs.showErrorDialog(language.data.error_occurred);
 
 							break;
 					}
@@ -372,7 +372,7 @@ account.register = function(onlyRegister)
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)
-					showErrorDialog(language.data.no_internet);
+					dialogs.showErrorDialog(language.data.no_internet);
 				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
@@ -399,13 +399,13 @@ account.register = function(onlyRegister)
 
 							if(onlyRegister == true)
 							{
-								showErrorDialog(language.data.error_duplicated_email);
+								dialogs.showErrorDialog(language.data.error_duplicated_email);
 								Layout.stopLoginAnimation();
 							}
 							else
 							{
 								wunderlist.login();
-								closeDialog(register_dialog);
+								dialogs.closeDialog(register_dialog);
 							}
 
 							break;
@@ -427,7 +427,7 @@ account.register = function(onlyRegister)
 						default:
 
 							Layout.stopLoginAnimation();
-							showErrorDialog(language.error_occurred);
+							dialogs.showErrorDialog(language.error_occurred);
 
 							break;
 					}
@@ -435,7 +435,7 @@ account.register = function(onlyRegister)
 			},
 			error: function(xhrobject)
 			{
-				showErrorDialog(language.data.register_error);
+				dialogs.showErrorDialog(language.data.register_error);
 				Layout.stopLoginAnimation();
 			}
 		});
@@ -470,7 +470,7 @@ account.editProfile = function() {
 		});
 	}
 
-	openDialog(edit_profile_dialog);
+	dialogs.openDialog(edit_profile_dialog);
 
 	// Disconnect the live functionality
 	$('#cancel_edit_profile').die();
@@ -516,7 +516,7 @@ account.change_profile_data = function() {
 			data['new_email'] = new_email_address;
 		else
 		{
-			showErrorDialog(language.data.invalid_email);
+			dialogs.showErrorDialog(language.data.invalid_email);
 			return false;
 		}
 	}
@@ -535,7 +535,7 @@ account.change_profile_data = function() {
 	// Is the old password given and correct?
 	if ($('#old_password').val() == '' || data['password'] != $.md5($('#old_password').val()))
 	{
-		showErrorDialog(language.data.wrong_password);
+		dialogs.showErrorDialog(language.data.wrong_password);
 		return false;
 	}
 
@@ -548,7 +548,7 @@ account.change_profile_data = function() {
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)
-					showErrorDialog(language.data.no_internet);
+					dialogs.showErrorDialog(language.data.no_internet);
 				else if(xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
@@ -563,29 +563,29 @@ account.change_profile_data = function() {
 								data['new_password'] = data['password'];
 
 							wunderlist.createUser(data['new_email'], data['new_password']);
-							closeDialog(edit_profile_dialog);
-							showOKDialog(language.data.changed_account_data);
+							dialogs.closeDialog(edit_profile_dialog);
+							dialogs.showOKDialog(language.data.changed_account_data);
 
 							break;
 
 						case account.status_codes.EDIT_PROFILE_AUTHENTICATION_FAILED:
 
-							showErrorDialog(language.data.authentication_failed);
+							dialogs.showErrorDialog(language.data.authentication_failed);
 							break;
 
 						case account.status_codes.EDIT_PROFILE_EMAIL_ALREADY_EXISTS:
 
-							showErrorDialog(language.email_already_exists);
+							dialogs.showErrorDialog(language.email_already_exists);
 							break;
 
 						case account.status_codes.EDIT_PROFILE_INVALID_EMAIL_ADDRESS:
 
-							showErrorDialog(language.error_invalid_email);
+							dialogs.showErrorDialog(language.error_invalid_email);
 							break;
 
 						default:
 
-							showErrorDialog(language.data.error_occurred);
+							dialogs.showErrorDialog(language.data.error_occurred);
 
 							break;
 					}
@@ -593,7 +593,7 @@ account.change_profile_data = function() {
 			},
 			error: function(msg)
 			{
-				showErrorDialog(language.data.error_occurred);
+				dialogs.showErrorDialog(language.data.error_occurred);
 			}
 		});
 	}
@@ -690,34 +690,34 @@ account.delete_account_data = function() {
 						case account.status_codes.DELETE_ACCOUNT_SUCCESS:
 							account.logout();
 							$(delete_account_dialog).dialog('close');
-							showConfirmationDialog();
+							dialogs.showConfirmationDialog();
 							break;
 
 						case account.status_codes.DELETE_ACCOUNT_NOT_EXISTS:
-							showErrorDialog(language.data.sync_not_exist);
+							dialogs.showErrorDialog(language.data.sync_not_exist);
 							break;
 
 						case account.status_codes.DELETE_ACCOUNT_INVALID_EMAIL:
-							showErrorDialog(language.data.error_invalid_email);
+							dialogs.showErrorDialog(language.data.error_invalid_email);
 							break;
 
 						case account.status_codes.DELETE_ACCOUNT_FAILURE:
-							showErrorDialog(language.data.delete_account_failure);
+							dialogs.showErrorDialog(language.data.delete_account_failure);
 							break;
 
 						case account.status_codes.DELETE_ACCOUNT_DENIED:
-							showErrorDialog(language.data.delete_account_denied);
+							dialogs.showErrorDialog(language.data.delete_account_denied);
 							break;
 
 						default:
-							showErrorDialog(language.data.error_occurred);
+							dialogs.showErrorDialog(language.data.error_occurred);
 							break;
 					}
 				}
 			},
 			error: function(msg)
 			{
-				showErrorDialog(language.data.error_occurred);
+				dialogs.showErrorDialog(language.data.error_occurred);
 			}
 		});
 	}
@@ -749,7 +749,7 @@ account.logout = function()
 	}
 	else
 	{
-		showWhileSyncDialog(language.data.no_logout_sync);
+		dialogs.showWhileSyncDialog(language.data.no_logout_sync);
 	}
 }
 
@@ -763,9 +763,9 @@ account.showInviteDialog = function()
 	var inviteEventListener = 0;
 
 	if(invite_dialog == undefined)
-		invite_dialog = generateDialog('', generateSocialDialogHTML(), 'dialog-social');
+		invite_dialog = dialogs.generateDialog('', generateSocialDialogHTML(), 'dialog-social');
 
-	openDialog(invite_dialog);
+	dialogs.openDialog(invite_dialog);
 
 	$('div#invitebox input#send_invitation').live('click', function(){
 		input = $('div#invitebox input#email');
@@ -854,7 +854,7 @@ account.invite = function()
 								buttonOptions['OK'] = function() {
 									$(this).dialog('close');
 									input.val(language.data.invite_email);
-									closeDialog(invite_dialog);
+									dialogs.closeDialog(invite_dialog);
 								};
 								buttonOptions[language.data.invite_more] = function() {
 									$(this).dialog('close');
@@ -870,7 +870,7 @@ account.invite = function()
 								});
 							}
 
-							openDialog(inviteCloseDialog);
+							dialogs.openDialog(inviteCloseDialog);
 
 							break;
 
@@ -920,12 +920,12 @@ account.showInviteOKDialog = function(title) {
 					$(this).dialog('destroy');
 					delete account.inviteOKDialog;
 					input.val(language.data.invite_email);
-					closeDialog(invite_dialog);
+					dialogs.closeDialog(invite_dialog);
 				}
 			}
 		});
 	}
-	openDialog(account.inviteOKDialog);
+	dialogs.openDialog(account.inviteOKDialog);
 }
 
 /**
