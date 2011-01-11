@@ -8,7 +8,7 @@ var delete_account_dialog;
 var logging_in = false;
 
 account.init = function() {
-	this.syncDomain 	   = 'http://stagesync.wunderlist.net';//'https://sync.wunderlist.net';
+	this.syncDomain 	   = 'https://sync.wunderlist.net';
 	this.registerUrl       = this.syncDomain + '/register';
 	this.loginUrl          = this.syncDomain + '/login';
 	this.forgotPasswordUrl = this.syncDomain + '/password';
@@ -59,13 +59,15 @@ account.init = function() {
  */
 account.load = function() {
 
-	if(wunderlist.isUserLoggedIn())
+	if (wunderlist.isUserLoggedIn())
 	{
 		account.loadInterface();
 		timer.set(2).start();
 	}
 	else
+	{
 		account.showRegisterDialog();
+	}
 }
 
 /**
@@ -83,8 +85,10 @@ account.loadInterface = function() {
 	makeListsDropable();
 
 	if (os == 'darwin')
+	{
 		// Stupid, but necessary workaround for Mac OS X
 		$('.input-add').focus().blur();
+	}
 }
 
 /**
@@ -114,6 +118,11 @@ account.showRegisterDialog = function() {
 	}
 
 	dialogs.openDialog(register_dialog);
+
+	// Set wood background for login dialog
+	setTimeout(function() {
+		$('.ui-widget-overlay').addClass('ui-widget-overlay-wood');
+	}, 1);
 
 	Layout.stopLoginAnimation();
 
@@ -162,12 +171,16 @@ account.showRegisterDialog = function() {
 			setTimeout(function() {logging_in = false}, 2000);
 		}
 		else if(evt.keyCode == 27)
+		{
 			account.loadInterface('no_thanks');
+		}
 	})
 
 	$('#forgot-pwd').live('click', function() {
 		account.forgotpw();
 	});
+
+	Menu.remove();
 }
 
 /**
@@ -183,11 +196,13 @@ account.login = function() {
 	var newsletter = $('input#login-newsletter').attr('checked');
 	
 	if (newsletter == true)
-		data['newsletter'] = 1;
-
-	if(sync.validateEmail(data['email']))
 	{
-		if($('input#login-password').val() == '')
+		data['newsletter'] = 1;
+	}
+
+	if (sync.validateEmail(data['email']))
+	{
+		if ($('input#login-password').val() == '')
 		{
 			$('.error').hide().fadeIn("fast").text(language.data.password_not_empty)
 			return false;
@@ -201,13 +216,15 @@ account.login = function() {
 			data: data,
 			success: function(response_data, text, xhrobject)
 			{
-				if(xhrobject.status == 0)
+				if (xhrobject.status == 0)
+				{
 					dialogs.showErrorDialog(language.data.no_internet);
-				else if(xhrobject.status == 200)
+				}
+				else if (xhrobject.status == 200)
 				{
 					var response = eval('(' + response_data + ')');
 
-					switch(response.code)
+					switch (response.code)
 					{
 						case account.status_codes.LOGIN_SUCCESS:
 
@@ -219,6 +236,9 @@ account.login = function() {
 
 							// Synchronize data
 							$('#sync').click();
+
+							// Hide the wood texture
+							$('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 
 							break;
 
@@ -246,6 +266,8 @@ account.login = function() {
 									logging_in = true;
 									account.register();
 									$(this).dialog('close');
+									// Hide the wood texture
+									$('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 									setTimeout(function() {logging_in = false}, 5000);
 								}
 							};
@@ -344,7 +366,9 @@ account.forgotpw = function()
 account.register = function(onlyRegister)
 {
 	if (onlyRegister == undefined)
+	{
 		onlyRegister = false;
+	}
 
 	var data = {};
 	data['email']    = $('input#login-email').val().toLowerCase();
@@ -353,7 +377,9 @@ account.register = function(onlyRegister)
 	var newsletter = $('input#login-newsletter').attr('checked');
 	
 	if (newsletter == true)
+	{
 		data['newsletter'] = 1;
+	}
 
 	if (sync.validateEmail(data['email']))
 	{
@@ -392,6 +418,9 @@ account.register = function(onlyRegister)
 
 							// And sync in baby!
 							$('#sync').click();
+
+							// Hide the wood texture
+							$('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 
 							break;
 

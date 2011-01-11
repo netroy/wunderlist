@@ -20,7 +20,7 @@ function saveTask()
 
 	if($date == undefined || $date == '') $date = 0;
 
-	$('#task-edit').parent().find('.description').html(replace_http_link(unescape($newtitle)));
+	$('#task-edit').parent().find('.description').html(html.replace_http_link(unescape($newtitle)));
 	$('#task-edit').parent().find('.description').show();
 
 	$("span.fav").show();

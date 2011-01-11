@@ -51,6 +51,7 @@ function openTaskDeletePrompt(deleteElement)
 		.dialog({
 			autoOpen: false,
 			draggable: false,
+			modal: true,
 			dialogClass: 'dialog-delete-task',
 			title: language.data.delete_task_question,
 			buttons: buttonsDeleteTask,

@@ -14,15 +14,15 @@ dialogs.shareSuccessDialog  = null;
  *
  * @author Daniel Marschner
  */
-dialogs.generateDialog = function(title, html, dialogClass) {
+dialogs.generateDialog = function(title, html_code, dialogClass) {
 	if(title == undefined) title = '';
-	if(html == undefined) html = '';
+	if(html_code == undefined) html = '';
 	if(dialogClass == undefined) dialogClass = '';
 
-	return $('<div></div>').html(html).dialog({
+	return $('<div></div>').html(html_code).dialog({
 		autoOpen: false,
 		draggable: false,
-		modal: false,
+		modal: true,
 		dialogClass: dialogClass,
 		title: title
 	});
@@ -73,7 +73,7 @@ dialogs.showShareOwnEmailDialog = function() {
 		dialogs.shareOwnEmailDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
-			modal: false,
+			modal: true,
 			title: language.data.share_own_email,
 			buttons: {
 				'OK': function() {
@@ -100,7 +100,7 @@ dialogs.showOKDialog = function(title) {
 		dialogs.okDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
-			modal: false,
+			modal: true,
 			title: title,
 			buttons: {
 				'OK': function() {
@@ -127,7 +127,7 @@ dialogs.showSharedSuccessDialog = function(title) {
 		dialogs.shareSuccessDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
-			modal: false,
+			modal: true,
 			title: title,
 			buttons: {
 				'OK': function() {
@@ -152,12 +152,12 @@ dialogs.showDeletedDialog = function(title) {
 	if(dialogs.deleteDialog == undefined)
 	{
 		dialogs.deleteDialog = $('<div></div>').dialog({
-			autoOpen: true,
-			draggable: false,
-			modal: false,
-			title: title,
-			buttons: {
-				'OK': function() {
+			autoOpen  : true,
+			draggable : false,
+			modal     : true,
+			title     : title,
+			buttons   : {
+				'OK'  : function() {
 					$(this).dialog('close');
 				}
 			}
@@ -180,7 +180,7 @@ dialogs.showCloudAppDialog = function() {
 		dialogs.cloudAppDialog = $('<div><p>' + language.data.cloudapp_1 + '<br><br>' + language.data.cloudapp_2 + '</p></div>').dialog({
 			autoOpen  : true,
 			draggable : false,
-			modal     : false,
+			modal     : true,
 			title     : 'Are you sure to publish your tasks?',
 			buttons   : {
 				'No'  : function() {
@@ -208,12 +208,12 @@ dialogs.showWhileSyncDialog = function(title) {
 	if(dialogs.whileSyncDialog == undefined)
 	{
 		dialogs.whileSyncDialog = $('<div></div>').dialog({
-			autoOpen: true,
-			draggable: false,
-			modal: false,
-			title: title,
-			buttons: {
-				'OK': function() {
+			autoOpen  : true,
+			draggable : false,
+			modal     : true,
+			title     : title,
+			buttons   : {
+				'OK'  : function() {
 					$(this).dialog('close');
 				}
 			}

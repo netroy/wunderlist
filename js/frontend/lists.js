@@ -253,6 +253,7 @@ function bindListDeleteMode()
 	delete_dialog = $('<div></div>')
 		.dialog({
 			autoOpen: false,
+			modal: true,
 			draggable: false,
 			dialogClass: 'dialog-delete-list',
 			title: language.data.delete_list_question,
