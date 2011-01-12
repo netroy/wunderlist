@@ -66,7 +66,7 @@ dialogs.showErrorDialog = function(message) {
 dialogs.showConfirmationDialog = function() {
 	dialogs.confirmationDialog = dialogs.generateDialog(language.data.account_deleted, '<p>' + language.data.account_del_successful + '</p><input class="input-button" type="submit" id="okay" value="' + language.data.okay + '" />');
 	dialogs.openDialog(dialogs.confirmationDialog);
-	$('input#okay').click(function() {dialogs.closeDialog(confirmationDialog);});
+	$('input#okay').click(function() {dialogs.closeDialog(dialogs.confirmationDialog);});
 }
 
 dialogs.showShareOwnEmailDialog = function() {

@@ -63,6 +63,7 @@ account.load = function() {
 	{
 		account.loadInterface();
 		timer.set(2).start();
+		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 	}
 	else
 	{
@@ -604,12 +605,12 @@ account.change_profile_data = function() {
 
 						case account.status_codes.EDIT_PROFILE_EMAIL_ALREADY_EXISTS:
 
-							dialogs.showErrorDialog(language.email_already_exists);
+							dialogs.showErrorDialog(language.data.email_already_exists);
 							break;
 
 						case account.status_codes.EDIT_PROFILE_INVALID_EMAIL_ADDRESS:
 
-							dialogs.showErrorDialog(language.error_invalid_email);
+							dialogs.showErrorDialog(language.data.error_invalid_email);
 							break;
 
 						default:
