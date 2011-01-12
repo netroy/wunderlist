@@ -38,66 +38,42 @@ filters.init = function() {
 
 	// Shortcut Bind Command(or Ctrl)+1 - go to filter list all
 	$(document).bind('keydown', shortcutkey + '+1', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#all').click();
-		}
+		$('a#all').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+2 - go to filter list starred
 	$(document).bind('keydown', shortcutkey + '+2', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#starred').click();
-		}
+		$('a#starred').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+3 - go to filter list done
 	$(document).bind('keydown', shortcutkey + '+3', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#done').click();
-		}
+		$('a#done').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+4 - go to filter list today
 	$(document).bind('keydown', shortcutkey + '+4', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#today').click();
-		}
+		$('a#today').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+5 - go to filter list tomorrow
 	$(document).bind('keydown', shortcutkey + '+5', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#tomorrow').click();
-		}
+		$('a#tomorrow').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+6 - go to filter list next 7 days
 	$(document).bind('keydown', shortcutkey + '+6', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#thisweek').click();
-		}
+		$('a#thisweek').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+7 - go to filter list later
 	$(document).bind('keydown', shortcutkey + '+7', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#someday').click();
-		}
+		$('a#someday').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+8 - go to filter list without date
 	$(document).bind('keydown', shortcutkey + '+8', function (evt) {
-		if (dialogs.modalDialog == false)
-		{
-			$('a#withoutdate').click();
-		}
+		$('a#withoutdate').click();
 	});
 
 }
