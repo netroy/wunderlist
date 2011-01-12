@@ -18,23 +18,23 @@ function saveNewTask()
 			var last_insert_id = wunderlist.createTask(task_text, list_id, timestamp);
 			filters.updateBadges();
 
-			$html  = "<li rel='" + list_id + "' id='" + last_insert_id + "'>";
-			$html += "<div class='checkboxcon'>";
-			$html += "<input class='input-checked' type='checkbox'/>";
-			$html += "</div>";
-			$html += "<span class='icon favina'></span>";
-			$html += "<span class='description'>" + unescape(task_text) + "</span>";
+			var html_code  = "<li rel='" + list_id + "' id='" + last_insert_id + "'>";
+			html_code += "<div class='checkboxcon'>";
+			html_code += "<input class='input-checked' type='checkbox'/>";
+			html_code += "</div>";
+			html_code += "<span class='icon favina'></span>";
+			html_code += "<span class='description'>" + unescape(task_text) + "</span>";
 
 			if(timestamp != '')
-				$html += "<span class='showdate timestamp' rel='" + timestamp + "'></span>";
+				html_code += "<span class='showdate timestamp' rel='" + timestamp + "'></span>";
 			else
-				$html += "<span class='showdate'></span>";
+				html_code += "<span class='showdate'></span>";
 
-			$html += "<span class='icon delete' title='delete task'></span>";
-			$html += "<span class='icon note' title='notes'></span>";
-			$html += "</li>";
+			html_code += "<span class='icon delete' title='delete task'></span>";
+			html_code += "<span class='icon note' title='notes'></span>";
+			html_code += "</li>";
 
-			$(".mainlist").append($html);
+			$(".mainlist").append(html_code);
 			$("input.input-add").val('');
 			$(".add .showdate").remove();
 			makeSortable();

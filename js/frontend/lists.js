@@ -142,23 +142,25 @@ function saveList(listElement)
 
     listElementInput.remove();
 
+	var html_code = '';
+
 	if(listElement.attr('id') == 1)
-		html = '<b class="inbox">' + unescape(listElementName) + '</b>';
+		html_code = '<b class="inbox">' + unescape(listElementName) + '</b>';
 	else
 	{
 		if(wunderlist.listIsAlreadyShared(listElement.attr('id')))
 		{
-			html = '<b class="shared">' + unescape(listElementName) + '</b>';
+			html_code = '<b class="shared">' + unescape(listElementName) + '</b>';
 		}
 		else
 		{
-			html = '<b>' + unescape(listElementName) + '</b>';
+			html_code = '<b>' + unescape(listElementName) + '</b>';
 		}
 	}
 
 	listElement.children('.savep').hide();
 	listElement.children('.deletep').hide();
-	listElement.find('span').before(html);
+	listElement.find('span').before(html_code);
 
 	if(listElementName.length > 30)
 		listElement.children('b').attr('title', unescape(listElementName));
@@ -193,11 +195,11 @@ function saveNewList(listElement)
 
     listElementInput.remove();
 
-    html = '<b>' + unescape(listElementName) + '</b>';
+    html_code = '<b>' + unescape(listElementName) + '</b>';
 
 	listElement.children('.savep').hide();
 	listElement.children('.deletep').hide();
-	listElement.find('span').before(html);
+	listElement.find('span').before(html_code);
 	listElement.attr('id', listId);
 
 	if(listElementName.length > 30)
