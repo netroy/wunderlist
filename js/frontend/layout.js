@@ -15,7 +15,7 @@ var printShortcutListener = 0;
 var syncShortcutListener = 0;
 
 // Tooltip
-tooltip = function() {
+var tooltip = function() {
 	$("a.more, span.more, #listfunctions a").live("mouseenter", function(e) {
 		var content = $(this).attr("rel");
 		var offset = $(this).offset();
