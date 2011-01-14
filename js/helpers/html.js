@@ -380,8 +380,6 @@ html.make_timestamp_to_string = function() {
 		// Remove red color everytime
 		$(this).removeClass('red');
 
-		console.debug(year+"-"+today.getFullYear());
-		
 		// If older then yesterday, mark red and show the date
 		if((selected_date.getDate() < today.getDate() - 2 && selected_date.getMonth() <= today.getMonth() && selected_date.getMonth() == today.getMonth()) || selected_date.getFullYear() < today.getFullYear()) {
 			$(this).addClass('red');
@@ -493,7 +491,7 @@ html.getDayName = function(day_number)
  */
 html.addRemoveDateButton = function(object)
 {
-	//$('#ui-datepicker-div div.remove_date').remove(); //fix for bug #505
+	$('#ui-datepicker-div div.remove_date').remove(); //fix for bug #505
 	$('#ui-datepicker-div').append("<div class='remove_date'>" + language.data.no_date + "</div>");
 	$('#ui-datepicker-div div.remove_date').die();
 	$('#ui-datepicker-div div.remove_date').live('click', function()
@@ -605,10 +603,9 @@ html.createDatepicker = function()
 		},
 		onChangeMonthYear: function(year, month, inst) {
 			var $edit_li = $(this).parent();
-			html.addRemoveDateButton($edit_li);
 			setTimeout(function() {
 				html.addRemoveDateButton($edit_li);
-			}, 5);
+			}, 5);	
 		},
 		onClose: function() {
 			if ($(this).parent().children("#task-edit").length == 1)
