@@ -380,22 +380,24 @@ html.make_timestamp_to_string = function() {
 		// Remove red color everytime
 		$(this).removeClass('red');
 
+		console.debug(year+"-"+today.getFullYear());
+		
 		// If older then yesterday, mark red and show the date
-		if(selected_date.getDate() < today.getDate() - 2 && selected_date.getMonth() <= today.getMonth()) {
+		if((selected_date.getDate() < today.getDate() - 2 && selected_date.getMonth() <= today.getMonth() && selected_date.getMonth() == today.getMonth()) || selected_date.getFullYear() < today.getFullYear()) {
 			$(this).addClass('red');
 			html.showDateByLanguage(this, day, month, year);
 		}
 		// If yesterday, mark red and show "yesterday"
-		else if((selected_date.getDate() < today.getDate() && selected_date.getDate() > today.getDate() - 2) && selected_date.getMonth() == today.getMonth()) {
+		else if((selected_date.getDate() < today.getDate() && selected_date.getDate() > today.getDate() - 2) && selected_date.getMonth() == today.getMonth() && selected_date.getFullYear() == today.getFullYear() ) {
 			$(this).html(language.data.yesterday);
 			$(this).addClass('red');
 		}
 		// or today
-		else if(selected_date.getDate() == today.getDate() && selected_date.getMonth() == today.getMonth()) {
+		else if(selected_date.getDate() == today.getDate() && selected_date.getMonth() == today.getMonth() && selected_date.getFullYear() == today.getFullYear() ) {
 			$(this).html(language.data.today);
 		}
 		// or tomorrow
-		else if((selected_date.getDate() > today.getDate() && selected_date.getDate() < (today.getDate() + 2)) && selected_date.getMonth() == today.getMonth()) {
+		else if((selected_date.getDate() > today.getDate() && selected_date.getDate() < (today.getDate() + 2)) && selected_date.getMonth() == today.getMonth() && selected_date.getFullYear() == today.getFullYear()) {
 			$(this).html(language.data.tomorrow);
 		}
 		else {
@@ -491,6 +493,7 @@ html.getDayName = function(day_number)
  */
 html.addRemoveDateButton = function(object)
 {
+	//$('#ui-datepicker-div div.remove_date').remove(); //fix for bug #505
 	$('#ui-datepicker-div').append("<div class='remove_date'>" + language.data.no_date + "</div>");
 	$('#ui-datepicker-div div.remove_date').die();
 	$('#ui-datepicker-div div.remove_date').live('click', function()
@@ -602,6 +605,7 @@ html.createDatepicker = function()
 		},
 		onChangeMonthYear: function(year, month, inst) {
 			var $edit_li = $(this).parent();
+			html.addRemoveDateButton($edit_li);
 			setTimeout(function() {
 				html.addRemoveDateButton($edit_li);
 			}, 5);
@@ -622,7 +626,7 @@ html.createDatepicker = function()
             // Get timestamp (in seconds) for database
 			var date       = new Date(dateText);
 			var timestamp  = html.getWorldWideDate(date);
-
+			
 			if ($(this).parent().find('.input-add').length == 1)
 			{
 				var $date = $(".add input.datepicker").val();
