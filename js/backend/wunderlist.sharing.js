@@ -226,7 +226,7 @@ sharing.deleteSharedEmail = function(list_id, deletedElement)
 	data['email']    = user_credentials['email'];
 	data['password'] = user_credentials['password'];
 	data['list_id']  = wunderlist.getOnlineIdByListId(list_id);
-	data['delete']   = sharing.deletedMails;
+	data['delete']   = sharing.deletedMails[0];
 
 	console.log(data);
 

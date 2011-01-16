@@ -415,7 +415,7 @@ sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list
 		}
 	}
 
-	setTimeout(function() { sync.isSyncing = false; }, 2000);	
+	setTimeout(function() {sync.isSyncing = false;}, 2000);	
 	stopSyncAnimation();
 
 	// The callback for the sharing functionality
