@@ -23,7 +23,34 @@ timer.init = function()
 			}
 		}
 	}, 1000);
+	
+	// check every 10 seconds if day changed (overnight)
+	this.former_date = 0; //init
+	this.daychange_interval = setInterval(function()
+	{
+		var current_date = timer.current_date();
+		if(this.former_date != current_date && this.former_date != 0 && typeof(this.former_date) != "undefined") 
+		{
+			account.loadInterface();
+		}
+		this.former_date = current_date;
+		
+	}, 10000);
+	
+	
 	return this;
+}
+
+/**
+ * Returns the current date in the format YYYYMMDD
+ *
+ * @author Sebastian Kreutzberger
+ */
+timer.current_date = function()
+{
+	var now = new Date();
+	var ymd = now.getFullYear()+""+now.getMonth()+""+now.getDay();
+	return ymd;
 }
 
 /**
@@ -96,6 +123,8 @@ timer.resume = function()
 	this.isPaused = false;
 	return this;
 }
+
+
 
 // timer.midnight = function()
 // {
