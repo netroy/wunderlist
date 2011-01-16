@@ -15,9 +15,11 @@ var sharing = sharing || {};
  */
 sharing.init = function()
 {
-	sharing.shareUrl               = 'https://sync.wunderlist.net/share/1.1.2';
-	sharing.sharedEmailsUrl        = 'https://sync.wunderlist.net/share/1.1.2/emails';
-	sharing.deleteSharedEmailUrl   = 'https://sync.wunderlist.net/share/1.1.2/delete';
+	sharing.domain                 = 'https://sync.wunderlist.net'; 
+	sharing.shareUrl               = sharing.domain + '/share/1.1.2';
+	sharing.sharedEmailsUrl        = sharing.domain + '/share/1.1.2/emails';
+	sharing.deleteSharedEmailUrl   = sharing.domain + '/share/1.1.2/delete';
+	sharing.getOwnerUrl            = sharing.domain + '/share/1.1.2/owner';
 	sharing.shareListDialog        = null;
 	sharing.deletedMails           = [];
 	sharing.openedNoInternetDialog = false;
@@ -227,8 +229,6 @@ sharing.deleteSharedEmail = function(list_id, deletedElement)
 	data['password'] = user_credentials['password'];
 	data['list_id']  = wunderlist.getOnlineIdByListId(list_id);
 	data['delete']   = sharing.deletedMails[0];
-
-	console.log(data);
 
 	$.ajax({
 		url: sharing.deleteSharedEmailUrl,
@@ -440,13 +440,11 @@ sharing.unshareList = function(offline_list_id)
  */
 sharing.getSharedEmails = function(list_id)
 {
-	list_id          = wunderlist.getOnlineIdByListId(list_id);
-
 	var data         = {};
 	user_credentials = wunderlist.getUserCredentials();
 	data['email']    = user_credentials['email'];
 	data['password'] = user_credentials['password'];
-	data['list_id']  = list_id;
+	data['list_id']  = wunderlist.getOnlineIdByListId(list_id);
 
 	$.ajax({
 		url: sharing.sharedEmailsUrl,
@@ -458,13 +456,15 @@ sharing.getSharedEmails = function(list_id)
 		},
 		success: function(response_data, text, xhrobject)
 		{
-			if(response_data != '' && text != '' && xhrobject != undefined)
+			if (response_data != '' && text != '' && xhrobject != undefined)
 			{
-				if(xhrobject.status == 200)
+				if (xhrobject.status == 200)
 				{
+					console.log(response_data);
+
 					var response = eval('(' + response_data + ')');
 
-					switch(response.code)
+					switch (response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
 							sharing.openShareListDialog();
@@ -473,14 +473,14 @@ sharing.getSharedEmails = function(list_id)
 							var shareListItems = shareList.children('li');
 							shareListItems = shareList.children('li');
 
-							if(response.emails != undefined && response.emails.length > 0)
+							if (response.emails != undefined && response.emails.length > 0)
 							{
-								if(shareListItems.length == 0)
+								if (shareListItems.length == 0)
 								{
 									shareList.before("<p class='invitedpeople'><b>"+ language.data.currently_shared_with +":</b></br></p>");
 								}
 								
-								for(value in response.emails)
+								for (value in response.emails)
 								{
 									shareList.append('<li><span></span> ' + $.trim(response.emails[value]) + '</li>');
 								}
@@ -492,7 +492,7 @@ sharing.getSharedEmails = function(list_id)
 							break;
 
 						case sharing.status_codes.SHARE_DENIED:
-							dialogs.showErrorDialog(language.data.share_denied);
+							sharing.getOwnerOfList(data['list_id']);
 							break;
 
 						case sharing.status_codes.SHARE_NOT_EXIST:
@@ -501,6 +501,66 @@ sharing.getSharedEmails = function(list_id)
 
 						case sharing.status_codes.SHARE_NOT_SHARED:
 							sharing.openShareListDialog();
+							break;
+
+						default:
+							dialogs.showErrorDialog(language.data.error_occurred);
+							break;
+					}
+				}
+			}
+		},
+		error: function(xhrobject)
+		{
+			dialogs.showErrorDialog(language.data.sync_error);
+		}
+	});
+}
+
+/**
+ * Get the owner of the list
+ *
+ * @author Dennis Schneider
+ */
+sharing.getOwnerOfList = function(online_list_id)
+{
+	var data = {'list_id' : online_list_id};
+
+	$.ajax({
+		url: sharing.getOwnerUrl,
+		type: 'POST',
+		data: data,
+		beforeSend: function()
+		{
+			// Show loading indicator on invitation dialog
+		},
+		success: function(response_data, text, xhrobject)
+		{
+			if (response_data != '' && text != '' && xhrobject != undefined)
+			{
+				if (xhrobject.status == 200)
+				{
+					var response = eval('(' + response_data + ')');
+
+					switch (response.code)
+					{
+						case sharing.status_codes.SHARE_SUCCESS:
+							if (response.list_id === online_list_id)
+							{
+								dialogs.showErrorDialog(language.data.share_denied + response.owner);
+							}
+							else
+							{
+								dialogs.showErrorDialog(language.data.share_denied);
+							}
+							break;
+
+						case sharing.status_codes.SHARE_FAILURE:
+							dialogs.showErrorDialog(language.data.share_failure);
+							break;
+
+						case sharing.status_codes.SHARE_NOT_EXIST:
+							dialogs.showErrorDialog(language.data.sync_not_exist);
 							break;
 
 						default:
