@@ -545,9 +545,9 @@ sharing.getOwnerOfList = function(online_list_id)
 					switch (response.code)
 					{
 						case sharing.status_codes.SHARE_SUCCESS:
-							if (response.list_id === online_list_id)
+							if (response.list_id == online_list_id)
 							{
-								dialogs.showErrorDialog(language.data.share_denied + response.owner);
+								dialogs.showErrorDialog(language.data.share_denied + '<br /><b>' + response.owner + '</b>');
 							}
 							else
 							{
