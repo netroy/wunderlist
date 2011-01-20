@@ -163,7 +163,7 @@ html.generateNewListElementHTML = function(listId, listElementName, listElementI
  */
 html.generateCreditsDialogHTML = function()
 {
-	var html_code = '<p><b>wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your wunderlists follows you.<br /><br />' +
+	var html_code = '<p><b>wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your Wunderlists follows you.<br /><br />' +
 		'<b>What´s next?</b><br><br>' +
 		'We are currently working on something pretty big. We call it <b>wunderkit</b>, an online business platform that will change the way you look at corporate software products.<br /><br />' +
 		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.<br /><br /></p>' +
@@ -238,7 +238,7 @@ html.generateSocialDialogHTML = function()
 		'<p class="socialmedia"><span class="icons">' +
 		'<a href="http://www.stumbleupon.com/submit/?url=' + encodeURI('http://www.6wunderkinder.com') + '" target="_blank" class="stumbleupon"></a> ' +
 		'<a href="http://digg.com/submit?url=' + encodeURI('http://www.6wunderkinder.com') + '" target="_blank" class="digg"></a> ' +
-		'<a href="http://twitter.com/home?status=' + encodeURI('wunderlist - http://www.6wunderkinder.com') + '" target="_blank" class="twitter"></a> ' +
+		'<a href="http://twitter.com/home?status=' + encodeURI('Wunderlist - http://www.6wunderkinder.com') + '" target="_blank" class="twitter"></a> ' +
 		'<a href="http://www.facebook.com/sharer.php?u=' + encodeURI('http://www.6wunderkinder.com') + '&t=' + encodeURI('wunderlist') + '" target="_blank" class="facebook"></a> ' +
 		'</span>' +
 		language.data.invite_without_email +

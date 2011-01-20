@@ -105,9 +105,9 @@
 	"wunderkinder_tw":		    "Follow 我们的 Twitter",
 	"delete_account":		    "删除帐户",
 	"sign_in":				    "登入",
-	"restart":				    "你所做出的更改需要重新启动。请手动重启 wunderlist。",
+	"restart":				    "你所做出的更改需要重新启动。请手动重启 Wunderlist 。",
 	"invitation":			    "邀请你的朋友",
-	"invitetextarea":			"Hey，我现在开始用 wunderlist 来管理我的任务了，它看起来超酷！这东西完全免费，你应该试试看！",
+	"invitetextarea":			"Hey，我现在开始用 Wunderlist 来管理我的任务了，它看起来超酷！这东西完全免费，你应该试试看！",
 	"older_tasks":			    "显示已完成的任务",
 	"sync_error":			    "同步过程中出现了一个错误。请重试。",
 	"login_error":			    "登入过程中出现了一个错误。请重试。",
@@ -132,7 +132,7 @@
 	"invitation_error":			"邀请过程中出现了一个错误。请重试。",
 	"invitation_success":   	"你的邀请已经被成功发出！",
 	"invitation_invalid_email":	"你键入了一个无效的电子邮件地址。请重试。",
-	"invite":					"邀请你的朋友使用 wunderlist",
+	"invite":					"邀请你的朋友使用 Wunderlist ",
 	"invite_without_email":		"不想发送一封电子邮件吗？",
 	"invite_spread_word":		"那就帮我们到处宣传一下吧...",
 	"invite_email":				"yourfriend@email.com",
@@ -160,5 +160,5 @@
 	"startday":					"每周开始的一天",
 	"sunday":					"星期天",
 	"monday":					"星期一",
-	"exit_wunderlist":			"退出 wunderlist"
+	"exit_wunderlist":			"退出 Wunderlist "
 }
