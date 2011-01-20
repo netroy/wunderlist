@@ -107,7 +107,7 @@
 	"sign_in":				    "Entra",
 	"restart":				    "Los cambios que has realizado requieren reiniciar la aplicación. Por favor reinicia manualmente.",
 	"invitation":			    "Invita a tus amigos",
-	"invitetextarea":			"Hey, estoy gestionando mis tareas con wunderlist y luce muy bien. Es 100% gratis!. Quizas te interesa ;)",
+	"invitetextarea":			"Hey, estoy gestionando mis tareas con Wunderlist y luce muy bien. Es 100% gratis!. Quizas te interesa ;)",
 	"older_tasks":			    "Muestra las tareas acabadas",
 	"sync_error":			    "Ha ocurrido un error en el proceso de sincronizacón. Por favor vuelva a intentarlo.",
 	"login_error":			    "Ha ocurrido un error en el proceso de login. Por favor vuelva a intentarlo",
@@ -132,7 +132,7 @@
 	"invitation_error":			"Ha ocurrido un problema en el proceso de invitación. Por favor vuelva a intentarlo.",
 	"invitation_success":   	"Su invitación se ha enviado correctamente!",
 	"invitation_invalid_email":	"Has entrado una dirección de correo electrónico incorrecta. Por favor vuelva a intentarlo.",
-	"invite":					"Invita tus amigos a wunderlist",
+	"invite":					"Invita tus amigos a Wunderlist ",
 	"invite_without_email":		"No quieres enviar un mail?",
 	"invite_spread_word":		"Correr la voz...",
 	"invite_email":				"tuamigo@email.com",
@@ -160,5 +160,5 @@
 	"startday":     			"Día de inicio de la semana",
 	"sunday":     				"Domingo",
 	"monday":     				"Lunes",
-	"exit_wunderlist":			"cerrar wunderlist"
+	"exit_wunderlist":			"cerrar Wunderlist "
 }

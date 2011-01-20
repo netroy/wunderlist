@@ -105,9 +105,9 @@
 	"wunderkinder_tw":		    "Följ oss på Twitter",
 	"delete_account":		    "Radera Kontot",
 	"sign_in":				    "Logga in",
-	"restart":				    "Förändringarna du gjort kräver en omstart. Var vänlig starta om wunderlist manuellt.",
+	"restart":				    "Förändringarna du gjort kräver en omstart. Var vänlig starta om Wunderlist manuellt.",
 	"invitation":			    "Bjud in dina vänner",
-	"invitetextarea":			"Tjenare, Jag hanterar mina att göra listor i wunderlist nu och det verkar riktigt bra. Det är 100% gratis, kanske kan vara något för dig!",
+	"invitetextarea":			"Tjenare, Jag hanterar mina att göra listor i Wunderlist nu och det verkar riktigt bra. Det är 100% gratis, kanske kan vara något för dig!",
 	"older_tasks":			    "Visa avklarade uppgifter",
 	"sync_error":			    "Ett fel uppstod i synkroniseringen. Vänligen försök igen.",
 	"login_error":			    "Ett fel uppstod i inloggningen. Vänligen försök igen.",
@@ -132,7 +132,7 @@
 	"invitation_error":			"Ett fel uppstod i inbjudan. Vänligen försök igen.",
 	"invitation_success":   	"Din inbjudan har skickats!",
 	"invitation_invalid_email":	"Du har angivit en felaktig emailadress. Vänligen försök igen.",
-	"invite":					"Bjud in dina vänner till wunderlist",
+	"invite":					"Bjud in dina vänner till Wunderlist ",
 	"invite_without_email":		"Vill du inte skicka ett email?",
 	"invite_spread_word":		"Sprid ryktet vidare...",
 	"invite_email":				"din_kompis@email.se",
@@ -160,5 +160,5 @@
 	"startday":					"Första dagen i veckan",
 	"sunday":					"Söndag",
 	"monday":					"Måndag",
-	"exit_wunderlist":			"avsluta wunderlist"
+	"exit_wunderlist":			"avsluta Wunderlist "
 }

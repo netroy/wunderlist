@@ -1,7 +1,7 @@
 var Menu = Menu || {};
 
 /**
- * Reset position of wunderlist (Mac)
+ * Reset position of Wunderlist (Mac)
  *
  * @author Christian Reber
  */
@@ -118,7 +118,7 @@ Menu.initializeTrayIcon = function() {
 		var trayIcon     = Titanium.UI.addTray(trayIconPath, function () {
 			Menu.showWindow(wunderlistWindow)
 		});
-		trayIcon.setHint('wunderlist - todo application')
+		trayIcon.setHint('Wunderlist - todo application')
 
 		var trayMenu         = Titanium.UI.createMenu();
 		var trayExitItem	 = trayMenu.addItem(language.data.exit_wunderlist, Menu.exitWunderlist);
@@ -164,7 +164,7 @@ Menu.preventCloseEvent = function() {
 }
 
 /**
- * Show the wunderlist window if it's hidden
+ * Show the Wunderlist window if it's hidden
  *
  * @author Dennis Schneider
  */
@@ -200,7 +200,7 @@ Menu.remove = function() {
  * @author Daniel Marschner
  */
 function openCreditsDialog() {
-	dialogs.openDialog(dialogs.generateDialog('What is wunderlist?', html.generateCreditsDialogHTML(), 'dialog-credits'));
+	dialogs.openDialog(dialogs.generateDialog('What is Wunderlist?', html.generateCreditsDialogHTML(), 'dialog-credits'));
 }
 
 function openBackgroundsDialog() {
