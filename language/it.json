@@ -105,9 +105,9 @@
 	"wunderkinder_tw":		    "Seguici su Twitter",
 	"delete_account":		    "Cancella Account",
 	"sign_in":				    "Sign in",
-	"restart":				    "I cambiamenti effettuati richiedono un riavvio. Per favore chiudi wunderlist e riaprilo.",
+	"restart":				    "I cambiamenti effettuati richiedono un riavvio. Per favore chiudi Wunderlist e riaprilo.",
 	"invitation":			    "Invita gli amici",
-	"invitetextarea":			"Ciao, sto utilizzando wunderlist per gestire i miei eventi e ne sono soddisfatto. E' gratuito ed ho pensato che avessi piacere di provarlo anche tu!",
+	"invitetextarea":			"Ciao, sto utilizzando Wunderlist per gestire i miei eventi e ne sono soddisfatto. E' gratuito ed ho pensato che avessi piacere di provarlo anche tu!",
 	"older_tasks":			    "Mostra eventi completati",
 	"sync_error":			    "Si è verificato un errore di sincronizzazione, prova di nuovo.",
 	"login_error":			    "Si è verificato un errore di login, prova di nuovo.",
@@ -132,7 +132,7 @@
 	"invitation_error":			"Si è verificato un errore. Riprova per favore.",
 	"invitation_success":   	"Il tuo invito è stato inviato!",
 	"invitation_invalid_email":	"Hai inserito un indirizzo email non valido. Per favore riprova.",
-	"invite":					"Invita gli amici in wunderlist",
+	"invite":					"Invita gli amici in Wunderlist ",
 	"invite_without_email":		"Non preferisci inviare un'email?",
 	"invite_spread_word":		"Just spread the word on...",
 	"invite_email":				"indirizzo@email.com",
@@ -160,5 +160,5 @@
 	"startday": 				"giornio d'inizio",
 	"sunday": 					"domenica",
 	"monday": 					"lunedi",
-	"exit_wunderlist":			"chiudere wunderlist"
+	"exit_wunderlist":			"chiudere Wunderlist "
 }

@@ -24,7 +24,7 @@ $(function()
  */
 wunderlist.initAppTitle = function()
 {
-	document.title = 'wunderlist ';
+	document.title = 'Wunderlist ';
 }
 
 /**

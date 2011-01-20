@@ -1,13 +1,12 @@
 <html>
 <head>
-	<title>wunderlist - ####LIST####</title>
+	<title>Wunderlist - ####LIST####</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<style type="text/css"> 
-			body {font-family:"Myriad Pro", Arial, Sans-Serif;background:#FCFCFC url(https://s3.amazonaws.com/wunderlist/background.png) repeat-x}
-			.wunderlist-wrapper { width:600px; margin:50px auto}
-			.wunderlist-logo {width:128px; height:128px; margin:20px auto}
+			body {font-family:"Myriad Pro", Arial, Sans-Serif}
+			.wunderlist-wrapper { width:700px; margin:50px auto}
 			h1, p {text-align:center}
-			p.small {font-size:14px}
+			p.small {font-size:14px; color:#777;}
 			a {color:#2B96F1; text-decoration:none;font-weight:bold}
 			a:hover {text-decoration:underline}
 			ul.wunderlist { border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;background:#fff;border:1px solid #ddd;padding:30px}
@@ -18,11 +17,15 @@
 	</head>
 	<body onload="window.setTimeout('window.print()', 200);">
 		<div class="wunderlist-wrapper">
-			<div class="wunderlist-logo"><img src="https://s3.amazonaws.com/wunderlist/wunderlist_icon.png" alt="wunderlist"/></div>
-			<h1>wunderlist - ####LIST####</h1>
+			<h1>####LIST####</h1>
 			<ul class="wunderlist">####TASKS####</ul>
-			<p>These tasks are generated with <a href="http://www.6wunderkinder.com/wunderlist">wunderlist</a></p>
-			<p class="small"><a href="http://www.6wunderkinder.com">www.6wunderkinder.com</a></p>
+			<p class="small">
+					These tasks are generated with wunderlist <span id="printDate"></span>
+					<script type="text/javascript">
+						// var wert = "10-02-2010";
+			 			// document.getElementById('printDate').innerHTML = "("+ wert +")";
+			 		</script>
+			</p>
 		</div>
 	</body>
 </html>

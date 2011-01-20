@@ -105,9 +105,9 @@
 	"wunderkinder_tw":		    "Siga-nos no Twitter",
 	"delete_account":		    "Eliminar conta",
 	"sign_in":				    "Iniciar sessão",
-	"restart":				    "É necessário reiniciar para aplicar as alterações. Por favor reinicie o Wunderlist manualmente.",
+	"restart":				    "É necessário reiniciar para aplicar as alterações. Por favor reinicie o Wunderlist  manualmente.",
 	"invitation":			    "Convidar amigos",
-	"invitetextarea":			"Boas, eu controlo as minhas tarefas do dia-dia com Wunderlist que me parece bastante intessante. É 100% gratuito, talvez queiras dar uma olhadela!",
+	"invitetextarea":			"Boas, eu controlo as minhas tarefas do dia-dia com Wunderlist  que me parece bastante intessante. É 100% gratuito, talvez queiras dar uma olhadela!",
 	"older_tasks":			    "Mostrar tarefas concluídas",
 	"sync_error":			    "Ocorreu um erro ao sincronizar. Por favor, tente novamente.",
 	"login_error":			    "Ocorreu um erro ao iniciar sessão. Por favor, tente novamente.",
@@ -132,7 +132,7 @@
 	"invitation_error":			"Ocorreu um erro no convite. Por favor tente novamente.",
 	"invitation_success":   	"O seu convite foi enviado com sucesso!",
 	"invitation_invalid_email":	"Introduziu um endereço de e-mail inválido. Por favor tente novamente.",
-	"invite":					"Convide os seus amigos para o Wunderlist",
+	"invite":					"Convide os seus amigos para o Wunderlist ",
 	"invite_without_email":		"Não quer enviar um e-mail?",
 	"invite_spread_word":		"Divulgue no...",
 	"invite_email":				"oseuamigo@email.com",
@@ -160,5 +160,5 @@
 	"startday": 				"Dia do começo da semana",
 	"sunday": 					"Domingo",
 	"monday":					"Segunda",
-	"exit_wunderlist":			"Sair do wunderlist"
+	"exit_wunderlist":			"Sair do Wunderlist "
 }

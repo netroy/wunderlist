@@ -163,7 +163,7 @@ background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ecece
 border:1px solid #ccc}
 
 .ui-datepicker-calendar .ui-state-active {
-background:url(/images/sidebar_bg.png) top left repeat-x !important;
+background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
 border:1px solid #1177b9 !important;
 color:#fff !important}
 

@@ -1,22 +1,22 @@
 +==========================================================================+
-+                           wunderlist for Desktop                         +
++                           Wunderlist for Desktop                         +
 +==========================================================================+
 
-For details on wunderlist, please see <http://www.6wunderkinder.com. wunderlist source code is licensed under the terms of the Apache Public License, version 2.
+For details on Wunderlist, please see <http://www.6wunderkinder.com. Wunderlist source code is licensed under the terms of the Apache Public License, version 2.
 
 ---------------------
- Building wunderlist
+ Building Wunderlist
 ---------------------
 
-wunderlist is based on Titanium. Download the current Titanium stable on http://www.appcelerator.com/products/download/ and create an new desktop project. Open terminal and go into the "Resources" folder of the empty project you created.
+Wunderlist is based on Titanium. Download the current Titanium stable on http://www.appcelerator.com/products/download/ and create an new desktop project. Open terminal and go into the "Resources" folder of the empty project you created.
 
-Then type "git clone git@github.com:6wunderkinder/wunderlist.git" and that's it! Now you are member of the wunderlist community ;)
+Then type "git clone git@github.com:6wunderkinder/wunderlist.git" and that's it! Now you are member of the Wunderlist community ;)
 
 --------------------
  Known Bugs
 --------------------
 
-The desktop version of wunderlist has some strange bugs, we couldn't fix yet. They will be fixed, when Titanium 1.1.0 will be released.
+The desktop version of Wunderlist has some strange bugs, we couldn't fix yet. They will be fixed, when Titanium 1.1.0 will be released.
 
 - Auto-Update on Windows
 - Bad OS X behaviour (Close on "X")
@@ -26,7 +26,7 @@ The desktop version of wunderlist has some strange bugs, we couldn't fix yet. Th
  Getting Assistance
 --------------------
 
-For more help on wunderlist (or to report bugs), we have a good support tracker on http://support.6wunderkinder.com.
+For more help on Wunderlist (or to report bugs), we have a good support tracker on http://support.6wunderkinder.com.
 
 We'd also encourage you to follow us on Twitter at http://twitter.com/6Wunderkinder or @6Wunderkinder
 
@@ -71,4 +71,4 @@ Huge thanks to all our users, we love you!
 
 Copyright (C) 2010-2011 by 6 Wunderkinder (6 Wunderkinder GmbH, Germany) All Rights Reserved.
 
-wunderlist is a trademark of 6 Wunderkinder GmbH.
+Wunderlist is a trademark of 6 Wunderkinder GmbH.

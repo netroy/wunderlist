@@ -30,7 +30,7 @@ share.share_by_email = function()
 	if (j_tasks.length > 0)
 	{
 		// Generate List Name
-		var name = encodeURI('wunderlist - ' + $('#content h1:first').text());
+		var name = encodeURI('Wunderlist - ' + $('#content h1:first').text());
 
 		var list_id        = $('ul#list').attr('rel');
 		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
@@ -67,7 +67,7 @@ share.share_by_email = function()
 			body += '%0A';
 		});
 
-		Titanium.Desktop.openURL('mailto:?subject=' + name + '&body=' + body + '%0A' + encodeURI(' I generated this list with my task tool wunderlist from 6 Wunderkinder - Get it from http://www.6wunderkinder.com'));
+		Titanium.Desktop.openURL('mailto:?subject=' + name + '&body=' + body + '%0A' + encodeURI(' I generated this list with my task tool Wunderlist from 6 Wunderkinder - Get it from http://www.6wunderkinder.com'));
 	}
 	else
 	{
