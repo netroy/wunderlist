@@ -57,6 +57,20 @@ var position_saved = false;
 Titanium.API.addEventListener(Titanium.CLOSE, save_window_position);
 Titanium.API.addEventListener(Titanium.EXIT, save_window_position);
 
+
+// Change the top header color on blur
+Titanium.API.addEventListener(Titanium.UNFOCUSED, function(){
+	$("#top").addClass("blurred");
+	$("#macmenu a").css("opacity", "0.5");
+});
+
+// Change the top header color on blur
+Titanium.API.addEventListener(Titanium.FOCUSED, function(){
+	$("#top").removeClass("blurred");
+	$("#macmenu a").css("opacity", "1.0");
+
+});
+
 /**
  * Save Window Size and Position on exit
  *
