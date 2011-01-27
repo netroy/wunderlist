@@ -35,11 +35,26 @@ background.list = {
  */
 background.init = function() {
 	var bgCounter = 1;
+		
+	$('#right').prepend('<a class="activebackground" style="background:#000"></a>');
+
+	$('#backgroundList').hide();
+
+	$('a.activebackground').bind('click', function() {
+		$('#backgroundList').fadeToggle(200);
+	});
 
 	$.each(background.list, function(bgClass) {
 		$('#backgroundList').prepend('<a class="' + bgClass + '">' + (bgCounter++) + '</a>');
 
 		$('a.' + bgClass).bind('click', function() {
+			
+			// set active menu switch
+						
+			var bgName = background.list[bgClass].bgPath.substring(12,background.list[bgClass].bgPath.length-4);			
+			$(".activebackground").css("background","url('images/icon_" + bgName + ".png')");
+			
+			// change background
 			$('#bghelp').fadeOut(200, function() {
                 $(this).css('background', background.list[bgClass].bgColor + ' url(' + background.list[bgClass].bgPath + ') '+ background.list[bgClass].bgPosition +' no-repeat fixed').fadeIn(200)
 			});
