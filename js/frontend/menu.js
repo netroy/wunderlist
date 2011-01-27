@@ -53,6 +53,7 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Hrvatski',   function() {Menu.switch_language('hr')});
 	languageMenuItem.addItem('Norsk',      function() {Menu.switch_language('no')});
 	languageMenuItem.addItem('Српска',     function() {Menu.switch_language('sr')});
+	languageMenuItem.addItem('Galego',     function() {Menu.switch_language('gl')});
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
