@@ -56,8 +56,6 @@
 	<div id="bghelp"></div>
 	<div id="top">
 		<div id="macmenu">
-			<div style="float:right;">
-			</div>
 			<a href="#" class="addtaskbutton"></a>
 			<!-- <a href="#" class="trashbutton"></a> -->
 			<a href="#" class="sharebutton"></a>
@@ -69,9 +67,9 @@
 			<span class="clearsearch"></span>
 			<input type="text" id="search"/>
 		</div>
-		<h3>
+		<!-- <h3>
 			<a class="add" href="#" title="">add</a>
-		</h3>	
+		</h3>	 -->
 	</div>
 	<div id="sidebar">
 		<div id="note">
@@ -84,19 +82,27 @@
 		<div id="notification"><div></div></div>
 	</div>
 	
-	<div id="content" style="top:38px"></div>
+	<div id="content"></div>
 	<div id="bottombar">
 		<div id="left">
-			<span id="sync" class="more"><span id="syncing"></span></span>
-			<a id="all" class="roundedleft more"><img src="icons/filterall.png" alt="all"/></a>
-			<a id="starred" class="more"><img src="icons/filterstar.png" alt="all"/></a>
-			<a id="done" class="roundedright more"><img src="icons/filterdone.png" alt="all"/></a>
+			<div id="bottom-sidebar">
+				<span id="addlistitem"></span>
+			</div>
+			<div id="bottom-filters">
+				
+				<span id="sync" class="more"><span id="syncing"></span></span>
+				
+				<a id="all" class="roundedleft more"><img src="icons/filterall.png" alt="all"/></a>
+				<a id="starred" class="more"><img src="icons/filterstar.png" alt="all"/></a>
+				<a id="done" class="roundedright more"><img src="icons/filterdone.png" alt="all"/></a>
 
-			<a id="today" class="roundedleft">Today</a>
-			<a id="tomorrow">Tomorrow</a>
-			<a id="thisweek">Next 7 Days</a>
-			<a id="someday">Someday</a>
-			<a id="withoutdate" class="roundedright">Without Date</a>
+				<a id="today" class="roundedleft">Today</a>
+				<a id="tomorrow">Tomorrow</a>
+				<a id="thisweek">Next 7 Days</a>
+				<a id="someday">Someday</a>
+				<a id="withoutdate" class="roundedright">Without Date</a>
+				
+			</div>
 
 			<div id="login_data">
 				

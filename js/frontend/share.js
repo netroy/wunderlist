@@ -2,9 +2,9 @@ var share = share || {};
 
 share.init = function()
 {
-	$('a.list-email').live("click", share.share_by_email);
-	$('a.list-cloud').live("click", dialogs.showCloudAppDialog);
-	$('a.list-print').live("click", share.print);
+	$('#macmenu a.mailbutton').live("click", share.share_by_email);
+	$('#macmenu a.cloudbutton').live("click", dialogs.showCloudAppDialog);
+	$('#macmenu a.printbutton').live("click", share.print);
 	
 	// Open URL on click
 	$('#cloudtip span.link').live("click", function() {

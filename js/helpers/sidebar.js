@@ -12,11 +12,15 @@ sidebar.init = function() {
 		$("#sidebar").css("left","0px");
 		$("#lists").css("left","0px");
 		$("#content").css("left","259px");
+		
+		$("#bottom-sidebar").css("width", "253");
 	} else {
 		$(".togglesidebar").css("-webkit-transform","rotate(180deg)");
 		$("#sidebar").css("left","-269px");
 		$("#lists").css("left","-269px");
 		$("#content").css("left","0px");
+		
+		$("#bottom-sidebar").css("width", "0");
 	}
 
 	sidebar.toggle();
@@ -35,12 +39,18 @@ sidebar.toggle = function() {
 			$("#sidebar").stop().animate({left: '-269'});
 			$("#lists").stop().animate({left: '-269'});
 			$("#content").stop().animate({left: '0'});
+			
+			$("#bottom-sidebar").animate({width:'0'});
+			
 			sidebar_opened_status = "false";
 		} else {
 			$(this).css("-webkit-transform","rotate(0deg)");
 			$("#sidebar").stop().animate({left: '0'});
 			$("#lists").stop().animate({left: '0'});
 			$("#content").stop().animate({left: '259'});
+			
+			$("#bottom-sidebar").animate({width:'253'});
+
 			sidebar_opened_status = "true";
 		}
 
