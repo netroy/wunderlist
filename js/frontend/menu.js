@@ -45,7 +45,7 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('České',      function() {Menu.switch_language('cs')});
 	languageMenuItem.addItem('中文',        function() {Menu.switch_language('zh')});
 	languageMenuItem.addItem('Türkçe',     function() {Menu.switch_language('tr')});
-	languageMenuItem.addItem('ألماني',        function() {Menu.switch_language('ar')});
+	languageMenuItem.addItem('عربي',        function() {Menu.switch_language('ar')});
 	languageMenuItem.addItem('Svenska',    function() {Menu.switch_language('se')});
 	languageMenuItem.addItem('日本語',      function() {Menu.switch_language('ja')});
 	languageMenuItem.addItem('Magyar',     function() {Menu.switch_language('hu')});
@@ -53,6 +53,7 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Hrvatski',   function() {Menu.switch_language('hr')});
 	languageMenuItem.addItem('Norsk',      function() {Menu.switch_language('no')});
 	languageMenuItem.addItem('Српска',     function() {Menu.switch_language('sr')});
+	languageMenuItem.addItem('Galego',     function() {Menu.switch_language('gl')});
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
