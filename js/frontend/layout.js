@@ -88,15 +88,15 @@ function rotate(degree) {
 startSyncAnimation = function() {
 
 	$('#tooltip').remove();
-	$("#bottom-filters").append("<p id='sync_tooltip'>" + language.data.sync + "</p>");
-	$("#sync_tooltip").css("bottom",(50) + "px").css("left",(-9) + "px").fadeIn("fast");
+	$("#bottom-sidebar").append("<p id='sync_tooltip'>" + language.data.sync + "</p>");
+	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(16) + "px").fadeIn("fast");
 
     rotate(0);
 }
 
 stopSyncAnimation = function() {
 
-	$("#sync_tooltip").css("bottom",(50) + "px").css("left",(-9) + "px").delay("1000").fadeOut("fast", function() {
+	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(16) + "px").delay("1000").fadeOut("fast", function() {
 		$(this).remove();
 		clearTimeout(rotationTimer);
 	});
