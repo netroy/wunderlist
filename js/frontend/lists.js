@@ -256,6 +256,7 @@ function bindListDeleteMode()
 		.dialog({
 			autoOpen: false,
 			modal: true,
+			resizable: false,
 			draggable: false,
 			dialogClass: 'dialog-delete-list',
 			title: language.data.delete_list_question,

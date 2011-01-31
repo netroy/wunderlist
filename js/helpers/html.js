@@ -10,9 +10,9 @@ html.generateShareListDialogHTML = function()
 	var html_code =  '<p>' + language.data.sharelist_info +'</p>' +
 			'<p class="small"><b>' + language.data.sharelist_hint + '</b>: ' + language.data.sharelist_hint_text + '</p>' +
 			'<input type="hidden" id="share-list-id" rel="" />' +
-			'<p><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
+			'<p class="clearfix"><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + language.data.invite_email + ',' + language.data.invite_email + '..." />' +
 			'<input id="send_share_invitation" class="input-button button-social" type="submit" value="'+ language.data.sharelist_button +'" /></p></div>' +
-			'<ul class="sharelistusers"></ul>';
+			'<ul class="sharelistusers"></ul><br/>';
 
 	return html_code;
 }
@@ -24,8 +24,7 @@ html.generateShareListDialogHTML = function()
  */
 html.generateLoginRegisterDialogHTML = function()
 {
-	var html_code = '<p class="pl8">' + language.data.login_hint + '</p><br />' +
-		'<div class="wunderlistlogo"></div>' +
+	var html_code = '<div class="wunderlistlogo"></div><br/>' +
 		'<input class="input-login" type="text" id="login-email" name="email" placeholder="' + language.data.email + '" />' +
 		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + language.data.password + '" />' +
 		'<div id="newsletter-signup">'+
@@ -37,7 +36,7 @@ html.generateLoginRegisterDialogHTML = function()
 		'<input class="input-button" type="submit" id="cancelreg" value="' + language.data.no_thanks + '" />' +
 		'<img id="account-loader" src="images/ajax-loader.gif" />' +
 		'</div>' +
-		'<p class="error"></p>' +
+		'<p class="error clearfix"></p>' +
         '<p class="pwd"><a id="forgot-pwd" href="#" target="_blank">' + language.data.forgot_password + '</a></p>' +
 		'<div class="followus"><p>' +
 		'<a class="followtwitter" target="_blank" href="http://www.twitter.com/6wunderkinder"></a>' +
@@ -166,9 +165,7 @@ html.generateCreditsDialogHTML = function()
 	var html_code = '<p><b>wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your Wunderlists follows you.<br /><br />' +
 		'<b>What´s next?</b><br><br>' +
 		'We are currently working on something pretty big. We call it <b>wunderkit</b>, an online business platform that will change the way you look at corporate software products.<br /><br />' +
-		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.<br /><br /></p>' +
-
-		'<p class="logo"><img src="images/logo.png"></p>';
+		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.</p>';
 
 		return html_code;
 }
@@ -179,9 +176,9 @@ html.generateCreditsDialogHTML = function()
  * @author Daniel Marschner
  */
 html.generateBackgroundsDialogHTML = function() {
-	var html_code =  '<a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
-			'<a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a> (Artcore)<br/>' +
-			'<a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a> (Galaxgui)</p>';
+	var html_code =  '<p>&raquo; <a href="http://downloads.dvq.co.nz" target="_blank">Handcrafted Wood Texture</a> (DVQ)<br/>' +
+			'&raquo; <a href="http://blog.artcore-illustrations.de" target="_blank">Balloon Monster</a> (Artcore Illustrations)<br/>' +
+			'&raquo; <a href="http://www.galaxygui.com/" target="_blank">Dark Wood Texture</a> (Galaxgui)</p>';
 	return html_code;
 }
 
@@ -193,11 +190,11 @@ html.generateBackgroundsDialogHTML = function() {
 html.generateSettingsHTML = function()
 {
     var html_code = '<div id="task-delete-radios" class="radios">' +
-       		'<span class="ui-widget-header custom-dialog-headline">' + language.data.delete_task_prompt + '</span>' +
-			'<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /><span>' + language.data.yes + '</span></p>' +
-			'<p><input id="task_delete_0" type="radio" name="taskDelete" value="0" /><span>' + language.data.no + '</span></p>' +
+       		'<p><b>' + language.data.delete_task_prompt + '</b></p>' +
+			'<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /> <span>' + language.data.yes + '</span></p>' +
+			'<p><input id="task_delete_0" type="radio" name="taskDelete" value="0" /> <span>' + language.data.no + '</span></p>' +
  			'</div>' +
-    		'<p><input id="cancel-settings" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
+    		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
 	return html_code;
 }
 
@@ -211,12 +208,12 @@ html.generateSwitchDateFormatHTML = function() {
     		'<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
        		'<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p></div>' +
        		'<div id="week-start-day-radios" class="radios">' +
-       		'<span class="ui-widget-header custom-dialog-headline">' + language.data.startday + '</span>' +
-			'<p><input id="startday_1" type="radio" name="startDay" value="1" /><span>' + language.data.monday + '</span></p>' +
-			'<p><input id="startday_6" type="radio" name="startDay" value="6" /><span>' + language.data.saturday + '</span></p>' +
-			'<p><input id="startday_0" type="radio" name="startDay" value="0" /><span>' + language.data.sunday + '</span></p>' +
+       		'<span class="custom-dialog-headline">' + language.data.startday + '</span>' +
+			'<p><input id="startday_1" type="radio" name="startDay" value="1" /> <span>' + language.data.monday + '</span></p>' +
+			'<p><input id="startday_6" type="radio" name="startDay" value="6" /> <span>' + language.data.saturday + '</span></p>' +
+			'<p><input id="startday_0" type="radio" name="startDay" value="0" /> <span>' + language.data.sunday + '</span></p>' +
  			'</div>' +
-    		'<p><input id="cancel-dateformat" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
+    		'<p class="clearfix"><input id="cancel-dateformat" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
 	return html_code;
 }
 
@@ -229,13 +226,11 @@ html.generateSocialDialogHTML = function()
 {
 	var html_code = '<div id="invitebox"><div class="wunderlistlogo"></div>'+
 
-		'<p class="invitefriends">' + language.data.invite + ':</p>' +
-		'<textarea class="textarea-dialog" id="invite-text" maxlength="140">'+ language.data.invitetextarea +'</textarea>' +
-		'<p><input class="input-login input-social" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
+		'<br><p><textarea class="textarea-dialog" id="invite-text" maxlength="140">'+ language.data.invitetextarea +'</textarea>' +
+		'<p class="clearfix"><input class="input-login input-social" type="text" id="email" name="email" value="' + language.data.invite_email + '" />' +
 		'<input id="send_invitation" class="input-button button-social" type="submit" value="' + language.data.send + '" /></p>' +
 
-
-		'<p class="socialmedia"><span class="icons">' +
+		'<p class="socialmedia clearfix"><span class="icons">' +
 		'<a href="http://www.stumbleupon.com/submit/?url=' + encodeURI('http://www.6wunderkinder.com') + '" target="_blank" class="stumbleupon"></a> ' +
 		'<a href="http://digg.com/submit?url=' + encodeURI('http://www.6wunderkinder.com') + '" target="_blank" class="digg"></a> ' +
 		'<a href="http://twitter.com/home?status=' + encodeURI('Wunderlist - http://www.6wunderkinder.com') + '" target="_blank" class="twitter"></a> ' +

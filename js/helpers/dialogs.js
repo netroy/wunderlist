@@ -23,6 +23,7 @@ dialogs.generateDialog = function(title, html_code, dialogClass) {
 	return $('<div></div>').html(html_code).dialog({
 		autoOpen: false,
 		draggable: false,
+		resizable: false,
 		modal: true,
 		dialogClass: dialogClass,
 		title: title
@@ -76,6 +77,7 @@ dialogs.showShareOwnEmailDialog = function() {
 		dialogs.shareOwnEmailDialog = $('<div></div>').dialog({
 			autoOpen: true,
 			draggable: false,
+			resizable: false,
 			modal: true,
 			title: language.data.share_own_email,
 			buttons: {
@@ -104,6 +106,7 @@ dialogs.showOKDialog = function(title) {
 			autoOpen: true,
 			draggable: false,
 			modal: true,
+			resizable: false,
 			title: title,
 			buttons: {
 				'OK': function() {
@@ -132,6 +135,7 @@ dialogs.showSharedSuccessDialog = function(title) {
 			draggable: false,
 			modal: true,
 			title: title,
+			resizable: false,
 			buttons: {
 				'OK': function() {
 					$(this).dialog('close');
@@ -159,6 +163,7 @@ dialogs.showDeletedDialog = function(title) {
 			draggable : false,
 			modal     : true,
 			title     : title,
+			resizable: false,
 			buttons   : {
 				'OK'  : function() {
 					$(this).dialog('close');
@@ -180,9 +185,10 @@ dialogs.showDeletedDialog = function(title) {
 dialogs.showCloudAppDialog = function() {
 	if(dialogs.cloudAppDialog == undefined)
 	{
-		dialogs.cloudAppDialog = $('<div><p>' + language.data.cloudapp_1 + '<br><br>' + language.data.cloudapp_2 + '</p></div>').dialog({
+		dialogs.cloudAppDialog = $('<div><p>' + language.data.cloudapp_1 + '</p><p class="small">' + language.data.cloudapp_2 + '</p></div>').dialog({
 			autoOpen  : true,
 			draggable : false,
+			resizable: false,
 			modal     : true,
 			title     : 'Are you sure to publish your tasks?',
 			buttons   : {
@@ -213,6 +219,7 @@ dialogs.showWhileSyncDialog = function(title) {
 		dialogs.whileSyncDialog = $('<div></div>').dialog({
 			autoOpen  : true,
 			draggable : false,
+			resizable: false,
 			modal     : true,
 			title     : title,
 			buttons   : {

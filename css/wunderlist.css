@@ -252,18 +252,7 @@ left:0px;
 height:36px;
 width:100%}
 
-#right {float:right; padding:8px 40px 8px 0px}
-
-#right #backgroundList {
-background:url(/images/bottombar.jpg);
-width:74px;
-position:absolute;
-bottom:44px;
-right:10px;
-padding:4px;
--moz-border-radius:3px;
--webkit-border-radius:3px;
-border-radius:3px;}
+/* LEFT BOTOTMBAR ------------------------------------------------------------------------- */
 
 #left {float: left; padding:9px; padding-right:0px; padding-left:40px}
 
@@ -328,7 +317,25 @@ right:21px;
 z-index:1000;
 bottom:10px}
 
-#bottombar #right a {width:18px; height:19px; float:right; display:block; opacity:0.5; text-indent: -9999px; margin-right:5px}
+/* RIGHT BOTOTMBAR ------------------------------------------------------------------------- */
+
+#right {float:right; padding:8px 40px 8px 0px}
+
+#right #backgroundList {
+background:rgba(50,50,50,0.8);
+width:70px;
+position:absolute;
+bottom:44px;
+right:17px;
+padding:5px 0px 0px 5px;
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+border-radius:3px;}
+
+#bottombar #right a {width:18px; height:19px; float:right; display:block; opacity:0.5; text-indent: -9999px; margin-right:5px;}
+
+#right #backgroundList a {margin-bottom:5px;}
+
 #bottombar #right a:hover, #bottombar #right a.active { cursor:pointer; opacity:1.0}
 
 #bottombar #right a.bgone { background:url(/images/icon_wood.png)}

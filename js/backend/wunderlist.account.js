@@ -105,6 +105,7 @@ account.showRegisterDialog = function() {
 			.dialog({
 				autoOpen: false,
 				draggable: false,
+				resizable: false,
 				modal: true,
 				dialogClass: 'dialog-login',
 				title: language.data.register_title,
@@ -276,6 +277,7 @@ account.login = function() {
 							create_user_dialog = $('<div></div>')
 								.dialog({
 									autoOpen: false,
+									resizable: false,
 									draggable: false,
 									dialogClass: 'dialog-delete-list',
 									title: language.data.register_question,
@@ -650,6 +652,7 @@ account.deleteAccount = function() {
 			.dialog({
 				autoOpen: false,
 				draggable: false,
+				resizable: false,
 				modal: true,
 				dialogClass: 'dialog-edit-profile',
 				title: language.data.delete_account_title,
@@ -791,7 +794,7 @@ account.showInviteDialog = function()
 	var inviteEventListener = 0;
 
 	if(invite_dialog == undefined)
-		invite_dialog = dialogs.generateDialog('', html.generateSocialDialogHTML(), 'dialog-social');
+		invite_dialog = dialogs.generateDialog(language.data.invite, html.generateSocialDialogHTML(), 'dialog-social');
 
 	dialogs.openDialog(invite_dialog);
 
@@ -892,6 +895,7 @@ account.invite = function()
 								inviteCloseDialog = $('<div></div>').dialog({
 									autoOpen: false,
 									draggable: false,
+									resizable: false,
 									modal: false,
 									title: language.data.invitation_success,
 									buttons: buttonOptions
@@ -941,6 +945,7 @@ account.showInviteOKDialog = function(title) {
 			autoOpen: false,
 			draggable: false,
 			modal: false,
+			resizable: false,
 			title: title,
 			buttons: {
 				'OK': function() {

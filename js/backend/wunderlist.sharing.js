@@ -112,6 +112,7 @@ sharing.init = function()
 					autoOpen  : true,
 					draggable : false,
 					modal     : false,
+					resizable: false,
 					title     : language.data.delete_shared_email,
 					buttons   : {
 						'No'  : function() {
@@ -477,7 +478,7 @@ sharing.getSharedEmails = function(list_id)
 							{
 								if (shareListItems.length == 0)
 								{
-									shareList.before("<p class='invitedpeople'><b>"+ language.data.currently_shared_with +":</b></br></p>");
+									shareList.before("<p class='invitedpeople'><b>"+ language.data.currently_shared_with +":</b></p>");
 								}
 								
 								for (value in response.emails)

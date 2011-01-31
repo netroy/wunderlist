@@ -1,10 +1,19 @@
 /* GENERAL DIALOG IMPROVEMENTS */
 
-.ui-dialog .ui-dialog-titlebar { padding-left:12px !important}
+.ui-dialog .ui-dialog-titlebar { padding-left:12px !important; }
+
+.ui-dialog { padding:0px !important}
+
+/* CLEARFIX FOR FLOATING BUTTONS */
+
+.clearfix:after {content: ".";display: block;clear: both;visibility: hidden;line-height: 0;height: 0}
+.clearfix {display: inline-block;}
+html[xmlns] .clearfix {display: block;}
+* html .clearfix {height: 1%;}
 
 /* LOGIN DIALOG --------------------------------------------------------------------------------------- */
 
-p.pwd { padding:2px 0px 12px 8px; clear:both; float:left; margin-top:-18px}
+p.pwd { clear:both; float:left; margin-top:-36px;}
 
 a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important; float:right}
 
@@ -27,26 +36,40 @@ overflow:visible}
 top: 50% !important; left: 50% !important; margin-left: -240px; margin-top: -130px; height: 260px; width:470px !important}
 
 .dialog-login .error, .dialog-edit-profile .error {
-text-align:left; color:#c30; height:20px; padding-top:10px; text-align:right; float:right; width:315px; margin-bottom:-4px; }
+text-align:left; color:#c30; height:20px; text-align:right; float:right; width:315px; }
+
+
 
 .dialog-edit-profile { width: 326px !important; margin-left:-163px !important; width:320px !important; margin-top:-163px}
 
 .ui-widget-content {
-background:-webkit-gradient(linear, left center, right center, from(#d0d0d0), to(#ececec)) !important;
+border-bottom:none; border-top:1px solid #fff !important;	
+background:#e3e6ed !important;
 -webkit-border-radius:5px;-webkit-box-shadow:0px 3px 16px #222}
 
-.ui-dialog-content {-webkit-gradient:none;-webkit-border-radius:0px;-webkit-box-shadow:none; min-height:0px !important}
+	.ui-widget-content p { padding:10px 0px; line-height:16px;}
 
-.ui-widget-header {color:#555 !important;border:none !important;font-size:14px !important; padding-top:12px !important;padding-left:20px !important;background:none !important;text-shadow:1px 1px 1px #fff}
+.ui-dialog-content {-webkit-gradient:none;-webkit-border-radius:0px;-webkit-box-shadow:none; min-height:0px !important; padding: 0em 1em !important;}
+
+.ui-widget-header {
+background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f7), to(#e3e6ed)) !important; 
+border:none !important;	border-bottom:1px solid #b7bdcb !important; color:#4b4e54 !important;font-size:14px !important; padding:12px 18px !important; text-shadow:0px 1px 1px #fff}
+
+.ui-dialog-content .custom-dialog-headline {
+	background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f7), to(#e3e6ed)) !important; 
+	border:none !important;	border-bottom:1px solid #b7bdcb !important; color:#4b4e54 !important;font-size:14px !important; padding:12px 0px !important; padding-left:13px !important ;text-shadow:0px 1px 1px #fff;
+	-webkit-box-shadow:0px 1px 1px #fff; font-weight:bold; margin-left:-13px; margin-right:-13px;}
 
 .dialog-login .ui-dialog-titlebar-close {display: none !important}
 
 .ui-dialog-titlebar-close { top:20px !important; right:8px !important}
 
 .ui-dialog-titlebar-close:hover,  .ui-datepicker-prev:hover, .ui-datepicker-next:hover  {
-border:1px solid #ddd !important; background:#ccc; -webkit-border-radius:3px; cursor:pointer}
+border:1px solid #b7bdcb !important; background:#fff !important; -webkit-border-radius:3px; cursor:pointer}
 
-.wunderlistlogo {width:139px;height:111px;background:url(/images/wunderlisticon.png); float:left; margin-top:-6px;margin-left:-10px}
+.wunderlistlogo {width:139px;height:111px;background:url(/images/wunderlisticon.png); float:left; margin-left:-10px; margin-top:24px;}
+
+.dialog-login .wunderlistlogo {margin-top:18px !important;}
 
 .input-login {padding:8px;float:right;display:block;width:282px;margin-top:8px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
@@ -82,11 +105,9 @@ background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32
 .dialog-social input {margin-left:0px; margin-right:0px}
 .dialog-social input.input-social {float:left; width:250px}
 
-.dialog-social input.button-social {
-float:right; height:32px; width:70px; margin-left:7px;
-font-weight:bold; margin-bottom:10px !important}
+.dialog-social input.button-social {float:right; height:32px; width:70px; margin-left:7px;font-weight:bold; margin-bottom:10px !important}
 
-p.socialmedia { clear:both; border-top:2px solid #ccc; padding-top:10px; padding-left:5px}
+p.socialmedia { clear:both; border-top:1px solid #b7bdcb !important; -webkit-box-shadow:inset 0px 1px 1px #fff; margin:0px -13px; padding:12px;}
 
 p.socialmedia span { font-size:14px; font-weight:bold; display:block;margin-top:7px;margin-bottom:7px}
 
@@ -130,9 +151,9 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 
 	.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
 	
-	.dialog-sharelist p.invitedpeople { margin-bottom:10px; margin-top:80px}
+	.dialog-sharelist p.invitedpeople { margin-top:-10px;}
 	
-	.dialog-sharelist p.small {
+	.ui-dialog p.small {
 	text-shadow: #fff 0px 1px 2px;
 	padding:6px;
 	-webkit-border-radius:3px;
@@ -177,40 +198,24 @@ color:#777;
 margin-right:5px;
 margin-bottom:5px}
 
-/* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
-
-.radios p {
-color:#666;
-padding:4px;
-margin-bottom:4px;
--webkit-border-radius:3px}
-
-.radios p.selected { color:#fff; background:#29aa38; -webkit-box-shadow: 1px 0px 1px #333; }
-
-.radios p span { margin:0px 3px; }
-
 /* CREDITS DIALOG --------------------------------------------------------------------------------------- */
 
 .dialog-credits {
-width:540px !important; margin-left:-270px; height: 340px !important; margin-top:-170px;
-top:50% !important; left:50% !important; }
-.dialog-credits p { padding:0px 8px 8px 8px; }
+width:540px !important; margin-left:-270px; height: 230px !important; margin-top:-115px; top:50% !important; left:50% !important }
 
 /* CONFIRM DIALOG --------------------------------------------------------------------------------------- */
 
 .ui-dialog-buttonpane {
-border:none;
+border-top:none !important;
+margin-top:0px !important;
 -webkit-border-radius:0px;
 background:none !important;
 border:none;
 -webkit-box-shadow:none}
 
-.dialog-delete-list, .dialog-delete-task {
-height:110px}
+.dialog-delete-list, .dialog-delete-task {height:110px}
 
-.dialog-delete-task {
-	width: 330px !important;
-}
+.dialog-delete-task {width: 330px !important;}
 
 .dialog-delete-list .ui-widget-header, .dialog-delete-task .ui-widget-header { font-size:13px !important}
 

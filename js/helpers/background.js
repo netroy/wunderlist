@@ -41,7 +41,7 @@ background.init = function() {
 	$('#backgroundList').hide();
 
 	$('a.activebackground').bind('click', function() {
-		$('#backgroundList').fadeToggle(200);
+		$('#backgroundList').fadeToggle(100);
 	});
 
 	$.each(background.list, function(bgClass) {
