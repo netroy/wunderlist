@@ -53,7 +53,7 @@ sharing.init = function()
 	sharing.clickedSharingButton = false;
 
 	// Called on pressed sharing button
-	$('#macmenu a.sharebutton').live('click', function()
+	$('#listfunctions a.list-share').live('click', function()
 	{
 		if (Titanium.Network.online == true)
 		{

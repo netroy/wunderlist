@@ -15,7 +15,7 @@ var printShortcutListener = 0;
 var syncShortcutListener = 0;
 
 // Tooltip
-var tooltip = function() {
+tooltip = function() {
 	$("a.more, span.more, #listfunctions a").live("mouseenter", function(e) {
 		var content = $(this).attr("rel");
 		var offset = $(this).offset();
@@ -88,15 +88,15 @@ function rotate(degree) {
 startSyncAnimation = function() {
 
 	$('#tooltip').remove();
-	$("#bottom-sidebar").append("<p id='sync_tooltip'>" + language.data.sync + "</p>");
-	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(16) + "px").fadeIn("fast");
+	$("body").append("<p id='sync_tooltip'>" + language.data.sync + "</p>");
+	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(7) + "px").fadeIn("fast");
 
     rotate(0);
 }
 
 stopSyncAnimation = function() {
 
-	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(16) + "px").delay("1000").fadeOut("fast", function() {
+	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(7) + "px").delay("1000").fadeOut("fast", function() {
 		$(this).remove();
 		clearTimeout(rotationTimer);
 	});
