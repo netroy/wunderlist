@@ -25,7 +25,7 @@ var listShortcutListener = 0;
  */
 function bindListAddMode()
 {
-	$('#addlistitem').live('click', function() {
+	$('h3 .add').live('click', function() {
 		addList();
 		makeListsSortable();
     });
