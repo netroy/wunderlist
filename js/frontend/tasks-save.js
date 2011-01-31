@@ -57,7 +57,7 @@ function filterLinks(spanElement, text)
 }
 
 /**
- * Cancel saving the task
+
  *
  * @author Dennis Schneider, Christian Reber, Daniel Marschner
  */

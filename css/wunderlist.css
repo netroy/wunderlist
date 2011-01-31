@@ -254,9 +254,20 @@ width:100%}
 
 #right {float:right; padding:8px 40px 8px 0px}
 
+#right #backgroundList {
+background:url(/images/bottombar.jpg);
+width:74px;
+position:absolute;
+bottom:44px;
+right:10px;
+padding:4px;
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+border-radius:3px;}
+
 #left {float: left; padding:9px; padding-right:0px; padding-left:40px}
 
-#left a, #credits {
+#left a {
 padding:0px 10px;
 text-shadow: #333 0px 1px 2px;
 background:url(/images/bottombar_menu.png) repeat-x;
@@ -270,15 +281,11 @@ cursor:pointer;
 height:16px;
 font-size:11px}
 
-#credits {margin-right:6px}
-
 #left .roundedleft {border-left:none;-webkit-border-radius: 10px 0px 0px 10px}
 
 #left .roundedright {-webkit-border-radius: 0px 10px 10px 0px;border-right:none;margin-right:12px}
 
-#credits {-webkit-border-radius:5px;float:right}
-
-#left a:hover, #left a.active, #credits:hover {
+#left a:hover, #left a.active {
 color:#fff;
 height:15px;
 border-bottom:1px solid #126faa;
@@ -333,8 +340,6 @@ bottom:10px}
 #bottombar #right a.bgseven { background:url(/images/icon_white.png)}
 #bottombar #right a.bgeight { background:url(/images/icon_monster.png)}
 #bottombar #right a.bgnine { background:url(/images/icon_darkwood.png)}
-
-span#credits { float:right; font-weight: bold; padding:2px 5px; cursor:pointer}
 
 /* CONTENT --------------------------------------------------------------------------------- */
 
