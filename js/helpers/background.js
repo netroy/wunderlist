@@ -36,7 +36,7 @@ background.list = {
 background.init = function() {
 	var bgCounter = 1;
 		
-	$('#right').prepend('<a class="activebackground" style="background:#000"></a>');
+	$('#right').prepend('<a class="activebackground"></a>');
 
 	$('#backgroundList').hide();
 

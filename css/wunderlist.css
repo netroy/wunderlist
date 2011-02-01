@@ -325,12 +325,23 @@ bottom:10px}
 background:rgba(50,50,50,0.8);
 width:70px;
 position:absolute;
-bottom:44px;
+bottom:46px;
 right:17px;
 padding:5px 0px 0px 5px;
 -moz-border-radius:3px;
 -webkit-border-radius:3px;
 border-radius:3px;}
+
+	#right #backgroundList .arrow {
+    border-color: rgba(50,50,50,0.8) transparent transparent transparent;
+    border-style:solid;
+	position:absolute;
+	left:32px;
+	bottom:-10px;
+	bottom:24;
+    border-width:5px;
+    width:0;
+    height:0}
 
 #bottombar #right a {width:18px; height:19px; float:right; display:block; opacity:0.5; text-indent: -9999px; margin-right:5px;}
 
@@ -468,7 +479,7 @@ background:#c30;
 #content span.delete {background:url(/icons/delete_active.png); opacity:0.5; float:right; display: none; cursor:pointer; height:16px}
 #content span.delete:hover {opacity:1.0}
 
-#content span.note {position:absolute;right:19px;top:7px;background:url(/icons/note.png); float:right; display:none; cursor:pointer, height:16px; width:16px; margin-top:-1px}
+#content span.note {position:absolute; right:19px; top:6px; background:url(/icons/note.png); float:right; display:none; cursor:pointer; height:16px; width:16px}
 
 #content span.note:hover {background:url(/icons/noteh.png);}
 

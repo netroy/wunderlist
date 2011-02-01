@@ -61,9 +61,17 @@ $(function()
 
 		var note_text = notes.note.val();
 		var task_id   = notes.note.attr('id');
-
-		wunderlist.saveNoteForTask(html.convertStringForDB(note_text), task_id);
 		
+		if(notes.note.val().length == 0) 
+		{
+			notes.currentNoteIcon.removeClass("activenote");
+		}
+		else {			
+			notes.currentNoteIcon.addClass("activenote");
+		}
+				
+		wunderlist.saveNoteForTask(html.convertStringForDB(note_text), task_id);
+
 		dialogs.closeDialog(notes.notesDialog);
 
 		timer.resume();

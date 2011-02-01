@@ -11,11 +11,11 @@ html[xmlns] .clearfix {display: block;}
 
 /* LOGIN DIALOG --------------------------------------------------------------------------------------- */
 
-p.pwd { clear:both; float:left; margin-top:-36px;}
+p.pwd { position:absolute; bottom:4px; left:12px;}
 
 a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important; float:right}
 
-#newsletter-signup { float: right; width: 300px; margin-top: 8px; }
+#newsletter-signup { float: right; width: 300px; margin-top: 14px; margin-bottom:6px; }
 #newsletter-signup input { float: right; margin-right: 5px; }
 #newsletter-signup span { float: right; }
 
@@ -63,7 +63,7 @@ border:none !important;	border-bottom:1px solid #b7bdcb !important; color:#4b4e5
 .ui-dialog-titlebar-close:hover,  .ui-datepicker-prev:hover, .ui-datepicker-next:hover  {
 border:1px solid #b7bdcb !important; background:#fff !important; -webkit-border-radius:3px; cursor:pointer}
 
-.wunderlistlogo {width:139px;height:111px;background:url(/images/wunderlisticon.png); float:left; margin-left:-10px; margin-top:24px;}
+.wunderlistlogo {width:128px;height:122px;background:url(/images/wunderlisticon.png) no-repeat; float:left; margin-left:0px; margin-top:30px;}
 
 .dialog-login .wunderlistlogo {margin-top:18px !important;}
 
@@ -92,17 +92,19 @@ background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32
 
 /* NOTES DIALOG ---------------------------------------------------------------------------- */
 
-.dialog-notes { width:80% !important; height:80% !important; margin:10% !important; background: #ece5a1 !important;}
+.dialog-notes { width:80% !important; height:80% !important; margin:10% !important; background: #fefdba !important;}
 
 .dialog-notes .ui-dialog-content {padding:0px !important; position:static !important}
 
 .dialog-notes textarea {border:none; background:none; padding:2%; width:96%; position:absolute; bottom:52px;top:50px; color:#333}
 
-.notes_top {background:url(/images/notes_top.png); height:11px}
+::selection {background:#000 !important;}
+
+.notes_top {background:url(/images/notes_top.png); height:10px}
 
 .notes_buttons { textalign:right; position:absolute; bottom:20px; right:12px}
 
-.notes_bottom {background:url(/images/notes_bottom.png); height:8px; position:absolute; bottom:0px; width:100%;}
+.notes_bottom {background:url(/images/notes_bottom.png); height:6px; position:absolute; bottom:0px; width:100%;}
 
 /* SOCIAL MEDIA SHARE DIALOG ---------------------------------------------------------------------------- */
 
@@ -132,8 +134,6 @@ p.socialmedia span.icons a.digg { background:url(/icons/digg.png)}
 width: 323px; height:50px; padding:10px; margin-top:6px; margin-bottom:-6px;
 -webkit-box-shadow:0px 1px 1px #fff;-webkit-border-radius:5px;
 border:1px solid #9c9ea4; font-size:11px; color:#777}
-
-#invitebox { margin-top:-12px}
 
 /* SHARE LIST DIALOG ------------------------------------------------------------------------------------ */
 
