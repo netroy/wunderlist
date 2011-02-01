@@ -9,156 +9,80 @@
 var notes = notes || {};
 
 /**
- * Hide all the note elements
+ * Open Notes Dialog
  *
- * @author Dennis Schneider
+ * @author Marvin Labod
  */
-notes.hideNoteElements = function()
+notes.openNotesDialog = function()
 {
-	notes.listItems.toggle();
-	$('div#note a#cancel-note').hide();
-	$('div#note a#save-note').hide();
-	$('#note textarea').hide();
-	notes.cellotape.hide();
-}
-
-/**
- * Show all the note elements
- *
- * @author Dennis Schneider
- */
-notes.showNoteElements = function()
-{
-	notes.listItems.hide();
-	notes.note.show();
-	notes.cellotape.show();
-	$('div#note a#cancel-note').show();
-	$('div#note a#save-note').show();
+	if(notes.notesDialog == undefined)
+	{
+		notes.notesDialog = dialogs.generateDialog('Notes', html.generateNotesDialogHTML(), 'dialog-notes')
+	}
+	dialogs.openDialog(notes.notesDialog);
 }
 
 // Loaded on start
 $(function()
 {
-	notes.noteIcons = $('ul#list li span.note');
-	notes.listItems = $('div#lists');
-	notes.note      = $('#note textarea');
-	notes.cellotape = $('#cellotape');
-
-	// Hide Note initially
-	notes.note.hide();
-	notes.cellotape.hide();
 
 	// Click on note icon
 	$('ul#list li span.note').live('click', function()
 	{
-		// If the textarea is displayed right now
-		if($('#note textarea').css('display') == 'block')
-		{
-			// If the note icon was clicked before and the last clicked note icon is the same as the icon click right now
-			if(notes.currentNoteIcon != undefined && notes.currentNoteIcon.parent().attr('id') == $(this).parent().attr('id'))
-			{
-				$('div#note a#save-note').click();
-				return false;
-			}
-		}
-
-		// If there is a note opened and not saved and another note is clicked, just close it by canceling
-		if(notes.currentNoteIcon != undefined)
-		{
-			$('div#note a#save-note').click();
-		}
-
-		// If the sidebar is not opened open it
-		if(sidebar_opened_status == "false")
-		{
-			$(".togglesidebar").css("-webkit-transform","rotate(0deg)");
-			$("#sidebar").stop().animate({right: '0'});
-			$("#lists").stop().animate({right: '0'});
-			$("#content").stop().animate({right: '259'});
-			sidebar_opened_status = "true";
-		}
+		timer.pause();
+		
+		notes.openNotesDialog();
 		
 		notes.noteIcons       = $('ul#list li span.note');
-		notes.listItems       = $('div#lists');
-		notes.note            = $('#note textarea');
+		notes.note            = $('.dialog-notes textarea');
 		notes.cellotape       = $('#cellotape');
 		notes.currentNoteIcon = $(this);
+		notes.currentNoteTitle = $(this).parent().children(".description").text();
 
+		notes.note.focus();
+		
 		var task_id = notes.currentNoteIcon.parent().attr('id');
 		notes.note.attr('id', task_id);
 		var noteContent = wunderlist.getNoteForTask(task_id);
+		
+		// Getting Content Of Note
+		$(".notes_buffer textarea").val(html.replace_http_link(unescape(noteContent)));
+		
+		// Getting Task Title Of Note
+		$(".dialog-notes .ui-dialog-title").text(notes.currentNoteTitle);
 
-		notes.note.val(html.replace_http_link(unescape(noteContent)));
-		notes.showNoteElements();
-
-		notes.note.focus();
-
-		$(this).addClass("activenote");
 	});
 
 	// Save the note
-	$('div#note a#save-note').live('click', function()
+	$('.dialog-notes input#save-note').live('click', function()
 	{
 		notes.noteIcons = $('ul#list li span.note');
-		notes.listItems = $('div#lists');
-		notes.note      = $('#note textarea');
+		notes.note      = $('.dialog-notes textarea');
 
 		var note_text = notes.note.val();
 		var task_id   = notes.note.attr('id');
 
-		if(note_text == '')
-		{
-			notes.currentNoteIcon.removeClass('activenote');
-		}
-
 		wunderlist.saveNoteForTask(html.convertStringForDB(note_text), task_id);
-
-		notes.hideNoteElements();
+		
+		dialogs.closeDialog(notes.notesDialog);
 
 		timer.resume();
 	});
 
 	// Cancel the note
-	$('div#note a#cancel-note').live('click', function()
+	$('.dialog-notes input#cancel-note').live('click', function()
 	{
-		if (typeof notes.currentNoteIcon == 'object' && $('#note textarea').css('display') == 'block')
-		{
-			notes.noteIcons = $('ul#list li span.note');
-			notes.listItems = $('div#lists');
-			notes.note      = $('#note textarea');
+		notes.noteIcons = $('ul#list li span.note');
+		notes.note      = $('.dialog-notes textarea');
 
-			var task_id     = notes.note.attr('id');
-			var noteContent = wunderlist.getNoteForTask(task_id);
-			var note_text   = notes.note.val();
+		var task_id     = notes.note.attr('id');
+		var noteContent = wunderlist.getNoteForTask(task_id);
+		var note_text   = notes.note.val();
 
-			if(noteContent == '')
-			{
-				notes.currentNoteIcon.removeClass('activenote');
-			}
+		notes.note.val(noteContent);
+		
+	    dialogs.closeDialog(notes.notesDialog);
 
-			notes.note.val(noteContent);
-			notes.hideNoteElements();
-
-			timer.resume();
-		}
-	});
-
-	$('#note textarea').live('keyup', function(e)
-	{
-		timer.pause();
-	});
-
-
-	var saveNoteCommand = false;
-
-	// Save the note with ctrl / command + return key
-	$(document).bind('keydown', shortcutkey + '+return', function (evt)
-	{
-		if(($('#note textarea:focus').length == 1 || $('#note textarea').css('display') == 'block') && saveNoteCommand == false)
-		{
-			saveNoteCommand = true;
-			$('div#note a#save-note').click();
-			setTimeout(function() {saveNoteCommand = false}, 100);
-		}
+		timer.resume();
 	});
 });

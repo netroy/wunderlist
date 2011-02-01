@@ -1,6 +1,21 @@
 var html = html || {};
 
 /**
+ * Generates the HTML structure for the settings dialog
+ *
+ * @author Marvin Labod
+ */
+html.generateNotesDialogHTML = function()
+{
+    var html_code = '<div class="notes_top"></div>' +
+			'<div class="notes_buffer"><textarea></textarea></div>' +
+    		'<div class="notes_buttons"><input id="cancel-note" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="save-note" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></div>' +
+			'<div class="notes_bottom"></div>';
+
+	return html_code;
+}
+
+/**
  * Returns the HTML structure of the login/register Dialog
  *
  * @author Marvin Labod
@@ -191,8 +206,7 @@ html.generateSettingsHTML = function()
 {
     var html_code = '<div id="task-delete-radios" class="radios">' +
        		'<p><b>' + language.data.delete_task_prompt + '</b></p>' +
-			'<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /> <span>' + language.data.yes + '</span></p>' +
-			'<p><input id="task_delete_0" type="radio" name="taskDelete" value="0" /> <span>' + language.data.no + '</span></p>' +
+			'<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /> <span>' + language.data.yes + '</span> &nbsp; &nbsp; &nbsp; <input id="task_delete_0" type="radio" name="taskDelete" value="0" /> <span>' + language.data.no + '</span></p>' +
  			'</div>' +
     		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ language.data.save_changes +'" /></p>';
 	return html_code;

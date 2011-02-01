@@ -488,6 +488,7 @@ account.editProfile = function() {
 			.dialog({
 				autoOpen: false,
 				draggable: false,
+				resizable: false,
 				modal: true,
 				dialogClass: 'dialog-edit-profile',
 				title: language.data.edit_profile_title,

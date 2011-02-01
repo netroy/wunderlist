@@ -1,7 +1,5 @@
 /* GENERAL DIALOG IMPROVEMENTS */
 
-.ui-dialog .ui-dialog-titlebar { padding-left:12px !important; }
-
 .ui-dialog { padding:0px !important}
 
 /* CLEARFIX FOR FLOATING BUTTONS */
@@ -52,7 +50,7 @@ background:#e3e6ed !important;
 .ui-dialog-content {-webkit-gradient:none;-webkit-border-radius:0px;-webkit-box-shadow:none; min-height:0px !important; padding: 0em 1em !important;}
 
 .ui-widget-header {
-background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f7), to(#e3e6ed)) !important; 
+background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f7), to(#e3e6ed)) !important;
 border:none !important;	border-bottom:1px solid #b7bdcb !important; color:#4b4e54 !important;font-size:14px !important; padding:12px 18px !important; text-shadow:0px 1px 1px #fff}
 
 .ui-dialog-content .custom-dialog-headline {
@@ -74,7 +72,7 @@ border:1px solid #b7bdcb !important; background:#fff !important; -webkit-border-
 .input-login {padding:8px;float:right;display:block;width:282px;margin-top:8px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
 
-.input-normal {padding:8px;display:block;width:282px;margin-top:12px !important;-webkit-box-shadow:0px 1px 1px #fff;
+.input-normal {padding:2%; width:96%; margin-top:12px !important;-webkit-box-shadow:0px 1px 1px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
 
 .input-button, button {background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ececec)) !important;
@@ -94,11 +92,23 @@ background:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#13
 .button-login:hover {
 background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32a3f0)) !important}
 
+/* NOTES DIALOG ---------------------------------------------------------------------------- */
+
+.dialog-notes { width:80% !important; height:80% !important; margin:10% !important; background: #ece5a1 !important;}
+
+.dialog-notes .ui-dialog-content {padding:0px !important; position:static !important}
+
+.dialog-notes textarea {border:none; background:none; padding:2%; width:96%; position:absolute; bottom:52px;top:50px; color:#333}
+
+.notes_top {background:url(/images/notes_top.png); height:11px}
+
+.notes_buttons { textalign:right; position:absolute; bottom:20px; right:12px}
+
+.notes_bottom {background:url(/images/notes_bottom.png); height:8px; position:absolute; bottom:0px; width:100%;}
+
 /* SOCIAL MEDIA SHARE DIALOG ---------------------------------------------------------------------------- */
 
 .dialog-social, .dialog-sharelist { top: 50% !important; left: 50% !important; margin-left: -250px; margin-top: -150px; height: 300px; width:500px !important}
-
-.dialog-social .ui-dialog-titlebar { background:none !important}
 
 .dialog-social .invitefriends { font-size:16px; font-weight:bold; margin-top:12px; color:#333}
 
@@ -114,7 +124,7 @@ p.socialmedia span { font-size:14px; font-weight:bold; display:block;margin-top:
 p.socialmedia span.icons a, .followus a {
 display:block; width:32px; height:32px; float:right; margin-left:14px;-webkit-box-shadow:0px 1px 3px #999;-webkit-border-radius:5px}
 
-p.socialmedia span.icons a:hover , .followus a:hover { -webkit-box-shadow:0px 1px 3px #666}
+p.socialmedia span.icons a:hover , .followus a:hover { -webkit-box-shadow:0px 2px 3px #444}
 p.socialmedia span.icons a.facebook,  .followfacebook  { background:url(/icons/facebook.png)}
 p.socialmedia span.icons a.twitter, .followtwitter { background:url(/icons/twitter.png)}
 p.socialmedia span.icons a.stumbleupon { background:url(/icons/stumbleupon.png)}
