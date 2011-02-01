@@ -468,13 +468,13 @@ background:#c30;
 #content span.delete {background:url(/icons/delete_active.png); opacity:0.5; float:right; display: none; cursor:pointer; height:16px}
 #content span.delete:hover {opacity:1.0}
 
-#content span.note {position:absolute;right:19px;top:7px;background:url(/icons/note.png); float:right; display:none; cursor:pointer, height:16px; width:16px; opacity:0.5; margin-top:-1px}
+#content span.note {position:absolute;right:19px;top:7px;background:url(/icons/note.png); float:right; display:none; cursor:pointer, height:16px; width:16px; margin-top:-1px}
 
-#content span.note:hover {opacity:1.0}
+#content span.note:hover {background:url(/icons/noteh.png);}
 
 #content .mainlist li:hover span.note {display:block}
 
-#content span.activenote {display:block}
+#content span.activenote {display:block; background:url(/icons/noteh.png);}
 
 #content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/icons/important.png);cursor:pointer}
 #content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/icons/star.png) no-repeat;cursor:pointer}

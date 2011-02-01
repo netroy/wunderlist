@@ -36,8 +36,6 @@ top: 50% !important; left: 50% !important; margin-left: -240px; margin-top: -130
 .dialog-login .error, .dialog-edit-profile .error {
 text-align:left; color:#c30; height:20px; text-align:right; float:right; width:315px; }
 
-
-
 .dialog-edit-profile { width: 326px !important; margin-left:-163px !important; width:320px !important; margin-top:-163px}
 
 .ui-widget-content {
