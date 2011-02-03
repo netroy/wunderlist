@@ -50,7 +50,6 @@ background.init = function() {
 		$('a.' + bgClass).bind('click', function() {
 			
 			// set active menu switch
-						
 			var bgName = background.list[bgClass].bgPath.substring(12,background.list[bgClass].bgPath.length-4);			
 			$(".activebackground").css("background","url('images/icon_" + bgName + ".png')");
 			

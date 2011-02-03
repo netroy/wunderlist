@@ -256,6 +256,14 @@ width:100%}
 
 #left {float: left; padding:9px; padding-right:0px; padding-left:40px}
 
+#left .loggedinas {
+min-width:140px;
+text-align:center;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+border-radius:10px;
+margin-right:6px}
+
 #left a {
 padding:0px 10px;
 text-shadow: #333 0px 1px 2px;
@@ -343,9 +351,9 @@ border-radius:3px;}
     width:0;
     height:0}
 
-#bottombar #right a {width:18px; height:19px; float:right; display:block; opacity:0.5; text-indent: -9999px; margin-right:5px;}
+#bottombar #right a {width:18px; height:19px; float:right; display:block; opacity:0.5; text-indent: -9999px; margin-right:5px}
 
-#right #backgroundList a {margin-bottom:5px;}
+#right #backgroundList a {margin-bottom:5px}
 
 #bottombar #right a:hover, #bottombar #right a.active { cursor:pointer; opacity:1.0}
 
@@ -552,8 +560,8 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 #cloudtip { top:24px; right:-10px; width:288px;}
 
-#cloudtip span.link { color: #fff; float:left; display:block; margin-top:1px;}
-#cloudtip span.link:hover { text-decoration: underline; cursor: pointer;}
+#cloudtip span.link { color: #fff; float:left; display:block; margin-top:1px}
+#cloudtip span.link:hover { text-decoration: underline; cursor: pointer}
 
 #cloudtip span.copy { background:rgba(255,255,255,0.2); -webkit-border-radius:14px; padding:1px 5px 0px 5px;float:right; cursor:pointer; display:block; font-size:9px;margin-top:1px; margin-right:-2px;}
 #cloudtip span.copy:hover { background:rgba(255,255,255,0.4)}

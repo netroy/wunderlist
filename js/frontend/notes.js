@@ -35,7 +35,6 @@ $(function()
 		
 		notes.noteIcons       = $('ul#list li span.note');
 		notes.note            = $('.dialog-notes textarea');
-		notes.cellotape       = $('#cellotape');
 		notes.currentNoteIcon = $(this);
 		notes.currentNoteTitle = $(this).parent().children(".description").text();
 
