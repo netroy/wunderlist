@@ -91,7 +91,7 @@ $(function() {
 	});
 
 	// Shortcut Bind Command (or Ctrl) + N - Add new task
-	$('document').bind('keydown', shortcutkey + '+n', function (evt) {
+	$(document).bind('keydown', shortcutkey + '+n', function (evt) {
 		cancelSaveTask();
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn() == true)
@@ -99,7 +99,7 @@ $(function() {
 	});
 
 	// Shortcut Bind Command (or Ctrl) + T - Add new task
-	$('document').bind('keydown', shortcutkey + '+t', function (evt) {
+	$(document).bind('keydown', shortcutkey + '+t', function (evt) {
 		cancelSaveTask();
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn() == true)
