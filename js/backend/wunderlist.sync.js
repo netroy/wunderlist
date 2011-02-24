@@ -20,7 +20,6 @@ $(function()
 sync.init = function()
 {
 	this.syncDomain 		= 'https://sync.wunderlist.net/1.1.0';
-	this.syncUrl			= this.syncDomain;
 	this.alreadyRegistered 	= false;
 	this.timeOutInterval 	= '';
 	this.isSyncing			= false;
