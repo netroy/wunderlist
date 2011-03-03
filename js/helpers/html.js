@@ -387,17 +387,24 @@ html.make_timestamp_to_string = function() {
 		var today = new Date();
 
 		// Remove red color everytime
-		$(this).removeClass('red');
+		$(this).removeClass('red');	
 
+		if (timestamp == 1299106800)
+		{
+			console.log((selected_date.getDate() <= (today.getDate() - 2) && selected_date.getMonth() <= today.getMonth()));
+			console.log(selected_date.getMonth() <= today.getMonth());
+			console.log(selected_date.getFullYear() <= today.getFullYear());
+		}
+		
 		// If older then yesterday, mark red and show the date
-		if((selected_date.getDate() < today.getDate() - 2 && selected_date.getMonth() <= today.getMonth() && selected_date.getMonth() == today.getMonth()) || selected_date.getFullYear() < today.getFullYear()) {
+		if((selected_date.getDate() <= (today.getDate() - 2)) && (selected_date.getMonth() <= today.getMonth()) || (selected_date.getFullYear() < today.getFullYear())) {
 			$(this).addClass('red');
 			html.showDateByLanguage(this, day, month, year);
 		}
 		// If yesterday, mark red and show "yesterday"
-		else if((selected_date.getDate() < today.getDate() && selected_date.getDate() > today.getDate() - 2) && selected_date.getMonth() == today.getMonth() && selected_date.getFullYear() == today.getFullYear() ) {
-			$(this).html(language.data.yesterday);
+		else if((selected_date.getDate() < today.getDate()) && (selected_date.getDate() > today.getDate() - 2) && (selected_date.getMonth() == today.getMonth()) && (selected_date.getFullYear() == today.getFullYear())) {
 			$(this).addClass('red');
+			$(this).html(language.data.yesterday);
 		}
 		// or today
 		else if(selected_date.getDate() == today.getDate() && selected_date.getMonth() == today.getMonth() && selected_date.getFullYear() == today.getFullYear() ) {

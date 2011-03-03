@@ -25,6 +25,7 @@ if (Titanium.App.Properties.hasProperty('first_run') == false)
 	Titanium.App.Properties.setString('user_width', '760');
 	Titanium.App.Properties.setString('runtime', '1');
 	Titanium.App.Properties.setString('dateformat', language.code);
+	Titanium.App.Properties.setString('task_delete', '1');
 	Titanium.App.Properties.setString('invited', invited.toString());
 }
 else

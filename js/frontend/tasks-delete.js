@@ -90,7 +90,7 @@ $(function() {
 
         if (deleteTaskDialog == undefined || deleteTaskDialog.dialog('isOpen') == false)
         {
-			var show_delete_task_prompt = parseInt(Titanium.App.Properties.getString('task_delete'));
+			var show_delete_task_prompt = parseInt(Titanium.App.Properties.getString('task_delete', '1'));
 
 			if (show_delete_task_prompt === 1)
 			{
