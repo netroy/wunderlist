@@ -80,6 +80,10 @@ $(document).ready(function() {
 			{
 				cancelSaveList();
 			}
+			else if(datePickerOpen == true)
+			{
+				$('.datepicker').datepicker('hide');
+			}
 			else
 			{
 				cancelSaveTask();
