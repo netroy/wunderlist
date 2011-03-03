@@ -12,7 +12,7 @@ language.availableLang = new Array(
 	'ru', 'cs', 'zh', 'tr',
 	'ar', 'se', 'ja', 'hu',
 	'ko', 'no', 'hr', 'sr',
-	'gl'
+	'gl', 'ro'
 );
 
 /**

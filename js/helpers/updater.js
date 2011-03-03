@@ -11,6 +11,9 @@ updater.init = function() {
 	
 	// Update to version 1.1.0
 	updater.to_111();
+	
+	// Update to version 1.2.0
+	//updater.to_120();
 };
 
 /**
@@ -36,5 +39,18 @@ updater.to_111 = function() {
 	{
 		Titanium.App.Properties.setString('version', Titanium.App.version.toString().split('.').join(''));	
 		wunderlist.update_111();	
+	}
+}
+
+/**
+ * Check the version for doing the update to version 1.2.0
+ *
+ * @author Daniel Marschner
+ */
+updater.to_120 = function() {
+	if (Titanium.App.Properties.hasProperty('version') == false || parseInt(Titanium.App.Properties.getString('version')) < 120)
+	{
+		Titanium.App.Properties.setString('version', Titanium.App.version.toString().split('.').join(''));	
+		wunderlist.update_120();
 	}
 }

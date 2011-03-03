@@ -19,7 +19,7 @@ $(function()
  */
 sync.init = function()
 {
-	this.syncDomain 		= 'https://sync.wunderlist.net/1.1.0';
+	this.syncDomain 		= 'https://sync.wunderlist.net/1.2.0';
 	this.syncUrl			= this.syncDomain;
 	this.alreadyRegistered 	= false;
 	this.timeOutInterval 	= '';
@@ -141,7 +141,9 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
     			startSyncAnimation();
 			},
 			success: function(response_data, text, xhrobject)
-			{
+			{			
+				console.log(response_data);
+			
 				if(response_data != '' && text != '' && xhrobject != undefined)
 				{
 					switchSyncSymbol(xhrobject.status);
@@ -187,8 +189,9 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 					switchSyncSymbol(0);
 				}
 			},
-			error: function(xhrobject)
+			error: function(response_data)
 			{
+				console.log(response_data);
 				dialogs.showErrorDialog(language.data.sync_error);
 				switchSyncSymbol(0);
 				sync.isSyncing = false;

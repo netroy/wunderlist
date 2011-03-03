@@ -75,6 +75,19 @@ wunderlist.update_111 = function() {
 };
 
 /**
+ * Is needed for the new update (push) 17.02.2011
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.update_120 = function() {
+	try {
+		this.database.execute('ALTER TABLE "main"."tasks" ADD COLUMN "push" INTEGER DEFAULT 0');
+		this.database.execute('ALTER TABLE "main"."tasks" ADD COLUMN "push_ts" INTEGER DEFAULT 0');		
+	}
+	catch(err) {}
+};
+
+/**
  * Creates the standard database calls
  *
  * @author Daniel Marschner, Christian Reber, Dennis Schneider
