@@ -171,7 +171,7 @@ $(document).ready(function() {
 	 *
 	 * @author Christian Reber,  Daniel Marschner, Dennis Schneider
 	 */
-	$('input.deine_mudda').bind('keydown', shortcutkey + '+p', function (evt) {
+	$(document).bind('keydown', shortcutkey + '+p', function (evt) {
 		if(printShortcutListener == 0)
 		{
 			share.print();
@@ -187,7 +187,7 @@ $(document).ready(function() {
 	 *
 	 * @author Daniel Marschner
 	 */
-	$('input.deine_mudda').bind('keydown', shortcutkey + '+s', function (evt) {
+	$(document).bind('keydown', shortcutkey + '+s', function (evt) {
 		cancelSaveTask();
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn() == true)
@@ -224,7 +224,7 @@ $(document).ready(function() {
 	account.showInviteDialog();
 
 	// For removing select all
-	$('input.deine_mudda').bind('keydown', shortcutkey + '+a', function (evt) {
+	$(document).bind('keydown', shortcutkey + '+a', function (evt) {
 		if ($('#note textarea:focus').length == 0 && $('input:focus').length == 0)
 			return false;
 	});
