@@ -235,6 +235,7 @@ sharing.deleteSharedEmail = function(list_id, deletedElement)
 		url: sharing.deleteSharedEmailUrl,
 		type: 'POST',
 		data: data,
+		timeout: config.REQUEST_TIMEOUT,
 		beforeSend: function()
 		{
 			// @TODO Show loading indicator on invitation dialog
@@ -350,6 +351,7 @@ sharing.sendSharedList = function(list_id)
 		url: sharing.shareUrl,
 		type: 'POST',
 		data: data,
+		timeout: config.REQUEST_TIMEOUT,
 		beforeSend: function()
 		{
 			// @TODO Show loading indicator on invitation dialog
@@ -451,6 +453,7 @@ sharing.getSharedEmails = function(list_id)
 		url: sharing.sharedEmailsUrl,
 		type: 'POST',
 		data: data,
+		timeout: config.REQUEST_TIMEOUT,
 		beforeSend: function()
 		{
 			// Show loading indicator on invitation dialog
@@ -531,6 +534,7 @@ sharing.getOwnerOfList = function(online_list_id)
 		url: sharing.getOwnerUrl,
 		type: 'POST',
 		data: data,
+		timeout: config.REQUEST_TIMEOUT,
 		beforeSend: function()
 		{
 			// Show loading indicator on invitation dialog

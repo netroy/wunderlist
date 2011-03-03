@@ -216,6 +216,7 @@ account.login = function() {
 			url: this.loginUrl,
 			type: 'POST',
 			data: data,
+			timeout: config.REQUEST_TIMEOUT,
 			success: function(response_data, text, xhrobject)
 			{
 				if (xhrobject.status == 0)
@@ -321,6 +322,7 @@ account.forgotpw = function()
 			url: this.forgotPasswordUrl,
 			type: 'POST',
 			data: data,
+			timeout: config.REQUEST_TIMEOUT,
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)
@@ -398,6 +400,7 @@ account.register = function(onlyRegister)
 			url: this.registerUrl,
 			type: 'POST',
 			data: data,
+			timeout: config.REQUEST_TIMEOUT,
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)
@@ -578,6 +581,7 @@ account.change_profile_data = function() {
 			url: this.editAccountUrl,
 			type: 'POST',
 			data: data,
+			timeout: config.REQUEST_TIMEOUT,			
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)
@@ -709,6 +713,7 @@ account.delete_account_data = function() {
 			url: this.deleteAccountUrl,
 			type: 'POST',
 			data: data,
+			timeout: config.REQUEST_TIMEOUT,			
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)
@@ -865,6 +870,7 @@ account.invite = function()
 			url: this.inviteUrl,
 			type: 'POST',
 			data: data,
+			timeout: config.REQUEST_TIMEOUT,			
 			success: function(response_data, text, xhrobject)
 			{
 				if(xhrobject.status == 0)

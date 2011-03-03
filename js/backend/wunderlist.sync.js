@@ -136,6 +136,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 			url: this.syncDomain,
 			type: 'POST',
 			data: data,
+			timeout: config.REQUEST_TIMEOUT,
 			beforeSend: function()
 			{
     			startSyncAnimation();
@@ -221,7 +222,7 @@ sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id)
 					clearInterval(sync.timeOutInterval);
 				}
 			}, 2000);
-		}, 10000);
+		}, 30000);
 	}
 }
 
