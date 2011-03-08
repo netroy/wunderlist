@@ -127,6 +127,15 @@ Menu.initializeTrayIcon = function() {
 		var trayExitItem	 = trayMenu.addItem(language.data.exit_wunderlist, Menu.exitWunderlist);
 		trayIcon.setMenu(trayMenu);
 	}
+	else
+	{
+		var wunderlistWindow = Titanium.UI.getCurrentWindow();	
+	
+		wunderlistWindow.addEventListener(Titanium.CLOSE, function(event) {
+			sync.fireSync(false, true);
+			event.stopPropagation();
+		});	
+	}
 }
 
 /**

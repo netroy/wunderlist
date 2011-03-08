@@ -194,6 +194,10 @@ account.login = function() {
 	var data         = {};
  	data['email'] 	 = $.trim($('input#login-email').val().toLowerCase());
 	data['password'] = $.md5($.trim($('input#login-password').val()));
+	data['device']   = 'desktop';
+	data['version']  = parseInt(html.str_replace('.', '', Titanium.App.version.toString()));
+	data['offset']   = timer.getTimezoneOffset();
+	data['language'] = navigator.language;	
 	
 	var newsletter = $('input#login-newsletter').attr('checked');
 	
@@ -378,7 +382,11 @@ account.register = function(onlyRegister)
 	var data = {};
 	data['email']    = $('input#login-email').val().toLowerCase();
 	data['password'] = $.md5($('input#login-password').val());
-	
+	data['device']   = 'desktop';
+	data['version']  = parseInt(html.str_replace('.', '', Titanium.App.version.toString()));
+	data['offset']   = timer.getTimezoneOffset();
+	data['language'] = navigator.language;
+
 	var newsletter = $('input#login-newsletter').attr('checked');
 	
 	if (newsletter == true)

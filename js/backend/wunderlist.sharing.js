@@ -505,6 +505,7 @@ sharing.getSharedEmails = function(list_id)
 
 						case sharing.status_codes.SHARE_NOT_SHARED:
 							sharing.openShareListDialog();
+							sharing.unshareList(list_id);
 							break;
 
 						default:

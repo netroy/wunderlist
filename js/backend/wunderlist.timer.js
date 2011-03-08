@@ -124,7 +124,15 @@ timer.resume = function()
 	return this;
 }
 
-
+/**
+ * Return the timezone offset of the current user; is needed for login and register (Stats)
+ *
+ * @author Daniel Marschner
+ */
+timer.getTimezoneOffset = function() {
+	var date = new Date();  
+	return (date.getTimezoneOffset() / 60) * (-1);
+}
 
 // timer.midnight = function()
 // {
