@@ -55,6 +55,7 @@ Menu.initialize = function() {
 	languageMenuItem.addItem('Српска',     function() {Menu.switch_language('sr')});
 	languageMenuItem.addItem('Galego',     function() {Menu.switch_language('gl')});
 	languageMenuItem.addItem('Română',     function() {Menu.switch_language('ro')});
+	languageMenuItem.addItem('Português (Brazilian)',     function() {Menu.switch_language('pt-br')});
 
 	languageMenuItem.addSeparatorItem();
 	languageMenuItem.addItem(language.data.switchdateformat, openSwitchDateFormatDialog);
