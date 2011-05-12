@@ -1,232 +1,504 @@
+/* JQUERY UI STUFF */
+
+.ui-datepicker { width: 20em; -webkit-box-shadow:0px 3px 16px #222 !important}
+.ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 12px; width: 18px; height: 19px; background:#000;}
+.ui-datepicker .ui-datepicker-prev:hover, .ui-datepicker .ui-datepicker-next:hover {cursor:pointer}
+.ui-datepicker .ui-datepicker-prev { background: url(/images/datenav.png); left:10px; }
+.ui-datepicker .ui-datepicker-next { background: url(/images/datenav.png); right:10px; background-position:-18px 0px}
+.ui-datepicker .ui-datepicker-next:hover {background-position:-18px -19px} 
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {display: none; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
+
+.ui-datepicker .ui-datepicker-title { line-height: 1.8em; text-align: center; }
+.ui-datepicker .ui-datepicker-title select { font-size:1em; margin:0; }
+.ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year { width: 49%;}
+.ui-datepicker table {width: 100%; font-size: .9em; border-collapse: collapse}
+.ui-datepicker th { padding: 8px 0px; text-align: center; font-weight: bold; border: 0;  }
+.ui-datepicker td { border: 0; padding: 1px; }
+.ui-datepicker td span, .ui-datepicker td a { display: block; padding: .2em; text-align: right; text-decoration: none; }
+.ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+.ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
+
 /* GENERAL DIALOG IMPROVEMENTS */
 
-.ui-dialog { padding:0px !important}
+.ui-dialog { position: absolute; padding: .2em; overflow: hidden}
+.ui-dialog { padding:0px !important; border:none}
 
-/* CLEARFIX FOR FLOATING BUTTONS */
+.ui-dialog a {color: #1389d3 } .ui-dialog a:hover {text-decoration:underline}
+
+.register, .input-bold { font-weight:bold}
+
+/* Close Dialog Button */			
+
+.ui-dialog .ui-dialog-titlebar-close { 
+width:18px; height:19px; background:url(/images/close.png);position: absolute; top:12px; right:12px}
+
+.ui-dialog .ui-dialog-titlebar-close span { display:none}
+
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus, .ui-datepicker-prev:hover, .ui-datepicker-next:hover {background-position: 0px -19px}
+
+/* CLEARFIX FOR TEXT */
 
 .clearfix:after {content: ".";display: block;clear: both;visibility: hidden;line-height: 0;height: 0}
-.clearfix {display: inline-block;}
-html[xmlns] .clearfix {display: block;}
-* html .clearfix {height: 1%;}
+.clearfix {display: inline-block}
+html[xmlns] .clearfix {display: block}
+* html .clearfix {height: 1%}
+
+/* CLEARFIX FOR BUTTONS */
+
+.ui-dialog-buttonset {min-height:30px; padding:12px}
 
 /* LOGIN DIALOG --------------------------------------------------------------------------------------- */
 
-p.pwd { position:absolute; bottom:4px; left:12px;}
+p.pwd { padding-top:6px !important; float:left; font-size:12px; font-weight:bold; text-shadow:0px 1px 1px #fff;  color:#737781}
+p.pwd a {font-size:12px; font-weight:bold; text-shadow:0px 1px 1px #fff;  color:#737781}
+p.pwd input {margin-right:8px}
 
-a#forgot-pwd { font-size:11px; text-decoration:underline; color:#555 !important; float:right}
+#account-buttons #account-loader {display: none; position: absolute; bottom: 12px; right: 200px; background:transparent}
 
-#newsletter-signup { float: right; width: 300px; margin-top: 14px; margin-bottom:6px; }
-#newsletter-signup input { float: right; margin-right: 5px; }
-#newsletter-signup span { float: right; }
+#account-buttons {
+margin:12px -12px 0px -12px;
+background:#eef1f8; 
+padding:14px  24px !important; 
+border-top:1px solid #c5c8ce !important;
+-webkit-border-bottom-right-radius: 5px;
+-webkit-border-bottom-left-radius: 5px;
+-moz-border-radius-bottomright: 5px;
+-moz-border-radius-bottomleft: 5px;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px}
 
-#account-buttons { margin-top: 80px; height: 5px}
-#account-buttons #account-loader { display: none; position: absolute; z-index: 100; bottom: 6px; right: 140px; }
+a.facebooklogin {
+cursor:pointer;
+text-indent: -23981px;
+float:right; 
+background:url(/images/facebooklogin.png) no-repeat;
+display:block;
+height:31px;
+width:84px;
+margin-left:12px}
+
+a.facebooklogin:hover {background-position:0px -31px}
+
+.dialog-login .ui-dialog-buttonset {padding:0px !important; border-radius:0px;-webkit-border-radius:0px; border:none !important}
 
 .ui-widget-overlay {
-background: #000 !important; opacity:0.5 !important;
-overflow:visible}
+position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+background:#000;
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+filter:Alpha(opacity=50);
+-moz-opacity: 0.5;}
 
-.ui-widget-overlay-wood {
-background: #000 url(/backgrounds/wood.jpg) top center no-repeat !important; opacity:1 !important;
-overflow:visible}
+.ui-widget-overlay-wood {background: #000 url(/backgrounds/wood.jpg) top center no-repeat ; opacity:1 ;overflow:visible}
 
-.dialog-login, .dialog-edit-profile {
-top: 50% !important; left: 50% !important; margin-left: -240px; margin-top: -130px; height: 260px; width:470px !important}
+.dialog-login{ 
+-webkit-box-shadow:0px 3px 16px #222;
+position:relative !important; top:50% !important; left:auto !important;  margin:-125px auto -250px auto !important; height: 250px !important; width:500px !important }
 
-.dialog-login .error, .dialog-edit-profile .error {
-text-align:left; color:#c30; height:20px; text-align:right; float:right; width:315px; }
+.dialog-edit-profile {width:470px !important; margin-left: -240px !important;}
 
-.dialog-edit-profile { width: 326px !important; margin-left:-163px !important; width:320px !important; margin-top:-163px}
+	div.errorwrap {height:14px; padding-top:4px}
+	
+	.forgotpwbuttons div.errorwrap {clear:both; display:none}
 
+	div.errorwrap p {text-align:left; color:#c83021; font-size:11px; font-weight:bold; text-shadow:0px 1px 1px #fff; padding:0px !important}
+	
+	.input-red {border-color: #c83021 !important}
+
+.dialog-edit-profile { margin-left:-163px ; width:320px !important; margin-top:-163px}
 .ui-widget-content {
-border-bottom:none; border-top:1px solid #fff !important;	
-background:#e3e6ed !important;
--webkit-border-radius:5px;-webkit-box-shadow:0px 3px 16px #222}
+border-bottom:none; border-top:1px solid #fff ;	
+background:#e3e6ed ;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+border-radius:5px;
+/*-webkit-box-shadow:0px 3px 16px #222;*/
+-moz-box-shadow:0px 3px 16px #222;
+box-shadow:0px 3px 16px #222}
 
-	.ui-widget-content p { padding:10px 0px; line-height:16px;}
+.ui-dialog .ui-widget-content {
+-webkit-box-shadow:none;
+-moz-box-shadow:none;
+box-shadow:none;
+border:none}
 
-.ui-dialog-content {-webkit-gradient:none;-webkit-border-radius:0px;-webkit-box-shadow:none; min-height:0px !important; padding: 0em 1em !important;}
+	.ui-widget-content p { padding:10px 0px; line-height:18px}
+	
+	.ui-widget-content .small { line-height:12px }
 
-.ui-widget-header {
-background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f7), to(#e3e6ed)) !important;
-border:none !important;	border-bottom:1px solid #b7bdcb !important; color:#4b4e54 !important;font-size:14px !important; padding:12px 18px !important; text-shadow:0px 1px 1px #fff}
+.ui-dialog .ui-dialog-content {
+min-height:0px !important;
+-webkit-gradient:none;
+-webkit-box-shadow:none; 
+-moz-box-shadow:none; 
+box-shadow:none;
+padding: 0em 1em ; 
+border:none !important}
+
+.ui-widget-header, .ui-datepicker-header{
+position:relative;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+-moz-border-radius-topleft: 5px;
+-moz-border-radius-topright: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+height:20px !important;
+background: url(/images/dialoghead.png) -1px center;
+border:none ;border-bottom:1px solid #9ea0a6;
+font-weight:bold;
+color:#4b4e54 ;font-size:14px ; padding:15px 12px 9px 12px; text-shadow:0px 1px 1px #fff}
 
 .ui-dialog-content .custom-dialog-headline {
-	background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f7), to(#e3e6ed)) !important; 
-	border:none !important;	border-bottom:1px solid #b7bdcb !important; color:#4b4e54 !important;font-size:14px !important; padding:12px 0px !important; padding-left:13px !important ;text-shadow:0px 1px 1px #fff;
-	-webkit-box-shadow:0px 1px 1px #fff; font-weight:bold; margin-left:-13px; margin-right:-13px;}
+color:#4b4e54 ;font-size:14px ; padding:12px 0px ; padding-left:13px  ;text-shadow:0px 1px 1px #fff;
+-webkit-box-shadow:0px 1px 1px #fff; -moz-box-shadow:0px 1px 1px #fff; box-shadow:0px 1px 1px #fff; font-weight:bold; margin-left:-13px; margin-right:-13px}
 
-.dialog-login .ui-dialog-titlebar-close {display: none !important}
+.dialog-login .ui-dialog-titlebar-close {display: none}
 
-.ui-dialog-titlebar-close { top:20px !important; right:8px !important}
+.socialform p {padding-left:130px; padding-top:20px; padding-bottom:0px}
+.socialform p.ui-dialog-buttonset {padding-top:10px; padding-bottom:20px;}
 
-.ui-dialog-titlebar-close:hover,  .ui-datepicker-prev:hover, .ui-datepicker-next:hover  {
-border:1px solid #b7bdcb !important; background:#fff !important; -webkit-border-radius:3px; cursor:pointer}
+.wunderlistlogo {position:absolute; width:104px; height:131px; position:absolute; top:68px}
 
-.wunderlistlogo {width:128px;height:122px;background:url(/images/wunderlisticon.png) no-repeat; float:left; margin-left:0px; margin-top:30px;}
+.dialog-login .wunderlistlogo {margin-left:12px}
 
-.dialog-login .wunderlistlogo {margin-top:18px !important;}
+.formright {margin-left:130px; margin-top:24px; margin-right:12px}
 
-.input-login {padding:8px;float:right;display:block;width:282px;margin-top:8px !important;-webkit-box-shadow:0px 1px 1px #fff;
-border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
+.input-login {display:block; width:94%; padding:8px; margin-top:8px;
+-webkit-box-shadow:0px 1px 1px #fff;-moz-box-shadow:0px 1px 1px #fff;box-shadow:0px 1px 1px #fff;
+border:1px solid #adadad;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;background:#fff;font-size:12px;color:#777}
 
-.input-normal {padding:2%; width:96%; margin-top:12px !important;-webkit-box-shadow:0px 1px 1px #fff;
-border:1px solid #adadad;-webkit-border-radius:4px;background:#fff;font-size:12px;color:#777; }
+.input-normal {width:96%; padding: 2%; margin-top:12px ;
+-webkit-box-shadow:0px 1px 1px #fff;-moz-box-shadow:0px 1px 1px #fff;box-shadow:0px 1px 1px #fff;
+border:1px solid #adadad;-webkit-border-radius:4px;-moz-border-radius:4px; border-radius:4px; background:#fff;font-size:12px;color:#777}
 
-.input-button, button {background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ececec)) !important;
-color:#333;-webkit-box-shadow:0px 1px 3px #999;border:1px solid #9c9ea4;padding:5px 6px;text-shadow:1px 1px 1px #fff;-webkit-border-radius:4px;margin:8px 0px 0px 8px;float:right;cursor:pointer}
+.input-button, button {
+font-size:12px;
+background:#e3e4e5;
+background:-webkit-gradient(linear, left top, left bottom, from(#e1e3e8), to(#cacfd9));
+background: -moz-linear-gradient(top,  #e1e3e8,  #cacfd9);
+
+color:#424242;
+-webkit-box-shadow:inset 0px 1px 1px #fff;
+-moz-box-shadow:inset 0px 1px 1px #fff;
+box-shadow:inset 0px 1px 1px #fff;
+border:1px solid #939494;
+padding:7px 12px;
+border-radius:5px;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+font-weight:bold;
+text-shadow:0px 1px 5px #f0f0f0;
+margin-left:12px;
+float:right;
+cursor:pointer}
 
 .input-button:hover, button:hover {
--webkit-box-shadow:0px 1px 3px #666;
-background:-webkit-gradient(linear, left top, left bottom, from(#ececec), to(#fff)) !important}
-
-.register { font-weight:bold}
+background:#cacfd9;
+background:-webkit-gradient(linear, left top, left bottom, from(#c0c9cf), to(#e6e7e9));
+background: -moz-linear-gradient(top,  #c0c9cf,  #e6e7e9)}
 
 .button-login {
+-webkit-box-shadow:inset 0px 1px 1px #84c7f4; -moz-box-shadow:inset 0px 1px 1px #84c7f4; box-shadow:inset 0px 1px 1px #84c7f4;
 color:#fff;border:1px solid #166fa9;text-shadow:1px 1px 1px #166fa9;
-background:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3)) !important;
--webkit-border-radius:4px}
+background:#32a3f0;
+background:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3));
+background: -moz-linear-gradient(top,  #32a3f0,  #1389d3) ;
+-webkit-border-radius:4px;
+-moz-border-radius:4px;
+border-radius:4px}
 
 .button-login:hover {
-background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32a3f0)) !important}
+background:#1389d3;
+background:-webkit-gradient(linear, left top, left bottom, from(#1389d3), to(#32a3f0));
+background: -moz-linear-gradient(top,  #1389d3,  #32a3f0)}
 
-/* NOTES DIALOG ---------------------------------------------------------------------------- */
+/* CLOUDAPP DIALOG --------------------------------------------------------------------------------------- */
 
-.dialog-notes { width:80% !important; height:80% !important; margin:10% !important; background: #fefdba !important;}
+.dialog-cloudapp {width:320px !important}
 
-.dialog-notes .ui-dialog-content {padding:0px !important; position:static !important}
+/* NEW LOGIN / REGISTER / FORGOT PW ------------------------------------------------------------------ */
 
-.dialog-notes textarea {border:none; background:none; padding:2%; width:96%; position:absolute; bottom:52px;top:50px; color:#333}
+.showregisterdialog, .forgotpwbuttons {display:none; position:relative}
 
-::selection {background:#000 !important;}
+.registertutorial {
+position:absolute;
+right:-180px;
+top:-80px;
+text-indent: -29856px;
+width:162px;
+height:223px;
+background:url(/images/registertutorial.png)}
 
-.notes_top {background:url(/images/notes_top.png); height:10px}
+	.forgotpwbuttons {position:relative}
 
-.notes_buttons { textalign:right; position:absolute; bottom:20px; right:12px}
+	.forgotpwbuttons input.input-forgotpw { width:200px; float:left; margin:0px; padding:8px; font-size:11px}
+	
+	.whiteoverlay {width:480px; height:146px; background:white; position:absolute; top:-161px; right:-24px; opacity: 0.5}
 
-.notes_bottom {background:url(/images/notes_bottom.png); height:6px; position:absolute; bottom:0px; width:100%;}
+/* SWITCH DATE FORMAT ---------------------------------------------------------------------------------*/
+
+.input[type=radio] { margin-right:6px}
+
+/* NOTES DIALOG ---------------------------------------------------------------------------------------- */
+
+.dialog-notes { position:absolute; height:80% !important; width:80% !important;  margin:10%; background:#F5F5F5 !Important}
+
+.dialog-notes .notes_buffer { position:absolute; top:50px; right:0px; left:0px; bottom:60px}
+
+.dialog-notes .hint {margin-left:12px; font-weight:bold; margin-top:6px; display:block; float:left}
+
+.dialog-notes textarea, .dialog-notes .savednote {
+position:absolute; border:none; background:none; 
+width:100%; height:100%; line-height: 22px; color:#333; font-size: 12px;
+word-wrap: break-word}
+
+.dialog-notes .savednote {overflow:auto}
+
+.dialog-notes .savednote .inner {background: url(/images/notebg.png); padding:5px 20px 0px 20px; color:#333; min-height:98%}
+
+.dialog-notes .savednote span.openApp { color:#1389D3}
+.dialog-notes .savednote span.openApp:hover { color:#1389D3; cursor: pointer; text-decoration: underline}
+
+.dialog-notes textarea {
+margin:0 1%;
+width:96% !important;
+-webkit-box-shadow:0px 1px 1px #fff;
+-moz-box-shadow:0px 1px 1px #fff;
+box-shadow:0px 1px 1px #fff;
+border:1px solid #ccc;
+-webkit-border-radius:4px;
+-moz-border-radius:4px;
+border-radius:4px;
+padding:1%; background:#fff; border:1px solid #ddd; height:94% !important}
+
+.dialog-notes .ui-widget-header {background:#f5f5f5 ; border:none ; padding-bottom:0px}
+
+.ui-dialog-title {
+position: absolute;
+left:18px;
+right:40px;
+white-space: nowrap;
+overflow:hidden;
+text-overflow: ellipsis}
+
+.dialog-notes .ui-dialog-title {
+font-size:16px;
+left:14px;
+white-space: nowrap; 
+text-overflow: ellipsis; 
+right:40px; 
+overflow:hidden; 
+position:absolute}
+
+.notes_buttons { 
+-webkit-border-bottom-right-radius: 5px;
+-webkit-border-bottom-left-radius: 5px;
+-moz-border-radius-bottomright: 5px;
+-moz-border-radius-bottomleft: 5px;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px; 
+position:absolute; bottom:0px; right:0px; left:0px; height:30px; padding-bottom:18px; padding-right:14px; background:#f5f5f5}
+
+.notes_buttons input#save-and-close { display: none}
 
 /* SOCIAL MEDIA SHARE DIALOG ---------------------------------------------------------------------------- */
 
-.dialog-social, .dialog-sharelist { top: 50% !important; left: 50% !important; margin-left: -250px; margin-top: -150px; height: 300px; width:500px !important}
+.dialog-social, .dialog-sharelist {
+position:absolute; top: 50% !important; left: 50% !important; margin-left: -250px; margin-top: -140px; height: 280px !important; width:500px !important}
 
 .dialog-social .invitefriends { font-size:16px; font-weight:bold; margin-top:12px; color:#333}
 
+.dialog-social .wunderlistlogo {width:128px; background:url(/images/wlicon.png) no-repeat}
+
 .dialog-social input {margin-left:0px; margin-right:0px}
+
 .dialog-social input.input-social {float:left; width:250px}
 
-.dialog-social input.button-social {float:right; height:32px; width:70px; margin-left:7px;font-weight:bold; margin-bottom:10px !important}
+.dialog-social input.button-social {float:right; height:32px; width:70px; font-weight:bold; margin:8px 0px 10px 7px}
 
-p.socialmedia { clear:both; border-top:1px solid #b7bdcb !important; -webkit-box-shadow:inset 0px 1px 1px #fff; margin:0px -13px; padding:12px;}
+p.socialmedia { 
+width:100%;
+clear:both; border-top:1px solid #b7bdcb ; 
+box-shadow:inset 0px 1px 1px #fff;
+-moz-box-shadow:inset 0px 1px 1px #fff;
+-webkit-box-shadow:inset 0px 1px 1px #fff; margin:0px -13px; padding:12px 12px 0px 12px}
 
 p.socialmedia span { font-size:14px; font-weight:bold; display:block;margin-top:7px;margin-bottom:7px}
 
-p.socialmedia span.icons a, .followus a {
-display:block; width:32px; height:32px; float:right; margin-left:14px;-webkit-box-shadow:0px 1px 3px #999;-webkit-border-radius:5px}
+p.socialmedia span.icons a, .followus p a {
+display:block; width:32px; height:32px; float:right; margin-left:14px; text-indent: -32879px;
 
-p.socialmedia span.icons a:hover , .followus a:hover { -webkit-box-shadow:0px 2px 3px #444}
-p.socialmedia span.icons a.facebook,  .followfacebook  { background:url(/icons/facebook.png)}
-p.socialmedia span.icons a.twitter, .followtwitter { background:url(/icons/twitter.png)}
-p.socialmedia span.icons a.stumbleupon { background:url(/icons/stumbleupon.png)}
-p.socialmedia span.icons a.digg { background:url(/icons/digg.png)}
+-webkit-box-shadow:inset 0px 1px 3px #999;
+-moz-box-shadow:0px 1px 3px #999;
+box-shadow:inset 0px 1px 3px #999;
+
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+border-radius:5px}
+
+p.socialmedia span.icons a:hover , .followus p a:hover { -webkit-box-shadow:0px 2px 3px #444; box-shadow:0px 2px 3px #444; -moz-box-shadow:0px 2px 3px #444}
+p.socialmedia span.icons a.facebook,  .followfacebook  { background:url(/images/icons/facebook.png)}
+p.socialmedia span.icons a.twitter, .followtwitter { background:url(/images/icons/twitter.png)}
+p.socialmedia span.icons a.stumbleupon { background:url(/images/icons/stumbleupon.png)}
+p.socialmedia span.icons a.digg { background:url(/images/icons/digg.png)}
 
 .textarea-dialog {
 width: 323px; height:50px; padding:10px; margin-top:6px; margin-bottom:-6px;
--webkit-box-shadow:0px 1px 1px #fff;-webkit-border-radius:5px;
+-webkit-box-shadow:0px 1px 1px #fff;
+-moz-box-shadow:0px 1px 1px #fff;
+box-shadow:0px 1px 1px #fff;
+-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;
 border:1px solid #9c9ea4; font-size:11px; color:#777}
 
 /* SHARE LIST DIALOG ------------------------------------------------------------------------------------ */
 
-.dialog-sharelist {width:360px !important; margin-left:-180px !important; }
+.dialog-sharelist {width:400px !important; margin-left:-250px; height:auto !important; top:40% !important}
 
-	.dialog-sharelist ul {
-	max-height:90px;
-	overflow:auto;}
+	#send_share_invitation {margin-top:8px;}
+
+	.dialog-sharelist ul { overflow-y:auto !important; max-height:100px !important; margin-bottom:40px}
 
 	.dialog-sharelist ul li {
-		opacity:0.75;
-		background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
-		border-bottom:1px solid #177bbd; color:#fff;text-shadow: #125a8a 0px 1px 2px; -webkit-border-radius:3px;
-		padding:5px;
-		margin-bottom:4px;}
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	opacity:0.7; 
+	-moz-opacity: 0.7;
+	background:#33a3ef;
+	background:-webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) ;
+	background:-moz-linear-gradient(top,  #33a3ef,  #168ad4) ;
+	border-bottom:1px solid #177bbd; color:#fff;text-shadow: #125a8a 0px 1px 2px; 
+	-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
+	padding:5px;margin-bottom:4px}
 		
-		.dialog-sharelist ul li:hover {opacity:1.0}
+		.dialog-sharelist ul li:hover {-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";opacity:1.0;-moz-opacity: 1.0}
 		
-	.dialog-sharelist li span { background:url(/icons/delete_white.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; opacity:0.5}
-	.dialog-sharelist li span:hover {opacity:1.0}
+		.dialog-sharelist li span { background:url(/images/icons/delete_white.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; opacity:0.5}
+		.dialog-sharelist li span:hover {opacity:1.0}
 
-	.dialog-sharelist input.input-sharelist {width:96%; padding:2%}
-
-	.dialog-sharelist textarea.textarea-dialog {width:96%; padding:2%}
+		.dialog-sharelist input.input-sharelist {width:96%; padding:5px 2%}
+		
+		.dialog-sharelist {overflow:inherit}
 	
-	.dialog-sharelist p.invitedpeople { margin-top:-10px;}
+		.ui-dialog p.small {
+		text-shadow: #fff 0px 1px 2px;
+		padding:6px;
+		-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;
+		border:1px solid #fff;
+		font-size:11px;
+		line-height:18px ;
+		margin-top:6px;
+		background: #f3f4f6}
+				
+.delete-all-shared-lists {position:absolute; bottom:12px; right:12px; width:auto !important}
 	
-	.ui-dialog p.small {
-	text-shadow: #fff 0px 1px 2px;
-	padding:6px;
-	-webkit-border-radius:3px;
-	border:1px solid #fff;
-	font-size:10px;
-	margin-top:6px;
-	background: #f3f4f6}
+/* FOLLOW LINKS @ LOGIN DIALOG --------------------------------------------------------------------------- */
+
+.followus { position:relative; clear:both; display: none}
+
+.dialog-login, .dialog-login div {overflow:visible}
+
+.followus p {position:absolute; bottom:-190px; left: -50px; background:url(/images/followus.png) 0px 10px no-repeat; padding-left:80px; width:460px}
+.followus p a { margin-left:2px; margin-right:8px; -webkit-box-shadow:0px 1px 3px #666; -moz-box-shadow:0px 1px 3px #666; box-shadow:0px 1px 3px #666; float:left;}
+.followus p a:hover { -webkit-box-shadow:0px 1px 3px #333; box-shadow:0px 1px 3px #333; box-shadow:0px 1px 3px #333}
+
+/* HEADLINE @ LOGIN DIALOG --------------------------------------------------------------------------- */
+
+.dialog-login h1 {text-indent: -9678px; height:57px; width:303px; position:absolute; left:85px;  top: -72px; background:url(/images/headline.png) no-repeat}
+.dialog-login h2, .dialog-login h3 {display:none}
+
+.seefeatures {Position:absolute; height:44px; width:179px; top:-70px; left:150px;background:url(/images/seefeatures.png) no-repeat; text-indent: -45123px}
+.seefeatures:hover {background-position:0px -44px}
+
+.wkseparator {position:absolute; width:560px; height:2px; background:url(/images/wkseparator.png); left:-30px; bottom:-130px;}
+
+.wkdownload {position:absolute; width:570px; height:88px; left:-44px; bottom:-110px; text-align:center}
+
+	.wkdownload a {width:114px; height:88px; display:inline-block; text-indent: -23718px; background:url(/images/download.png);}
 	
-/* SOCIAL MEDIA FOLLOW DIALOG --------------------------------------------------------------------------- */
+		.wkdownload .iphone {background-position: 0px -88px}
+		.wkdownload .iphone:hover {background-position: 0px 0px}
+		
+		.wkdownload .ipad {background-position: 456px -88px}
+		.wkdownload .ipad:hover {background-position: 456px 0px}
+		
+		.wkdownload .android {background-position: 342px -88px}
+		.wkdownload .android:hover {background-position: 342px 0px}
+		
+		.wkdownload .windows {background-position: 228px -88px}
+		.wkdownload .windows:hover {background-position: 228px 0px}
+		
+		.wkdownload .mac {background-position: 114px -88px}
+		.wkdownload .mac:hover {background-position: 114px 0px}
+		
+		.wkdownload .notyet {opacity:0.5}
+		.wkdownload .notyet:hover {background-position: 342px -88px; cursor:default}
 
-.followus { position:relative; clear:both}
+.wklogo {position:absolute; width:580px; height:50px; background: url(/images/wklogo.png) 247px 9px no-repeat; 
+bottom:-190px; left:-38px; cursor: pointer; text-indent: -34129px}
 
-.dialog-login, .dialog-login div {overflow:visible !important}
+.wklogowhite {display: block; width:329px; height:49px; position:absolute; left:191px; bottom:-185px; background: url(/images/wklogowhite.png); text-indent: -34129px}
 
-.followus p {
-position:absolute; top:24px; right: -8px; background:url(/images/followus.png) 0px 3px no-repeat; padding-left:70px; width:90px}
-
-.followus a { margin-left:2px; margin-right:8px; -webkit-box-shadow:0px 1px 3px #666}
-.followus a:hover { -webkit-box-shadow:0px 1px 3px #333}
+.freewunderlist {background:url(/images/free.png);width:95px;height:103px;position:absolute;top:-3px;right:-16px; text-indent: -4303px}
 
 /* DATEPICKER DIALOG ------------------------------------------------------------------------------------ */
 
-.ui-datepicker-header {
-padding:3px 0px 0px 0px !important}
+.ui-datepicker-header {padding:10px !important; height:20px !important;}
 
 .ui-datepicker-calendar a.ui-state-default {
+padding-right:5px;
+color:#666;
+background:#fff;
+background: -moz-linear-gradient(top,  #fff,  #ececec) ;
 background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ececec));
 border:1px solid #ccc}
 
-.ui-datepicker-calendar .ui-state-active {
-background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
-border:1px solid #1177b9 !important;
+.ui-datepicker-calendar .ui-state-highlight {
+color:#fff !important;
+border: 1px solid #59a6e7 !important;
+font-weight:bold !important;
+background:url(/images/bottombar_active_light.png) top left repeat-x !important;}
+
+.ui-datepicker-calendar .ui-datepicker-current-day .ui-state-active {
+background:url(/images/bottombar_active.png) top left repeat-x !important;
+border: 1px solid #4580b1 !important;
+font-weight:bold;
 color:#fff !important}
 
-.ui-datepicker-calendar th {
-color:#777 !important}
+.ui-datepicker-calendar th {color:#4b4e54}
 
 div.remove_date {
 float:right;
 font-weight:bold;
-color:#777;
+color:#4b4e54;
 margin-right:5px;
 margin-bottom:5px}
 
 /* CREDITS DIALOG --------------------------------------------------------------------------------------- */
 
-.dialog-credits {
-width:540px !important; margin-left:-270px; height: 230px !important; margin-top:-115px; top:50% !important; left:50% !important }
+.dialog-credits {width:540px !important; margin-left:-270px; left:50%}
 
 /* CONFIRM DIALOG --------------------------------------------------------------------------------------- */
 
-.ui-dialog-buttonpane {
-border-top:none !important;
-margin-top:0px !important;
--webkit-border-radius:0px;
-background:none !important;
-border:none;
--webkit-box-shadow:none}
+.dialog-delete-task, .dialog-delete-list {width: 400px !important}
 
-.dialog-delete-list, .dialog-delete-task {height:110px}
-
-.dialog-delete-task {width: 330px !important;}
-
-.dialog-delete-list .ui-widget-header, .dialog-delete-task .ui-widget-header { font-size:13px !important}
+.dialog-confirm {width:auto !important }
 
 /* DATE FORMAT SWITCHER DIALOG ---------------------------------------------------------------------------- */
 
-.custom-dialog-headline { display: block; padding-left: 5px !important; padding-bottom: 15px !important; padding-top: 10px !important; }
+.custom-dialog-headline { display: block; padding-left: 5px ; padding-bottom: 15px ; padding-top: 10px}
+
+/* Layout helpers
+----------------------------------*/
+.ui-helper-hidden { display: none; }
+.ui-helper-hidden-accessible { position: absolute; left: -99999999px; }
+.ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
+.ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.ui-helper-clearfix { display: inline-block; }
+/* required comment for clearfix to work in Opera \*/
+* html .ui-helper-clearfix { height:1%; }
+.ui-helper-clearfix { display:block; }
+/* end clearfix */
+.ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }

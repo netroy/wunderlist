@@ -100,7 +100,7 @@
 	"account":				    "Compte",
 	"extra":				    "Extras",
 	"credits":				    "À propos",
-	"wunderkinder":			    "6 Wunderkinder",
+	"wunderkinder":			    "6Wunderkinder",
 	"wunderkinder_fb":		    "Suivez-nous sur Facebook",
 	"wunderkinder_tw":		    "Suivez-nous sur Twitter",
 	"delete_account":		    "Supprimer mon compte",
@@ -117,7 +117,7 @@
 	"no_Internet":			    "Vous n’avez pas de connexion à Internet.",
 	"withoutdate":			    "Sans date",
 	"sync_not_logged_in":	    "Si vous voulez synchroniser vos informations, vous devez avoir un compte.",
-	"sync_not_logged_in_yes":   "Oui, je vex m’inscrire",
+	"sync_not_logged_in_yes":   "Oui, je veux m'inscrire",
 	"sync_not_logged_in_no":    "Non, je ne veux pas m’inscrire",
 	"sync_not_logged_in_title": "Voulez-vous synchroniser ?",
 	"sync_not_exist":		    "L’utilisateur n’existe pas.",
@@ -182,5 +182,5 @@
 	"share_this_list":			"partager cette liste",
 	"print_tasks":				"imprimer les tâches",
 	"send_by_mail":				"envoyer par email",
-	"share_with_cloud":			"partager avec l'application cloud"
+	"share_with_cloud":			"partager avec l´application cloud"
 }

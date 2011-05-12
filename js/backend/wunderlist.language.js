@@ -1,11 +1,19 @@
-var language = language || {};
+/**
+ * wunderlist.language.js
+ *
+ * Class for handling the different languages
+ * 
+ * @author Dennis Schneider, Daniel Marschner
+ */
+
+wunderlist.language = wunderlist.language || {};
 
 /**
  * Available languages
  *
  * @author Dennis Schneider, Daniel Marschner
  */
-language.availableLang = new Array(
+wunderlist.language.availableLang = [
 	'de', 'en', 'es', 'fr',
 	'pl', 'pt', 'it', 'sk',
 	'ca', 'nl', 'da', 'uk',
@@ -13,85 +21,88 @@ language.availableLang = new Array(
 	'ar', 'se', 'ja', 'hu',
 	'ko', 'no', 'hr', 'sr',
 	'gl', 'ro', 'pt-br'
-);
+];
 
 /**
  * Initiates language functionalities
  *
  * @author Christian Reber
  */
-language.init = function()
+wunderlist.language.init = function()
 {
-	language.load();
-	language.replaceBasics();
-}
+	wunderlist.language.load();
+	wunderlist.language.replaceBasics();
+};
 
 /**
  * Load language
  *
  * @author Dennis Schneider
  */
-language.load = function()
+wunderlist.language.load = function()
 {
 	// Load the language code
 	code = navigator.language.toLowerCase();
 	code = code[0] + code[1]; // e.g. de or en
-	language.code = Titanium.App.Properties.getString('language', code);
+	wunderlist.language.code = Titanium.App.Properties.getString('language', code);
 
-	if(language.availableLang.join(' ').indexOf(language.code) == -1)
+	if (wunderlist.language.availableLang.join(' ').indexOf(wunderlist.language.code) == -1)
 	{
-		language.code = 'en';
+		wunderlist.language.code = 'en';
 		Titanium.App.Properties.setString('language', 'en');
 	}
 
 	// Load the language file
-	path          = Titanium.Filesystem.getResourcesDirectory() + "/language";
-	file          = Titanium.Filesystem.getFile(path, 'en.json');
-	language.data = Titanium.JSON.parse(file.read());
-
-	if(language.code != 'en')
+	path                        = Titanium.Filesystem.getResourcesDirectory() + "/language";
+	file                        = Titanium.Filesystem.getFile(path, 'en.json');
+	wunderlist.language.data    = Titanium.JSON.parse(file.read());
+	wunderlist.language.english = Titanium.JSON.parse(file.read());
+	
+	if (wunderlist.language.code != 'en')
 	{
-		path                 = Titanium.Filesystem.getResourcesDirectory() + "/language";
-		file                 = Titanium.Filesystem.getFile(path, language.code + '.json');
-		language.translation = Titanium.JSON.parse(file.read());
+		path                            = Titanium.Filesystem.getResourcesDirectory() + "/language";
+		file                            = Titanium.Filesystem.getFile(path, wunderlist.language.code + '.json');
+		wunderlist.language.translation = Titanium.JSON.parse(file.read());
 
-		for(langstring in language.data)
+		for (langstring in wunderlist.language.data)
 		{
-			var translation = language.translation[langstring];
+			var translation = wunderlist.language.translation[langstring];
 			if(translation != undefined)
-				language.data[langstring] = translation;
+			{
+				wunderlist.language.data[langstring] = translation;
+			}
 		}
 	}
-}
+};
 
 /**
  * Replace basics
  *
  * @author Christian Reber
  */
-language.replaceBasics = function()
-{
-	$("a.history").text(language.data.history);
-	$("a.addtask").text(language.data.add_task);
-	$("a.button-add").text(language.data.add_task);
-	$("input#search").attr('placeholder',language.data.search);
 
-	$('a#today').text(language.data.today);
-	$('a#tomorrow').text(language.data.tomorrow);
-	$('a#thisweek').text(language.data.thisweek);
-	$('a#someday').text(language.data.someday);
-	$('a#withoutdate').text(language.data.withoutdate);
+wunderlist.language.replaceBasics = function() {
+	$("a.history").text(wunderlist.language.data.history);
+	$("a.addtask").text(wunderlist.language.data.add_task);
+	$("a.button-add").text(wunderlist.language.data.add_task);
+	$("input#search").attr('placeholder',wunderlist.language.data.search);
 
-	$('h3 a.add').attr('title', language.data.add_list);
-	$('.editp').attr('title', language.data.edit_list);
-	$('.savep').attr('title', language.data.save_list);
-	$('.deletep').attr('title', language.data.delete_list);
+	$('a#today').text(wunderlist.language.data.today);
+	$('a#tomorrow').text(wunderlist.language.data.tomorrow);
+	$('a#thisweek').text(wunderlist.language.data.thisweek);
+	$('a#someday').text(wunderlist.language.data.someday);
+	$('a#withoutdate').text(wunderlist.language.data.withoutdate);
 
-	$(".togglesidebar").attr('title', language.data.sidebar_toggle);
+	$('a.addlist').text(wunderlist.language.data.add_list);
+	$('.editp').attr('title', wunderlist.language.data.edit_list);
+	$('.savep').attr('title', wunderlist.language.data.save_list);
+	$('.deletep').attr('title', wunderlist.language.data.delete_list);
 
-	$("a#all").attr('rel', language.data.all);
-	$("a#starred").attr('rel', language.data.starred);
-	$("a#done").attr('rel', language.data.done);
+	$(".togglesidebar").attr('title', wunderlist.language.data.sidebar_toggle);
 
-	$("span#sync").attr('rel', language.data.tooltip_sync);
-}
+	$("a#all").attr('rel', wunderlist.language.data.all);
+	$("a#starred").attr('rel', wunderlist.language.data.starred);
+	$("a#done").attr('rel', wunderlist.language.data.done);
+
+	$("span#sync").attr('rel', wunderlist.language.data.tooltip_sync);
+};

@@ -14,24 +14,82 @@ var printShortcutListener = 0;
  */
 var syncShortcutListener = 0;
 
-// Tooltip
-tooltip = function() {
+/**
+ *	Login / Register / Forgot PW Behavior Fallback
+ *
+ * @author Marvin Labod
+ */
+ 
+registerProcess = function() {
+
+	// Show and Hide Register Dialog
+	$("#showregistersubmit").live("click", function(){
+		$('input.input-red').removeClass('input-red');
+		$('div.errorwrap p').text('');
+		$(".dialog-login .ui-dialog-title").text(wunderlist.language.data.register_your_account);
+		$(".showlogindialog").hide();
+		$(".showregisterdialog").fadeIn("slow");
+		$("#account-loader").hide();
+	});
+	
+	$("#showloginsubmit").live("click",function(){
+		$('input.input-red').removeClass('input-red');
+		$('div.errorwrap p').text('');
+		$(".dialog-login .ui-dialog-title").text(wunderlist.language.data.register_title);
+		$(".showregisterdialog").hide();
+		$(".showlogindialog").fadeIn("slow");	
+		$("#account-loader").hide();
+	});
+	
+	// Show and Hide Forgot PW Dialog
+	$("#showforgotpw").live("click",function(){
+		$('input.input-red').removeClass('input-red');
+		$('div.errorwrap p').text('');
+		$(".dialog-login .ui-dialog-title").text(wunderlist.language.data.forgot_password);
+		$(".loginbuttons").hide();
+		$(".forgotpwbuttons").fadeIn();
+		$("#account-loader").hide();
+	});
+	
+	$("#cancelforgotpw").live("click",function(){
+		$(".forgotpwbuttons .errorwrap").hide();
+		$("#forgotpw-email").val("");
+		$(".dialog-login .ui-dialog-title").text(wunderlist.language.data.register_title);
+		$(".forgotpwbuttons").hide();
+		$(".loginbuttons").fadeIn();	
+	});
+};
+
+
+/**
+ *	Tooltips
+ *
+ * @author Marvin Labod
+ */
+ 
+toolTips = function() {
 	$("a.more, span.more, #listfunctions a").live("mouseenter", function(e) {
 		var content = $(this).attr("rel");
 		var offset = $(this).offset();
 		var width = $(this).width();
 
-		// if($(this).attr("id") == "all"){width = "-4";}
-
 		$("body").append("<p id='tooltip'>"+ content +"</p>");
 		
 		var tipWidth = $("#tooltip").width();
+		
 		if($(this).attr("id") == "sync"){tipWidth = "36";}
 
 		$("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-tipWidth/2) + "px").fadeIn("fast");
 				
 		if($(this).parent().attr("id") == "listfunctions") {
 			$("#tooltip").css("top",(offset.top+25));
+		}
+		
+		if(settings.getSidebarPosition() == "left") {
+					
+			if(e.target.className == "list-cloud") {
+				$("#tooltip").css("left",(offset.left-40-tipWidth/2) + "px");
+			}
 		}
 		
 		if ($("#cloudtip:visible").length == 1 && $(this).parent().attr("id") == "listfunctions") {
@@ -45,62 +103,38 @@ tooltip = function() {
 		
 	$("a.more, span.more, #listfunctions a").live("mouseleave", function(e) {
 		$("#tooltip").remove();
-	});
+	});	
 };
 
-/**
- * Starts the syncing animation
- *
- * @author Daniel Marschner
- */
-/*
-startSyncAnimation = function() {
-
-	$('#tooltip').remove();
-
-	$('span#syncing').addClass('rotation');
-
-	$("body").append("<p id='sync_tooltip'>" + language.data.sync + "</p>");
-
-	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(7) + "px").fadeIn("fast");
-}
-
-stopSyncAnimation = function() {
-
-	$('span#syncing').animate({opacity: 1}, 1000, function() {
-		$(this).removeClass('rotation');
-	});
-
-	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(7) + "px").delay("1000").fadeOut("fast", function() {
-		$(this).remove();
-	});
-}
-*/
 var rotationTimer = 0;
 
-function rotate(degree) {
+rotate = function(degree) {
 	$("span#syncing").css('-webkit-transform','rotate(' + degree + 'deg)');
 	rotationTimer = setTimeout(function() {
     	rotate(degree+12);
     },5);
-}
+};
 
 startSyncAnimation = function() {
-
 	$('#tooltip').remove();
-	$("body").append("<p id='sync_tooltip'>" + language.data.sync + "</p>");
-	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(7) + "px").fadeIn("fast");
+	$("body").append("<p id='sync_tooltip'>" + wunderlist.language.data.sync + "</p>");
+	$("#sync_tooltip").css("bottom",41 + "px").css("left",7 + "px");
+	
+	if(settings.getSidebarPosition() == "left") {
+		$("#sync_tooltip").css("bottom",41 + "px").css("left",275 + "px");
+	}
+	
+	$("#sync_tooltip").fadeIn("fast");
 
     rotate(0);
-}
+};
 
 stopSyncAnimation = function() {
-
-	$("#sync_tooltip").css("bottom",(41) + "px").css("left",(7) + "px").delay("1000").fadeOut("fast", function() {
+	$("#sync_tooltip").delay("1000").fadeOut("fast", function() {
 		$(this).remove();
 		clearTimeout(rotationTimer);
 	});
-}
+};
 
 
 /**
@@ -108,101 +142,52 @@ stopSyncAnimation = function() {
  *
  * @author Dennis Schneider
  */
-Layout.startLoginAnimation = function()
-{
+Layout.startLoginAnimation = function() {
 	$('#account-buttons input').hide();
 	$('#account-buttons #account-loader').fadeIn('slow');
 	$('.error').text('');
-}
+};
 
 /**
  * Stop the account login / register animation
  *
  * @author Dennis Schneider
  */
-Layout.stopLoginAnimation = function()
-{
+Layout.stopLoginAnimation = function() {
 	$('#account-buttons input').fadeIn('slow');
 	$('#account-buttons #account-loader').hide();
-}
+};
 
 /**
  * Change the sync background image from green to red
  *
  * @author Daniel Marschner
  */
-function switchSyncSymbol(status)
-{
+switchSyncSymbol = function(status) {
 	if(status == 0)
 	{
 		if($('span#sync').hasClass("sync_red") == false)
 			$('span#sync').addClass('sync_red');
 
 		setTimeout(function() {
-			$('p#sync_tooltip').text(language.data.no_sync);
+			$('p#sync_tooltip').text(wunderlist.language.data.no_sync);
 			stopSyncAnimation();
 		}, 1000);
 	}
 	else
 	{
 		$('span#sync').removeClass('sync_red');
-		$('p#sync_tooltip').text(language.data.sync);
+		$('p#sync_tooltip').text(wunderlist.language.data.sync);
 	}
-}
+};
 
 $(document).ready(function() {
 
-	/**
-	 * Init sidebar
-	 *
-	 * @author Daniel Marschner
-	 */
+    toolTips();
+    
+    registerProcess();
+
 	sidebar.init();
-	
-	/**
-	 * Init the tooltips
-	 *
-	 * @author Daniel Marschner
-	 */
-	tooltip();
-
-	/**
-	 * Printing with Ctrl / Command + P
-	 *
-	 * @author Christian Reber,  Daniel Marschner, Dennis Schneider
-	 */
-	$(document).bind('keydown', shortcutkey + '+p', function (evt) {
-		if(printShortcutListener == 0)
-		{
-			share.print();
-		}
-
-		printShortcutListener++;
-
-		setTimeout(function() { printShortcutListener = 0 }, 50);
-	});
-
-	/**
-	 * Sync with Ctrl + S
-	 *
-	 * @author Daniel Marschner
-	 */
-	$(document).bind('keydown', shortcutkey + '+s', function (evt) {
-		cancelSaveTask();
-
-        if($(register_dialog).dialog('isOpen') == false || wunderlist.isUserLoggedIn() == true)
-		{
-			if(syncShortcutListener == 0 && sync.isSyncing == false)
-			{
-				timer.stop();
-				sync.fireSync();
-			}
-
-			syncShortcutListener++;
-
-			setTimeout(function() {syncShortcutListener = 0}, 50);
-		}
-	});
 
 	/**
 	 * Init background Switcher
@@ -220,12 +205,20 @@ $(document).ready(function() {
 
 	// If program has been opened 5 times, open the invite dialog
 	runtime = Titanium.App.Properties.getString('runtime');
-	if(runtime % 5 == 0 && invited == 'false')
-	account.showInviteDialog();
+	if(runtime % 10 == 0 && settings.invited == 'false')
+		wunderlist.account.showInviteDialog();
+	
+	$('a.showhelp').bind('click', function() {
+		dialogs.showHelpDialog();
+	});
+	
+	$(".wklogo").mouseenter(function(){
+		$(this).fadeOut();
+		$(".followus").fadeIn();
+	});
 
-	// For removing select all
-	$(document).bind('keydown', shortcutkey + '+a', function (evt) {
-		if ($('#note textarea:focus').length == 0 && $('input:focus').length == 0)
-			return false;
+	$(".followus").mouseleave(function(){
+		$(this).fadeOut();
+		$(".wklogo").fadeIn();
 	});
 });

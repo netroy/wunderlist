@@ -81,8 +81,8 @@
 	"error_invalid_email":	    "Indirizzo email non valido",
 	"error_login_failed":	    "Login fallito: prova di nuovo.",
 	"tutorials":			    "Tutorial",
-	"overdue_text_pl":		    "gli eventi sono sovrapposti",
-	"overdue_text_sl":		    "l'evento è sovrapposto",
+	"overdue_text_pl":		    "eventi sono sovrapposti",
+	"overdue_text_sl":		    "l'evento scaduto",
 	"day_ago":				    "giorni fa",
 	"list_delete_no":		    "No, annulla",
 	"list_delete_yes":		    "SI, cancella",
@@ -100,7 +100,7 @@
 	"account":				    "Account",
 	"extra":				    "Extra",
 	"credits":				    "Informazioni su",
-	"wunderkinder":			    "6 Wunderkinder",
+	"wunderkinder":			    "6Wunderkinder",
 	"wunderkinder_fb":		    "Seguici su Facebook",
 	"wunderkinder_tw":		    "Seguici su Twitter",
 	"delete_account":		    "Cancella Account",
@@ -160,5 +160,6 @@
 	"startday": 				"giornio d'inizio",
 	"sunday": 					"domenica",
 	"monday": 					"lunedi",
-	"exit_wunderlist":			"chiudere Wunderlist "
+	"exit_wunderlist":			"chiudere Wunderlist",
+	"hide_older_tasks":			"Nascondi eventi completati"
 }

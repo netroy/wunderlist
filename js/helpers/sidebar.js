@@ -1,67 +1,112 @@
 var sidebar = sidebar || {};
 
 /**
- * Initialize the sidebar position
+ * Initialize the sidebar
  *
- * @author Daniel Marschner
+ * @author Daniel Marschner, Dennis Schneider
  */
 sidebar.init = function() {
-	// Sidebar Position
-	if(sidebar_opened_status == "true") {
-		$(".togglesidebar").css("-webkit-transform","rotate(0deg)");
-		$("#sidebar").css("right","0px");
-		$("#lists").css("right","0px");
-		$("#content").css("right","259px");
-	} else {
-		$(".togglesidebar").css("-webkit-transform","rotate(180deg)");
-		$("#sidebar").css("right","-269px");
-		$("#lists").css("right","-269px");
-		$("#content").css("right","0px");
-	}
-
-	sidebar.toggle();
-}
+	sidebar.initPosition();
+	
+	$(".togglesidebar").live('click', function() {
+		sidebar.setPosition();
+	});	
+};
 
 /**
- * Toggle Sidebar
+ * Initialize the sidebar position
  *
- * @author Marvin Labod
+ * @author Dennis Schneider, Marvin Labod
  */
-sidebar.toggle = function() {
-	$(".togglesidebar").live('click', function() {
+sidebar.initPosition = function() {
+	// Sidebar Position	
+	if (settings.getSidebarPosition() == "right")
+	{		
+		$("body").removeClass("sidebarleft");
+		
+		// Sidebar Position Left
+		if (settings.sidebar_opened_status == "true")
+		{
+			$(".togglesidebar").removeClass("hidden");
+			$("#sidebar").css("left","auto").css('right', '0px');
+			$("#lists").css("left","auto").css('right', '0px');
+			$("#content").css("left","0px").css('right', '259px');			
+		} 
+		else 
+		{
+			$(".togglesidebar").addClass("hidden");
+			$("#sidebar").css("left", "auto").css('right', '-269px');
+			$("#lists").css("left", "auto").css('right', '-269px');
+			$("#content").css("left", "0px").css('right', '0px');						
+		}
+	}
+	else if (settings.getSidebarPosition() == "left") 
+	{	
+		$("body").addClass("sidebarleft");
 
-		if(sidebar_opened_status == "true") {
-			$(this).css("-webkit-transform","rotate(180deg)");
+		if (settings.sidebar_opened_status == "true") 
+		{
+			$(".togglesidebar").removeClass("hidden");
+			$("#sidebar").css("right", "auto").css('left', '0px');
+			$("#lists").css("right", "auto").css('left', '0px');
+			$("#content").css("right", "0px").css('left', '259px');						
+		} 
+		else 
+		{	
+			$(".togglesidebar").addClass("hidden");			
+			$("#sidebar").css("right", "auto").css('left', '-269px');
+			$("#lists").css("right", "auto").css('left', '-269px');
+			$("#content").css("right", "0px").css('left', '0px');					
+		}
+	}
+};
+
+/**
+ * Set the sidebar position based on the settings
+ *
+ * @author Dennis Schneider
+ */
+sidebar.setPosition = function() {
+	if (settings.getSidebarPosition() == "right") 
+	{
+		$("body").removeClass("sidebarleft");
+		
+		// Sidebar Position Left
+		if (settings.sidebar_opened_status == "true") {
+			$(".togglesidebar").addClass("hidden");
 			$("#sidebar").stop().animate({right: '-269'});
 			$("#lists").stop().animate({right: '-269'});
 			$("#content").stop().animate({right: '0'});
-			sidebar_opened_status = "false";
-		} else {
-			$(this).css("-webkit-transform","rotate(0deg)");
+			settings.sidebar_opened_status = "false";		
+		} 
+		else 
+		{
+			$(".togglesidebar").removeClass("hidden");
 			$("#sidebar").stop().animate({right: '0'});
 			$("#lists").stop().animate({right: '0'});
 			$("#content").stop().animate({right: '259'});
-			sidebar_opened_status = "true";
+			settings.sidebar_opened_status = "true";		
 		}
+	}
+	else if (settings.getSidebarPosition() == "left") 
+	{
+		$("body").addClass("sidebarleft");
 
-	});
+		if (settings.sidebar_opened_status == "true") {
+			$(".togglesidebar").addClass("hidden");
+			$("#sidebar").stop().animate({left: '-269'});
+			$("#lists").stop().animate({left: '-269'});
+			$("#content").stop().animate({left: '0'});								
+			settings.sidebar_opened_status = "false";		
+		} 
+		else 
+		{
+			$(".togglesidebar").removeClass("hidden");
+			$(this).css("-webkit-transform","rotate(0deg)");
+			$("#sidebar").stop().animate({left: '0'});
+			$("#lists").stop().animate({left: '0'});
+			$("#content").stop().animate({left: '259'});
+			settings.sidebar_opened_status = "true";			
+		}
+	}
 };
-
-$(function() {
-	var sidebarToggle = false;
-
-	// Shortcut Bind Command(or Ctrl)+b - Hide the sidebar
-	$(document).bind('keydown', shortcutkey + '+b', function (evt) {
-		if(sidebarToggle == false)
-		{
-			sidebarToggle = true;
-			$('div#right span.togglesidebar').click();
-		}
-
-		setTimeout(function()
-		{
-			sidebarToggle = false;
-		}, 100);
-	});
-	
-});

@@ -1,7 +1,6 @@
 var share = share || {};
 
-share.init = function()
-{
+share.init = function() {
 	$('#listfunctions a.list-email').live("click", share.share_by_email);
 	$('#listfunctions a.list-cloud').live("click", dialogs.showCloudAppDialog);
 	$('#listfunctions a.list-print').live("click", share.print);
@@ -15,126 +14,89 @@ share.init = function()
 	$('#cloudtip span.copy').live("click", function() {
 		Titanium.UI.Clipboard.setText($('#cloudtip span.link').text());
 	});
-}
+};
 
 /**
  * Send lists by mail
  *
- * @author Christian Reber
+ * @author Christian Reber, Daniel Marschner
  */
-share.share_by_email = function()
-{
+share.share_by_email = function() {
 	// Get All Tasks
-	var j_tasks = $('ul.mainlist span.description');
+	var sharingTasks = $('ul.mainlist li');
 	
-	if (j_tasks.length > 0)
+	if (sharingTasks.length > 0)
 	{
 		// Generate List Name
-		var name = encodeURI('Wunderlist - ' + $('#content h1:first').text());
-
-		var list_id        = $('ul#list').attr('rel');
-		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
-
-		var tasks = share.getTasksForSharing(is_filter_list, list_id);
-		
-		// Build tasks html
+		var name = encodeURIComponent('Wunderlist - ' + $('#content h1:first').text());
 		var body = '';
-		
-		$.each(tasks, function(key, value)
-		{
-			// Add task
-			if (is_filter_list == false)
-			{
-				body += encodeURI('• ' + value.name);
-			}
-			else
-			{
-				body += encodeURI('• ' + value.task_name);
-			}
+
+		$('ul.mainlist li').each(function() {
+			body += encodeURIComponent("• " + Encoder.htmlDecode($(this).children('span.description').text()));
 
 			// Add date
-			if (value.date != '')
-			{
-				body += '%20(' + convert_timestamp_into_date(value.date) + ')';
-			}
+			if ($(this).children('span.showdate').html() != '' && $(this).children('span.showdate').html() != null)
+				body += "%20(" + $(this).children('span.showdate').html() + ")";
 			
 			// Add note
-			if (value.note != '')
-			{
-				body += '%0A%0A' + encodeURI(value.note) + '%0A';
-			}
-			
-			body += '%0A';
-		});
+			if ($(this).children('span.note').html() != '')
+				body += "%0d%0a" + encodeURIComponent(Encoder.htmlDecode($(this).children('span.note').html())) + "%0d%0a";
 
-		Titanium.Desktop.openURL('mailto:?subject=' + name + '&body=' + body + '%0A' + encodeURI(' I generated this list with my task tool Wunderlist from 6 Wunderkinder - Get it from http://www.6wunderkinder.com'));
+			body += "%0d%0a";
+		});
+		
+		Titanium.Desktop.openURL("mailto:?subject=" + name + "&body=" + body + "%0d%0a" + encodeURI(' I generated this list with my task tool Wunderlist from 6 Wunderkinder - Get it from http://www.6wunderkinder.com/wunderlist'));
 	}
 	else
 	{
-		alert(language.data.empty_list)
+		dialogs.showErrorDialog(wunderlist.language.data.empty_list);
 	}
-}
+};
 
 /**
  * Send lists to Cloudapp
  *
- * @author Christian Reber
+ * @author Christian Reber, Daniel Marschner
  */
-share.share_with_cloudapp = function()
-{
-	var url = 'http://cloudapp.wunderlist.net';
-	
+share.share_with_cloudapp = function() {
 	// Get All Tasks
 	if ($('ul.mainlist span.description').length > 0)
 	{
+		var user_credentials = wunderlist.account.getUserCredentials();
+
 		// Generate data
-		var data = {};		
-		var user_credentials = wunderlist.getUserCredentials();
+		var data = {
+			'email' : user_credentials['email'],
+			'list'  : $('#content h1:first').text(),
+			'tasks' : []
+		};
 
-		data['email']    = user_credentials['email'];
-		data['password'] = user_credentials['password'];
-		data['list']     = $('#content h1:first').text();
-
-		var list_id        = $('ul#list').attr('rel');
-		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
-
-		var tasks = share.getTasksForSharing(is_filter_list, list_id);
-		
-		// Build tasks html
-		data['tasks'] = [];
-		
-		$.each(tasks, function(key, value)
-		{
+		$('ul.mainlist li').each(function() {
 			var new_task = [];
-			
-			// Add name
-			if (is_filter_list == false)
-			{
-				new_task.push(unescape(value.name));
-			}
-			else
-			{
-				new_task.push(unescape(value.task_name));
-			}
+
+			new_task.push($(this).children('span.description').html());
 
 			// Add date
-			new_task.push(value.date);
+			if ($(this).children('span.showdate').hasClass('timestamp'))
+				new_task.push(parseInt($(this).children('span.timestamp').attr('rel')) + 86400);
+			else
+				new_task.push(0);
 			
 			// Add note
-			new_task.push(unescape(value.note));
-			
+			if ($(this).children('span.note').html() != '')
+				new_task.push($(this).children('span.note').html());
+
 			data['tasks'].push(new_task);
 		});
 		
 		// Generate CloudApp Link
 		$.ajax({
-			url  : url,
-			type : 'POST',
-			data : data,
-			
-			success: function(response_data, text, xhrobject)
+			url     : 'http://cloudapp.wunderlist.net',
+			type    : 'POST',
+			data    : data,
+			success : function(response_data, text, xhrobject)
 			{
-				var response = eval('(' + response_data + ')');
+				var response = $.parseJSON(response_data);
 				
 				// Everything fine?
 				if (response.code == 100)
@@ -144,24 +106,23 @@ share.share_with_cloudapp = function()
 				// Else show an error
 				else
 				{
-					alert(language.data.try_again_later);
+					alert(wunderlist.language.data.try_again_later);
 				}
 			}
 		});
 	}
 	else
 	{
-		alert(language.data.empty_list);
+		dialogs.showErrorDialog(wunderlist.language.data.empty_list);
 	}
-}
+};
 
 /**
  * Print the current list
  *
  * @author Christian Reber
  */
-share.print = function()
-{
+share.print = function() {
 	// NOTE: This is a workaround for printing - Titanium doesn't support window.print(), so we have to do it that way, still cool feature
 	
 	// Are they any tasks?	
@@ -178,39 +139,21 @@ share.print = function()
 		// Replace List Title
 		template = template.replace(/####LIST####/g, $('#content h1:first').text());
 
-		var list_id        = $('ul#list').attr('rel');
-		var is_filter_list = ($('ul.mainlist').hasClass('filterlist') == true);
-
-		var tasks = share.getTasksForSharing(is_filter_list, list_id);
-		
-		// Build tasks html
+		// Build tasks HTML
 		var html_code = '';
 		
-		$.each(tasks, function(key, value)
-		{
-			// Add task
-			if (is_filter_list == false)
-			{
-				// If is normal list
-				html_code += '<li><span></span>' + unescape(value.name);
-			}
-			else
-			{
-				// If is filter list
-				html_code += '<li><span></span>' + unescape(value.task_name);
-			}
-			
+		// Generate the print HTML data
+		$('ul.mainlist li').each(function() {
+			// If is normal list
+			html_code += '<li><span></span>' + $(this).children('span.description').html();
+								
 			// Add date
-			if (value.date != '')
-			{
-				html_code += ' (<b>' + convert_timestamp_into_date(value.date) + '</b>)';
-			}
+			if ($(this).children('span.showdate').html() != '' && $(this).children('span.showdate').html() != null)
+				html_code += ' (<b>' + $(this).children('span.showdate').html() + '</b>)';
 			
 			// Add note
-			if (value.note != '')
-			{
-				html_code += '<p>' + unescape(value.note.replace(/\n/g,'<br/>')) + '</p>';
-			}
+			if ($(this).children('span.note').html() != '')
+				html_code += '<p>' + $(this).children('span.note').html().replace(/\n/g,'<br/>') + '</p>';
 			
 			html_code += '</li>';
 		});
@@ -220,7 +163,7 @@ share.print = function()
 
 		file.write(template);
 		
-		if (os == 'darwin')
+		if (settings.os === 'darwin')
 			var file_url = 'file://';
 		else
 			var file_url = 'file:///';
@@ -229,22 +172,21 @@ share.print = function()
 	}
 	else
 	{
-		alert(language.data.empty_list);
+		dialogs.showErrorDialog(wunderlist.language.data.empty_list);
 	}
-}
+};
 
 /**
  * Get the tasks for the according shared list
  *
  * @author Dennis Schneider
  */
-share.getTasksForSharing = function(is_filter_list, list_id)
-{
+share.getTasksForSharing = function(is_filter_list, list_id) {
 	// Is it a filterlist or a normal list?
 	if (is_filter_list == false)
 	{
 		// Get all tasks from database within the current list
-		var tasks = wunderlist.getTasksByListId(list_id);
+		var tasks = wunderlist.database.getTasks(undefined, list_id);
 	}
 	else
 	{
@@ -252,28 +194,27 @@ share.getTasksForSharing = function(is_filter_list, list_id)
 
 		if (type == 'withdate')
 		{
-			var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
+			var tasks = wunderlist.database.getFilteredTasksForPrinting('date', type);
 		}
 		else if (type == 'nodate')
 		{
-			var tasks = wunderlist.getFilteredTasksForPrinting('date', type);
+			var tasks = wunderlist.database.getFilteredTasksForPrinting('date', type);
 		}
 		else
 		{
-			var tasks = wunderlist.getFilteredTasksForPrinting(type);
+			var tasks = wunderlist.database.getFilteredTasksForPrinting(type);
 		}
 	}
 
 	return tasks;
-}
+};
 
 /**
  * Converts a timestamp to a real date
  *
  * @author Christian Reber, Dennis Schneider
  */
-convert_timestamp_into_date = function(timestamp)
-{
+convert_timestamp_into_date = function(timestamp) {
 	var selected_date  = new Date(timestamp * 1000);
 
 	if(timestamp != 0)
@@ -294,7 +235,7 @@ convert_timestamp_into_date = function(timestamp)
 		if (Titanium.App.Properties.hasProperty('dateformat') == true)
 			var dateformat = Titanium.App.Properties.getString('dateformat');
 		else
-			var dateformat = language.code;
+			var dateformat = wunderlist.language.code;
 
 		if (dateformat == 'de') {
 			return day + '.' + month + '.' + year;

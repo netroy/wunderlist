@@ -1,23 +1,31 @@
-var notifications = notifications || {};
+/**
+ * wunderlist.notifications.js
+ *
+ * Class for handling notifications
+ * 
+ * @author Dennis Schneider
+ */
+
+wunderlist.notifications = wunderlist.notifications || {};
 
 /**
  * Initializes an notification object
  * 
  * @author Dennis Schneider
  */
-notifications.init = function()
+wunderlist.notifications.init = function()
 {
-	this.notification = Titanium.Notification.createNotification(Titanium.UI.createWindow());
-}
+	wunderlist.notification = Titanium.Notification.createNotification(Titanium.UI.createWindow());
+};
 
 /**
  * Creates a new notification
  * 
  * @author Dennis Schneider
  */
-notifications.createNotification = function(title, message)
+wunderlist.notifications.createNotification = function(title, message)
 {
-	this.notification.setTitle(title);
-	this.notification.setMessage(message);
-	this.notification.show();
-}
+	wunderlist.notification.setTitle(title);
+	wunderlist.notification.setMessage(message);
+	wunderlist.notification.show();
+};

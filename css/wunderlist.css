@@ -3,24 +3,38 @@
 * {
 margin:0px;
 padding:0px;
-outline:none;
+outline:none !important;
 text-decoration:none}
+
 li {list-style:none}
 
 /* GENERAL ----------------------------------------------------- */
 
-html {background:#333}
+html {background:#333; height:100%}
+
 
 body {
 background:#000 url(/backgrounds/wood.jpg) top center no-repeat fixed;
+/*-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;*/
+
 font-family: Arial, sans-serif;
 overflow:hidden;
+height:100%;
 font-size: 12px;
 color:#4e4e4e}
 
-#bghelp {position:fixed; top:0px; left:0px; right: 0px; bottom:0px; width:100%; height:100%}
+#bghelp {position:fixed; top:0px; left:0px; right: 0px; bottom:0px; width:100%; height:100%;
+/*-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover*/}
 
 .red{color:#c30}
+
+.cursor{cursor:pointer}
 
 #loading {
 display: none;
@@ -31,7 +45,11 @@ top: 10%;
 left: 10%;
 background: #fff}
 
-.remove_date {text-align:center;color:#11C;text-decoration:underline;padding-bottom:5px;font-size:10px;cursor:pointer}
+.remove_date {
+text-align:center;
+color:#11C;
+text-decoration:underline;
+padding-bottom:5px;font-size:10px;cursor:pointer}
 
 #content h1, #content h2, #content h3 {
 word-wrap: break-word;font-size:18px;letter-spacing:1px;color:#fff; text-shadow: 0px 1px 3px #333;
@@ -39,12 +57,24 @@ text-align:center;margin-bottom:13px; padding-bottom:3px}
 
 #content h1 {margin-top:14px}
 
-#content h2 { font-size:14px; opacity:0.8; margin-top:25px; margin-bottom:10px}
-#content h3 { font-size:12px; opacity:0.7; text-align:center; padding-top:16px !important; margin-top:0px}
+#content h2 { 
+font-size:14px;
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+opacity:0.8; 
+-moz-opacity: 0.8;
+margin-top:25px; 
+margin-bottom:10px}
 
-a {color:#393939 }
+#content h3 { 
+font-size:12px; 
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+opacity:0.7;
+-moz-opacity: 0.7;
+text-align:center; padding-top:16px !important; margin-top:0px}
 
-.pl8 { padding-left: 8px}
+a {color:#393939}
+
+.pl8 {padding-left: 8px}
 
 /* SIDEBAR ----------------------------------------------------------------------------------------------- */
 
@@ -65,20 +95,6 @@ right:0px;
 bottom:36px;
 top:59px}
 
-/*#top {
-padding-top:4px;
-position:fixed; top:0px; left:0px; right:0px; 
-z-index:100; background: -webkit-gradient(linear, left top, left bottom, from(#c8c8c8), to(#aaa)); 
-height:34px; border-bottom:1px solid #515151}
-#macmenu {position:absolute; right: 226px; left:280px}
-#macmenu a {width:25px;height:25px;display:block;display:inline-block; margin-right:12px;}
-#macmenu a.addtaskbutton {background:url(/images/compose.png); }
-#macmenu a.sharebutton {background:url(/images/top_share.png); }
-#macmenu a.mailbutton {background:url(/images/top_mail.png); }
-#macmenu a.cloudbutton {background:url(/images/top_cloud.png); }	
-#macmenu a.printbutton {background:url(/images/top_print.png); }
-#top.blurred {background:#e9e9e9}*/
-
 #sidebar .separator {
 border-bottom:1px solid #e8e9f0;
 height:2px;
@@ -89,16 +105,19 @@ top:56px}
 
 #sidebar .searchside {
 position:absolute;	
-right:45px;
-z-index:2;
+right:10px;
 top:5px;
-width:170px;
+width:204px;
 padding:0px 14px 0px 18px;
 margin-left:20px;
 margin-top:12px;
 -webkit-box-shadow:0px 1px 1px #fff;
+-moz-box-shadow:0px 1px 1px #fff;
+box-shadow:0px 1px 1px #fff;
 border:1px solid #c8cddd;
 -webkit-border-radius:15px;
+-moz-border-radius:15px;
+border-radius:15px;
 background:#fff url(/images/searchicon.png) 5% 50% no-repeat}
 
 #sidebar .searchside input {
@@ -112,25 +131,26 @@ margin-left:5px}
 #sidebar .searchside .clearsearch {
 display:none;
 position:absolute;
-opacity:0.5;
-background:url(/icons/delete_active.png);
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+opacity:0.7; 
+-moz-opacity: 0.7;
+background:url(/images/icons/delete_active.png);
 position:absolute;
 right:100px;
 top:4px;
-z-index:10;
 cursor:pointer;
 right:6px;
 height:14px;
 width:14px}
 
-#sidebar .searchside:hover .clearsearch {
-display:block}
+#sidebar .searchside:hover .clearsearch {display:block}
 
 #sidebar h3 {
-z-index:1;
 position:absolute;
 right:0px;
+background: #e7eaf2;
 background: -webkit-gradient(linear, left top, left bottom, from(#f6f7f8), to(#e7eaf2));
+background: -moz-linear-gradient(top,  #f6f7f8,  #e7eaf2);
 border-bottom:1px solid #d1d2d4;
 padding-left:35px;
 width:224px;
@@ -138,34 +158,65 @@ padding-top:22px;
 padding-bottom:10px;
 height:26px}
 
-#sidebar h3 .active {background:url(/images/editdone.png)}
-#sidebar h3 .add { text-indent: -9999px; float:right; margin: 4px 18px 0 0; background:url(/images/addlist.png); width: 12px; height: 12px; display:block }
+#sidebar div.deletep { 
+background:url(/images/icons/delete_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; 
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
 
-#sidebar div.deletep { background:url(/icons/delete_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; opacity:0.5}
 #sidebar div.deletep:hover {opacity:1.0}
 
-#sidebar div.editp { background:url(/icons/edit_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; opacity:0.5}
+#sidebar div.editp { background:url(/images/icons/edit_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none;
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
+
 #sidebar div.editp:hover {opacity:1.0}
 
-#sidebar div.savep { background:url(/icons/editdone_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; opacity:0.5}
+#sidebar div.savep { background:url(/images/icons/editdone_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none;
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
+
 #sidebar div.savep:hover {opacity:1.0}
 
-#sidebar b.inbox {padding-left:24px; background:url(/icons/inbox.png) no-repeat; background-position:0px 0px;}
-#sidebar b.shared {padding-right:20px; background:url(/icons/sharelist.png) no-repeat; background-position:-1px right}
+#sidebar b.inbox {padding-left:24px; background:url(/images/icons/inbox.png) no-repeat; background-position:0px 0px;}
+
+/* Share List Icon Behavior */
+
+#sidebar b.sharep {padding-right:22px;position:relative}
+
+#sidebar b.sharep .sharelist, #sidebar b.sharep .sharedlist {
+position:absolute; right:0px; top:-1px; width:17px; height:17px; background:url(/images/icons/sharelist.png) top right no-repeat; cursor:pointer !important}
+
+#sidebar b.sharep .sharelist {display:none}
+
+#sidebar .list:hover .sharelist {display:block; opacity:0.6}
+
+#sidebar .ui-state-disabled .sharelist {background:url(/images/icons/sharelist_white.png) top right no-repeat !important}
+
+#sidebar .ui-state-disabled .sharedlist {background:url(/images/icons/sharelist_white.png) top right no-repeat !important; opacity:1.0 !important}
+
+#sidebar b.sharep .sharedlist:hover, #sidebar b.sharep .sharelist:hover {opacity:1.0}
 
 #sidebar .list {
 cursor:pointer;
 color:#444;
 text-shadow: #fff 0px 1px 2px;
 padding:10px 8px 0px 12px;
+background: #f8f8f8;
 background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
+background: -moz-linear-gradient(top,  #f8f8f8,  #f3f4f6);
 display:block;
 height:23px;
 border-bottom:1px solid #e1e2e4}
 
-#sidebar .list:first-child {
-border-top:1px solid #fff}
-#sidebar .list:hover, #sidebar .list.hover {background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));}
+#sidebar .list:first-child {border-top:1px solid #fff}
+
+#sidebar .list:hover, #sidebar .list.hover {
+background:#fff;
+background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));
+background: -moz-linear-gradient(top,  #fff,  #f7f8fa)}
 
 #sidebar .list b {
 white-space:nowrap;
@@ -184,29 +235,40 @@ display:block;
 height:23px;
 border-bottom:1px solid #fff}
 
-#sidebar .list input, #sidebar .list .input-list {
-background:#fff;  border:1px solid #bbb; padding:4px 8px; margin-top:-4px; -webkit-border-radius:15px; font-size:12px;
-font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
--webkit-box-shadow: inset 1px 1px 3px #999; width:130px !important}
+#sidebar .list input, #sidebar .list .input-list { 
+outline:none !important; background:#fff;  border:1px solid #bbb; padding:4px 8px; margin-top:-4px; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px; font-size:12px; font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
+box-shadow: inset 1px 1px 3px #999; -webkit-box-shadow: inset 1px 1px 3px #999; -moz-box-shadow: inset 1px 1px 3px #999; width:134px !important}
 
 /* List Edit Icons */
 
-#sidebar .ui-state-disabled input , #sidebar .ui-dropped-disabled input {background: #21638c; color:#fff; -webkit-box-shadow: inset 1px 1px 3px #174460}
+#sidebar .ui-state-disabled input , #sidebar .ui-dropped-disabled input {
+background: #21638c; color:#fff; 
+-webkit-box-shadow: inset 1px 1px 3px #174460; 
+-moz-box-shadow: inset 1px 1px 3px #174460;
+box-shadow: inset 1px 1px 3px #174460}
 
-#sidebar .ui-state-disabled div.deletep , #sidebar .ui-dropped-disabled div.deletep {background:url(/icons/delete_white.png)}
-#sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/icons/edit_white.png)}
-#sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/icons/editdone_white.png)}
+#sidebar .ui-state-disabled div.deletep , #sidebar .ui-dropped-disabled div.deletep {background:url(/images/icons/delete_white.png)}
+#sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/images/icons/edit_white.png)}
+#sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/images/icons/editdone_white.png)}
 #sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-position:0px -14px}
-#sidebar .ui-state-disabled b.shared , #sidebar .ui-dropped-disabled b.shared {background-position:-16px right}
 
-#sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {opacity:0.5}
+#sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
+
 #sidebar .ui-state-disabled div:hover , #sidebar .ui-dropped-disabled div:hover {opacity:1.0}
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
+background:#33a3ef !important;
 background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
+background: -moz-linear-gradient(top,  #33a3ef,  #168ad4) !important;
 border-bottom:1px solid #177bbd; color:#fff;text-shadow: #125a8a 0px 1px 2px}
 
-#sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {opacity:1.0}
+#sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+opacity:1.0; 
+-moz-opacity: 1.0}
 
 #sidebar .ui-state-disabled span, #sidebar .ui-dropped-disabled span {background:url(/images/taskcounth.png) no-repeat}
 
@@ -216,7 +278,7 @@ float:right; width:31px; height:16px;
 background:url(/images/taskcount.png) no-repeat;
 text-align:center; display:block;
 padding-top:3px;
-margin-top:-2px;
+margin-top:-3px;
 font-weight:bold}
 
 #sidebar #notification {
@@ -227,8 +289,7 @@ position: absolute;
 right:0px;
 height:32px;
 padding-top:10px;
-width: 259px;
-z-index: 50}
+width: 259px}
 
 #sidebar #notification div {
 text-align:center;
@@ -242,30 +303,23 @@ padding-top:6px;
 width:214px;
 color:#fff}
 
-/* BOTTOM BAR -------------------------------------------------------------------------------*/
+/* LEFT BOTTOM BAR -------------------------------------------------------------------------------*/
 
 #bottombar {
-background:url(/images/bottombar.jpg) repeat-x;
+background:url(/images/bottombar.png) repeat-x;
 position:fixed;
 bottom:0px;
 left:0px;
 height:36px;
 width:100%}
 
-/* LEFT BOTOTMBAR ------------------------------------------------------------------------- */
+#left {float: left; padding:8px; padding-right:0px; padding-left:42px}
 
-#left {float: left; padding:9px; padding-right:0px; padding-left:40px}
-
-#left .loggedinas {
-min-width:140px;
-text-align:center;
--webkit-border-radius:10px;
--moz-border-radius:10px;
-border-radius:10px;
-margin-right:6px}
-
-#left a {
-padding:0px 10px;
+#left a.filter {
+-webkit-box-shadow:0px 1px 1px #676767;
+-moz-box-shadow:0px 1px 1px #676767;
+box-shadow:0px 1px 1px #676767;
+padding:0px 8px;
 text-shadow: #333 0px 1px 2px;
 background:url(/images/bottombar_menu.png) repeat-x;
 font-size:10px;
@@ -276,19 +330,52 @@ color:#cccccc;
 display:block;
 cursor:pointer;
 height:16px;
-font-size:11px}
+font-size:11px;
+border-top:1px solid #343434;
+border-bottom: 1px solid #343434}
 
-#left .roundedleft {border-left:none;-webkit-border-radius: 10px 0px 0px 10px}
+#left .roundedleft {
+border-left:1px solid #343434;
+border-radius: 10px 0px 0px 10px;
+-webkit-border-radius: 10px 0px 0px 10px;
+-moz-border-radius: 10px 0px 0px 10px}
 
-#left .roundedright {-webkit-border-radius: 0px 10px 10px 0px;border-right:none;margin-right:12px}
+#left .roundedright {
+border-right:1px solid #343434;
+-webkit-border-radius: 0px 10px 10px 0px;
+border-radius: 0px 10px 10px 0px;
+-moz-border-radius: 0px 10px 10px 0px;
+margin-right:12px}
 
-#left a:hover, #left a.active {
+#left roundedboth {
+-moz-border-radius:10px;
+-webkit-border-radius:10px;
+border-radius:10px}
+
+#left .loggedinas {
+min-width:140px;
+text-align:center;
+padding-left:20px !important;
+border-right:1px solid #343434;
+border-left:1px solid #343434;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+border-radius:10px;
+margin-right:6px;
+position:relative;}
+
+#left .loggedinas span {
+background:url(/images/menuopen.png);
+width:6px;
+height:4px;
+top:8px;
+left:9px;
+position:absolute}
+
+#left a.filter:hover, #left a.active, #left a.droppable {
 color:#fff;
-height:15px;
-border-bottom:1px solid #126faa;
 background:url(/images/bottombar_active.png) top left repeat-x;
--webkit-box-shadow:1px 1px 3px #3e3e3e;
-text-shadow: #176ea5 0px 1px 2px}
+text-shadow:0px 1px 1px #176ea5}
 
 #sync {
 position:fixed; bottom:6px; left:9px;
@@ -304,68 +391,112 @@ height:14px;
 width:14px;
 background-image: url(/images/sync_arrow.png)}
 
-span.rotation {
--webkit-animation-name: rotation;
--webkit-animation-duration: 0.7s;
--webkit-animation-iteration-count: infinite;
--webkit-animation-timing-function: linear}
-
-@-webkit-keyframes rotation {
-	0% { -webkit-transform: rotate(0deg)}
-	100% {-webkit-transform: rotate(360deg)}
-}
-
 .togglesidebar {
-width:18px;
-height:18px;
+width:19px;
+height:19px;
 cursor:pointer;
 position:fixed;
-background:url(/images/sidebartoggle.png);
+background:url(/images/sidebartogglen.png) no-repeat;
 right:21px;
-z-index:1000;
-bottom:10px}
+bottom:7px}
 
-/* RIGHT BOTOTMBAR ------------------------------------------------------------------------- */
+.hidden {background-position: -19px 0px}
 
-#right {float:right; padding:8px 40px 8px 0px}
+.togglesidebar:hover {background-image:url(/images/sidebartoggleh.png)}
+
+/* RIGHT BOTTOMBAR ------------------------------------------------------------*/
+
+#right {float:right; padding:10px 40px 8px 0px}
 
 #right #backgroundList {
-background:rgba(50,50,50,0.8);
+-webkit-box-shadow:inset 0px 1px 1px #6d6d6d; -moz-box-shadow:inset 0px 1px 1px #6d6d6d; box-shadow:inset 0px 1px 1px #6d6d6d;
+border:1px solid #323232;
+z-index:5;
+background:#4b4b4b;
 width:70px;
 position:absolute;
 bottom:46px;
-right:17px;
+right:27px;
 padding:5px 0px 0px 5px;
 -moz-border-radius:3px;
 -webkit-border-radius:3px;
-border-radius:3px;}
+border-radius:3px}
 
 	#right #backgroundList .arrow {
-    border-color: rgba(50,50,50,0.8) transparent transparent transparent;
+    border-color: #4b4b4b transparent transparent transparent;
     border-style:solid;
 	position:absolute;
+	z-index:6;
 	left:32px;
-	bottom:-10px;
+	bottom:-12px;
 	bottom:24;
-    border-width:5px;
+    border-width:6px;
     width:0;
     height:0}
 
-#bottombar #right a {width:18px; height:19px; float:right; display:block; opacity:0.5; text-indent: -9999px; margin-right:5px}
-
 #right #backgroundList a {margin-bottom:5px}
 
-#bottombar #right a:hover, #bottombar #right a.active { cursor:pointer; opacity:1.0}
+#bottombar #right a {width:18px; height:19px; float:right; display:block; text-indent: -9999px; margin-right:5px}
 
-#bottombar #right a.bgone { background:url(/images/icon_wood.png)}
-#bottombar #right a.bgtwo { background:url(/images/icon_wheat.png)}
-#bottombar #right a.bgthree { background:url(/images/icon_bokeh.png)}
-#bottombar #right a.bgfour { background:url(/images/icon_blue.png)}
-#bottombar #right a.bgfive { background:url(/images/icon_royal_purple.png)}
-#bottombar #right a.bgsix { background:url(/images/icon_dark.png)}
-#bottombar #right a.bgseven { background:url(/images/icon_white.png)}
-#bottombar #right a.bgeight { background:url(/images/icon_monster.png)}
-#bottombar #right a.bgnine { background:url(/images/icon_darkwood.png)}
+/* Add List */
+
+#right a.addlist {
+-webkit-box-shadow:0px 1px 1px #676767;
+-moz-box-shadow:0px 1px 1px #676767;
+box-shadow:0px 1px 1px #676767;
+padding:0px 10px;
+font-size:10px;
+padding-top:3px;
+width:auto !important;
+color:#ccc !important;
+display:block;
+text-indent: 0px !important;
+cursor:pointer;
+font-size:11px;
+border:1px solid #343434;
+margin-top:-2px;
+border-radius:10px;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+height:16px !important;
+color:#fff !important;
+background:url(/images/bottombar_active.png) top left repeat-x;
+text-shadow:0px 1px 1px #135680 !important; /*176ea5*/
+font-weight:bold;
+opacity:1.0 !important}
+
+/* Show Help */
+
+.showhelp {margin:0px 10px 0px 6px !important;background:url(/images/showhelp.png);width:19px !important;height:19px}
+
+.showhelp:hover {background-position: 19px 0px}
+
+/* BG Switcher START */
+
+.backgroundswitcher {
+opacity:1.0 !important; background:url(/images/bgswitch.png); height:19px; width:17px; padding-left:17px; background-repeat: no-repeat !important}
+
+.backgroundswitcher:hover, .backgroundswitcheractive {background-position: 0px -19px}
+
+.activebackground { width:14px; height:19px; background-position: top right !important; display:block; background-repeat: no-repeat !important}
+
+#bottombar #right a:hover { cursor:pointer}
+
+#bottombar .bgone { background:url(/images/icon_wood.png)}
+#bottombar .bgtwo { background:url(/images/icon_wheat.png)}
+#bottombar .bgthree { background:url(/images/icon_bokeh.png)}
+#bottombar .bgfour { background:url(/images/icon_blue.png)}
+#bottombar .bgfive { background:url(/images/icon_royal_purple.png)}
+#bottombar .bgsix { background:url(/images/icon_darkfade.png)}
+#bottombar .bgseven { background:url(/images/icon_whitefade.png)}
+#bottombar .bgeight { background:url(/images/icon_monster.png)}
+#bottombar .bgnine { background:url(/images/icon_darkwood.png)}
+
+#bottombar .bgten { background:url(/images/icon_chalkboard.png)}
+#bottombar .bgeleven { background:url(/images/icon_forrest.png)}
+#bottombar .bgtwelve { background:url(/images/icon_leaf.png)}
+
+span#credits { float:right; font-weight: bold; padding:2px 5px; cursor:pointer}
 
 /* CONTENT --------------------------------------------------------------------------------- */
 
@@ -375,42 +506,65 @@ color:#4e4e4e;
 overflow:auto;
 position:fixed; left:0px; right:259px; bottom: 36px; top:0px}
 
+	#content ul {min-width:300px !important}
+
 #content .mainlist, #content .donelist { margin-bottom:12px }
 
 #content .mainlist li, .donelist li {
 background:url(/images/task.jpg) repeat-x;
 -webkit-box-shadow:0px 1px 3px #333;
+-moz-box-shadow:0px 1px 3px #333;
+box-shadow:0px 1px 3px #333;
 padding:7px 0px 0px 8px;
--moz-border-radius:5px;
 position:relative;
 -webkit-border-radius:5px;
+-moz-border-radius:5px;
+border-radius:5px;
+border-radius:5px;
 overflow: hidden;
 cursor:pointer;
 height:20px;
 margin-bottom:5px}
 
+/* Add Task Field */
+
 div.add {
 margin-bottom:20px;
 position:relative; height:33px;
 background:url(/images/addbar.png) repeat-x;
--webkit-border-radius:6px}
+-webkit-border-radius:6px;
+border-radius:6px;
+-moz-border-radius:6px}
 
-div.add .showdate {position:absolute; right:28px !important; top:10px; font-size:11px; font-weight:bold; color:#fff}
+div.add div.addwrapper {width:auto !important;position:absolute;right:90px;top:0px;left:28px}
 
-div.add input {
-border:none; color:#fff; font-weight:bold; font-family:Arial, Verdana; font-size:13px;
-width:auto !important;padding:9px 0px; background:none;
-position:absolute;right:0;top:3px;left:28px}
+div.add div.addwrapper input {
+width:100%; margin:auto !important; padding:10px 0px; background:none;
+font-family:Arial, Verdana; font-size:13px; color:#fff;border:none}
 
-#content li.done {opacity:0.6; color:#333;text-decoration:line-through}
+div.add div.addwrapper.filter-add {left: 10px !important}
+
+div.add .showdate {position:absolute; right:-70px !important; top:10px; font-size:11px; font-weight:bold; color:#fff}
+
+/* Done Tasks */
+
+#content li.done {
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+opacity:0.6; 
+-moz-opacity: 0.6;
+filter:Alpha(opacity=60);
+color:#333;text-decoration:line-through}
 
 #content span.fav, #content .donelist span.favina { cursor:default}
 
 #content .placeholder {
 background:#fff;
-opacity:0.2;
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity20)";
+opacity:0.2; 
+-moz-opacity: 0.2;
 -moz-border-radius:5px;
 -webkit-border-radius:5px;
+border-radius:5px;
 height:24px;
 padding-top:10px;
 padding-left:10px;
@@ -422,21 +576,31 @@ width:35px !important;
 height:35px !important;
 background:url(/images/dragging.png) !important}
 
-#content .description {white-space:nowrap;text-overflow:ellipsis;overflow:hidden;position:absolute;right:110px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:#333}
+#content .description {
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;
+right:132px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:#333}
 
-#content .showdate {position:absolute; right:50px; font-size:11px; font-weight:bold}
+#content .description a {color:#2597e2}
+#content .description a:hover {text-decoration: underline}
+
+#content .showdate {position:absolute; right:52px; font-size:11px; font-weight:bold}
 
 #content .addhere {letter-spacing:1px; text-shadow: #333 0px 1px 2px; font-weight:bold; margin-top:12px; text-transform: uppercase}
 #content .addhere a { color:#fff}
 #content .addhere a:hover { cursor:pointer}
 
 #content button#older_tasks_head, #content button#hide_older_tasks {
-cursor:pointer; width: 175px; margin:30px auto 0px auto;
+font-weight:normal; font-size:11px;
+cursor:pointer; width: 200px; margin:30px auto 0px auto;
 display:block; float:none;
-background:url(/images/task.jpg) repeat-x;
--webkit-box-shadow:0px 1px 3px #333; -moz-gradient:none;
+background:url(/images/task.jpg);
+-webkit-box-shadow:0px 1px 3px #333;
+-moz-box-shadow:0px 1px 3px #333;
+box-shadow:0px 1px 3px #333;
 border:none;
-opacity:0.6}
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+opacity:0.6; 
+-moz-opacity: 0.6;}
 
 #content button#hide_older_tasks {
 display: none}
@@ -452,15 +616,29 @@ li input { font-family:Arial; border:none;margin-left:7px;margin-top:-3px; backg
 
 .input-checked {float:left; margin-right:7px}
 .input-add {width:80%; margin-right:7px; margin-top:-3px; padding-left:20px}
-.input-add::-webkit-input-placeholder { color:#fff; opacity:0.7}
+
+.input-add::-webkit-input-placeholder { color:#fff; opacity:0.5}
+.input-add::-moz-input-placeholder { color:#fff; opacity:0.5}
+.input-add::input-placeholder { color:#fff; opacity:0.5}
 
 .ui-datepicker-trigger { opacity:0.8; float:left; margin-right:7px; cursor:pointer}
-.mainlist li .ui-datepicker-trigger { float:left; margin-right:3px}
+.mainlist li .ui-datepicker-trigger { float:left; margin-right:7px}
 .ui-datepicker-trigger:hover {opacity:1.0}
+
 div.add .ui-datepicker-trigger { margin-top:10px; margin-left:7px}
 
-#task-edit {position:absolute;right:110px;left:45px;top:7px;
--webkit-box-shadow: inset 1px 1px 3px #999;-webkit-border-radius:15px;background:#fff; padding:3px 6px}
+.donelist .ui-datepicker-trigger { display:none}
+
+#task-edit {position:absolute;right:134px;left:45px;top:7px;
+-webkit-box-shadow: inset 1px 1px 3px #999;
+-moz-box-shadow: inset 1px 1px 3px #999;
+box-shadow: inset 1px 1px 3px #999;
+-webkit-border-radius:15px;
+border-radius:15px;
+-moz-border-radius:15px;
+background:#fff; 
+padding:3px 6px}
+
 #ui-datepicker-div { z-index: 100 !important}
 
 /* BADGES ------------------------------------------------------------------------------ */
@@ -470,81 +648,59 @@ position:relative}
 
 #today span, #overdue span, #all span, #starred span, #someday span, #done span, #withoutdate span, #thisweek span, #tomorrow span {
 position:absolute;
-z-index:5;
-top:-10px; right:-5px;
+top:-10px; right:0px;
 padding:2px 6px;
 font-size:9px;
 color:#fff;
 font-weight:bold;
 -webkit-box-shadow: 0px 0px 3px #333;
+-webkit-box-shadow: 0px 0px 3px #333;
+box-shadow: 0px 0px 3px #333;
 background:#c30;
--webkit-border-radius:15px}
+-moz-border-radius:15px;
+-webkit-border-radius:15px;
+border-radius:15px;}
 
 /* CONTENT ICONS ----------------------------------------------------------------------- */
 
 #content span.icon {height:14px; display:block; float:left; width:14px; margin-right:7px}
 
-#content span.delete {background:url(/icons/delete_active.png); opacity:0.5; float:right; display: none; cursor:pointer; height:16px}
-#content span.delete:hover {opacity:1.0}
+#content span.delete {background:url(/images/icons/delete_active.png); opacity:0.5; float:right; display: none; cursor:pointer; height:16px}
+#content span.delete:hover {opacity:1.0;}
 
-#content span.note {position:absolute; right:19px; top:6px; background:url(/icons/note.png); float:right; display:none; cursor:pointer; height:16px; width:16px}
-
-#content span.note:hover {background:url(/icons/noteh.png);}
+#content span.note {position:absolute;right:19px;top:7px;background:url(/images/icons/note.png); display:none; cursor:pointer; height:16px; width:16px; margin-top:-1px; text-indent: -8765px; overflow:hidden; color:transparent}
+#content span.note:hover {background:url(/images/icons/note.png);}
 
 #content .mainlist li:hover span.note {display:block}
 
-#content span.activenote {display:block; background:url(/icons/noteh.png);}
+#content span.activenote {display:block;background:url(/images/icons/note.png);}
 
-#content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/icons/important.png);cursor:pointer}
-#content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/icons/star.png) no-repeat;cursor:pointer}
+#content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/images/icons/important.png);cursor:pointer}
+#content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/images/icons/star.png) no-repeat;cursor:pointer}
 
-/* -- NOTE ---------------------------------------------------------------- */
-
-#note {
-width:258px;
-overflow-y:auto;
-overflow-x: hidden;
-position:absolute;
-right:0px;
-bottom:36px;
-top:59px}
-
-#note textarea {
-position:absolute;
-bottom:36px;
-top:6px;
-background:url("/images/notebg.png");
--webkit-box-shadow:0px 2px 4px #ccc;
-right:0px;
-width:76%;
-height:auto;
-border:4px solid #fff;
-margin:10px 7%;
-padding:20px 5% 10px 5%;
-color:#555;
-font-size:12px}
-
-
-/* Save And Cancel Button */
-
-#note a {position: absolute;display: none; border:none; opacity:0.8; bottom:20px; width:59px; height:13px}
-#note a:hover {opacity:1.0; cursor:pointer}
-#note a#save-note {background:url(/images/note-save.png);right: 10px}
-#note a#cancel-note {background:url(/images/note-cancel.png);right: 90px; bottom:21px;}
-
-#note #cellotape {position:absolute; right:90px; width:80px; height:21px; top:8px; background:url("/images/cellotape.png"); z-index:899; display:none;}
+.mainlist li .ui-datepicker-trigger {position:absolute; right:44px; top:7px; display:none; background:url(/images/icons/star.png)}
+#content .mainlist li:hover .ui-datepicker-trigger {display:block}
 
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 
-#listfunctions {position:absolute; right:20px; height:17px; top:10px; z-index:999; width:111px}
+#listfunctions {position:absolute; right:20px; height:17px; top:10px; z-index:2}
 
-	#listfunctions a { width:17px; height:17px; background:#000; display:block; float:left; opacity:0.5; cursor:pointer; margin-left:10px}
-	#listfunctions a:hover { opacity:1.0}
+	#listfunctions a {
+	width:17px; height:17px; background:#000; display:block; float:left;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	opacity:0.5; 
+	-moz-opacity: 0.5;
+	cursor:pointer; margin-left:10px}
+	
+	#listfunctions a:hover {
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	opacity:1.0; 
+	-moz-opacity: 1.0}
 
-	#listfunctions .list-print {background:url(/icons/print.png) no-repeat}
-	#listfunctions .list-email {background:url(/icons/sendmail.png) no-repeat}
-	#listfunctions .list-cloud {background:url(/icons/cloudapp.png) no-repeat}
-	#listfunctions .list-share {background:url(/icons/sharelist_white.png) no-repeat}
+	#listfunctions .list-print {background:url(/images/icons/print.png) no-repeat}
+	#listfunctions .list-email {background:url(/images/icons/sendmail.png) no-repeat}
+	#listfunctions .list-cloud {background:url(/images/icons/cloudapp.png) no-repeat}
+	#listfunctions .list-share {background:url(/images/icons/sharelist_white.png) no-repeat}
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 
@@ -556,19 +712,123 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 /* -- TOOLTIP --------------------------------------------------------------------------- */
 
-#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:rgba(0,0,0,0.8);-webkit-border-radius:10px;padding:5px 8px 5px 8px;color:#fff;z-index:100;font-size:11px;font-weight:bold;display:none}
+#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:rgba(0,0,0,0.5); -webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;padding:5px 8px 5px 8px;color:#fff;z-index:100;font-size:11px;display:none}
 
-#cloudtip { top:24px; right:-10px; width:288px;}
+#cloudtip { top:24px; right:-10px; width:300px}
 
 #cloudtip span.link { color: #fff; float:left; display:block; margin-top:1px}
 #cloudtip span.link:hover { text-decoration: underline; cursor: pointer}
 
-#cloudtip span.copy { background:rgba(255,255,255,0.2); -webkit-border-radius:14px; padding:1px 5px 0px 5px;float:right; cursor:pointer; display:block; font-size:9px;margin-top:1px; margin-right:-2px;}
+#cloudtip span.copy { background:rgba(255,255,255,0.2); border-radius:14px; -webkit-border-radius:14px;  -moz-border-radius:14px; padding:1px 5px 0px 5px;float:right; cursor:pointer; display:block; font-size:9px;margin-top:1px; margin-right:-2px;}
 #cloudtip span.copy:hover { background:rgba(255,255,255,0.4)}
 
-#cloudtip span.triangle {border:4px solid transparent; border-bottom:4px solid rgba(0,0,0,0.8); height:0px; width:0px; position:absolute; right:14px; top:-8px;}
+#cloudtip span.triangle {border:4px solid transparent; border-bottom:4px solid rgba(0,0,0,0.5); height:0px; width:0px; position:absolute; right:14px; top:-8px;}
 
-#taskTooltip {background:#333;opacity:0.9;width:220px;padding:7px 8px;line-height:16px;font-size:12px;-webkit-border-radius:5px}
+#taskTooltip {background:#333;opacity:0.9;width:220px;padding:7px 8px;line-height:16px;font-size:12px;-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px}
 #taskTooltip span {position:absolute;left:105px;height:0px; width:0px;border-style: solid}
 #taskTooltip span.top {border-color: transparent transparent #333 transparent;border-width: 0px 10px 10px 10px;top:-10px}
 #taskTooltip span.bottom {border-color: #333 transparent transparent transparent;border-width: 10px 10px 0px 10px;bottom:-10px}
+
+/* WUNDERLIST MENU --------------------------------------------------------------------------------------- */
+
+#menublur {position:absolute;left:0px;right:0px;top:0px;bottom:0px; background:transparent;display:none;}
+
+#left ul {
+display:none;
+border:1px solid #323232;
+position:absolute;
+left:20px;
+bottom:46px;
+-webkit-border-radius:3px;
+-moz-border-radius:3px;
+border-radius:3px;
+color:#fff !important}
+
+	ul.menu .arrow {
+    border-color: #4b4b4b transparent transparent transparent;
+    border-style:solid;
+	position:absolute;
+	z-index:101;
+	left:60px;
+	bottom:-12px;
+	bottom:24;
+ 	border-width:6px;
+ 	width:0;
+ 	height:0}
+
+#left ul li {position:relative; background:#4b4b4b !important; color:#fff !important}
+
+#left li:first-child{
+-webkit-box-shadow:inset 0px 1px 1px #6d6d6d; 
+-moz-box-shadow:inset 0px 1px 1px #6d6d6d; 
+box-shadow:inset 0px 1px 1px #6d6d6d;
+
+-webkit-border-top-left-radius: 3px;
+-webkit-border-top-right-radius: 3px;
+-moz-border-radius-topleft: 3px;
+-moz-border-radius-topright: 3px;
+border-top-left-radius: 3px;
+border-top-right-radius: 3px}
+
+#left li:last-child {
+-webkit-border-bottom-right-radius: 3px;
+-webkit-border-bottom-left-radius: 3px;
+-moz-border-radius-bottomright: 3px;
+-moz-border-radius-bottomleft: 3px;
+border-bottom-right-radius: 3px;
+border-bottom-left-radius: 3px}
+
+#left ul li a {
+font-size:11px;
+width:120px;
+color:#fff !important;
+display:block;
+padding:5px 10px}
+
+/* Submenus */
+
+#left ul ul {position:absolute;left:150px;bottom:0px}
+
+/* Active Menu and Indicator for Children */
+#left ul li.hasChild {position:relative; background:#4b4b4b url(/images/icons/hasChild.png) 128px no-repeat!important}
+
+#left ul li.currenttree, #left ul li:hover {
+-webkit-box-shadow:inset 0px 1px 1px #84c7f4; 
+-moz-box-shadow:inset 0px 1px 1px #84c7f4; 
+box-shadow:inset 0px 1px 1px #84c7f4;
+color:#fff;border:none;
+background-color:#32a3f0 !important;
+background:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3)) !important;
+background: -moz-linear-gradient(top,  #32a3f0,  #1389d3) !important}
+
+/* Not Yet implemented Menus */
+#left ul li.notyet, #left ul li.notyet:hover { background:#4b4b4b !important; cursor:default; border:none !important;}
+#left ul li.notyet a, #left ul li.notyet:hover a { color:rgba(255,255,255,0.3) !important; border:none !important;}
+
+/* Icon Menus */
+#left ul li a.icon {padding-left:32px;background-repeat:no-repeat !important; background-position:10px 4px !important; width:98px;}
+#left ul li a.settings {background-image:url(/images/icons/settings.png) !important}
+#left ul li a.logout {background-image:url(/images/icons/logout.png) !important}
+#left ul li a.downloads {background-image:url(/images/icons/downloads.png) !important}
+#left ul li a.aboutus {background-image:url(/images/icons/about.png) !important}
+
+/* SIDEBAR LEFT ---------------------------------------------------------------------------- */
+
+.sidebarleft #content {right:0px}
+.sidebarleft #sidebar {background:url(/images/sidebar_left.png)}
+.sidebarleft h3 {left:0px; right:auto}
+.sidebarleft .searchside {left:-10px}
+
+.sidebarleft #left {position:absolute; left:268px}
+.sidebarleft #right {float:left; padding-left:37px}
+.sidebarleft .togglesidebar {left:8px; right:auto; background-position: -19px 0px}
+.sidebarleft .hidden {background-position: 0px 0px}
+.sidebarleft #right a {float:left !important}
+.sidebarleft #backgroundList {left:16px}
+.sidebarleft #notification {left:0px;}
+
+.sidebarleft #sync {left:276px}
+.sidebarleft #syncing {left:281px}
+.sidebarleft # {}
+
+.sidebarleft .showhelp {margin:0px 8px 0px 0px!important}

@@ -1,105 +1,138 @@
-var sidebar_opened_status = 'true';
-var invited				  = 'false';
-var wunderlist_window     = Titanium.UI.getMainWindow();
-
-// Save the special key for OS
-var shortcutkey = (Titanium.Platform.name.toLowerCase() == 'darwin') ? 'command' : 'Ctrl';
-var os = Titanium.Platform.name.toLowerCase();
-
-// Count how often the program has been started
-var runtime = Titanium.App.Properties.getString('runtime', '1');
-runtimeInt  = parseInt(runtime);
-runtime++;
-Titanium.App.Properties.setString('runtime', runtime.toString());
-
 /**
- * Load default App Settings
+ * wunderlist.settings.js
  *
- * @author Dennis Schneider
+ * Class for handling all the settings
+ * 
+ * @author Christian Reber, Dennis Schneider, Daniel Marschner
  */
-if (Titanium.App.Properties.hasProperty('first_run') == false)
-{
-	Titanium.App.Properties.setString('active_theme', 'bgone');
-	Titanium.App.Properties.setString('first_run', '0');
-	Titanium.App.Properties.setString('user_height', '400');
-	Titanium.App.Properties.setString('user_width', '760');
-	Titanium.App.Properties.setString('runtime', '1');
-	Titanium.App.Properties.setString('dateformat', language.code);
-	Titanium.App.Properties.setString('task_delete', '1');
-	Titanium.App.Properties.setString('invited', invited.toString());
-}
-else
-{
-	// Load Window Size and Position
-	currentWindow = Titanium.UI.getMainWindow();
-	if (Titanium.App.Properties.getString('maximized', 'false') == 'true') {
-		currentWindow.maximize();
+var settings = settings || {}
+
+settings.init = function() {
+	settings.sidebar_opened_status = 'true';
+	settings.invited               = 'false';
+	settings.shortcutkey           = (Titanium.Platform.name.toLowerCase() == 'darwin') ? 'command' : 'Ctrl';
+	
+	// The timeout for sending a request e. g. with AJAX
+	settings.REQUEST_TIMEOUT = 100 * 1000;	
+	
+	// Count how often the program has been started
+	var runtime = Titanium.App.Properties.getString('runtime', '1');
+	runtimeInt  = parseInt(runtime);
+	runtime++;
+	Titanium.App.Properties.setString('runtime', runtime.toString());
+	
+	settings.os = Titanium.Platform.name.toLowerCase();
+	
+	/**
+	 * Load default App Settings
+	 *
+	 * @author Dennis Schneider
+	 */
+	if (Titanium.App.Properties.hasProperty('first_run') == false)
+	{
+		Titanium.App.Properties.setString('active_theme', 'bgone');
+		Titanium.App.Properties.setString('first_run', '0');
+		Titanium.App.Properties.setString('user_height', '400');
+		Titanium.App.Properties.setString('user_width', '760');
+		Titanium.App.Properties.setString('runtime', '1');
+		Titanium.App.Properties.setString('dateformat', wunderlist.language.code);
+		Titanium.App.Properties.setString('delete_prompt', '1');
+		Titanium.App.Properties.setString('invited', settings.invited.toString());
 	}
 	else
 	{
-		currentWindow.height = parseInt(Titanium.App.Properties.getString('user_height', '400'));
-		currentWindow.width  = parseInt(Titanium.App.Properties.getString('user_width',  '760'));
-		var user_x = Titanium.App.Properties.getString('user_x', 'none');
-		var user_y = Titanium.App.Properties.getString('user_y', 'none');
-
-		if(user_x != 'none') currentWindow.x = parseInt(user_x);
-		if(user_y != 'none') currentWindow.y = parseInt(user_y);
+		// Load Window Size and Position
+		var currentWindow = Titanium.UI.getMainWindow();
+		
+		if (Titanium.App.Properties.getString('maximized', 'false') == 'true') {
+			currentWindow.maximize();
+		}
+		else
+		{
+			currentWindow.height = parseInt(Titanium.App.Properties.getString('user_height', '400'));
+			currentWindow.width  = parseInt(Titanium.App.Properties.getString('user_width',  '760'));
+			var user_x = Titanium.App.Properties.getString('user_x', 'none');
+			var user_y = Titanium.App.Properties.getString('user_y', 'none');
+	
+			if(user_x != 'none') currentWindow.x = parseInt(user_x);
+			if(user_y != 'none') currentWindow.y = parseInt(user_y);
+		}
+	
+		// Load the sidebar opened status
+		settings.sidebar_opened_status = Titanium.App.Properties.getString('settings.sidebar_opened_status', 'true');
+	
+		// Load the invited status
+		settings.invited = Titanium.App.Properties.getString('invited', 'false');
 	}
+	
+	settings.position_saved = false;
+	
+	Titanium.API.addEventListener(Titanium.CLOSE, settings.save_window_position);
+	Titanium.API.addEventListener(Titanium.EXIT, settings.save_window_position);
+	
+	Titanium.API.addEventListener(Titanium.CLOSE, function() { settings.save_sidebar_opened_status() });
+	Titanium.API.addEventListener(Titanium.EXIT, function() { settings.save_sidebar_opened_status() });		
+	
+	// Change the top header color on blur
+	Titanium.API.addEventListener(Titanium.UNFOCUSED, function() {
+		$("#top").addClass("blurred");
+		$("#macmenu a").css("opacity", "0.5");
+	});
+	
+	// Change the top header color on blur
+	Titanium.API.addEventListener(Titanium.FOCUSED, function() {
+		$("#top").removeClass("blurred");
+		$("#macmenu a").css("opacity", "1.0");
+	
+	});		
+};
 
-	// Load the sidebar opened status
-	sidebar_opened_status = Titanium.App.Properties.getString('sidebar_opened_status', 'true');
+// GET the sidebar position
+settings.getSidebarPosition = function() {
+	return Titanium.App.Properties.getString('sidebar_position', 'right');
+};
 
-	// Load the invited status
-	invited = Titanium.App.Properties.getString('invited', 'false');
-}
+// GET the selected datformat
+settings.getDateformat = function() {
+	return Titanium.App.Properties.getString('dateformat', wunderlist.language.code);
+};
 
-var position_saved = false;
+// GET the selected week start day
+settings.getWeekstartday = function() {
+	return Titanium.App.Properties.getString('weekstartday', '1');
+};
 
-Titanium.API.addEventListener(Titanium.CLOSE, save_window_position);
-Titanium.API.addEventListener(Titanium.EXIT, save_window_position);
-
-
-// Change the top header color on blur
-Titanium.API.addEventListener(Titanium.UNFOCUSED, function(){
-	$("#top").addClass("blurred");
-	$("#macmenu a").css("opacity", "0.5");
-});
-
-// Change the top header color on blur
-Titanium.API.addEventListener(Titanium.FOCUSED, function(){
-	$("#top").removeClass("blurred");
-	$("#macmenu a").css("opacity", "1.0");
-
-});
+// GET the selected week start day
+settings.getDeleteprompt = function() {
+	return parseInt(Titanium.App.Properties.getString('delete_prompt', '1'));
+};
 
 /**
  * Save Window Size and Position on exit
  *
  * @author Christian Reber
  */
-function save_window_position()
-{
-	currentWindow = Titanium.UI.getMainWindow();
+settings.save_window_position = function() {
+	var currentWindow = Titanium.UI.getMainWindow();
 
-	if (position_saved == false && currentWindow.isMinimized() == false)
+	if (settings.position_saved == false && currentWindow.isMinimized() == false)
 	{
-		Titanium.App.Properties.setString('maximized', currentWindow.isMaximized().toString());
+		Titanium.App.Properties.setString('maximized',   currentWindow.isMaximized().toString());
 		Titanium.App.Properties.setString('user_height', currentWindow.height.toString());
-		Titanium.App.Properties.setString('user_width', currentWindow.width.toString());
-		Titanium.App.Properties.setString('user_x', currentWindow.x.toString());
-		Titanium.App.Properties.setString('user_y', currentWindow.y.toString());
-		position_saved = true;
+		Titanium.App.Properties.setString('user_width',  currentWindow.width.toString());
+		Titanium.App.Properties.setString('user_x',      currentWindow.x.toString());
+		Titanium.App.Properties.setString('user_y',      currentWindow.y.toString());
+		settings.position_saved = true;
 		currentWindow.hide();
 	}
-}
+};
 
 /**
  * Load last opened list
  *
  * @author Daniel Marschner
  */
-function load_last_opened_list()
-{
+settings.load_last_opened_list = function() {
 	return Titanium.App.Properties.getString('last_opened_list', '1');
 }
 
@@ -108,59 +141,34 @@ function load_last_opened_list()
  *
  * @author Daniel Marschner
  */
-function save_last_opened_list(list_id)
-{
+settings.save_last_opened_list = function(list_id) {
 	Titanium.App.Properties.setString('last_opened_list', list_id.toString());
-}
+};
 
 /**
  * Save last opened list
  *
  * @author Daniel Marschner
  */
-function clear_last_opened_list()
-{
+settings.clear_last_opened_list = function() {
 	Titanium.App.Properties.setString('last_opened_list', '1');
-}
-
-Titanium.API.addEventListener(Titanium.CLOSE, save_sidebar_opened_status);
-Titanium.API.addEventListener(Titanium.EXIT, save_sidebar_opened_status);
+};
 
 /**
  * Save last sidebar opened status
  *
  * @author Daniel Marschner
  */
-function save_sidebar_opened_status()
-{
-	Titanium.App.Properties.setString('sidebar_opened_status', sidebar_opened_status.toString());
-}
+settings.save_sidebar_opened_status = function() {
+	Titanium.App.Properties.setString('sidebar_opened_status', settings.sidebar_opened_status.toString());
+};
 
 /**
  * Save the invited status
  *
  * @author Daniel Marschner
  */
-function save_invited(value)
-{
-	invited = value.toString();
-	Titanium.App.Properties.setString('invited', invited);
-}
-
-/**
- * Little workaround bugfix for Mac OS X (sorry, but there is no way around)
- * Shortcut Bind Command (or Ctrl) + Q
- *
- * @author Christian Reber
- */
-$(function()
-{
-	if (os == 'darwin')
-	{
-		$(document).bind('keydown', shortcutkey + '+q', function (event) {
-			if (listShortcutListener == 0)
-				Titanium.App.exit();
-		});
-	}
-	
-});
+settings.save_invited = function(value) {
+	settings.invited = value.toString();
+	Titanium.App.Properties.setString('invited', settings.invited);
+};

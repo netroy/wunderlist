@@ -100,7 +100,7 @@
 	"account":				    "Conta",
 	"extra":				    "Extras",
 	"credits":				    "Sobre nós",
-	"wunderkinder":			    "6 Wunderkinder",
+	"wunderkinder":			    "6Wunderkinder",
 	"wunderkinder_fb":		    "Siga-nos no Facebook",
 	"wunderkinder_tw":		    "Siga-nos no Twitter",
 	"delete_account":		    "Eliminar conta",
@@ -160,5 +160,8 @@
 	"startday": 				"Dia do começo da semana",
 	"sunday": 					"Domingo",
 	"monday":					"Segunda",
-	"exit_wunderlist":			"Sair do Wunderlist "
+	"exit_wunderlist":			"Sair do Wunderlist",
+	"print_tasks":				"Imprimir tarefas",
+	"send_by_mail":				"Enviar por email",
+	"share_with_cloud":			"Partilhar através de cloud app"	
 }
