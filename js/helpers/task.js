@@ -9,8 +9,11 @@ task.insert = function(nohtml) {
 };
 
 // UPDATE the database task object
-task.update = function(noVersion) {
-	wunderlist.database.updateTask(noVersion);
+task.update = function(noVersion, callback) {
+	var returnValue = wunderlist.database.updateTask(noVersion);
+	
+	if (returnValue == true && callback != undefined)
+		callback();
 };
 
 // SET the current task object to default
@@ -158,7 +161,7 @@ task.updatePositions = function() {
         loop  : function() {        
             task.id       = tasks.eq(i).attr("id");
             task.position = i + 1;
-            task.list_id  = $('ul#list').attr('rel');
+            task.list_id  = tasks.eq(i).attr('rel');
             task.update();
             i++;
         }

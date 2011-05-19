@@ -426,6 +426,8 @@ wunderlist.database.updateTask = function(noVersion) {
 		
 		if (set != '')
 		{		    
+			console.log('TASK ID -> ' + task_id);
+			
 			wunderlist.database.db.execute("UPDATE tasks SET " + set + (noVersion == false ? ", version = version + 1" : '') + " WHERE id = " + task_id);
 			wunderlist.database.updateTaskCount();
 			wunderlist.timer.stop().set(15).start();

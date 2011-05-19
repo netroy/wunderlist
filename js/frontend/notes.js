@@ -88,6 +88,8 @@ $(function() {
 		
 		notes.onlyRead = $(this).parent('li').hasClass('done');
 		
+		$('.dialog-notes .hint').hide();
+		
 		// Setting Note Title
 		$(".dialog-notes .ui-dialog-title").text(notes.format(notes.currentNoteTitle, false));
 		

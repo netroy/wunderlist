@@ -190,7 +190,6 @@ wunderlist.is_email = function(email) {
  * More info at: www.soerenlarsen.dk/development-projects/xss-clean
  */
 wunderlist.xss_clean = function(str) {
-	str = wunderlist.strip_tags(str);
 	str = wunderlist.database.convertString(str);
 	str = str.replace(/\\0/gi, '')
 	str = str.replace(/\\\\0/gi, '')

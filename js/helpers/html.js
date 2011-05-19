@@ -108,9 +108,9 @@ html.generateLoginRegisterDialogHTML = function() {
 		
 		// TODO: If we launch a linux version we have to optimize that
 		if (settings.os === 'darwin')
-			html_code += '<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.0-win.msi">Download for Windows</a>';
+			html_code += '<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.1-win.msi">Download for Windows</a>';
 		else
-			html_code += '<a class="mac" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.0-osx.zip">Download for Mac OSX</a>';		
+			html_code += '<a class="mac" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.1-osx.zip">Download for Mac OSX</a>';		
 		
 		html_code += '</div>' +
 		'<div class="wklogo">6W</div>' +
@@ -767,7 +767,7 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 				{
 					var dbList = wunderlist.database.getLists(parseInt(tasks[ix].list_id));
 					
-					result += '<h3 class="clickable cursor" rel="' + actual_list + '">' + dbList[0].name +  '</h3>';
+					result += '<h3 class="clickable cursor" rel="' + actual_list + '">' + unescape(dbList[0].name) +  '</h3>';
 					result += '<ul id="filterlist' + actual_list + '" rel="' + (filter != '' ? filter : 'x') + '" class="mainlist filterlist' + (filter == 'done' ? ' donelist' : ' sortable') + '">';
 				}
 				

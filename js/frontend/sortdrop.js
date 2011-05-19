@@ -175,16 +175,6 @@ makeSortable = function() {
    		cursor      : 'pointer',
    		placeholder : 'placeholder',
    		update      : function(ev, ui) {
-   			
-			/*if ($('ul.filterlist').length > 0)
-   			{
-				task.id      = ui.item.attr('id');
-				task.list_id = (ui.item.parent('ul').attr('id') != undefined ? parseInt(ui.item.parent('ul').attr('id').replace('filterlist', '')) : ui.item.attr('rel'));
-				
-				if (task.list_id != ui.item.attr('rel'))
-					task.update();
-   			}*/
-   			
    			task.updatePositions();
    		}
     });
