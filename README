@@ -8,9 +8,13 @@ For details on Wunderlist, please see <http://www.6wunderkinder.com. Wunderlist 
  Building Wunderlist
 ---------------------
 
-Wunderlist is based on Titanium. Download the current Titanium stable on http://www.appcelerator.com/products/download/ and create an new desktop project. Open terminal and go into the "Resources" folder of the empty project you created.
-
-Then type "git clone git@github.com:6wunderkinder/wunderlist.git" and that's it! Now you are member of the Wunderlist community ;)
+Wunderlist is based on Titanium. 
+1. Download the current Titanium stable on http://www.appcelerator.com/products/download/ 
+2. Create an new desktop project. 
+3. Open terminal and go into the "Resources" folder of the empty project you created. 
+4. Delete all the default-files in this folder.
+5. Then type "git clone git@github.com:6wunderkinder/wunderlist.git ." and that's it! 
+Now you are member of the Wunderlist community ;)
 
 --------------------
  Known Bugs
