@@ -191,7 +191,7 @@
 	"copy_link":				"KOPIER LINK",
 	"saturday":					"Lørdag",
 	"settings":					"Indstillinger",
-	"delete_task_prompt":		"Vis bekræftelsesdialog når du sletter opgaver / lister?",
+	"delete_task_prompt":		"Vis bekræftelsesdialog når du sletter opgaver/lister?",
 	"yes":						"Ja",
 	"no":						"Nej",
 	"hide_older_tasks":			"Skjul afsluttede opgaver",
