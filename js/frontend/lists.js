@@ -336,6 +336,7 @@ makeListsSortable = function() {
 		placeholder : 'placeholder',
 		distance    : 20,
 		items       : '.sortablelist',
+		revert      : 200,
 		update      : saveListPosition
 	});
 };

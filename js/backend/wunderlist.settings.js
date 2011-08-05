@@ -75,14 +75,12 @@ settings.init = function() {
 	
 	// Change the top header color on blur
 	Titanium.API.addEventListener(Titanium.UNFOCUSED, function() {
-		$("#top").addClass("blurred");
-		$("#macmenu a").css("opacity", "0.5");
+		$("body").css("border-top", "1px solid #b9b9b9");
 	});
 	
 	// Change the top header color on blur
 	Titanium.API.addEventListener(Titanium.FOCUSED, function() {
-		$("#top").removeClass("blurred");
-		$("#macmenu a").css("opacity", "1.0");
+		$("body").css("border-top", "1px solid #666");
 	
 	});		
 };
@@ -123,7 +121,7 @@ settings.save_window_position = function() {
 		Titanium.App.Properties.setString('user_x',      currentWindow.x.toString());
 		Titanium.App.Properties.setString('user_y',      currentWindow.y.toString());
 		settings.position_saved = true;
-		currentWindow.hide();
+//		currentWindow.hide();
 	}
 };
 

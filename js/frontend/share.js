@@ -142,9 +142,30 @@ share.print = function() {
 		// Build tasks HTML
 		var html_code = '';
 		
+		var last_headline = '',
+			new_headline = false;
+		
+		//<ul class="wunderlist">
+		
 		// Generate the print HTML data
 		$('ul.mainlist li').each(function() {
-			// If is normal list
+			if ($(this).parent().prev().get(0).tagName === 'H3') {
+				new_headline = $(this).parent().prev().html();
+				if (new_headline !== last_headline) {
+					if (!last_headline) {
+						html_code += '<h3 class="first">' + new_headline + '</h3>';
+					} else {
+						html_code += '</ul><h3>' + new_headline + '</h3>';
+					}
+					html_code += '<ul class="wunderlist">';
+				}
+				last_headline = new_headline;
+			} else if (!new_headline) {
+				html_code += '<ul class="wunderlist">';
+				new_headline = true;
+			}
+			
+			// If is normal list1
 			html_code += '<li><span></span>' + $(this).children('span.description').html();
 								
 			// Add date
@@ -157,6 +178,8 @@ share.print = function() {
 			
 			html_code += '</li>';
 		});
+		
+		html_code += '</ul>';
 		
 		// Replace Tasks
 		template = template.replace(/####TASKS####/g, html_code);

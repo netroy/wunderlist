@@ -11,12 +11,33 @@ tasks.add = function() {
 	if ($("input.input-add").val() != '')
 	{
 		// Add Task to List
-		list_id   = $("ul.mainlist").attr("rel");
-		task_name = wunderlist.database.convertString($("input.input-add").val());
+		list_id       = $("ul.mainlist").attr("rel");
+		task_name     = wunderlist.database.convertString($("input.input-add").val());
+		
+		// Init timestamp & scan for the date
+		var timestamp = 0;
+		var smartDate = wunderlist.smartScanForDate(task_name);
+		
+		if (smartDate['day'] != 0 && smartDate['day'] != undefined) 
+		{
+		    var day             = smartDate['day'];
+		    var monthName       = smartDate['month'];
+		    var year            = smartDate['year'];
+		    var smartDateObject = new Date();
+		    var monthNumber     = html.getMonthNumber(monthName);
+		    smartDateObject.setMonth(monthNumber);
+		    smartDateObject.setDate(day);
+		    smartDateObject.setFullYear(year);
+		    timestamp           = html.getWorldWideDate(smartDateObject);
+		    task_name           = smartDate['string'];
+		}
 		
 		if (task_name != '')
 		{
-			timestamp = $(".add .showdate").attr('rel');
+		    if (timestamp == 0)
+		    {
+			    timestamp = $(".add .showdate").attr('rel');
+			}
 
 			if (timestamp == undefined)
 				timestamp = 0;
@@ -44,8 +65,8 @@ tasks.add = function() {
 			task.important = important;
 			
 			var task_id  = task.insert();	
-			var taskHTML = html.generateTaskHTML(task_id, task_name, list_id, 0, important, timestamp);
 			
+			var taskHTML = html.generateTaskHTML(task_id, task_name, list_id, 0, important, timestamp);
 			
 			if ($("ul.filterlist").length > 0 || $('#left a.active').length == 1)
 			{
@@ -62,8 +83,10 @@ tasks.add = function() {
 				}
 			}
 			else
+			{
 				$("ul.mainlist").append(taskHTML).find("li:last").hide().fadeIn(225);
 				html.createDatepicker();
+			}
 			
 			$("input.input-add").val('');
 			$(".add .showdate").remove();
@@ -123,7 +146,7 @@ tasks.cancel = function() {
 /**
  * Delete a task from the list
  *
- * @author Dennis Schneider
+ * @author Dennis Schneider, Daniel Marschner
  */
 tasks.deletes = function(deleteElement) {
 	var liElement = deleteElement.parent();
@@ -169,34 +192,37 @@ $(function() {
 	
 	// DoubleClick on Task - Edit mode
     $('.mainlist li .description').live('dblclick', function() {
-        var timestampElement = $(this).parent().children('span.timestamp');
-        
-        var doneIsActive = ($('div#left a#done.active').length == 1);
-
-		// Check if edit mode has already been activated
-		if($('#task-edit').length == 0 && doneIsActive == false)
+        var liElement = $(this).parent('li');
+		
+		if (liElement.hasClass('done') == false)
 		{
-			var spanElement = $(this);
-            var liElement   = spanElement.parent();
+			var timestampElement = liElement.children('span.timestamp');
+	        var doneIsActive     = ($('div#left a#done.active').length == 1);
 
-            wunderlist.timer.pause();
+			// Check if edit mode has already been activated
+			if($('#task-edit').length == 0 && doneIsActive == false)
+			{
+				var spanElement = $(this);
+	            var liElement   = spanElement.parent();
 
-			// Get input values
-			titleText = spanElement.text();
-            spanElement.hide();
+	            wunderlist.timer.pause();
 
-			var html_code  = '<input type="text" id="task-edit" value="" />';
+				// Get input values
+				titleText = spanElement.text();
+	            spanElement.hide();
 
-			// Edit the Actual task into an edit task
-			liElement.children(".checkboxcon").after(html_code);
+				var html_code  = '<input type="text" id="task-edit" value="" />';
 
-			$('input#task-edit').val(titleText);
-			$("input#task-edit").select();
+				// Edit the Actual task into an edit task
+				liElement.children(".checkboxcon").after(html_code);
 
-			tasks.totalFocusOut = false;
+				$('input#task-edit').val(titleText);
+				$("input#task-edit").select();
+
+				tasks.totalFocusOut = false;
+			}
 		}
     });
-    
     
     // Initiate The Datepicker when clicking an existing Date
     $('.mainlist li .showdate').live('click', function() {
@@ -253,8 +279,10 @@ $(function() {
 	});
 
 	$(".add input").live('focusout', function () {
-		if($(this).val() == '')
+		if($(this).val() == '') {
+			
 			wunderlist.timer.resume();
+		}
 	});
 	
 	// Do the check or uncheck a task magic
@@ -274,7 +302,7 @@ $(function() {
             if(is_checked)
             {
 				task.done      = 1;
-				task.done_date = html.getWorldWideDate();;	
+				task.done_date = html.getWorldWideDate();	
       		}
       		// If is already checked, append to upper list
             else
@@ -305,9 +333,11 @@ $(function() {
 
     // Make this task important
     $("ul.mainlist span.favina").live("click", function() {
-		if ($('a#done.active').length == 0)
+		var liElement = $(this).parent('li');
+		
+		if ($('a#done.active').length == 0 && liElement.hasClass('done') == false)
 		{
-			task.id        = $(this).parent('li').attr('id');
+			task.id        = liElement.attr('id');
 			task.important = 1;
 			task.updateImportant();
 	        task.update();

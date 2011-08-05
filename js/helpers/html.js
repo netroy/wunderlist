@@ -86,7 +86,8 @@ html.generateLoginRegisterDialogHTML = function() {
 		'<input class="input-login" type="password" id="register-password" name="password" placeholder="' + wunderlist.language.english.password + '"/>' +
 		'<div class="errorwrap"><p class="error-password"></p></div>' +
 		'</div>' +
-					
+		
+		
 		'<div id="account-buttons" class="ui-dialog-buttonset">' +
 		'<p class="pwd">' +
 		'<input type="checkbox" name="login-newsletter" id="register-newsletter" value="1" checked="checked"/>' +
@@ -108,9 +109,9 @@ html.generateLoginRegisterDialogHTML = function() {
 		
 		// TODO: If we launch a linux version we have to optimize that
 		if (settings.os === 'darwin')
-			html_code += '<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.1-win.msi">Download for Windows</a>';
+			html_code += '<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-win.msi">Download for Windows</a>';
 		else
-			html_code += '<a class="mac" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.1-osx.zip">Download for Mac OSX</a>';		
+			html_code += '<a class="mac" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-osx.zip">Download for Mac OSX</a>';		
 		
 		html_code += '</div>' +
 		'<div class="wklogo">6W</div>' +
@@ -167,7 +168,7 @@ html.generateTaskHTML = function(id, name, list_id, done, important, date, note)
 		taskHTML += "<div class='checkboxcon'>";
 		taskHTML += "<input tabIndex='-1' class='input-checked' type='checkbox' />";
 	}
-
+	
     var unescapedName = unescape(name);
     var name          = wunderlist.replace_links(wunderlist.strip_tags(unescape(name)));
     
@@ -186,7 +187,7 @@ html.generateTaskHTML = function(id, name, list_id, done, important, date, note)
 	taskHTML += '<span class="icon delete"></span>';
 
 	if (note != '' && note != undefined)
-		taskHTML += '<span class="icon note activenote">' + unescape(note) + '</span>';
+		taskHTML += '<span class="icon note activenote">' + note + '</span>';
 	else
 		taskHTML += '<span class="icon note"></span>';
 	
@@ -256,7 +257,7 @@ html.generateBackgroundsDialogHTML = function() {
 html.generateSidebarHTML = function() {
     var html_code = '<div id="sidebar-position-radios" class="radios">' +
 			'<p><b>' + wunderlist.language.data.sidebar_position_text + '</b></p>' +
-			'<p><input id="sidebar_position_1" type="radio" name="sidebarPosition" value="1" /> <span>' + wunderlist.language.data.left + '</span> &nbsp; &nbsp; &nbsp; <input id="sidebar_position_0" type="radio" name="sidebarPosition" value="0" /> <span>' + wunderlist.language.data.right + '</span></p>' +
+			'<p><label><input id="sidebar_position_1" type="radio" name="sidebarPosition" value="1" /> <span>' + wunderlist.language.data.left + '</span></label> &nbsp; &nbsp; &nbsp; <label><input id="sidebar_position_0" type="radio" name="sidebarPosition" value="0" /> <span>' + wunderlist.language.data.right + '</span></label></p>' +
  			'</div>' +
     		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
     		
@@ -328,12 +329,18 @@ html.generateSocialDialogHTML = function() {
 		'<p class="socialmedia clearfix"><span class="icons">' +
 		'<a href="http://www.stumbleupon.com/submit/?url=' + encodeURI('http://www.6wunderkinder.com') + '" target="_blank" class="stumbleupon"></a> ' +
 		'<a href="http://digg.com/submit?url=' + encodeURI('http://www.6wunderkinder.com') + '" target="_blank" class="digg"></a> ' +
-		'<a href="http://twitter.com/home?status=' + encodeURI('Wunderlist - http://www.6wunderkinder.com') + '" target="_blank" class="twitter"></a> ' +
-		'<a href="http://www.facebook.com/sharer.php?u=' + encodeURI('http://www.6wunderkinder.com') + '&t=' + encodeURI('wunderlist') + '" target="_blank" class="facebook"></a> ' +
-		'</span>' +
-		wunderlist.language.data.invite_without_email +
-		'<span>' + wunderlist.language.data.invite_spread_word + '</span></p></div>';
-
+		
+		
+       '<div style="overflow:hidden;margin-top:-27px;width:320px;">'+
+		'<iframe src="http://www.facebook.com/plugins/like.php?app_id=206703929372788&amp;href=http%3A%2F%2Ffacebook.com%2F6Wunderkinder&amp;send=false&amp;layout=button_count&amp;width=320&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:21px;position: absolute;left:30px;" allowTransparency="true"></iframe>'+
+       '<div style="position: absolute; left: 140px;width:270px;overflow:hidden;">'+
+   '       <a href="http://twitter.com/6Wunderkinder" class="twitter-follow-button" link_color="#ddd" data-show-count="false">Follow</a>' +
+   '       <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>' +
+   '   </div>' +
+   '   <div style="position: absolute; left: 320px">'+
+   '       <a href="http://twitter.com/share?url=http://www.6wunderkinder.com/wunderlist/&text=I started using Wunderlist" class="twitter-share-button" data-count="none" data-via="6Wunderkinder" data-lang="' + wunderlist.language.code + '">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>'+
+   '    </div></div>' +
+		'</span>';
 	return html_code;
 };
 
@@ -504,6 +511,30 @@ html.getMonthName = function(month_number) {
 };
 
 /**
+ * Get the month number by the given month name
+ *
+ * @author Dennis Schneider
+ */
+html.getMonthNumber = function(monthName) {
+    var monthNames = {
+        "January" : 0, 
+        "February" : 1, 
+        "March" : 2, 
+        "April" : 3, 
+        "May" : 4, 
+        "June" : 5,
+        "July" : 6, 
+        "August" : 7, 
+        "September" : 8, 
+        "October" : 9, 
+        "November" : 10, 
+        "December" : 11
+    };
+    
+    return monthNames[monthName];
+};
+
+/**
  * Get the the name of the day
  *
  * @author Dennis Schneider
@@ -531,20 +562,29 @@ html.addRemoveDateButton = function(object) {
 	$('#ui-datepicker-div').append("<div class='remove_date'>" + wunderlist.language.data.no_date + "</div>");
 	$('#ui-datepicker-div div.remove_date').die();
 	$('#ui-datepicker-div div.remove_date').live('click', function() {	
-		
-		object.children('.ui-datepicker-trigger').remove();
-		object.children('input.datepicker').remove();
-		object.children('.showdate').remove();
-		
-		object.children('.description').after("<input type='hidden' class='datepicker'/>");
-    	html.createDatepicker();
+		if (object.hasClass('add') != true)
+		{
+			object.children('.ui-datepicker-trigger').remove();
+			object.children('input.datepicker').remove();
+			object.children('span.showdate').remove();
+			object.children('span.description').after("<input type='hidden' class='datepicker'/>");
+			html.createDatepicker();
+			
+			object.children('span.timestamp').attr('rel', '0');
+		}
+		else
+		{
+			object.children('div.addwrapper').children('span.showdate').remove();
+		}
 		
 		$('#ui-datepicker-div').hide();
-		object.children('.timestamp').attr('rel', '0');
 		
-		task.id   = object.attr('id');
-		task.date = 0;
-		task.update();
+		if (object.hasClass('add') != true)
+		{
+			task.id   = object.attr('id');
+			task.date = 0;
+			task.update();
+		}
 
         setTimeout(function() {datePickerOpen = false}, 10);
 	});
@@ -706,7 +746,7 @@ html.createDatepicker = function() {
  * @author Dennis Schneider
  */
 html.replace_http_link = function(text) {
-  var exp = /((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g;
+  var exp = /((http|https|ftp):\/\/[\w?=&.\-\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g;
   return text.replace(exp,"<a href='$1'>$1</a>");
 };
 
@@ -753,6 +793,39 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 		last_list      = 0;
 		last_task_list = 0;
 		
+		var lists = wunderlist.database.getLists();
+		for (var list in lists) {
+			for (var ix in tasks)
+			{
+				if (lists[list].id == tasks[ix].list_id) {
+					if (wunderlist.database.existsById('lists', tasks[ix].list_id))
+					{
+						//alert(tasks[ix].list_id);
+						if (tasks[ix].list_id != last_task_list)
+							actual_list = tasks[ix].list_id;
+
+						if (last_list != 0 && last_list != actual_list)
+							result += "</ul>";
+
+						if (last_list != actual_list)
+						{
+							var dbList = wunderlist.database.getLists(parseInt(tasks[ix].list_id));
+
+							result += '<h3 class="clickable cursor" rel="' + actual_list + '">' + unescape(dbList[0].name) +  '</h3>';
+							result += '<ul id="filterlist' + actual_list + '" rel="' + (filter != '' ? filter : 'x') + '" class="mainlist filterlist' + (filter == 'done' ? ' donelist' : ' sortable') + '">';
+						}
+
+						result += html.generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
+
+						last_list      = actual_list;
+						last_task_list = tasks[ix].list_id;
+					}
+				}
+				
+			}
+		}
+		
+		/*
 		for (var ix in tasks)
 		{
 			if (wunderlist.database.existsById('lists', tasks[ix].list_id))
@@ -777,6 +850,7 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 				last_task_list = tasks[ix].list_id;
 			}
 		}
+		*/
 	}
 	
 	if (show_add === false && count == 0)

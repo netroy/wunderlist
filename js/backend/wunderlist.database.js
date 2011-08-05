@@ -97,7 +97,7 @@ wunderlist.database.createTuts = function(list_id) {
 		{
 			var addon = '';
 			
-			if ((ix == 2 || ix == 5 || ix == 6) && wunderlist.os == 'darwin')
+			if ((ix == 2 || ix == 3 || ix == 5 || ix == 6) && wunderlist.os == 'darwin')
 				addon = '_mac';
 			
 			task.name     = wunderlist.language.data['default_task_' + ix + addon];
@@ -426,8 +426,6 @@ wunderlist.database.updateTask = function(noVersion) {
 		
 		if (set != '')
 		{		    
-			console.log('TASK ID -> ' + task_id);
-			
 			wunderlist.database.db.execute("UPDATE tasks SET " + set + (noVersion == false ? ", version = version + 1" : '') + " WHERE id = " + task_id);
 			wunderlist.database.updateTaskCount();
 			wunderlist.timer.stop().set(15).start();

@@ -40,7 +40,7 @@ wunderlist.init = function() {
 	share.init();
 	
 	// Check for a new version
-	wunderlist.updater.checkVersion();
+	wunderlist.updater.checkVersion();	
 };
 
 /**
@@ -121,7 +121,7 @@ wunderlist.strip_tags = function(input, allowed) {
  */
 wunderlist.replace_links = function(text) {
 	// HTTP/HTTPS/FTP Links
-	var exp = /((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g;
+	var exp = /((http|https|ftp):\/\/[\w?=&.\-\/-;#~%-\ü\( \)]+(?![\w\s?&.\/;#~%"=-]*>))/g;
 	text = text.replace(exp,"<a href='$1'>$1</a>");
 	
 	// FILE Links (Windows)
@@ -247,6 +247,111 @@ wunderlist.xss_clean = function(str) {
 	str = str.replace(/-->/g,"--&gt;")
 	
 	return str
+};
+
+/**
+ * Scans for a date in a task and returns the result containing the information
+ * about the date
+ *
+ * @author Dennis Schneider
+ */
+wunderlist.smartScanForDate = function(string) {
+
+    // Add the year
+    // Do it in German (or multiple languages)
+
+    // In 2 weeks? In 14 days?
+    var inType = false;
+
+    // Search for a valid string in the format : on 21st of May | on 21 of May | on 21 May ...
+    var monthDateReg  = /\bon\s([1-9]*)(st|nd|rd|th)?\s\bof?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/;
+    
+    // Search for a valid string in the format : in 2 weeks | in 14 days ...
+    var weekDaysReg   = /\bin\s([1-9]*)\s\b(days?|weeks?|months?|years?)/;
+    
+    // Apply the regex and replace the old string
+    var result        = string.match(monthDateReg);
+    
+    // Is it a normal string containing tomorrow or today?
+    var todayTomorrow = false;    
+    
+    if (result == null && string.match(weekDaysReg) != null)
+    {
+        result = string.match(weekDaysReg);
+        inType = true;
+    }
+    
+    var string = (result != null) ? string.replace(result[0], '') : string;        
+    
+    // The json object containing the date information and the sanitized string
+    var jsonDate      = { 'day' : 0, 'month' : 0, 'year' : 0, 'string' : string };
+    
+    // The current date
+    var newDate       = new Date();
+    
+    if (inType == true)
+    {
+        var number = parseInt(result[1]);
+        if (number == 0)
+        {
+            number = 1;
+        }
+        var type   = result[2];
+        
+        if (type == 'day' || type == 'days')
+        {
+            newDate.setDate(newDate.getDate() + number);
+        }
+        else if (type == 'week' || type == 'weeks')
+        {
+            newDate.setDate(newDate.getDate() + 7 * number);
+        }
+        else if (type == 'month' || type == 'months')
+        {
+            newDate.setMonth(newDate.getMonth() + number);
+        }
+        else if (type == 'year' || type == 'years')
+        {
+            newDate.setFullYear(newDate.getFullYear() + number);
+        }
+        
+        result    = [];
+        result[0] = '';
+        result[1] = newDate.getDate();
+        result[2] = html.getMonthName(newDate.getMonth());   
+    }
+    
+    if (inType == false)
+    {
+        if (string.search(wunderlist.language.data.tomorrow.toLowerCase()) != -1)
+        {
+            result             = [];
+            result[0]          = 0;
+            result[1]          = newDate.getDate() + 1;
+            result[2]          = html.getMonthName(newDate.getMonth());
+            todayTomorrow      = true;
+            jsonDate['string'] = jsonDate['string'].replace(wunderlist.language.data.tomorrow.toLowerCase(), '');
+        }
+        
+        if (string.search(wunderlist.language.data.today.toLowerCase()) != -1)
+        {
+            result             = [];
+            result[0]          = 0;
+            result[1]          = newDate.getDate();
+            result[2]          = html.getMonthName(newDate.getMonth());
+            todayTomorrow      = true;        
+            jsonDate['string'] = jsonDate['string'].replace(wunderlist.language.data.today.toLowerCase(), '');        
+        }
+    } 
+    
+    if (result == null) result = [];
+    
+    // Fill the json object with data
+    jsonDate['day']   = result[1];
+    jsonDate['month'] = (todayTomorrow == true) ? result[2] : result[result.length - 1];
+    jsonDate['year']  = newDate.getFullYear();
+    
+    return jsonDate;
 };
 
 /**

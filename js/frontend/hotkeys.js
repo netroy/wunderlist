@@ -106,10 +106,13 @@ $(function() {
 	});
 	
 	// For removing select all
-	shortcut.add(settings.shortcutkey + '+a', function () { 
-		if ($('textarea:focus').length == 0 && $('input:focus').length == 0)
-			return false;
-	}, {'disable_in_input' : true});
+	shortcut.add(settings.shortcutkey + '+a', function (e) { 
+		if ($('textarea:focus').length == 1) {
+			$('textarea').select();
+		} else if ($('input:focus').length == 1) {
+			$('input').select();
+		}			
+	}, {'disable_in_input' : false});
 	
 	// Shortcut Bind Command (or Ctrl) + L - New list
 	shortcut.add(settings.shortcutkey + "+l",function() {

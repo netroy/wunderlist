@@ -18,7 +18,7 @@ notes.openNotesDialog = function() {
 	$(".dialog-notes").remove();
 
 	notes.dialog = undefined;
-	notes.dialog = dialogs.generateDialog(notes.currentNoteTitle, html.generateNotesDialogHTML(), 'dialog-notes');
+	notes.dialog = dialogs.generateDialog(notes.currentNoteTitle, html.generateNotesDialogHTML(), 'dialog-notes', false);
 	
 	dialogs.openDialog(notes.dialog);
 	
@@ -95,7 +95,7 @@ $(function() {
 		
 		if (notes.currentNoteIcon.html() != '' || notes.onlyRead == true)
 		{
-			notes.savednoteInner.html(notes.format(notes.currentNoteIcon.html()));
+			notes.savednoteInner.html(unescape(notes.format(notes.currentNoteIcon.html())));
 			
 			if (notes.onlyRead == true)
 			{
@@ -134,7 +134,7 @@ $(function() {
 			$('input#save-and-close').show();
 			$('.dialog-notes .hint').show();
 
-			notes.note.val(Encoder.htmlDecode(notes.currentNoteIcon.html())).show().focus();
+			notes.note.val(unescape(Encoder.htmlDecode(notes.currentNoteIcon.html()))).show().focus();
 			notes.savednote.hide();
 			
 			

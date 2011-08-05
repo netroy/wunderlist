@@ -109,7 +109,7 @@
 	"sign_in":				    "Sign in",
 	"restart":				    "The changes you made require a restart. Please restart Wunderlist manually.",
 	"invitation":			    "Invite your friends",
-	"invitetextarea":			"Hey, I'm managing my tasks with Wunderlist now and it looks pretty cool. It's 100% free, maybe you want to check it out!",
+	"invitetextarea":			"Hey, I'm managing my tasks with Wunderlist now, and it looks pretty cool. It's 100% free. Maybe you want to check it out!",
 	"older_tasks":			    "Show done tasks",
 	"sync_error":			    "An error in the sync process occurred. Please try again.",
 	"login_error":			    "An error in the login process occurred. Please try again.",

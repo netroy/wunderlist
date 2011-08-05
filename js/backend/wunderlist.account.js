@@ -144,6 +144,9 @@ wunderlist.account.load = function() {
 wunderlist.account.loadInterface = function() {
 	if (register_dialog != undefined) 
 	{
+		// Hide the wood texture
+		$('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+		
 		$(register_dialog).dialog('close');
 	}
 	
@@ -285,7 +288,8 @@ wunderlist.account.validate = function(email, password) {
 	}
 	
 	// Validate password
-	if (password == '' || password.toLowerCase() == 'password')
+	//if (password == '' || password.toLowerCase() == 'password')
+	if (password === '')
 	{
 		valid = false;
 		wunderlist.account.showPasswordError(wunderlist.language.data.password_not_empty);
@@ -414,10 +418,7 @@ wunderlist.account.login = function() {
 							
 							// Synchronize data
 							$('#sync').click();
-
-							// Hide the wood texture
-							$('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
-
+							
 							break;
 
 						case wunderlist.account.status_codes.LOGIN_FAILURE:
@@ -668,49 +669,53 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
  * @author Christian Reber
  */
 wunderlist.account.editProfile = function() {
-	edit_profile_dialog = $('<div></div>').html(html.generateEditProfileDialogHTML()).dialog({
-		autoOpen      : false,
-		draggable     : false,
-		resizable     : false,
-		modal         : true,
-		closeOnEscape : true,
-		dialogClass   : 'dialog-edit-profile',
-		title         : wunderlist.language.data.edit_profile_title,
-		open          : function() {
-			$('#new_email').val('');
-			$('#new_password').val('');
-			$('#old_password').val('');
-			$('.error').hide().fadeIn("fast").text('');
-			$('#new_email').blur();
-		}
-	});
+	if ($("[role='dialog']").length == 0)
+	{
+		edit_profile_dialog = $('<div></div>').html(html.generateEditProfileDialogHTML()).dialog({
+			autoOpen      : false,
+			draggable     : false,
+			resizable     : false,
+			modal         : true,
+			closeOnEscape : true,
+			dialogClass   : 'dialog-edit-profile',
+			title         : wunderlist.language.data.edit_profile_title,
+			open          : function() {
+				$('#new_email').val('');
+				$('#new_password').val('');
+				$('#old_password').val('');
+				$('.error').hide().fadeIn("fast").text('');
+				$('#new_email').blur();
+			}
+		});
 
-	dialogs.openDialog(edit_profile_dialog);
-    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+		dialogs.openDialog(edit_profile_dialog);
+		
+	    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 
-	// Disconnect the live functionality
-	$('#cancel_edit_profile').die();
-	$('#submit_edit_profile').die();
-	$('#new_email,#new_password,#old_password').die();
+		// Disconnect the live functionality
+		$('#cancel_edit_profile').die();
+		$('#submit_edit_profile').die();
+		$('#new_email,#new_password,#old_password').die();
 
-	// Login or Register on RETURN and close dialog on ESCAPE
-	$('#new_email,#new_password,#old_password').live('keyup', function(evt) {
-		if(evt.keyCode == 13)
-			wunderlist.account.change_profile_data();
-		else if(evt.keyCode == 27)
+		// Login or Register on RETURN and close dialog on ESCAPE
+		$('#new_email,#new_password,#old_password').live('keyup', function(evt) {
+			if(evt.keyCode == 13)
+				wunderlist.account.change_profile_data();
+			else if(evt.keyCode == 27)
+				$(edit_profile_dialog).dialog('close');
+		});
+
+		// Close Edit Profile Dialog
+		$('#cancel_edit_profile').live('click', function() {
 			$(edit_profile_dialog).dialog('close');
-	});
+		});
 
-	// Close Edit Profile Dialog
-	$('#cancel_edit_profile').live('click', function() {
-		$(edit_profile_dialog).dialog('close');
-	});
-
-	// Submit changed data
-	$('#submit_edit_profile').live('click', function() {
-		wunderlist.account.change_profile_data();
-		return false;
-	});
+		// Submit changed data
+		$('#submit_edit_profile').live('click', function() {
+			wunderlist.account.change_profile_data();
+			return false;
+		});
+	}
 };
 
 /**
@@ -822,10 +827,8 @@ wunderlist.account.change_profile_data = function() {
  * @author Dennis Schneider
  */
 wunderlist.account.deleteAccount = function() {
-/*
-	if ($(delete_account_dialog).dialog('isOpen') == false)
+	if ($("[role='dialog']").length == 0)
 	{
-*/
 		var html_code =	'<p>' + wunderlist.language.data.delete_account_desc + '</p>' +
 		'<input class="input-normal"          type="text"     id="delete_email" name="delete_email" placeholder="' + wunderlist.language.data.email + '" />' +
 		'<input class="input-normal"          type="password" id="delete_password" name="delete_password" placeholder="'+ wunderlist.language.data.password + '" />' +
@@ -851,6 +854,7 @@ wunderlist.account.deleteAccount = function() {
 		});
 
 		dialogs.openDialog(delete_account_dialog);
+	
 		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 
 		// Login or Register on RETURN and close dialog on ESCAPE
@@ -875,7 +879,7 @@ wunderlist.account.deleteAccount = function() {
 			wunderlist.account.delete_account_data();
 			return false;
 		});
-/* 	} */
+ 	} 
 };
 
 /**
