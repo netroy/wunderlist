@@ -38,7 +38,6 @@ wunderlist.language.availableLang = [
 	{ code : 'cs',    file : 'czech', 			   translation : 'České' },
 	{ code : 'zh',    file : 'chinese', 		   translation : '中文' },
 	{ code : 'tr',    file : 'turkish', 		   translation : 'Türkçe' },
-	{ code : 'gr',    file : 'greek', 		   translation : 'Ελληνικά' },
 	{ code : 'ar',    file : 'arabic', 			   translation : 'عربي' },
 	{ code : 'se',    file : 'swedish', 		   translation : 'Svenska' },
 	{ code : 'ja',    file : 'japanese', 		   translation : '日本語' },
