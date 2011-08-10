@@ -28,7 +28,8 @@
 
 .ui-dialog a {color: #1389d3 } .ui-dialog a:hover {text-decoration:underline}
 
-.register, .input-bold { font-weight:bold}
+.register, .input-bold { font-weight:bold; }
+.input-bold { background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B0B8BE), to(#D5D6D8)); }
 
 /* Close Dialog Button */			
 

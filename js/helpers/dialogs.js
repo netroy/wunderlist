@@ -306,8 +306,8 @@ dialogs.openTaskDeleteDialog = function(deleteElement) {
 			title       : wunderlist.language.data.delete_task_question,
 			buttons     : buttons,
 			open        : function(event, ui) {
-				$('.ui-dialog-buttonset button:last').focus();
-				$('.ui-dialog-buttonset button:last').addClass("input-bold");
+				$('.ui-dialog-buttonset button:first').focus();
+				$('.ui-dialog-buttonset button:first').addClass("input-bold");
 			}
 		});
 
@@ -339,7 +339,8 @@ dialogs.createDeleteListDialog = function(listId, listElement) {
 			title       : wunderlist.language.data.delete_list_question,
 			buttons     : buttonOptions,
 			open        : function() {
-				$('.ui-dialog-buttonset button:last').focus();
+				$('.ui-dialog-buttonset button:first').focus();
+				$('.ui-dialog-buttonset button:first').addClass("input-bold");
 			}
 		});
 	
