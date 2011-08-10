@@ -455,9 +455,15 @@ wunderlist.database.getLastTaskPosition = function(list_id) {
 /**
  * Update a list by given id
  *
- * @author Dennis Schneider
+ * @author Dennis Schneider, Daniel Marschner
  */
 wunderlist.database.updateListByOnlineId = function(id, name, deleted, position, version, inbox, shared) {
+	if (deleted == 1 && shared == 1) {
+		list_id = wunderlist.database.getListIdByOnlineId(id);
+		
+		wunderlist.database.db.execute("DELETE FROM tasks WHERE list_id = ?", list_id);
+	}
+	
 	wunderlist.database.db.execute("UPDATE lists SET name = ?, deleted = ?, position = ?, version = ?, inbox = ?, shared = ? WHERE online_id = ?", name, deleted, position, version, inbox, shared, id);
 };
 
