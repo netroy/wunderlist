@@ -179,7 +179,7 @@
 	"currently_shared_with":	"Actuellement partagée avec",
 	"sharelist_info":			"Vous pouvez désormais partager une liste pour collaborer avec des collègues ou des amis. Ajoutez simplement leur adresse e-mail pour leur envoyer une invitation. Vous pourrez modifier les options d'accès à votre liste à tout moment sur cet écran. Amusez-vous !",
 	"sharelist_hint":			"À NOTER",
-	"sharelist_hint_text":		"Les personnes n'ayant pas de compte Wunderlist recevront un message d'invitation normal. Vous devrez à nouveau partager votre liste après leur inscription.",
+	"sharelist_hint_text":		"Les personnes qui n’ont pas de compte Wunderlist vont recevoir un e-mail d’invitation normal. Vous devrez à nouveau partager la liste lorsqu’ils se seront inscrits.",
 	"sharelist_button":			"Envoyer l'invitation",
 	"shared_delete_success":	"L'utilisateur a été supprimé de la liste avec succès",
 	"shared_delete_title":		"Utilisateur retiré de la liste",
