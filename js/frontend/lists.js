@@ -262,6 +262,7 @@ bindListDeleteMode = function() {
 		}
 		else
 		{
+			cancelSaveList();
 			deleteList($(this).parent().attr('id').replace('list', ''), $(this).parent());
 		}
     });
