@@ -41,6 +41,9 @@ wunderlist.init = function() {
 	
 	// Check for a new version
 	wunderlist.updater.checkVersion();	
+	
+	// Add the wunderlist object to the current window
+	Titanium.UI.getCurrentWindow().wunderlist = wunderlist;
 };
 
 /**

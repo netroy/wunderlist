@@ -6,12 +6,31 @@ var menu = menu || {};
  * @author Christian Reber
  */
 menu.reset_window_size = function() {
-	var currentWindow = Titanium.UI.getCurrentWindow();
+	var currentWindow = Titanium.UI.getMainWindow();
 	
 	currentWindow.height = 400;
 	currentWindow.width  = 600;
 	currentWindow.x      = Math.round((screen.width / 2) - 300);
 	currentWindow.y      = Math.round((screen.height / 2) - 200);
+}
+
+/**
+ * Reset position of Wunderlist (Mac)
+ *
+ * @author Christian Reber
+ */
+menu.reset_note_window = function() {
+	var currentWindows = Titanium.UI.getOpenWindows();
+	
+	for (x in currentWindows) {
+		if (currentWindows[x].noteId != undefined) {
+			currentWindows[x].height = 400;
+			currentWindows[x].width  = 500;
+			currentWindows[x].x      = Math.round((screen.width / 2) - 250);
+			currentWindows[x].y      = Math.round((screen.height / 2) - 200);
+			currentWindows[x].focus();
+		}
+	}
 }
 
 /**
@@ -49,6 +68,7 @@ menu.initialize = function() {
 
 	// Extras Menu
 	extraMenuItem.addItem(wunderlist.language.data.reset_window_size, function() { menu.reset_window_size(); menu.refocus(); }); // Reset Window Size
+	extraMenuItem.addItem(wunderlist.language.data.reset_note_window, menu.reset_note_window); // Reset Note Window
 
 	// Create Tutorials
 	extraMenuItem.addItem(wunderlist.language.data.create_tutorials, function() { wunderlist.database.recreateTuts(); menu.refocus(); });

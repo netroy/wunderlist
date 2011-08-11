@@ -297,11 +297,7 @@ $(function() {
 	
 	// Save note and close the dialog
 	shortcut.add(settings.shortcutkey + '+Enter', function (event) {
-		if ($('[role="dialog"]').length == 1 && $('.dialog-notes textarea:visible').length == 1)
-		{
-			notes.saveAndClose();
-		}
-		else if ($('input.input-add:focus').length == 1)
+		if ($('input.input-add:focus').length == 1)
 		{
 			var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
 			

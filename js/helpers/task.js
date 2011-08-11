@@ -316,6 +316,8 @@ task.updateDeleted = function() {
 		}
 
 		liElement.remove();
+		
+		notes.closeNoteWindow(task.id);
 	}
 };
 

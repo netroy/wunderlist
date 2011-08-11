@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	
+		<title>Wunderlist - Note App</title>
+	
+		<link type="text/css" rel="stylesheet" href="css/wunderlist.css"/>
+		<link type="text/css" rel="stylesheet" href="css/dialogs.css"/>
+		
+		<script type="text/javascript" src="js/libraries/jquery-1.6.min.js"></script>
+		<script type="text/javascript" src="js/libraries/shortcuts.js"></script>
+		<script type="text/javascript" src="js/notes/note.js"></script>
+	</head>
+	
+	<body>
+		
+		<div class="dialog-notes">
+			<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+				<span class="ui-dialog-title" id="ui-dialog-title-1"></span>
+			</div>
+			<div class="notes_buffer">
+				<textarea id="noteTextarea"></textarea>
+				<div class="savednote">
+					<div id="noteText" class="inner"></div>
+				</div>
+			</div>
+			
+			<div class="notes_buttons">
+				<span id="hint" class="hint"></span>
+				<input id="save-and-close" class="input-button button-login" type="submit" value="Save & Close" />
+				<input id="save" class="input-button" type="submit" value="Save" />
+			</div>
+		</div>
+		
+	</body>
+	
+</html>

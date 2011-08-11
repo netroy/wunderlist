@@ -54,6 +54,7 @@
 	"choose_date":			    "Datum auswählen",
 	"no_results":			    "Nichts gefunden",
 	"reset_window_size":	    "Fenstergröße zurücksetzen",
+	"reset_note_window":	    "Notizfenstergröße zurücksetzen",
 	"options":				    "Optionen",
 	"fav":					    "Priorisierung entfernen",
 	"default_task_1":		    "Doppelklick zum bearbeiten",

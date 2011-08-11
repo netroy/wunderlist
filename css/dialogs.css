@@ -246,7 +246,7 @@ background:url(/images/registertutorial.png)}
 
 /* NOTES DIALOG ---------------------------------------------------------------------------------------- */
 
-.dialog-notes { position:absolute; height:80% !important; width:80% !important;  margin:10%; background:#F5F5F5 !Important}
+.dialog-notes { position:absolute; height:100% !important; width:100% !important; background:#F5F5F5 !Important}
 
 .dialog-notes .notes_buffer { position:absolute; top:50px; right:0px; left:0px; bottom:60px}
 
@@ -260,6 +260,8 @@ word-wrap: break-word}
 .dialog-notes .savednote {overflow:auto}
 
 .dialog-notes .savednote .inner {background: url(/images/notebg.png); padding:5px 20px 0px 20px; color:#333; min-height:98%}
+
+.dialog-notes .savednote .inner a { color: #2b96f1; text-decoration: underline}
 
 .dialog-notes .savednote span.openApp { color:#1389D3}
 .dialog-notes .savednote span.openApp:hover { color:#1389D3; cursor: pointer; text-decoration: underline}
