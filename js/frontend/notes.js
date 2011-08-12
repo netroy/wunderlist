@@ -15,6 +15,9 @@ notes.window = undefined;
  * @author Daniel Marschner
  */
 notes.openNotesWindow = function() {
+	if (notes.window !== undefined && notes.window.editMode) {
+		notes.window.saveAndClose();
+	}
 	if (notes.window == undefined) {
 		notes.window = Titanium.UI.getCurrentWindow().createWindow({
 			url       : "app://note.html",
@@ -43,7 +46,10 @@ notes.openNotesWindow = function() {
 	notes.window.focused   = false;
 	notes.window.focus();
 	
-	notes.window.addEventListener(Titanium.CLOSE, function() {
+	notes.window.addEventListener(Titanium.CLOSE, function(e) {
+		if (notes.window.editMode) {
+			notes.window.forceSave();
+		}
 		settings.save_note_window_position(notes.window);
 		notes.window = undefined;
 	});

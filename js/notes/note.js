@@ -49,6 +49,10 @@ note.format = function(text, replaceLinks) {
 	return wunderlist.replace_breaks(text);
 };
 
+note.forceSave = function () {
+	$('input#save').trigger('click');
+};
+
 note.saveAndClose = function() {
 	mainContent = mainWindow.document.getElementById("content");
 	noteElement = $(mainContent).children('ul').children('li#' + note.noteId).children('span.note');
