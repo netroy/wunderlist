@@ -160,4 +160,13 @@ $(function() {
 	$('span.openApp').live('click', function() {
 		Titanium.Platform.openApplication($.trim($(this).text()));
 	});
+	
+	// Shortcut Bind Esc - close window
+	shortcut.add('Esc', function (evt) {
+		if (note.editMode) {
+			note.saveAndClose();
+		} else {
+			note.close();
+		}
+	});	
 });
