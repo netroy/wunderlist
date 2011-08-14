@@ -16,7 +16,7 @@ Then type "git clone git@github.com:6wunderkinder/wunderlist.git" and that's it!
  Known Bugs
 --------------------
 
-The desktop version of Wunderlist has some strange bugs, we couldn't fix yet. They will be fixed, when Titanium 1.1.0 will be released.
+The desktop version of Wunderlist has some strange bugs that we couldn't fix yet. They will be fixed when Titanium 1.1.0 is released.
 
 - Auto-Update on Windows
 - Bad OS X behaviour (Close on "X")
