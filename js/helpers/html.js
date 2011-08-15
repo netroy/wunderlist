@@ -574,7 +574,16 @@ html.addRemoveDateButton = function(object) {
 		}
 		else
 		{
-			object.children('div.addwrapper').children('span.showdate').remove();
+			$('#add-input-date').fadeOut(250, function () {
+				$('div.addwrapper').animate({ right: '15px' }, 300);
+				object.children('div.addwrapper').children('span.showdate').remove();
+			});
+			
+			if($('.add .input-add').val().length > 0) {
+				$('.add .input-add').select();
+			} else {
+				$('.add .input-add').focus();
+			}
 		}
 		
 		$('#ui-datepicker-div').hide();
@@ -704,7 +713,7 @@ html.createDatepicker = function() {
 			if ($(this).parent().find('.input-add').length == 1)
 			{
 				var $date = $(".add input.datepicker").val();
-				var $html = '<span class="showdate timestamp" rel="' + timestamp + '">&nbsp;</span>';
+				var $html = '<span id="add-input-date" style="display:none;" class="showdate timestamp" rel="' + timestamp + '">&nbsp;</span>';
 				$('.add .showdate').remove();
 				$('.add .input-add').after($html);
 
@@ -712,6 +721,16 @@ html.createDatepicker = function() {
 					$('.add .input-add').select();
 				else
 					$('.add .input-add').focus();
+				
+				if ($('div.addwrapper').css('right') !== '90px') {
+					$('div.addwrapper').animate({
+						right: '90px'
+					}, 250, function () {
+						$('#add-input-date').fadeIn(250);
+					});
+				} else {
+					$('#add-input-date').show();
+				}
 			}
 			else
 			{

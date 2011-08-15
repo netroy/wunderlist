@@ -532,7 +532,7 @@ background:url(/images/addbar.png) repeat-x;
 border-radius:6px;
 -moz-border-radius:6px}
 
-div.add div.addwrapper {width:auto !important;position:absolute;right:90px;top:0px;left:28px}
+div.add div.addwrapper {width:auto !important;position:absolute;right:15px;top:0px;left:28px}
 
 div.add div.addwrapper input {
 width:100%; margin:auto !important; padding:10px 0px; background:none;
