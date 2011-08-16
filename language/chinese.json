@@ -165,7 +165,7 @@
 	"startday":					"一周第一天",
 	"sunday":					"周日",
 	"monday":					"周一",
-	"cloudapp_1":				"这个功能可以让和CloudApp分享你的列表。 如果你电击是， 你的列表被上传到 CloudApp 同时会生成一个秘密URL。 你可以使用这个 URL 轻松的和没有Wunderlist账号的人分享你的任务或者在Twitter公开分享.",
+	"cloudapp_1":				"这个功能可以让和CloudApp分享你的列表。 如果你点击是， 你的列表被上传到 CloudApp 同时会生成一个秘密URL。 你可以使用这个 URL 轻松的和没有Wunderlist账号的人分享你的任务或者在Twitter公开分享.",
 	"cloudapp_2":			    "提示:这是永久的。任何拥有此URL的人将会看到你的当前列表。 30天后自动清除。",
 	"exit_wunderlist":			"退出 Wunderlist ",
 	"empty_list":				"不能发送、打印或分享任何空列表。",
