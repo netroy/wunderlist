@@ -14,6 +14,7 @@ tasks.add = function() {
 		list_id       = $("ul.mainlist").attr("rel");
 		task_name     = wunderlist.database.convertString($("input.input-add").val());
 		
+		// Tasks default not be important
 		important = 0;
 		
 		// Check if task should be prio
@@ -29,6 +30,7 @@ tasks.add = function() {
 		var timestamp = 0;
 		var smartDate = wunderlist.smartScanForDate(task_name);
 		
+		// Process the smartDate results
 		if (smartDate['day'] != 0 && smartDate['day'] != undefined) 
 		{
 		    var day             = smartDate['day'];
