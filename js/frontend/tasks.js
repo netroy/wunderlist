@@ -14,6 +14,17 @@ tasks.add = function() {
 		list_id       = $("ul.mainlist").attr("rel");
 		task_name     = wunderlist.database.convertString($("input.input-add").val());
 		
+		important = 0;
+		
+		// Check if task should be prio
+		if (task_name.indexOf('*') == 0 || task_name.indexOf('!') == 0) {
+			task_name = task_name.substr(1);
+			important = 1;
+		}
+		
+		// Trim whitespace
+		task_name = $.trim(task_name);
+		
 		// Init timestamp & scan for the date
 		var timestamp = 0;
 		var smartDate = wunderlist.smartScanForDate(task_name);
@@ -42,7 +53,7 @@ tasks.add = function() {
 			if (timestamp == undefined)
 				timestamp = 0;
 			
-			important = 0;
+			important = important || 0;
 			
 			if (isNaN(parseInt(list_id)) || $('#left a.active').length == 1)
 			{
