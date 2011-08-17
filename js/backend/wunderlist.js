@@ -286,6 +286,28 @@ wunderlist.smartScanForDate = function(string) {
 		result = string.match(alternateMonthDateReg);
 		alternateMonthDateRegMatch = true;
 	}
+	
+	// Search for a valid string in the format: +1d | +2w | +3m | +4y
+	var shortcutDateReg = /\+([0-9]*)(d|w|m|y)/i;
+	if (result == null) {
+		var intervalTypes = {
+			y: 		'year',
+			year: 	'year',
+			d: 		'day',
+			day: 	'day',
+			m: 		'month',
+			month: 	'month',
+			w: 		'week',
+			week: 	'week'
+		}			
+		string = string.replace(/\+(\d+)(w(eek)?|d(ay)?|m(onth)?|y(ear)?)/, function(match, count, interval) {
+			var suffix = 's';
+			if (count < 2) {
+				suffix = '';
+			}
+			return "in " + count + " " + intervalTypes[interval] + suffix;
+		})
+	}
 
     // Search for a valid string in the format : in 2 weeks | in 14 days ...
     var weekDaysReg   = /\bin\s([1-9]*)\s\b(days?|weeks?|months?|years?)/;
