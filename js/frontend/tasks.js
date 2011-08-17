@@ -15,7 +15,7 @@ tasks.add = function() {
 		task_name     = wunderlist.database.convertString($("input.input-add").val());
 		
 		// Tasks default not be important
-		important = 0;
+		var important = 0;
 		
 		// Check if task should be prio
 		if (task_name.indexOf('*') == 0 || task_name.indexOf('!') == 0) {

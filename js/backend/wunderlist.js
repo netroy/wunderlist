@@ -253,27 +253,42 @@ wunderlist.xss_clean = function(str) {
 };
 
 /**
- * Scans for a date in a task and returns the result containing the information
- * about the date
+ * Scans for a date in a task and returns a result object
  *
  * @author Dennis Schneider
+ * @author Adam Renklint
  */
 wunderlist.smartScanForDate = function(string) {
 
     // Add the year
     // Do it in German (or multiple languages)
 
+	function capitaliseFirstLetter(str)
+	{
+	    return str.charAt(0).toUpperCase() + str.slice(1);
+	}
+	
     // In 2 weeks? In 14 days?
     var inType = false;
 
     // Search for a valid string in the format : on 21st of May | on 21 of May | on 21 May ...
-    var monthDateReg  = /\bon\s([1-9]*)(st|nd|rd|th)?\s\bof?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/;
-    
+    //var monthDateReg  = /\bon\s([1-9]*)(st|nd|rd|th)?\s\bof?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/i;
+	var monthDateReg  = /\bon\s([0-9]*)(st|nd|rd|th)?\s\b(of)?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/i;
+	
+	// Apply the regex and replace the old string
+	var result        = string.match(monthDateReg);
+	
+	// Search for a valid string in the format: on may 21
+	var alternateMonthDateReg = /\bon\s\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\b([0-9]*)/i;
+	
+	var alternateMonthDateRegMatch = false;
+	if (result == null) {
+		result = string.match(alternateMonthDateReg);
+		alternateMonthDateRegMatch = true;
+	}
+
     // Search for a valid string in the format : in 2 weeks | in 14 days ...
     var weekDaysReg   = /\bin\s([1-9]*)\s\b(days?|weeks?|months?|years?)/;
-    
-    // Apply the regex and replace the old string
-    var result        = string.match(monthDateReg);
     
     // Is it a normal string containing tomorrow or today?
     var todayTomorrow = false;    
@@ -321,9 +336,9 @@ wunderlist.smartScanForDate = function(string) {
         result    = [];
         result[0] = '';
         result[1] = newDate.getDate();
-        result[2] = html.getMonthName(newDate.getMonth());   
+        result[2] = html.getMonthName(newDate.getMonth());
     }
-    
+
     if (inType == false)
     {
         if (string.search(wunderlist.language.data.tomorrow.toLowerCase()) != -1)
@@ -347,12 +362,30 @@ wunderlist.smartScanForDate = function(string) {
         }
     } 
     
-    if (result == null) result = [];
+    //if (result == null) result = [];
+	if (!result) {
+		return {};
+	}
     
-    // Fill the json object with data
-    jsonDate['day']   = result[1];
-    jsonDate['month'] = (todayTomorrow == true) ? result[2] : result[result.length - 1];
-    jsonDate['year']  = newDate.getFullYear();
+	if (inType) {
+		jsonDate['day']   = result[1];
+		jsonDate['month'] = capitaliseFirstLetter(result[2]);
+		jsonDate['year']  = newDate.getFullYear();
+	} else if (alternateMonthDateRegMatch) {
+	    jsonDate['day']   = result[2];
+	    jsonDate['month'] = capitaliseFirstLetter(result[1]);
+	    jsonDate['year']  = newDate.getFullYear();
+	} else {
+		jsonDate['day']   = result[1];
+		jsonDate['month'] = (todayTomorrow == true) ? result[2] : capitaliseFirstLetter(result[result.length - 1]);
+		jsonDate['year']  = newDate.getFullYear();
+	}
+
+	var validatedDate = new Date(jsonDate['month'] + ' ' + jsonDate['day'] + ', ' + jsonDate['year']);
+	var nowDate = new Date();
+	if (nowDate > validatedDate) {
+		jsonDate['year']++;
+	}
     
     return jsonDate;
 };
