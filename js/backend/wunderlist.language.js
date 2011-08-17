@@ -27,7 +27,7 @@ wunderlist.language.availableLang = [
 	{ code : 'fr-ca', file : 'frenchcanadian',     translation : 'Canadienne-Française' },
 	{ code : 'pl',    file : 'polish', 			   translation : 'Polski' },
 	{ code : 'pt',    file : 'portugese', 		   translation : 'Português' },
-	{ code : 'pt-br', file : 'portugesebrazil', translation : 'Português (Brazilian)' },
+	{ code : 'pt-br', file : 'portugesebrazil',    translation : 'Português (Brazilian)' },
 	{ code : 'it',    file : 'italian', 		   translation : 'Italiano' },
 	{ code : 'sk',    file : 'slovak', 			   translation : 'Slovensky' },
 	{ code : 'ca',    file : 'catalan', 		   translation : 'Català' },
@@ -38,7 +38,7 @@ wunderlist.language.availableLang = [
 	{ code : 'cs',    file : 'czech', 			   translation : 'České' },
 	{ code : 'zh',    file : 'chinese', 		   translation : '中文' },
 	{ code : 'tr',    file : 'turkish', 		   translation : 'Türkçe' },
-	{ code : 'gr',    file : 'greek', 		   translation : 'Ελληνικά' },
+	{ code : 'gr',    file : 'greek', 		       translation : 'Ελληνικά' },
 	{ code : 'ar',    file : 'arabic', 			   translation : 'عربي' },
 	{ code : 'se',    file : 'swedish', 		   translation : 'Svenska' },
 	{ code : 'ja',    file : 'japanese', 		   translation : '日本語' },
@@ -49,8 +49,9 @@ wunderlist.language.availableLang = [
 	{ code : 'sr',    file : 'serbian',            translation : 'Српски' },
 	{ code : 'gl',    file : 'galician', 		   translation : 'Galego' },
 	{ code : 'ro',    file : 'romanian', 		   translation : 'Română' },
-	{ code : 'ns',	  file : 'northernsami',		   translation : 'Sami' },
-	{ code : 'is',	  file : 'icelandic',		   translation : 'Íslenska' }
+	{ code : 'ns',	  file : 'northernsami',	   translation : 'Sami' },
+	{ code : 'is',	  file : 'icelandic',		   translation : 'Íslenska' },
+	{ code : 'fi',	  file : 'finnish',		   	   translation : 'Suomi' }
 ];
 
 /**
