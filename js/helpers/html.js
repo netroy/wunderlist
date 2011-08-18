@@ -585,7 +585,10 @@ html.addRemoveDateButton = function(object) {
 					$(parentList).remove();
 				}
 				
-				alert( $('#content li').size() );
+				// If the view is not empty, reload it
+				if ($('#content li').size() < 1) {
+					$('#content').append('<h3>' + wunderlist.language.data.no_results + '</h3>');
+				}
 			}
 		}
 		else
