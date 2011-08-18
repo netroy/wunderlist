@@ -111,7 +111,7 @@ html.generateLoginRegisterDialogHTML = function() {
 		if (settings.os === 'darwin')
 			html_code += '<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-win.msi">Download for Windows</a>';
 		else
-			html_code += '<a class="mac" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-osx.zip">Download for Mac OSX</a>';		
+			html_code += '<a class="mac" href="http://itunes.apple.com/app/wunderlist/id410628904?mt=12&ls=1">Download for Mac OSX</a>';		
 		
 		html_code += '</div>' +
 		'<div class="wklogo">6W</div>' +
