@@ -587,7 +587,11 @@ html.addRemoveDateButton = function(object) {
 				
 				// If the view is not empty, reload it
 				if ($('#content li').size() < 1) {
-					$('#content').append('<h3>' + wunderlist.language.data.no_results + '</h3>');
+					if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active')) {
+						setTimeout(function () {
+							$('#bottombar #left a.filter.active').trigger('click');
+						}, 250);
+					}
 				}
 			}
 		}
@@ -764,25 +768,41 @@ html.createDatepicker = function() {
 					$(this).parent().find('.showdate').attr("rel", timestamp);
 					$(this).parent().find('.datepicker').hide();
 				}
-
+				
 				task.id   = $(this).parent().attr("id");
 				task.date = $(this).parent().find('span.timestamp').attr('rel');
 				task.update();
+					
 				
-				if ($('a#withoutdate').hasClass('active'))
+				if ($('a#withoutdate').hasClass('active')) {
+					var parentList = $(this).parent().parent();
 					$(this).parent().remove();
-				
-				if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
-					//var removedTaskListID = $(this).parent().attr('rel'); //WORKS, get's the list ID
-					
-					
-					//$('#filterlist' + removedTaskListID).hide();
-					//alert( $(this).parent().parent().children('li').size() );
+					if ( $(parentList).children('li').size() < 1 ) {
+						$(parentList).prev().remove();
+						$(parentList).remove();
+					}
 				}
-				
-				// CONDITIONAL BLOCK: if filter list with dates
-				// TODO: If date has changed and task no longer fit's in this filter list, remove it
-				// TODO: also, we need to check the amount of items in the list here, like when we remove the date
+					
+				if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
+					var oldTimestamp = $(this).parent().find('span.timestamp').html();
+					var timestampElement = $(this).parent().find('span.timestamp');
+					setTimeout(function() {
+						var newTimestamp = $(timestampElement).html();
+						var parentList = $(timestampElement).parent().parent();
+						if (oldTimestamp !== newTimestamp) {
+							if ($('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
+								$(timestampElement).parent().remove();
+							} else if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active')) {
+								$('#bottombar #left a.filter.active').trigger('click');
+							}
+						}
+						// If the parent list now is empty, remove it and it's headline
+						if ( $(parentList).children('li').size() < 1 ) {
+							$(parentList).prev().remove();
+							$(parentList).remove();
+						}
+					}, 250);
+				}
 			}
 
 			html.make_timestamp_to_string();
