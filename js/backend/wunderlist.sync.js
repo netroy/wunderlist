@@ -328,7 +328,7 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
 	data['step']						 = 2;
 	
 	// Only if there is a response or new tasks
-	if (sync_table_step1 != undefined || data['sync_table']['new_tasks'] != undefined)
+	if (sync_table_step1 != undefined || (data['sync_table']['new_tasks'] != undefined && JSON.stringify(data['sync_table']['new_tasks']).length > 2))
 	{
 		// Collect the tasks and lists, that the server requires
 		if (sync_table_step1 != undefined)
