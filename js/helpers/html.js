@@ -571,6 +571,22 @@ html.addRemoveDateButton = function(object) {
 			html.createDatepicker();
 			
 			object.children('span.timestamp').attr('rel', '0');
+			
+			if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
+				// Store the parent, before removing the element
+				var parentList = $(object).parent();
+				
+				// Remove the object from the filter list
+				$(object).remove();
+				
+				// If the parent list now is empty, remove it and it's headline
+				if ( $(parentList).children('li').size() < 1 ) {
+					$(parentList).prev().remove();
+					$(parentList).remove();
+				}
+				
+				alert( $('#content li').size() );
+			}
 		}
 		else
 		{
@@ -752,6 +768,18 @@ html.createDatepicker = function() {
 				
 				if ($('a#withoutdate').hasClass('active'))
 					$(this).parent().remove();
+				
+				if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
+					//var removedTaskListID = $(this).parent().attr('rel'); //WORKS, get's the list ID
+					
+					
+					//$('#filterlist' + removedTaskListID).hide();
+					//alert( $(this).parent().parent().children('li').size() );
+				}
+				
+				// CONDITIONAL BLOCK: if filter list with dates
+				// TODO: If date has changed and task no longer fit's in this filter list, remove it
+				// TODO: also, we need to check the amount of items in the list here, like when we remove the date
 			}
 
 			html.make_timestamp_to_string();
