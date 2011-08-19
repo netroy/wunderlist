@@ -668,7 +668,7 @@ border-radius:15px;}
 #content span.note:hover {background:url(/images/icons/note.png);}
 
 #content .mainlist li:hover span.note {display:block}
-#content .mainlist li.done:hover span.note {display:none}
+/* #content .mainlist li.done:hover span.note {display:none} */
 
 #content span.activenote {display:block;background:url(/images/icons/note.png);}
 
