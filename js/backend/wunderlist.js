@@ -44,6 +44,11 @@ wunderlist.init = function() {
 	
 	// Add the wunderlist object to the current window
 	Titanium.UI.getCurrentWindow().wunderlist = wunderlist;
+	
+	// Enable shutdown fix
+	Titanium.API.addEventListener(Titanium.EXIT, function() {
+		Titanium.Platform.canShutdown();
+	});
 };
 
 /**
@@ -279,12 +284,14 @@ wunderlist.smartScanForDate = function(string) {
 	var result        = string.match(monthDateReg);
 	
 	// Search for a valid string in the format: on may 21
-	var alternateMonthDateReg = /\bon\s\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\b([0-9]*)/i;
+	var alternateMonthDateReg = /\bon\s\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\b([0-9]*)(st|nd|rd|th)?/i;
 	
 	var alternateMonthDateRegMatch = false;
 	if (result == null) {
 		result = string.match(alternateMonthDateReg);
-		alternateMonthDateRegMatch = true;
+		if (result !== null) {
+			alternateMonthDateRegMatch = true;
+		}
 	}
 	
 	// Search for a valid string in the format: +1d | +2w | +3m | +4y
