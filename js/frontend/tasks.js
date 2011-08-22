@@ -32,8 +32,10 @@ tasks.add = function() {
 		var smartDate = wunderlist.smartScanForDate(task_name);
 		
 		// Process the smartDate results
-		if (smartDate['day'] != 0 && smartDate['day'] != undefined) 
-		{
+		if (smartDate.timestamp && smartDate.string) {
+			timestamp	= smartDate.timestamp;
+			task_name	= smartDate.string;
+			/*
 		    var day             = smartDate['day'];
 		    var monthName       = smartDate['month'];
 		    var year            = smartDate['year'];
@@ -44,6 +46,7 @@ tasks.add = function() {
 		    smartDateObject.setFullYear(year);
 		    timestamp           = html.getWorldWideDate(smartDateObject);
 		    task_name           = smartDate['string'];
+			*/
 		}
 		
 		if (task_name != '')

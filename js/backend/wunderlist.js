@@ -264,159 +264,164 @@ wunderlist.xss_clean = function(str) {
  * @author Adam Renklint
  */
 wunderlist.smartScanForDate = function(string) {
+	
+	// TODO: localize all strings
+	
+	function capitaliseFirstLetter(str) {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	};
+	
+	function setToFuture(date) {
+		var vDate = new Date();
+		if (vDate > date) {
+			date.setFullYear(date.getFullYear() + 1);
+			return setToFuture(date);
+		}
+		return date;
+	};
+	
+	var result 				= {},
+		number				= 0,
+		month				= '',
+		date 				= new Date();
 
-    // Add the year
-    // Do it in German (or multiple languages)
-
-	function capitaliseFirstLetter(str)
-	{
-	    return str.charAt(0).toUpperCase() + str.slice(1);
+	// Check for "today" or localized equivalent
+	if (string.search(wunderlist.language.data.today.toLowerCase()) != -1) {
+		return {
+			string: 		string.replace(wunderlist.language.data.today.toLowerCase(), ''),
+			timestamp: 		html.getWorldWideDate(date)
+		};
 	}
 	
-    // In 2 weeks? In 14 days?
-    var inType = false;
+	// Check for "tomorrow" or localized equivalent
+	if (string.search(wunderlist.language.data.tomorrow.toLowerCase()) != -1) {
+		date.setDate(date.getDate() + 1);
+		return {
+			string: 		string.replace(wunderlist.language.data.tomorrow.toLowerCase(), ''),
+			timestamp: 		html.getWorldWideDate(date)
+		};
+    }
 
-    // Search for a valid string in the format : on 21st of May | on 21 of May | on 21 May ...
-    //var monthDateReg  = /\bon\s([1-9]*)(st|nd|rd|th)?\s\bof?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/i;
-	var monthDateReg  = /\bon\s([0-9]*)(st|nd|rd|th)?\s\b(of)?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/i;
+	// Check for "in 3 days, in 1 week, in 2 months, in 1 year"
+    var rgxpRelativeDates	= /\bin\s([0-9]+)\s\b(days?|weeks?|months?|years?)/;
+	if (string.match(rgxpRelativeDates) !== null) {
+		result				= string.match(rgxpRelativeDates);
+		number 				= parseInt(result[1]);
+		if (number < 1) {
+            return {};
+		}
+		switch (result[2]) {
+			case 'day':
+			case 'days':
+				date.setDate(date.getDate() + number);
+				break;
+			case 'week':
+			case 'weeks':
+				date.setDate(date.getDate() + (7 * number));
+				break;
+			case 'month':
+			case 'months':
+				date.setMonth(date.getMonth() + number);
+				break;
+			case 'year':
+			case 'years':
+				date.setFullYear(date.getFullYear() + number);
+				break;
+			default:
+				return {};
+		}
+		return {
+			string: 		string.replace(result[0], ''),
+			timestamp: 		html.getWorldWideDate(date)
+		};
+	}
 	
-	// Apply the regex and replace the old string
-	var result        = string.match(monthDateReg);
-	
-	// Search for a valid string in the format: on may 21
-	var alternateMonthDateReg = /\bon\s\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\b([0-9]*)(st|nd|rd|th)?/i;
-	
-	var alternateMonthDateRegMatch = false;
-	if (result == null) {
-		result = string.match(alternateMonthDateReg);
-		if (result !== null) {
-			alternateMonthDateRegMatch = true;
+	// Check for "on monday, on tuesday, on wednesday, on thursday, on friday, on saturday, on sunday"
+	var rgxpOnWeekday		= /\bon\b\s(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)/i;
+	if (string.match(rgxpOnWeekday) !== null) {
+		var weekdays		= ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+		var today			= date.getDay();
+		var difference		= 0;
+		result				= string.match(rgxpOnWeekday);
+		for (var i = 0, max = weekdays.length; i < max; i++) {
+			if (weekdays[i] === result[1].toLowerCase()) {
+				difference = i - today;
+				if (difference < 0) {
+					difference = difference + 7;
+				} else if (difference === 0) {
+					difference = 7;
+				}
+				string		= string.replace(result[0], 'in ' + difference + ' days');
+				return wunderlist.smartScanForDate(string);
+			}
 		}
 	}
 	
-	// Search for a valid string in the format: +1d | +2w | +3m | +4y
-	if (result == null) {
-		var intervalTypes = {
-			y: 		'year',
-			year: 	'year',
-			d: 		'day',
-			day: 	'day',
-			m: 		'month',
-			month: 	'month',
-			w: 		'week',
-			week: 	'week'
-		}			
-		string = string.replace(/\+([0-9]+)(w(eek)?|d(ay)?|m(onth)?|y(ear)?)/, function(match, count, interval) {
-			var suffix = 's';
-			if (count < 2) {
-				suffix = '';
-			}
-			return "in " + count + " " + intervalTypes[interval] + suffix;
-		})
+	// Check for "on 21st of may, on 21 may"
+	var rgxpOnStandard 		= /\bon\s([0-9]+)(st|nd|rd|th)?\s\b(of)?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/i;
+	if (string.match(rgxpOnStandard) !== null) {
+		result				= string.match(rgxpOnStandard);
+		number				= parseInt(result[1]);
+		month				= capitaliseFirstLetter(result[4]);
+		date				= setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
+		return {
+			string: 		string.replace(result[0], ''),
+			timestamp: 		html.getWorldWideDate(date)
+		};
 	}
-
-    // Search for a valid string in the format : in 2 weeks | in 14 days ...
-    var weekDaysReg   = /\bin\s([1-9]*)\s\b(days?|weeks?|months?|years?)/;
-    
-    // Is it a normal string containing tomorrow or today?
-    var todayTomorrow = false;    
-    
-    if (result == null && string.match(weekDaysReg) != null)
-    {
-        result = string.match(weekDaysReg);
-        inType = true;
-    }
-    
-    var string = (result != null) ? string.replace(result[0], '') : string;        
-    
-    // The json object containing the date information and the sanitized string
-    var jsonDate      = { 'day' : 0, 'month' : 0, 'year' : 0, 'string' : string };
-    
-    // The current date
-    var newDate       = new Date();
-    
-    if (inType == true)
-    {
-        var number = parseInt(result[1]);
-        if (number == 0)
-        {
-            number = 1;
-        }
-        var type   = result[2];
-        
-        if (type == 'day' || type == 'days')
-        {
-            newDate.setDate(newDate.getDate() + number);
-        }
-        else if (type == 'week' || type == 'weeks')
-        {
-            newDate.setDate(newDate.getDate() + 7 * number);
-        }
-        else if (type == 'month' || type == 'months')
-        {
-            newDate.setMonth(newDate.getMonth() + number);
-        }
-        else if (type == 'year' || type == 'years')
-        {
-            newDate.setFullYear(newDate.getFullYear() + number);
-        }
-        
-        result    = [];
-        result[0] = '';
-        result[1] = newDate.getDate();
-        result[2] = html.getMonthName(newDate.getMonth());
-    }
-
-    if (inType == false)
-    {
-        if (string.search(wunderlist.language.data.tomorrow.toLowerCase()) != -1)
-        {
-            result             = [];
-            result[0]          = 0;
-            result[1]          = newDate.getDate() + 1;
-            result[2]          = html.getMonthName(newDate.getMonth());
-            todayTomorrow      = true;
-            jsonDate['string'] = jsonDate['string'].replace(wunderlist.language.data.tomorrow.toLowerCase(), '');
-        }
-        
-        if (string.search(wunderlist.language.data.today.toLowerCase()) != -1)
-        {
-            result             = [];
-            result[0]          = 0;
-            result[1]          = newDate.getDate();
-            result[2]          = html.getMonthName(newDate.getMonth());
-            todayTomorrow      = true;        
-            jsonDate['string'] = jsonDate['string'].replace(wunderlist.language.data.today.toLowerCase(), '');        
-        }
-    } 
-    
-    //if (result == null) result = [];
-	if (!result) {
-		return {};
-	}
-    
-	if (inType) {
-		jsonDate['day']   = result[1];
-		jsonDate['month'] = capitaliseFirstLetter(result[2]);
-		jsonDate['year']  = newDate.getFullYear();
-	} else if (alternateMonthDateRegMatch) {
-	    jsonDate['day']   = result[2];
-	    jsonDate['month'] = capitaliseFirstLetter(result[1]);
-	    jsonDate['year']  = newDate.getFullYear();
-	} else {
-		jsonDate['day']   = result[1];
-		jsonDate['month'] = (todayTomorrow == true) ? result[2] : capitaliseFirstLetter(result[result.length - 1]);
-		jsonDate['year']  = newDate.getFullYear();
-	}
-
-	var validatedDate = new Date(jsonDate['month'] + ' ' + jsonDate['day'] + ', ' + jsonDate['year']);
-	var nowDate = new Date();
 	
-	if (nowDate > validatedDate && !todayTomorrow) {
-		jsonDate['year']++;
+	// Check for "on may 21st, on may 21"
+	var rgxpOnAlternate 	= /\bon\s\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\b([0-9]+)(st|nd|rd|th)?/i;
+	if (string.match(rgxpOnAlternate) !== null) {
+		result				= string.match(rgxpOnAlternate);
+		number				= parseInt(result[2]);
+		month				= capitaliseFirstLetter(result[1]);
+		date				= setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
+		return {
+			string: 		string.replace(result[0], ''),
+			timestamp: 		html.getWorldWideDate(date)
+		};
 	}
-    
-    return jsonDate;
+
+	// Check for "#monday, #tuesday, #wednesday, #thursday, #friday, #saturday, #sunday"
+	var rgxpPUWeekdays		= /\#(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)/i;
+	if (string.match(rgxpPUWeekdays) !== null) {
+		result				= string.match(rgxpPUWeekdays);
+		string				= string.replace(result[0], 'on ' + result[1]);
+		return wunderlist.smartScanForDate(string);
+	}
+	
+	// Check for "#21may"
+	var rgxpPUExplicitDates	= /\#([0-9]+)(January|February|March|April|May|June|July|August|September|October|November|December)/i;
+	if (string.match(rgxpPUExplicitDates) !== null) {
+		result				= string.match(rgxpPUExplicitDates);
+		string				= string.replace(result[0], 'on ' + result[1] + ' ' + result[2]);
+		return wunderlist.smartScanForDate(string);
+	}
+	
+	// Check for "#may21"
+	var rgxpPUAlternateDates	= /\#(January|February|March|April|May|June|July|August|September|October|November|December)([0-9]+)/i;
+	if (string.match(rgxpPUExplicitDates) !== null) {
+		result				= string.match(rgxpPUExplicitDates);
+		string				= string.replace(result[0], 'on ' + result[2] + ' ' + result[1]);
+		return wunderlist.smartScanForDate(string);
+	}
+	
+	// Check for "#3d, #2w, #2m, #1y"
+	var rgxpPURelativeDates	= /\#([0-9]+)(d|w|m|y)/i;
+	if (string.match(rgxpPURelativeDates) !== null) {
+		result				= string.match(rgxpPURelativeDates);
+		var fullParams = {
+			'd': 	'days',
+			'w': 	'weeks',
+			'm': 	'months',
+			'y': 	'years'
+		};
+		string				= string.replace(result[0], 'in ' + result[1] + ' ' + fullParams[result[2]]);
+		return wunderlist.smartScanForDate(string);
+	}
+
+	return {};
 };
 
 /**
