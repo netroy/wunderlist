@@ -5,6 +5,7 @@ tasks.focusOutEnabled = true;
 tasks.totalFocusOut   = false;
 tasks.datePickerOpen  = false;
 tasks.dateBeforEdit   = '';
+tasks.addNewTaskToTop = false;
 
 // ADD a new task to the db and frontend
 tasks.add = function() {
@@ -86,7 +87,11 @@ tasks.add = function() {
 				var ulElement = $('ul#filterlist' + list_id);
 				
 				if (ulElement != undefined && ulElement.is('ul'))
-					ulElement.append(taskHTML);
+					if (tasks.addNewTaskToTop) {
+						ulElement.prepend(taskHTML).find('li:first').hide().fadeIn(225);
+					} else {
+						ulElement.append(taskHTML).find('li:last').hide().fadeIn(225);
+					}
 				else
 				{
 					listHTML  = '<h3 class="clickable cursor" rel="' + list_id + '">' + $('a#list' + list_id + ' b').text() + '</h3>';
@@ -103,9 +108,15 @@ tasks.add = function() {
 			}
 			else
 			{
-				$("ul.mainlist").append(taskHTML).find("li:last").hide().fadeIn(225);
+				// ORDINARY LIST
+				if (tasks.addNewTaskToTop) {
+					$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+				} else {
+					$("ul.mainlist").append(taskHTML).find("li:last").hide().fadeIn(225);
+				}
 				html.createDatepicker();
 			}
+			
 			
 			$("input.input-add").val('');
 			$(".add .showdate").remove();
@@ -118,6 +129,11 @@ tasks.add = function() {
 			makeSortable();
 			filters.updateBadges();
 			html.make_timestamp_to_string();
+			
+			if (tasks.addNewTaskToTop) {
+				task.updatePositions();
+				task.addNewTaskToTop = false;
+			}
 		}
 		else
 			$("input.input-add").val('');
@@ -196,6 +212,14 @@ $(function() {
 			tasks.totalFocusOut = false;
 			isEdit = false;
 			wunderlist.timer.resume();
+		}
+	});
+	
+	shortcut.add(settings.shortcutkey + '+enter', function (e) {
+		if ( $('div.add input:focus').size() > 0 ) {
+			tasks.addNewTaskToTop = true;
+			tasks.add();
+			tasks.addNewTaskToTop = false;
 		}
 	});
 
