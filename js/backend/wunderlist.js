@@ -411,7 +411,8 @@ wunderlist.smartScanForDate = function(string) {
 
 	var validatedDate = new Date(jsonDate['month'] + ' ' + jsonDate['day'] + ', ' + jsonDate['year']);
 	var nowDate = new Date();
-	if (nowDate > validatedDate) {
+	
+	if (nowDate > validatedDate && !todayTomorrow) {
 		jsonDate['year']++;
 	}
     
