@@ -355,7 +355,7 @@ wunderlist.smartScanForDate = function(string, doNaturalRecognition) {
 						difference = 7;
 					}
 					string		= string.replace(result[0], 'in ' + difference + ' days');
-					return wunderlist.smartScanForDate(string);
+					return wunderlist.smartScanForDate(string, doNaturalRecognition);
 				}
 			}
 		}
