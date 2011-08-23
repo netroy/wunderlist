@@ -225,5 +225,7 @@
 	"unsynced_data":			"Der er opgaver og lister der ikke er blevet overført korrekt. Forsøg venligst at synkronisere igen.",
 	"add_item_method":          "Genvejstast til oprettelse af opgave/liste",
 	"add_item_method_content":	"Vælg den genvejstast du vil bruge til at oprette opgaver og lister",
-	"privacy_policy":           "Politik om fortrolige oplysninger"
+	"privacy_policy":           "Politik om fortrolige oplysninger",
+	"enable_natural_date_recognition": "Aktivér Smart Date",
+	"disable_natural_date_recognition": "Deaktivér Smart Date"
 }

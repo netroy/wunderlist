@@ -178,5 +178,7 @@
 	"hotkey_help_inbox":		"Abrir 'Bandeja de Entrada'",
 	"hotkey_help_sidebar":		"Activar Barra Lateral",
 	"hotkey_help_backspace":	"Tecla de retroceso",
-	"hotkey_help_del":			"Quitar"	
+	"hotkey_help_del":			"Quitar",
+	"enable_natural_date_recognition": "Activar Smart Date",
+	"disable_natural_date_recognition": "Desactivar Smart Date"
 }
