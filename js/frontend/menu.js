@@ -66,6 +66,21 @@ menu.initialize = function() {
 	extraMenuItem.addItem(wunderlist.language.data.sidebar_position, function() { dialogs.openSidebarDialog(); menu.refocus(); });
 	extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, function() { dialogs.openDeletePromptDialog(); menu.refocus(); });
 
+	var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition');
+	if (isNaturalDateRecognitionEnabled === 1) {
+		enableNaturalDateRecognitionMenuString = wunderlist.language.data.disable_natural_date_recognition;
+	}
+	extraMenuItem.addItem(enableNaturalDateRecognitionMenuString, function () {
+		var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition', 0);
+		if (isNaturalDateRecognitionEnabled === 1) {
+			Titanium.App.Properties.setInt('enable_natural_date_recognition', 0);
+			this.getSubmenu().getItemAt(5).setLabel(wunderlist.language.data.enable_natural_date_recognition);
+		} else {
+			Titanium.App.Properties.setInt('enable_natural_date_recognition', 1);
+			this.getSubmenu().getItemAt(5).setLabel(wunderlist.language.data.disable_natural_date_recognition);
+		}
+	});
+	
 	// Extras Menu
 	extraMenuItem.addItem(wunderlist.language.data.reset_window_size, function() { menu.reset_window_size(); menu.refocus(); }); // Reset Window Size
 	extraMenuItem.addItem(wunderlist.language.data.reset_note_window, menu.reset_note_window); // Reset Note Window

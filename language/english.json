@@ -229,5 +229,7 @@
 	"unsynced_data":			"There are tasks and lists which have not been transferred correctly. Please try to sync again.",
 	"add_item_method":          "Task/List creation hotkey",
 	"add_item_method_content":	"Select a hotkey you want to use for creating tasks and lists.",
-	"privacy_policy":           "Privacy Policy"
+	"privacy_policy":           "Privacy Policy",
+	"enable_natural_date_recognition": "Enable natural date recognition",
+	"disable_natural_date_recognition": "Disable natural date recognition"
 }
