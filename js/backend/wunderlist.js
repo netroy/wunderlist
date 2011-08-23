@@ -263,9 +263,11 @@ wunderlist.xss_clean = function(str) {
  * @author Dennis Schneider
  * @author Adam Renklint
  */
-wunderlist.smartScanForDate = function(string) {
+wunderlist.smartScanForDate = function(string, doNaturalRecognition) {
 	
-	// TODO: localize all strings
+	if (Titanium.App.Properties.getInt('enable_natural_date_recognition') === 1) {
+		doNaturalRecognition = true;
+	}
 	
 	function capitaliseFirstLetter(str) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
@@ -285,102 +287,104 @@ wunderlist.smartScanForDate = function(string) {
 		month				= '',
 		date 				= new Date();
 
-	// Check for "today" or localized equivalent
-	if (string.search(wunderlist.language.data.today.toLowerCase()) != -1) {
-		return {
-			string: 		string.replace(wunderlist.language.data.today.toLowerCase(), ''),
-			timestamp: 		html.getWorldWideDate(date)
-		};
-	}
-	
-	// Check for "tomorrow" or localized equivalent
-	if (string.search(wunderlist.language.data.tomorrow.toLowerCase()) != -1) {
-		date.setDate(date.getDate() + 1);
-		return {
-			string: 		string.replace(wunderlist.language.data.tomorrow.toLowerCase(), ''),
-			timestamp: 		html.getWorldWideDate(date)
-		};
-    }
+	if (doNaturalRecognition) {
+		// Check for "today"
+		if (string.search('today') != -1) {
+			return {
+				string: 		string.replace('today', ''),
+				timestamp: 		html.getWorldWideDate(date)
+			};
+		}
 
-	// Check for "in 3 days, in 1 week, in 2 months, in 1 year"
-    var rgxpRelativeDates	= /\bin\s([0-9]+)\s\b(days?|weeks?|months?|years?)/;
-	if (string.match(rgxpRelativeDates) !== null) {
-		result				= string.match(rgxpRelativeDates);
-		number 				= parseInt(result[1]);
-		if (number < 1) {
-            return {};
+		// Check for "tomorrow"
+		if (string.search('tomorrow') != -1) {
+			date.setDate(date.getDate() + 1);
+			return {
+				string: 		string.replace('tomorrow', ''),
+				timestamp: 		html.getWorldWideDate(date)
+			};
+	    }
+
+		// Check for "in 3 days, in 1 week, in 2 months, in 1 year"
+	    var rgxpRelativeDates	= /\bin\s([0-9]+)\s\b(days?|weeks?|months?|years?)/;
+		if (string.match(rgxpRelativeDates) !== null) {
+			result				= string.match(rgxpRelativeDates);
+			number 				= parseInt(result[1]);
+			if (number < 1) {
+	            return {};
+			}
+			switch (result[2]) {
+				case 'day':
+				case 'days':
+					date.setDate(date.getDate() + number);
+					break;
+				case 'week':
+				case 'weeks':
+					date.setDate(date.getDate() + (7 * number));
+					break;
+				case 'month':
+				case 'months':
+					date.setMonth(date.getMonth() + number);
+					break;
+				case 'year':
+				case 'years':
+					date.setFullYear(date.getFullYear() + number);
+					break;
+				default:
+					return {};
+			}
+			return {
+				string: 		string.replace(result[0], ''),
+				timestamp: 		html.getWorldWideDate(date)
+			};
 		}
-		switch (result[2]) {
-			case 'day':
-			case 'days':
-				date.setDate(date.getDate() + number);
-				break;
-			case 'week':
-			case 'weeks':
-				date.setDate(date.getDate() + (7 * number));
-				break;
-			case 'month':
-			case 'months':
-				date.setMonth(date.getMonth() + number);
-				break;
-			case 'year':
-			case 'years':
-				date.setFullYear(date.getFullYear() + number);
-				break;
-			default:
-				return {};
-		}
-		return {
-			string: 		string.replace(result[0], ''),
-			timestamp: 		html.getWorldWideDate(date)
-		};
-	}
-	
-	// Check for "on monday, on tuesday, on wednesday, on thursday, on friday, on saturday, on sunday"
-	var rgxpOnWeekday		= /\bon\b\s(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)/i;
-	if (string.match(rgxpOnWeekday) !== null) {
-		var weekdays		= ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-		var today			= date.getDay();
-		var difference		= 0;
-		result				= string.match(rgxpOnWeekday);
-		for (var i = 0, max = weekdays.length; i < max; i++) {
-			if (weekdays[i] === result[1].toLowerCase()) {
-				difference = i - today;
-				if (difference < 0) {
-					difference = difference + 7;
-				} else if (difference === 0) {
-					difference = 7;
+
+		// Check for "on monday, on tuesday, on wednesday, on thursday, on friday, on saturday, on sunday"
+		var rgxpOnWeekday		= /\bon\b\s(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)/i;
+		if (string.match(rgxpOnWeekday) !== null) {
+			var weekdays		= ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+			var today			= date.getDay();
+			var difference		= 0;
+			result				= string.match(rgxpOnWeekday);
+			for (var i = 0, max = weekdays.length; i < max; i++) {
+				if (weekdays[i] === result[1].toLowerCase()) {
+					difference = i - today;
+					if (difference < 0) {
+						difference = difference + 7;
+					} else if (difference === 0) {
+						difference = 7;
+					}
+					string		= string.replace(result[0], 'in ' + difference + ' days');
+					return wunderlist.smartScanForDate(string);
 				}
-				string		= string.replace(result[0], 'in ' + difference + ' days');
-				return wunderlist.smartScanForDate(string);
 			}
 		}
-	}
-	
-	// Check for "on 21st of may, on 21 may"
-	var rgxpOnStandard 		= /\bon\s([0-9]+)(st|nd|rd|th)?\s\b(of)?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/i;
-	if (string.match(rgxpOnStandard) !== null) {
-		result				= string.match(rgxpOnStandard);
-		number				= parseInt(result[1]);
-		month				= capitaliseFirstLetter(result[4]);
-		date				= setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
-		return {
-			string: 		string.replace(result[0], ''),
-			timestamp: 		html.getWorldWideDate(date)
-		};
-	}
-	
-	// Check for "on may 21st, on may 21"
-	var rgxpOnAlternate 	= /\bon\s\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\b([0-9]+)(st|nd|rd|th)?/i;
-	if (string.match(rgxpOnAlternate) !== null) {
-		result				= string.match(rgxpOnAlternate);
-		number				= parseInt(result[2]);
-		month				= capitaliseFirstLetter(result[1]);
-		date				= setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
-		return {
-			string: 		string.replace(result[0], ''),
-			timestamp: 		html.getWorldWideDate(date)
-		};
+
+		// Check for "on 21st of may, on 21 may"
+		var rgxpOnStandard 		= /\bon\s([0-9]+)(st|nd|rd|th)?\s\b(of)?\s?\b(January|February|March|April|May|June|July|August|September|October|November|December)/i;
+		if (string.match(rgxpOnStandard) !== null) {
+			result				= string.match(rgxpOnStandard);
+			number				= parseInt(result[1]);
+			month				= capitaliseFirstLetter(result[4]);
+			date				= setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
+			return {
+				string: 		string.replace(result[0], ''),
+				timestamp: 		html.getWorldWideDate(date)
+			};
+		}
+
+		// Check for "on may 21st, on may 21"
+		var rgxpOnAlternate 	= /\bon\s\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\b([0-9]+)(st|nd|rd|th)?/i;
+		if (string.match(rgxpOnAlternate) !== null) {
+			result				= string.match(rgxpOnAlternate);
+			number				= parseInt(result[2]);
+			month				= capitaliseFirstLetter(result[1]);
+			date				= setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
+			return {
+				string: 		string.replace(result[0], ''),
+				timestamp: 		html.getWorldWideDate(date)
+			};
+		}
 	}
 
 	// Check for "#monday, #tuesday, #wednesday, #thursday, #friday, #saturday, #sunday"
@@ -388,7 +392,7 @@ wunderlist.smartScanForDate = function(string) {
 	if (string.match(rgxpPUWeekdays) !== null) {
 		result				= string.match(rgxpPUWeekdays);
 		string				= string.replace(result[0], 'on ' + result[1]);
-		return wunderlist.smartScanForDate(string);
+		return wunderlist.smartScanForDate(string, true);
 	}
 	
 	// Check for "#21may"
@@ -396,7 +400,7 @@ wunderlist.smartScanForDate = function(string) {
 	if (string.match(rgxpPUExplicitDates) !== null) {
 		result				= string.match(rgxpPUExplicitDates);
 		string				= string.replace(result[0], 'on ' + result[1] + ' ' + result[2]);
-		return wunderlist.smartScanForDate(string);
+		return wunderlist.smartScanForDate(string, true);
 	}
 	
 	// Check for "#may21"
@@ -404,7 +408,7 @@ wunderlist.smartScanForDate = function(string) {
 	if (string.match(rgxpPUExplicitDates) !== null) {
 		result				= string.match(rgxpPUExplicitDates);
 		string				= string.replace(result[0], 'on ' + result[2] + ' ' + result[1]);
-		return wunderlist.smartScanForDate(string);
+		return wunderlist.smartScanForDate(string, true);
 	}
 	
 	// Check for "#3d, #2w, #2m, #1y"
@@ -418,7 +422,19 @@ wunderlist.smartScanForDate = function(string) {
 			'y': 	'years'
 		};
 		string				= string.replace(result[0], 'in ' + result[1] + ' ' + fullParams[result[2]]);
-		return wunderlist.smartScanForDate(string);
+		return wunderlist.smartScanForDate(string, true);
+	}
+	
+	// Check for "#td"
+	if (string.match('#td')) {
+		string				= string.replace('#td', 'today');
+		return wunderlist.smartScanForDate(string, true);
+	}
+	
+	// Check for "#tm"
+	if (string.match('#tm')) {
+		string				= string.replace('#tm', 'tomorrow');
+		return wunderlist.smartScanForDate(string, true);
 	}
 
 	return {};
