@@ -19,7 +19,7 @@ tasks.add = function() {
 		var important = 0;
 		
 		// Check if task should be prio
-		if (task_name.indexOf('*') == 0 || task_name.indexOf('!') == 0) {
+		if (task_name.indexOf('*') == 0) {
 			task_name = task_name.substr(1);
 			important = 1;
 		}
