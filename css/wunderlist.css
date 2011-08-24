@@ -540,6 +540,17 @@ font-family:Arial, Verdana; font-size:13px; color:#fff;border:none}
 
 div.add div.addwrapper.filter-add {left: 10px !important}
 
+span.add_task_hint {
+	display: block;
+	font-size: 90%;
+	float: right;
+	margin-top: -25px;
+	color: #fff;
+	opacity:0.5; 
+	-moz-opacity: 0.5;
+	filter:Alpha(opacity=50);
+}
+
 div.add .showdate {position:absolute; right:-70px !important; top:10px; font-size:11px; font-weight:bold; color:#fff}
 
 /* Done Tasks */

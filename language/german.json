@@ -228,5 +228,6 @@
 	"add_item_method_content":	"Wähle dein Tastenkürzel für das Hinzufügen von Aufgaben und Listen.",
 	"privacy_policy":			"Datenschutzerklärung",
 	"enable_natural_date_recognition": "Smart Date aktivieren",
-	"disable_natural_date_recognition": "Smart Date deaktivieren"
+	"disable_natural_date_recognition": "Smart Date deaktivieren",
+	"add_task_hint":			"▲▼ wechselt zwischen Listen, ⌥ + Enter fügt ein Task oben hinzu"
 }

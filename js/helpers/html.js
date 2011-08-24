@@ -141,7 +141,7 @@ html.generateListContentHTML = function(list_id, list_name) {
 	
 	html_code += "<h1>" + unescape(list_name) + "</h1>";
 	html_code += "<div class='add'>";
-	html_code += "<div class='addwrapper'><input type='text' class='input-add' placeholder='" + wunderlist.language.data.add_task + "' /></div>";
+	html_code += "<div class='addwrapper'><input type='text' class='input-add' placeholder='" + wunderlist.language.data.add_task + "' /><span class='add_task_hint'>" + wunderlist.language.data.add_task_hint + "</span></div>";
 	html_code += "<input type='hidden' class='datepicker'/>";
 	html_code += "</div>";
 	html_code += "<ul id='list' rel='" + list_id + "' class='mainlist sortable'></ul>";
@@ -850,7 +850,7 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 	if (show_add === true)
 	{
 		result += '<div class="add">';
-		result += '<div class="addwrapper ' + (filter != 'all' && filter != 'starred' ? 'filter-add' : '') + '"><input type="text" class="input-add" placeholder="' + wunderlist.language.data.add_task + '" /></div>';
+		result += '<div class="addwrapper ' + (filter != 'all' && filter != 'starred' ? 'filter-add' : '') + '"><input type="text" class="input-add" placeholder="' + wunderlist.language.data.add_task + '" /><span class="add_task_hint">' + wunderlist.language.data.add_task_hint + '</span></div>';
 		if (filter == 'all' || filter == 'starred')
 			result += '<input type="hidden" class="datepicker" />';
 		result += '</div>';

@@ -226,6 +226,15 @@ $(function() {
 		}
 	});
 
+	$('.addwrapper input').live('focus', function () {
+		$('.add_task_hint').hide();
+	});
+	$('.addwrapper input').live('blur', function () {
+		if ($('.addwrapper input').val().length < 1) {
+			$('.add_task_hint').show();
+		}
+	});
+
 	$("div.add input").live('keydown', 'Esc', function (evt) {
 		if(evt.keyCode == 27) {
 	  		$(this).val('');
