@@ -47,7 +47,7 @@ wunderlist.init = function() {
 	
 	// Enable shutdown fix
 	Titanium.API.addEventListener(Titanium.EXIT, function() {
-		Titanium.Platform.canShutdown();
+		//Titanium.Platform.canShutdown();
 	});
 };
 
@@ -265,7 +265,7 @@ wunderlist.xss_clean = function(str) {
  */
 wunderlist.smartScanForDate = function(string, doNaturalRecognition) {
 	
-	if (Titanium.App.Properties.getInt('enable_natural_date_recognition') === 1) {
+	if (Titanium.App.Properties.getInt('enable_natural_date_recognition', 0) === 1) {
 		doNaturalRecognition = true;
 	}
 	
