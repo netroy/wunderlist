@@ -91,9 +91,26 @@ tasks.add = function() {
 				
 				if (ulElement != undefined && ulElement.is('ul'))
 					if (tasks.addNewTaskToTop) {
-						ulElement.prepend(taskHTML).find('li:first').hide().fadeIn(225);
+						//ulElement.prepend(taskHTML).find('li:first').hide().fadeIn(225);
+						if (important) {
+							$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+						} else {
+							if ($('ul.mainlist li.more:not(.done) .fav').size() > 0) {
+								$('ul.mainlist li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+							} else {
+								$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+							}
+						}
 					} else {
-						ulElement.append(taskHTML).find('li:last').hide().fadeIn(225);
+						if (important) {
+							if ($('ul.mainlist li.more:not(.done) .fav').size() > 0) {
+								$('ul.mainlist li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+							} else {
+								$("ul.mainlist").prepend(taskHTML).find("li:last").hide().fadeIn(225);
+							}
+						} else {
+							$("ul.mainlist").append(taskHTML).find("li:last").hide().fadeIn(225);
+						}
 					}
 				else
 				{
@@ -113,9 +130,25 @@ tasks.add = function() {
 			{
 				// ORDINARY LIST
 				if (tasks.addNewTaskToTop) {
-					$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+					if (important) {
+						$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+					} else {
+						if ($('ul.mainlist li.more:not(.done) .fav').size() > 0) {
+							$('ul.mainlist li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+						} else {
+							$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+						}
+					}
 				} else {
-					$("ul.mainlist").append(taskHTML).find("li:last").hide().fadeIn(225);
+					if (important) {
+						if ($('ul.mainlist li.more:not(.done) .fav').size() > 0) {
+							$('ul.mainlist li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+						} else {
+							$("ul.mainlist").prepend(taskHTML).find("li:last").hide().fadeIn(225);
+						}
+					} else {
+						$("ul.mainlist").append(taskHTML).find("li:last").hide().fadeIn(225);
+					}
 				}
 				html.createDatepicker();
 			}
