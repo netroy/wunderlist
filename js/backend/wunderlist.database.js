@@ -965,7 +965,7 @@ wunderlist.database.getFilteredTasks = function(filter, date_type, printing) {
 							break;
 	}
 
-	sql += " AND tasks.deleted = 0 ORDER BY tasks.list_id ASC, tasks.important DESC, tasks.position ASC";
+	sql += " AND tasks.deleted = 0 ORDER BY tasks.list_id ASC, tasks.important DESC, tasks.date ASC, tasks.position ASC";
 
 	var result = wunderlist.database.db.execute(sql);
 
