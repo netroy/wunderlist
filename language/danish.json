@@ -226,6 +226,6 @@
 	"add_item_method":          "Genvejstast til oprettelse af opgave/liste",
 	"add_item_method_content":	"Vælg den genvejstast du vil bruge til at oprette opgaver og lister",
 	"privacy_policy":           "Politik om fortrolige oplysninger",
-	"enable_natural_date_recognition": "Aktivér Smart Date",
-	"disable_natural_date_recognition": "Deaktivér Smart Date"
+	"enable_natural_date_recognition": "Aktivér smart datogenkendelse",
+	"disable_natural_date_recognition": "Deaktivér smart datogenkendelse"
 }

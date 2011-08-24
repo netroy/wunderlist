@@ -229,7 +229,7 @@
 	"add_item_method":          "kortkommando för skapande av Uppgift/Lista",
 	"add_item_method_content":	"Välj ett kortkommando du vill använda för att skapa uppgifter och listor.",
 	"privacy_policy":           "Integritetspolicy",
-	"enable_natural_date_recognition": "Aktivera Smart Date",
-	"disable_natural_date_recognition": "Inaktivera Smart Date",
+	"enable_natural_date_recognition": "Aktivera smart igenkänning av datum",
+	"disable_natural_date_recognition": "Inaktivera smart igenkänning av datum",
 	"add_task_hint":			"▲▼ byter lista,  ⌥ + Retur lägger uppgiften på toppen"
 }
