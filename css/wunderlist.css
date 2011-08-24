@@ -576,8 +576,8 @@ background:url(/images/dragging.png) !important}
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;
 right:132px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:#333}
 
-#content .description a {color:#2597e2}
-#content .description a:hover {text-decoration: underline}
+#content .description a, #content .openApp {color:#2597e2}
+#content .description a:hover, #content .openApp:hover {text-decoration: underline; cursor: pointer; }
 
 #content .showdate {position:absolute; right:52px; font-size:11px; font-weight:bold}
 
