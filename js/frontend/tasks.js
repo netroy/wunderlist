@@ -218,7 +218,7 @@ $(function() {
 		}
 	});
 	
-	shortcut.add(settings.shortcutkey + '+enter', function (e) {
+	shortcut.add('alt+enter', function (e) {
 		if ( $('div.add input:focus').size() > 0 ) {
 			tasks.addNewTaskToTop = true;
 			tasks.add();
