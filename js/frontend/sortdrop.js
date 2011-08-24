@@ -167,7 +167,8 @@ makeFilterDropable = function() {
 makeSortable = function() {
 	// Sortable Tasks
 	$("ul.sortable").sortable({
-   		scroll      : false,
+   		scroll      : true,
+		containment : 'document',
    		delay       : 100,
    		appendTo    : 'body',
    		helper      : function() { return $("<div class='dragging'></div>"); },
@@ -179,3 +180,20 @@ makeSortable = function() {
    		}
     });
 };
+
+$(function() {
+	
+	$(document).mousemove(function(e) {
+		if ($('.dragging').size() > 0) {
+			var currentOffset = $('#content').scrollTop();
+			var height = $(document).height();
+			if (e.pageY < 100) {
+				$('#content').scrollTop(currentOffset - 50);
+			} else if (e.pageY > (height - 100)) {
+				$('#content').scrollTop(currentOffset + 50);
+			}
+		}	
+	});
+	
+});
+
