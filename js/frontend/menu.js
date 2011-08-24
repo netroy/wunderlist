@@ -66,7 +66,7 @@ menu.initialize = function() {
 	extraMenuItem.addItem(wunderlist.language.data.sidebar_position, function() { dialogs.openSidebarDialog(); menu.refocus(); });
 	extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, function() { dialogs.openDeletePromptDialog(); menu.refocus(); });
 
-	var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition');
+	var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition', 0);
 	var enableNaturalDateRecognitionMenuString = wunderlist.language.data.enable_natural_date_recognition;
 	if (isNaturalDateRecognitionEnabled === 1) {
 		enableNaturalDateRecognitionMenuString = wunderlist.language.data.disable_natural_date_recognition;
