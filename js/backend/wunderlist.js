@@ -405,8 +405,8 @@ wunderlist.smartScanForDate = function(string, doNaturalRecognition) {
 	
 	// Check for "#may21"
 	var rgxpPUAlternateDates	= /\#(January|February|March|April|May|June|July|August|September|October|November|December)([0-9]+)/i;
-	if (string.match(rgxpPUExplicitDates) !== null) {
-		result				= string.match(rgxpPUExplicitDates);
+	if (string.match(rgxpPUAlternateDates) !== null) {
+		result				= string.match(rgxpPUAlternateDates);
 		string				= string.replace(result[0], 'on ' + result[2] + ' ' + result[1]);
 		return wunderlist.smartScanForDate(string, true);
 	}
