@@ -83,7 +83,7 @@
 	"error_invalid_email":	    "Adresse e-mail invalide",
 	"error_login_failed":	    "Connexion rejetée. Veuillez recommencer.",
 	"tutorials":			    "Tutoriels",
-	"overdue_text_pl":		    "ces tâches sont en retard",
+	"overdue_text_pl":		    "tâches en retard",
 	"overdue_text_sl":		    "cette tâche est en retard",
 	"day_ago":				    "de xx jour(s)",
 	"list_delete_no":		    "Non, annuler",
