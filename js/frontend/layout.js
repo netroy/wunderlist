@@ -99,8 +99,7 @@ toolTips = function() {
 		var tipWidth = $("#tooltip").width();
 		
 		if($(this).attr("id") == "sync"){tipWidth = "36";}
-
-		$("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-tipWidth/2) + "px").fadeIn("fast");
+		$("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-tipWidth/2) + "px").show();
 				
 		if($(this).parent().attr("id") == "listfunctions") {
 			$("#tooltip").css("top",(offset.top+25));
