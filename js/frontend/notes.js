@@ -7,7 +7,7 @@
  */
 var notes = notes || {};
 
-notes.window = undefined;
+notes.windows = [];
 
 /**
  * Open Notes Window
@@ -15,44 +15,47 @@ notes.window = undefined;
  * @author Daniel Marschner
  */
 notes.openNotesWindow = function() {
-	if (notes.window !== undefined && notes.window.editMode) {
-		notes.window.saveAndClose();
-	}
-	if (notes.window == undefined) {
-		notes.window = Titanium.UI.getCurrentWindow().createWindow({
-			url       : "app://note.html",
-			width     : parseInt(Titanium.App.Properties.getString('note_user_width', '500')),
-	        minWidth  : 500,
-	        height    : parseInt(Titanium.App.Properties.getString('note_user_height', '400')),
-	        minHeight : 400,
-	        maximized : Titanium.App.Properties.getString('maximized', 'false')
+	if (notes.windows[notes.currentNoteId] == null) {
+			var notesWindow = Titanium.UI.getCurrentWindow().createWindow({
+				url       : "app://note.html",
+				width     : parseInt(Titanium.App.Properties.getString('note_user_width', '500')),
+		        minWidth  : 500,
+		        height    : parseInt(Titanium.App.Properties.getString('note_user_height', '400')),
+		        minHeight : 400,
+		        maximized : Titanium.App.Properties.getString('maximized', 'false')
+			});
+
+			note_user_x = Titanium.App.Properties.getString('note_user_x', 'none');
+			note_user_y = Titanium.App.Properties.getString('note_user_y', 'none');
+
+			//if(note_user_x != 'none') notes.window.x = parseInt(note_user_x);
+			//if(note_user_y != 'none') notes.window.y = parseInt(note_user_y);
+
+			notesWindow.open();
+
+
+		notesWindow.noteTitle = notes.format(notes.currentNoteTitle, false);
+		notesWindow.text      = notes.currentNote;
+		notesWindow.html      = unescape(notes.format(notes.currentNote));
+		notesWindow.noteId    = notes.currentNoteId;
+		notesWindow.readOnly  = notes.readOnly;
+		notesWindow.editMode  = false;
+		notesWindow.focused   = false;
+		notesWindow.focus();
+
+		notesWindow.addEventListener(Titanium.CLOSE, function(e) {
+			if (notesWindow.editMode) {
+				notesWindow.forceSave();
+			}
+			//settings.save_note_window_position(notesWindow);
+			notes.window[notes.currentNoteId] = undefined;
 		});
 		
-		note_user_x = Titanium.App.Properties.getString('note_user_x', 'none');
-		note_user_y = Titanium.App.Properties.getString('note_user_y', 'none');
-
-		if(note_user_x != 'none') notes.window.x = parseInt(note_user_x);
-		if(note_user_y != 'none') notes.window.y = parseInt(note_user_y);
+		notes.windows[notes.currentNoteId] = notesWindow;
 		
-		notes.window.open();
+	} else {
+		notes.windows[notes.currentNoteId].focus();
 	}
-	
-	notes.window.noteTitle = notes.format(notes.currentNoteTitle, false);
-	notes.window.text      = notes.currentNote;
-	notes.window.html      = unescape(notes.format(notes.currentNote));
-	notes.window.noteId    = notes.currentNoteId;
-	notes.window.readOnly  = notes.readOnly;
-	notes.window.editMode  = false;
-	notes.window.focused   = false;
-	notes.window.focus();
-	
-	notes.window.addEventListener(Titanium.CLOSE, function(e) {
-		if (notes.window.editMode) {
-			notes.window.forceSave();
-		}
-		settings.save_note_window_position(notes.window);
-		notes.window = undefined;
-	});
 };
 
 /**
