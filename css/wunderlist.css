@@ -541,7 +541,7 @@ font-family:Arial, Verdana; font-size:13px; color:#fff;border:none}
 div.add div.addwrapper.filter-add {left: 10px !important}
 
 span.add_task_hint {
-	display: block;
+	display: none;
 	font-size: 90%;
 	float: right;
 	margin-top: -25px;

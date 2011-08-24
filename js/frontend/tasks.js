@@ -231,7 +231,10 @@ tasks.deletes = function(deleteElement) {
 
 // On DOM ready
 $(function() {
-	// Add task by hitting Enter
+	
+	var stepUp   = false;
+	var stepDown = false;
+	
 	$("div.add input").live('keyup', function(e) {
 		wunderlist.timer.pause();
 		var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
@@ -248,6 +251,44 @@ $(function() {
 			tasks.totalFocusOut = false;
 			isEdit = false;
 			wunderlist.timer.resume();
+		} else if (e.keyCode == 38) {
+			if (stepUp == false)
+			{
+				stepUp        = true;
+				$element      = $('div#lists > a.ui-state-disabled');
+				var elementId = $element.prev().attr('id');
+				var taskName = $("div.add input").val();
+
+				if(elementId == undefined)
+					$('div#lists a').last().click();
+				else
+					$('div#lists > a.ui-state-disabled').prev().click();
+			}
+
+			setTimeout(function() {
+				$(".addwrapper input").focus();
+				$("div.add input").val(taskName);
+				stepUp = false;	
+			}, 50);
+		} else if (e.keyCode == 40) {
+			if(stepDown == false)
+			{
+				stepDown      = true;
+				$element      = $('div#lists > a.ui-state-disabled');
+				var elementId = $element.next().attr('id');
+				var taskName = $("div.add input").val();
+
+				if(elementId == undefined)
+					$('div#lists a').first().click();
+				else
+					$('div#lists > a.ui-state-disabled').next().click();
+			}
+
+			setTimeout(function() {
+				$(".addwrapper input").focus(); 
+				$("div.add input").val(taskName);
+				stepDown = false; 
+			}, 50);
 		}
 	});
 	
@@ -259,14 +300,26 @@ $(function() {
 		}
 	});
 
-	$('.addwrapper input').live('focus', function () {
-		$('.add_task_hint').hide();
-	});
-	$('.addwrapper input').live('blur', function () {
-		if ($('.addwrapper input').val().length < 1) {
-			$('.add_task_hint').show();
-		}
-	});
+	var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
+	if (numberOfShownHints < 5) {
+		$('.addwrapper input').live('focus', function () {
+			if ($('.addwrapper input').val().length < 15) {
+				$('.add_task_hint').show();
+			}
+		});
+		$('.addwrapper input').keyup('focus', function () {
+			if ($('.addwrapper input').val().length < 15) {
+				$('.add_task_hint').show();
+			} else {
+				$('.add_task_hint').fadeOut('fast');
+			}
+		});
+		$('.addwrapper input').live('blur', function () {
+			$('.add_task_hint').fadeOut('fast');
+		});
+		Titanium.App.Properties.setInt('number_of_shown_add_task_hints', numberOfShownHints);
+	}
+
 
 	$("div.add input").live('keydown', 'Esc', function (evt) {
 		if(evt.keyCode == 27) {
