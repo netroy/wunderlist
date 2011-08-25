@@ -159,18 +159,6 @@ wunderlist.account.loadInterface = function() {
 	
 	makeListsDropable();
 	makeFilterDropable();
-
-	if (settings.os === 'darwin')
-	{
-		// Stupid, but necessary workaround for Mac OS X
-		$('.input-add').focus().blur();
-	}
-	
-	if (taskInput != '')
-	{
-		$("input.input-add").val(taskInput);
-		$("input.input-add").focus();
-	}
 };
 
 /**
