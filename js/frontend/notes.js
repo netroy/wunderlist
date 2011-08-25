@@ -48,10 +48,10 @@ notes.openNotesWindow = function() {
 				notesWindow.forceSave();
 			}
 			//settings.save_note_window_position(notesWindow);
-			notes.window[notes.currentNoteId] = undefined;
+			notes.windows[notesWindow.noteId] = null;
 		});
 		
-		notes.windows[notes.currentNoteId] = notesWindow;
+		notes.windows[notesWindow.noteId] = notesWindow;
 		
 	} else {
 		notes.windows[notes.currentNoteId].focus();
