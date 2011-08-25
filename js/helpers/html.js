@@ -235,7 +235,7 @@ html.generateNewListElementHTML = function(listId, listElementName, listElementI
  * @author Daniel Marschner
  */
 html.generateCreditsDialogHTML = function() {
-	var html_code = '<p><b>Wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux and on Apple iOS. Register for free to sync your todos online. No matter where you are, your Wunderlist follows you.<br /><br />' +
+	var html_code = '<p><b>Wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux, Android and on Apple iOS. Register for free to sync your todos online. No matter where you are, your Wunderlist follows you.<br /><br />' +
 		'<b>What´s next?</b><br><br>' +
 		'We are currently working on something pretty big. We call it <b>Wunderkit</b>, an online business platform that will change the way you look at corporate software products.<br /><br />' +
 		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.<br><br>' + 
