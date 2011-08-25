@@ -330,7 +330,7 @@ dialogs.openNoteDeleteDialog = function() {
 		buttons[wunderlist.language.data.delete_note_no]  = function() { $(this).dialog('close'); };
 		buttons[wunderlist.language.data.delete_note_yes] = function() {
 			$('textarea#noteTextarea').val('');
-			$('input#save-and-close').click();
+			$('input#save').trigger('deleteNote');
 			dialogs.closeDialog(dialogs.deleteNoteDialog);
 		};
 

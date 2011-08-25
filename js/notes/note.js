@@ -95,13 +95,20 @@ $(function() {
 			dialogs.openNoteDeleteDialog();
 		} else {
 			$('textarea#noteTextarea').val('');
-			$('input#save-and-close').click();
+			$('input#save').click();
 		}
 			
 	});
 	
+	$('input#save').live('deleteNote', function () {
+		$('textarea#noteTextarea').val('');
+		note.editMode = true;
+		$('input#save').click();
+	});
+	
 	// Save / Edit Button
-	$('input#save').live('click', function() {		
+	$('input#save').live('click', function() {
+			
 		mainContent = mainWindow.document.getElementById("content");
 		noteElement = $(mainContent).children('ul').children('li#' + note.noteId).children('span.note');
 		
@@ -111,7 +118,7 @@ $(function() {
 			note.editMode = true;
 		
 			$(this).addClass("button-login").val(wunderlist.language.data.save_changes).show();
-			$('input#save-and-close').show();
+			//$('input#save-and-close').show();
 			$('span.hint').show();
 
 			$('textarea#noteTextarea').val(unescape(mainWindow.Encoder.htmlDecode(note.text))).show().focus();
@@ -123,7 +130,7 @@ $(function() {
 			note.editMode = false;
 			
 			$(this).removeClass("button-login").val(wunderlist.language.data.edit_changes);
-			$('input#save-and-close').hide();
+			//$('input#save-and-close').hide();
 			$('span.hint').hide();
 			
 			newNote = wunderlist.xss_clean($('textarea#noteTextarea').val());
@@ -139,6 +146,8 @@ $(function() {
 			mainWindow.task.id   = note.noteId;
 			mainWindow.task.note = note.text;
 			mainWindow.task.update();
+			
+			note.close();
 		}
 		
 		if($('textarea#noteTextarea').val().length == 0)
