@@ -590,7 +590,7 @@ right:132px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:
 #content .description a, #content .openApp {color:#2597e2}
 #content .description a:hover, #content .openApp:hover {text-decoration: underline; cursor: pointer; }
 
-#content .showdate {position:absolute; right:52px; font-size:11px; font-weight:bold}
+#content .showdate {position:absolute; right:46px; font-size:11px; font-weight:bold}
 
 #content .addhere {letter-spacing:1px; text-shadow: #333 0px 1px 2px; font-weight:bold; margin-top:12px; text-transform: uppercase}
 #content .addhere a { color:#fff}
@@ -686,7 +686,7 @@ border-radius:15px;}
 #content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/images/icons/important.png);cursor:pointer}
 #content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/images/icons/star.png) no-repeat;cursor:pointer}
 
-.mainlist li .ui-datepicker-trigger {position:absolute; right:44px; top:7px; display:none; background:url(/images/icons/star.png)}
+.mainlist li .ui-datepicker-trigger {position:absolute; right:40px; top:7px; display:none; background:url(/images/icons/star.png)}
 #content .mainlist li:hover .ui-datepicker-trigger {display:block}
 #content .mainlist li.done:hover .ui-datepicker-trigger {display:none}
 
