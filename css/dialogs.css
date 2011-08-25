@@ -93,7 +93,7 @@ opacity:0.5;
 filter:Alpha(opacity=50);
 -moz-opacity: 0.5;}
 
-.ui-widget-overlay-wood {background: #000 url(/backgrounds/wood.jpg) top center no-repeat ; opacity:1 ;overflow:visible}
+.ui-widget-overlay-wood {top:1px;background: #000 url(/backgrounds/wood.jpg) top center no-repeat ; opacity:1 ;overflow:visible}
 
 .dialog-login{ 
 -webkit-box-shadow:0px 3px 16px #222;
