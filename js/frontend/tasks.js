@@ -318,29 +318,11 @@ $(function() {
 				setTimeout(function () {
 					isShowingAgain = true;
 					$('.add_task_hint').fadeIn('fast', function () {
-						//isShowingAgain = false;
 						setTimeout(function () {
 							isShowingAgain = false;
 						}, 250);
 					});
 				}, 50);
-				
-				
-				
-				/*
-				
-					On blur, wait 200, check if VIEW is true
-						If NOT, hide
-					
-					On focus, show
-				
-				*/
-				
-				
-				
-				
-				
-				
 			}
 		});
 		$('.addwrapper input').live('keyup', function () {
@@ -350,22 +332,14 @@ $(function() {
 				$('.add_task_hint').fadeOut('fast');
 			}
 		});
-		$('.addwrapper input').live('blur', function () {
-			
+		$('.addwrapper input').live('blur', function () {			
 			setTimeout(function () {
 				if (!isShowingAgain) {
 					$('.add_task_hint').fadeOut('fast');
 				}
-			}, 200);
-			
-			
-			
-			
+			}, 200);		
 		});
 		Titanium.App.Properties.setInt('number_of_shown_add_task_hints', numberOfShownHints);
-	
-		
-		
 	}
 	
 	$('.addwrapper input').live('focus', function () {
