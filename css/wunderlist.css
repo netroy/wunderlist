@@ -549,6 +549,7 @@ span.add_task_hint {
 	opacity:0.5; 
 	-moz-opacity: 0.5;
 	filter:Alpha(opacity=50);
+	z-index: 1;
 }
 
 div.add .showdate {position:absolute; right:-70px !important; top:10px; font-size:11px; font-weight:bold; color:#fff}

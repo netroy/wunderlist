@@ -307,21 +307,41 @@ $(function() {
 	});
 	
 	// For testing purposes, to null the count, just uncomment this
-	//Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
+	Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
 	
 	var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
+	var isShowingAgain = false;
 	if (numberOfShownHints < 5) {
+		$('.add_task_hint:hidden').live('click', function () { alert(); });
 		$('.addwrapper input').live('focus', function () {
 			if ($('.addwrapper input').val().length < 15) {
-				$('.add_task_hint').fadeIn('fast');
+				setTimeout(function () {
+					isShowingAgain = true;
+					$('.add_task_hint').fadeIn('fast', function () {
+						//isShowingAgain = false;
+						setTimeout(function () {
+							isShowingAgain = false;
+						}, 250);
+					});
+				}, 50);
+				
+				
+				
+				/*
+				
+					On blur, wait 200, check if VIEW is true
+						If NOT, hide
+					
+					On focus, show
+				
+				*/
+				
+				
+				
+				
+				
+				
 			}
-			setTimeout(function () {
-				if ($('.addwrapper input').val().length < 15) {
-					$('.add_task_hint').fadeIn('fast');
-				} else {
-					$('.add_task_hint').hide();
-				}
-			}, 250)
 		});
 		$('.addwrapper input').live('keyup', function () {
 			if ($('.addwrapper input').val().length < 15) {
@@ -331,9 +351,21 @@ $(function() {
 			}
 		});
 		$('.addwrapper input').live('blur', function () {
-			$('.add_task_hint').fadeOut('fast');
+			
+			setTimeout(function () {
+				if (!isShowingAgain) {
+					$('.add_task_hint').fadeOut('fast');
+				}
+			}, 200);
+			
+			
+			
+			
 		});
 		Titanium.App.Properties.setInt('number_of_shown_add_task_hints', numberOfShownHints);
+	
+		
+		
 	}
 	
 	$('.addwrapper input').live('focus', function () {
