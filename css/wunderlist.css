@@ -675,13 +675,13 @@ border-radius:15px;}
 #content span.delete {background:url(/images/icons/delete_active.png); opacity:0.5; float:right; display: none; cursor:pointer; height:16px}
 #content span.delete:hover {opacity:1.0;}
 
-#content span.note {position:absolute;right:19px;top:7px;background:url(/images/icons/note.png); display:none; cursor:pointer; height:16px; width:16px; margin-top:-1px; text-indent: -8765px; overflow:hidden; color:transparent}
-#content span.note:hover {background:url(/images/icons/note.png);}
+#content span.note {position:absolute;right:19px;top:7px;background:url(/images/icons/notes_icon.png) no-repeat center center; display:none; cursor:pointer; height:16px; width:16px; margin-top:-1px; text-indent: -8765px; overflow:hidden; color:transparent}
+#content span.note:hover {background:url(/images/icons/notes_icon_hover.png) no-repeat center center;}
 
 #content .mainlist li:hover span.note {display:block}
 /* #content .mainlist li.done:hover span.note {display:none} */
 
-#content span.activenote {display:block;background:url(/images/icons/note.png);}
+#content span.activenote {display:block;background:url(/images/icons/notes_icon.png) no-repeat center center;}
 
 #content span.fav {width:16px; height:24px; margin-top:-9px;background:url(/images/icons/important.png);cursor:pointer}
 #content span.favina {width:16px; height:14px; margin-top:-1px;background:url(/images/icons/star.png) no-repeat;cursor:pointer}
