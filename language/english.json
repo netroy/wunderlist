@@ -235,5 +235,5 @@
 	"privacy_policy":           "Privacy Policy",
 	"enable_natural_date_recognition": "Enable smart date recognition",
 	"disable_natural_date_recognition": "Disable smart date recognition",
-	"add_task_hint":			"Press ▲▼ to switch lists or  ⌥ + Return to add task at the top"
+	"add_task_hint":			"Press ▲▼ to switch lists or Alt + Return to add task at the top"
 }

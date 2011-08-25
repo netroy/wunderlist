@@ -133,6 +133,10 @@ html.generateLoginRegisterDialogHTML = function() {
  */
 html.generateListContentHTML = function(list_id, list_name) {
 	
+	if (settings.os === 'darwin') {
+		wunderlist.language.data.add_task_hint = wunderlist.language.data.add_task_hint.replace('Alt', '⌥');
+	}
+	
 	var taskName = wunderlist.lastSavedTaskName || '';
 	
 	var html_code = '';
@@ -838,6 +842,10 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 	// If tasks are set and not empty count them
 	if (task != undefined && wunderlist.is_array(tasks) && tasks.length > 0)
 		count = tasks.length;
+	
+	if (settings.os === 'darwin') {
+		wunderlist.language.data.add_task_hint = wunderlist.language.data.add_task_hint.replace('Alt', '⌥');
+	}
 	
 	// If there are tasks add the share functionality
 	result += "<div id='listfunctions'>";

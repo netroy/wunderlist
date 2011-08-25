@@ -232,5 +232,5 @@
 	"privacy_policy":			"Datenschutzerklärung",
 	"enable_natural_date_recognition": "Intelligente Datumserkennung aktivieren",
 	"disable_natural_date_recognition": "Intelligente Datumserkennung deaktivieren",
-	"add_task_hint":			"▲▼ wechselt zwischen Listen, ⌥ + Enter fügt ein Task oben hinzu"
+	"add_task_hint":			"▲▼ wechselt zwischen Listen, Alt + Enter fügt ein Task oben hinzu"
 }

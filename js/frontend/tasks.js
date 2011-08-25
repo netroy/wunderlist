@@ -306,7 +306,7 @@ $(function() {
 		}
 	});
 	
-	//Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
+	Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
 	
 	var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
 	if (numberOfShownHints < 5) {

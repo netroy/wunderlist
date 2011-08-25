@@ -231,5 +231,5 @@
 	"privacy_policy":           "Integritetspolicy",
 	"enable_natural_date_recognition": "Aktivera smart igenkänning av datum",
 	"disable_natural_date_recognition": "Inaktivera smart igenkänning av datum",
-	"add_task_hint":			"▲▼ byter lista,  ⌥ + Retur lägger uppgiften på toppen"
+	"add_task_hint":			"▲▼ byter lista, Alt + Enter lägger uppgiften på toppen"
 }
