@@ -286,7 +286,7 @@ $(function() {
 				else
 					$('div#lists > a.ui-state-disabled').next().click();
 				
-				wunderlist.lastSavedTaskName = $("div.add input").val(taskName);
+				wunderlist.lastSavedTaskName = wunderlist.lastSavedTaskName || $("div.add input").val(taskName);
 			}
 
 			setTimeout(function() {
