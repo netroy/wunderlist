@@ -159,6 +159,14 @@ wunderlist.account.loadInterface = function() {
 	
 	makeListsDropable();
 	makeFilterDropable();
+	
+	if (settings.os === 'darwin') {
+		$('.input-add').focus().blur();
+	}
+	
+	if (taskInput != '') {
+		$("input.input-add").val(taskInput);
+	}
 };
 
 /**
