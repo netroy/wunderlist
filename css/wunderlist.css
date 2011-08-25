@@ -585,7 +585,7 @@ background:url(/images/dragging.png) !important}
 
 #content .description {
 white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;
-right:132px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:#333}
+right:115px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:#333}
 
 #content .description a, #content .openApp {color:#2597e2}
 #content .description a:hover, #content .openApp:hover {text-decoration: underline; cursor: pointer; }
@@ -636,7 +636,7 @@ div.add .ui-datepicker-trigger { margin-top:10px; margin-left:7px}
 
 .donelist .ui-datepicker-trigger { display:none}
 
-#task-edit {position:absolute;right:134px;left:45px;top:7px;
+#task-edit {position:absolute;right:115px;left:45px;top:7px;
 -webkit-box-shadow: inset 1px 1px 3px #999;
 -moz-box-shadow: inset 1px 1px 3px #999;
 box-shadow: inset 1px 1px 3px #999;
