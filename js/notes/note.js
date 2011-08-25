@@ -87,6 +87,16 @@ $(function() {
 	
 	$('span.hint').text(wunderlist.ucfirst(mainWindow.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
 	
+	$('input#delete').live('click', function() {
+		if (Titanium.App.Properties.getString('delete_prompt', '1') == 1) {
+			dialogs.openNoteDeleteDialog();
+		} else {
+			$('textarea#noteTextarea').val('');
+			$('input#save-and-close').click();
+		}
+			
+	});
+	
 	// Save / Edit Button
 	$('input#save').live('click', function() {		
 		mainContent = mainWindow.document.getElementById("content");

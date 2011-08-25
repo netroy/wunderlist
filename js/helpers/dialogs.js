@@ -317,6 +317,43 @@ dialogs.openTaskDeleteDialog = function(deleteElement) {
 	}
 };
 
+
+/**
+ * Open a prompt asking for the deletion of a note
+ *
+ * @author Adam Renklint
+ */
+dialogs.openNoteDeleteDialog = function() {
+	if ($("[role='dialog']").length == 0)
+	{
+		var buttons = {};
+		buttons[wunderlist.language.data.delete_note_no]  = function() { $(this).dialog('close'); };
+		buttons[wunderlist.language.data.delete_note_yes] = function() {
+			$('textarea#noteTextarea').val('');
+			$('input#save-and-close').click();
+			dialogs.closeDialog(dialogs.deleteNoteDialog);
+		};
+
+		dialogs.deleteNoteDialog = $('<div></div>').dialog({
+			autoOpen    : false,
+			draggable   : false,
+			modal       : true,
+			closeOnEscape: true,
+			dialogClass : 'dialog-delete-task',
+			title       : wunderlist.language.data.delete_note_question,
+			buttons     : buttons,
+			open        : function(event, ui) {
+				$('.ui-dialog-buttonset button:first').focus();
+				$('.ui-dialog-buttonset button:first').addClass("input-bold");
+			}
+		});
+
+		dialogs.openDialog(dialogs.deleteNoteDialog);
+	
+		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+	}
+};
+
 /**
  * Open a prompt asking for the deletion of a list
  *
