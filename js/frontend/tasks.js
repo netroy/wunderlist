@@ -306,7 +306,7 @@ $(function() {
 		}
 	});
 	
-	Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
+	//Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
 	
 	var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
 	if (numberOfShownHints < 5) {
@@ -334,6 +334,14 @@ $(function() {
 		});
 		Titanium.App.Properties.setInt('number_of_shown_add_task_hints', numberOfShownHints);
 	}
+	
+	$('.addwrapper input').live('focus', function () {
+		$('.addwrapper input').attr("placeholder", "");
+	});
+	
+	$('.addwrapper input').live('blur', function () {
+		$('.addwrapper input').attr('placeholder', wunderlist.language.data.add_task);
+	});
 
 
 	$("div.add input").live('keydown', 'Esc', function (evt) {
