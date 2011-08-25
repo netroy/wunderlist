@@ -19,6 +19,8 @@
 	"edit_list":			    "Edit List",
 	"save_list":			    "Save List",
 	"delete_list":			    "Delete List",
+	"save_generic":				"Save",
+	"delete_generic":			"Delete",
 	"history":				    "Tasks History",
 	"search":				    "Search everywhere...",
 	"search_results": 		    "Search Results",

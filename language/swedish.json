@@ -16,6 +16,8 @@
 	"edit_list":			    "Redigera lista",
 	"save_list":			    "Spara lista",
 	"delete_list":			    "Radera lista",
+	"save_generic":				"Spara",
+	"delete_generic":			"Radera",
 	"history":				    "Uppgiftshistorik",
 	"search":				    "Sök överallt...",
 	"search_results": 		    "Sökresultat",

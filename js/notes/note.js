@@ -85,6 +85,9 @@ $(function() {
 	note.onReady();
 	note.focused = true;
 	
+	$('#save-and-close').val(wunderlist.language.data.save_generic);
+	$('#delete').val(wunderlist.language.data.delete_generic);
+	
 	$('span.hint').text(wunderlist.ucfirst(mainWindow.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
 	
 	$('input#delete').live('click', function() {

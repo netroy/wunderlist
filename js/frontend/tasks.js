@@ -306,7 +306,8 @@ $(function() {
 		}
 	});
 	
-	Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
+	// For testing purposes, to null the count, just uncomment this
+	//Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
 	
 	var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
 	if (numberOfShownHints < 5) {

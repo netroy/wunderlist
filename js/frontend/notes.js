@@ -22,7 +22,8 @@ notes.openNotesWindow = function() {
 		        minWidth  : 500,
 		        height    : parseInt(Titanium.App.Properties.getString('note_user_height', '400')),
 		        minHeight : 400,
-		        maximized : Titanium.App.Properties.getString('maximized', 'false')
+		        maximized : Titanium.App.Properties.getString('maximized', 'false'),
+				wunderlist: wunderlist
 			});
 
 			note_user_x = Titanium.App.Properties.getString('note_user_x', 'none');
@@ -32,7 +33,6 @@ notes.openNotesWindow = function() {
 			//if(note_user_y != 'none') notes.window.y = parseInt(note_user_y);
 
 			notesWindow.open();
-
 
 		notesWindow.noteTitle = notes.format(notes.currentNoteTitle, false);
 		notesWindow.text      = notes.currentNote;
