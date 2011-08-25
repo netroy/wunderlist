@@ -263,11 +263,14 @@ $(function() {
 					$('div#lists a').last().click();
 				else
 					$('div#lists > a.ui-state-disabled').prev().click();
+					
+				wunderlist.lastSavedTaskName = $("div.add input").val(taskName);
 			}
 
 			setTimeout(function() {
 				$(".addwrapper input").focus();
-				$("div.add input").val(taskName);
+				//$("div.add input").val(taskName);
+				delete wunderlist.lastSavedTaskName;
 				stepUp = false;	
 			}, 50);
 		} else if (e.keyCode == 40) {
@@ -282,11 +285,14 @@ $(function() {
 					$('div#lists a').first().click();
 				else
 					$('div#lists > a.ui-state-disabled').next().click();
+				
+				wunderlist.lastSavedTaskName = $("div.add input").val(taskName);
 			}
 
 			setTimeout(function() {
 				$(".addwrapper input").focus(); 
-				$("div.add input").val(taskName);
+				//$("div.add input").val(taskName);
+				delete wunderlist.lastSavedTaskName;
 				stepDown = false; 
 			}, 50);
 		}
@@ -299,17 +305,26 @@ $(function() {
 			tasks.addNewTaskToTop = false;
 		}
 	});
-
+	
+	Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
+	
 	var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
 	if (numberOfShownHints < 5) {
 		$('.addwrapper input').live('focus', function () {
 			if ($('.addwrapper input').val().length < 15) {
-				$('.add_task_hint').show();
+				$('.add_task_hint').fadeIn('fast');
 			}
+			setTimeout(function () {
+				if ($('.addwrapper input').val().length < 15) {
+					$('.add_task_hint').fadeIn('fast');
+				} else {
+					$('.add_task_hint').hide();
+				}
+			}, 250)
 		});
-		$('.addwrapper input').keyup('focus', function () {
+		$('.addwrapper input').live('keyup', function () {
 			if ($('.addwrapper input').val().length < 15) {
-				$('.add_task_hint').show();
+				$('.add_task_hint').fadeIn('fast');
 			} else {
 				$('.add_task_hint').fadeOut('fast');
 			}

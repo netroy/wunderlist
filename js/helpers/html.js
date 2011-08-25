@@ -132,6 +132,9 @@ html.generateLoginRegisterDialogHTML = function() {
  * @author Daniel Marschner
  */
 html.generateListContentHTML = function(list_id, list_name) {
+	
+	var taskName = wunderlist.lastSavedTaskName || '';
+	
 	var html_code = '';
 
 	if(list_id != 1 && wunderlist.account.isLoggedIn() == true)
@@ -141,7 +144,7 @@ html.generateListContentHTML = function(list_id, list_name) {
 	
 	html_code += "<h1>" + unescape(list_name) + "</h1>";
 	html_code += "<div class='add'>";
-	html_code += "<div class='addwrapper'><input type='text' class='input-add' placeholder='" + wunderlist.language.data.add_task + "' /><span class='add_task_hint'>" + wunderlist.language.data.add_task_hint + "</span></div>";
+	html_code += "<div class='addwrapper'><input type='text' class='input-add' placeholder='" + wunderlist.language.data.add_task + "' value='" + taskName + "' /><span class='add_task_hint'>" + wunderlist.language.data.add_task_hint + "</span></div>";
 	html_code += "<input type='hidden' class='datepicker'/>";
 	html_code += "</div>";
 	html_code += "<ul id='list' rel='" + list_id + "' class='mainlist sortable'></ul>";
