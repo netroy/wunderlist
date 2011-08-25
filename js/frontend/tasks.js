@@ -307,7 +307,7 @@ $(function() {
 	});
 	
 	// For testing purposes, to null the count, just uncomment this
-	Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
+	//Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
 	
 	var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
 	var isShowingAgain = false;
