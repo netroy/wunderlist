@@ -178,7 +178,7 @@
 	"sharelist_button":			"Send invitation",
 	"shared_delete_success":	"Brugeren blev slettet fra listen",
 	"delete_shared_email":		"Er du sikker på, at du vil slette denne e-mailadresse fra din delte liste?",
-	"share_own_email":			"Det er ikke muligt at dele denne liste med din egen e-mailadresse"
+	"share_own_email":			"Det er ikke muligt at dele denne liste med din egen e-mailadresse",
 	"shared_delete_title":		"Fjernede bruger fra liste",
 	"delete_shared_email":		"Er du sikker på at du vil fjerne e-mailen fra din delte liste?",
 	"delete_shared_title":		"Fjern bruger fra deling",
