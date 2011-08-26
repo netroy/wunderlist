@@ -94,8 +94,7 @@ $(function() {
 		if (Titanium.App.Properties.getString('delete_prompt', '1') == 1) {
 			dialogs.openNoteDeleteDialog();
 		} else {
-			$('textarea#noteTextarea').val('');
-			$('input#save').click();
+			$('input#save').trigger('deleteNote');
 		}
 			
 	});
