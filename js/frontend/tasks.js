@@ -93,23 +93,23 @@ tasks.add = function() {
 					if (tasks.addNewTaskToTop) {
 						//ulElement.prepend(taskHTML).find('li:first').hide().fadeIn(225);
 						if (important) {
-							$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+							$(ulElement).prepend(taskHTML).find("li:first").hide().fadeIn(225);
 						} else {
-							if ($('ul.mainlist li.more:not(.done) .fav').size() > 0) {
-								$('ul.mainlist li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+							if ($(ulElement).find('li.more:not(.done) .fav').size() > 0) {
+								$(ulElement).find('li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
 							} else {
-								$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
+								$(ulElement).prepend(taskHTML).find("li:first").hide().fadeIn(225);
 							}
 						}
 					} else {
 						if (important) {
-							if ($('ul.mainlist li.more:not(.done) .fav').size() > 0) {
-								$('ul.mainlist li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+							if ($(ulElement).find('li.more:not(.done) .fav').size() > 0) {
+								$(ulElement).find('li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
 							} else {
-								$("ul.mainlist").prepend(taskHTML).find("li:last").hide().fadeIn(225);
+								$(ulElement).prepend(taskHTML).find("li:last").hide().fadeIn(225);
 							}
 						} else {
-							$("ul.mainlist").append(taskHTML).find("li:last").hide().fadeIn(225);
+							$(ulElement).append(taskHTML).find("li:last").hide().fadeIn(225);
 						}
 					}
 				else
