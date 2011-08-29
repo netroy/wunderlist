@@ -9,18 +9,49 @@
 wunderlist.language = wunderlist.language || {};
 
 /**
+ * Contains the loaded langauge from the settings 
+ */
+wunderlist.language.loaded = {};
+
+/**
  * Available languages
  *
  * @author Dennis Schneider, Daniel Marschner
  */
 wunderlist.language.availableLang = [
-	'de', 'en', 'es', 'fr',
-	'pl', 'pt', 'it', 'sk',
-	'ca', 'nl', 'da', 'uk',
-	'ru', 'cs', 'zh', 'tr',
-	'ar', 'se', 'ja', 'hu',
-	'ko', 'no', 'hr', 'sr',
-	'gl', 'ro', 'pt-br'
+	{ code : 'de',    file : 'german', 			   translation : 'Deutsch' },
+	{ code : 'en',    file : 'english', 		   translation : 'English' },
+	{ code : 'es',    file : 'spanish', 		   translation : 'Español' },
+	{ code : 'en-lt', file : 'spanishlatin', 	   translation : 'Español latino' },
+	{ code : 'fr',    file : 'french',  		   translation : 'Français' },
+	{ code : 'fr-ca', file : 'frenchcanadian',     translation : 'Canadienne-Française' },
+	{ code : 'pl',    file : 'polish', 			   translation : 'Polski' },
+	{ code : 'pt',    file : 'portugese', 		   translation : 'Português' },
+	{ code : 'pt-br', file : 'portugesebrazil',    translation : 'Português (Brazilian)' },
+	{ code : 'it',    file : 'italian', 		   translation : 'Italiano' },
+	{ code : 'sk',    file : 'slovak', 			   translation : 'Slovensky' },
+	{ code : 'ca',    file : 'catalan', 		   translation : 'Català' },
+	{ code : 'nl',    file : 'dutch', 			   translation : 'Nederlands' },
+	{ code : 'da',    file : 'danish', 			   translation : 'Dansk' },
+	{ code : 'uk',    file : 'ukrainian', 		   translation : 'Українське' },
+	{ code : 'ru',    file : 'russian', 		   translation : 'Pусский' },
+	{ code : 'cs',    file : 'czech', 			   translation : 'České' },
+	{ code : 'zh',    file : 'chinese', 		   translation : '中文' },
+	{ code : 'tr',    file : 'turkish', 		   translation : 'Türkçe' },
+	{ code : 'gr',    file : 'greek', 		       translation : 'Ελληνικά' },
+	{ code : 'ar',    file : 'arabic', 			   translation : 'عربي' },
+	{ code : 'se',    file : 'swedish', 		   translation : 'Svenska' },
+	{ code : 'ja',    file : 'japanese', 		   translation : '日本語' },
+	{ code : 'hu',    file : 'hungarian', 		   translation : 'Magyar' },
+	{ code : 'ko',    file : 'korean', 			   translation : '한국어' },
+	{ code : 'no',    file : 'norwegian', 		   translation : 'Norsk' },
+	{ code : 'hr',    file : 'croatian', 		   translation : 'Hrvatski' },
+	{ code : 'sr',    file : 'serbian',            translation : 'Српски' },
+	{ code : 'gl',    file : 'galician', 		   translation : 'Galego' },
+	{ code : 'ro',    file : 'romanian', 		   translation : 'Română' },
+	{ code : 'ns',	  file : 'northernsami',	   translation : 'Sami' },
+	{ code : 'is',	  file : 'icelandic',		   translation : 'Íslenska' },
+	{ code : 'fi',	  file : 'finnish',		   	   translation : 'Suomi' }
 ];
 
 /**
@@ -28,8 +59,7 @@ wunderlist.language.availableLang = [
  *
  * @author Christian Reber
  */
-wunderlist.language.init = function()
-{
+wunderlist.language.init = function() {
 	wunderlist.language.load();
 	wunderlist.language.replaceBasics();
 };
@@ -39,14 +69,26 @@ wunderlist.language.init = function()
  *
  * @author Dennis Schneider
  */
-wunderlist.language.load = function()
-{
+wunderlist.language.load = function() {
 	// Load the language code
 	code = navigator.language.toLowerCase();
 	code = code[0] + code[1]; // e.g. de or en
 	wunderlist.language.code = Titanium.App.Properties.getString('language', code);
 
-	if (wunderlist.language.availableLang.join(' ').indexOf(wunderlist.language.code) == -1)
+	// Check if the saved language exists
+	languageFound = false;
+	for (var ix in wunderlist.language.availableLang)
+	{
+		if (wunderlist.language.availableLang[ix].code == wunderlist.language.code)
+		{
+			wunderlist.language.loaded = wunderlist.language.availableLang[ix];
+			languageFound = true;
+			break;
+		}
+	}
+	
+	// If saved lanuguage not exists, load english as default
+	if (languageFound == false)
 	{
 		wunderlist.language.code = 'en';
 		Titanium.App.Properties.setString('language', 'en');
@@ -54,14 +96,14 @@ wunderlist.language.load = function()
 
 	// Load the language file
 	path                        = Titanium.Filesystem.getResourcesDirectory() + "/language";
-	file                        = Titanium.Filesystem.getFile(path, 'en.json');
+	file                        = Titanium.Filesystem.getFile(path, 'english.json');
 	wunderlist.language.data    = Titanium.JSON.parse(file.read());
 	wunderlist.language.english = Titanium.JSON.parse(file.read());
 	
 	if (wunderlist.language.code != 'en')
 	{
 		path                            = Titanium.Filesystem.getResourcesDirectory() + "/language";
-		file                            = Titanium.Filesystem.getFile(path, wunderlist.language.code + '.json');
+		file                            = Titanium.Filesystem.getFile(path, wunderlist.language.loaded.file + '.json');
 		wunderlist.language.translation = Titanium.JSON.parse(file.read());
 
 		for (langstring in wunderlist.language.data)

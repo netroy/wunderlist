@@ -144,6 +144,16 @@ task.updateDone = function() {
 						
 			liElement.removeClass('done');
 			html.make_timestamp_to_string();
+			
+			liElement.children('input.datepicker').remove();
+			liElement.children('img.ui-datepicker-trigger').remove();
+			
+			if (liElement.children('span.showdate').length == 0) {
+				datepickerHTML = '<input type="hidden" class="datepicker" value="0"/>';
+				$(datepickerHTML).insertAfter(liElement.children('span.description'));
+			}
+			
+			html.createDatepicker();
 		}
 	}
 };
@@ -306,6 +316,8 @@ task.updateDeleted = function() {
 		}
 
 		liElement.remove();
+		
+		notes.closeNoteWindow(task.id);
 	}
 };
 

@@ -60,7 +60,7 @@ background.init = function() {
 			
 			// change background
 			$('#bghelp').fadeOut(200, function() {
-                $(this).css('background', background.list[bgClass].bgColor + ' url(' + background.list[bgClass].bgPath + ') '+ background.list[bgClass].bgPosition +' no-repeat fixed').fadeIn(200)
+                $(this).css('background', background.list[bgClass].bgColor + ' url(' + background.list[bgClass].bgPath + ') '+ background.list[bgClass].bgPosition +' no-repeat').fadeIn(200)
 			});
 			$('body').css('background','none');
 			styleActive(this);

@@ -1,5 +1,8 @@
 var dialogs = dialogs || {};
 
+// Settings
+dialogs.modalDialog = false;
+
 // Dialogs
 dialogs.confirmationDialog  = null;
 dialogs.okDialog            = null;
@@ -8,7 +11,6 @@ dialogs.deleteDialog        = null;
 dialogs.whileSyncDialog     = null;
 dialogs.cloudAppDialog      = null;
 dialogs.shareSuccessDialog  = null;
-dialogs.modalDialog         = false;
 dialogs.deleteTaskDialog    = null;
 
 // On startup bind the dialolgclose event
@@ -44,10 +46,11 @@ dialogs.closeEveryone = function() {
  *
  * @author Daniel Marschner
  */
-dialogs.generateDialog = function(title, html_code, dialogClass) {
-	if(title == undefined) title = '';
-	if(html_code == undefined) html = '';
-	if(dialogClass == undefined) dialogClass = '';
+dialogs.generateDialog = function(title, html_code, dialogClass, closeOnEscape) {
+	if (title == undefined) title = '';
+	if (html_code == undefined) html_code = '';
+	if (dialogClass == undefined) dialogClass = '';
+	if (closeOnEscape == undefined) closeOnEscape = true;
 
 	return $('<div></div>').html(html_code).dialog({
 		autoOpen      : false,
@@ -56,7 +59,7 @@ dialogs.generateDialog = function(title, html_code, dialogClass) {
 		modal         : true,
 		dialogClass   : dialogClass,
 		title         : title,
-		closeOnEscape : true
+		closeOnEscape : closeOnEscape
 	});
 }
 
@@ -126,8 +129,19 @@ dialogs.showShareOwnEmailDialog = function() {
  *
  * @author Dennis Schneider
  */
-dialogs.showOKDialog = function(title) {
-	dialogs.okDialog = $('<div></div>').dialog({
+dialogs.showOKDialog = function(title, inBody) {
+	if (inBody == undefined) {
+		inBody = false;
+	} 
+	
+	content = '';
+	
+	if (inBody == true) {
+		content = '<p>' + title + '</p>';
+		title   = '';
+	}
+	
+	dialogs.okDialog = $('<div>' + content + '</div>').dialog({
 		autoOpen: true,
 		draggable: false,
 		modal: true,
@@ -142,6 +156,16 @@ dialogs.showOKDialog = function(title) {
 	});
 	
 	dialogs.openDialog(dialogs.okDialog);
+	
+	dialogElement  = $('div.ui-dialog');
+	dialogElement.width(800);
+	spanWidth = $('span.ui-dialog-title').innerWidth();
+	newDialogWidth = spanWidth + 60;
+	dialogElement.width(newDialogWidth);
+	dialogElement.css({
+		left:'50%',
+		'margin-left': -(newDialogWidth / 2)
+	});
 	
 	$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');	
 }
@@ -195,10 +219,10 @@ dialogs.showDeletedDialog = function(title, content) {
 			}
 		}
 	});
-	
+
 	dialogs.openDialog(dialogs.deleteDialog);
-	
-	$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');	
+
+	$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 }
 
 /**
@@ -207,27 +231,30 @@ dialogs.showDeletedDialog = function(title, content) {
  * @author Dennis Schneider
  */
 dialogs.showCloudAppDialog = function() {
-	var buttons = {};
-	buttons[wunderlist.language.data.no]  = function() { $(this).dialog('close'); };
-	buttons[wunderlist.language.data.yes] = function() {
-		share.share_with_cloudapp();
-		$(this).dialog('close');
-	};
+	if ($("[role='dialog']").length == 0)
+	{
+		var buttons = {};
+		buttons[wunderlist.language.data.no]  = function() { $(this).dialog('close'); };
+		buttons[wunderlist.language.data.yes] = function() {
+			share.share_with_cloudapp();
+			$(this).dialog('close');
+		};
 
-	dialogs.cloudAppDialog = $('<div><p>' + wunderlist.language.data.cloudapp_1 + '</p><p class="small">' + wunderlist.language.data.cloudapp_2 + '</p></div>').dialog({
-		autoOpen      : true,
-		draggable     : false,
-		resizable     : false,
-		dialogClass   : 'dialog-cloudapp',
-		modal         : true,
-		closeOnEscape : true,
-		title         : wunderlist.language.data.cloudapp_sharing,
-		buttons       : buttons
-	});	
+		dialogs.cloudAppDialog = $('<div><p>' + wunderlist.language.data.cloudapp_1 + '</p><p class="small">' + wunderlist.language.data.cloudapp_2 + '</p></div>').dialog({
+			autoOpen      : true,
+			draggable     : false,
+			resizable     : false,
+			dialogClass   : 'dialog-cloudapp',
+			modal         : true,
+			closeOnEscape : true,
+			title         : wunderlist.language.data.cloudapp_sharing,
+			buttons       : buttons
+		});	
 	
-	dialogs.openDialog(dialogs.cloudAppDialog);		
+		dialogs.openDialog(dialogs.cloudAppDialog);		
 	
-	$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');	
+		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');	
+	}
 }
 
 /**
@@ -261,30 +288,70 @@ dialogs.showWhileSyncDialog = function(title) {
  * @author Dennis Schneider, Daniel Marschner
  */
 dialogs.openTaskDeleteDialog = function(deleteElement) {
-	var buttons = {};
-	buttons[wunderlist.language.data.delete_task_no]  = function() { $(this).dialog('close'); };
-	buttons[wunderlist.language.data.delete_task_yes] = function() {
-		tasks.deletes(deleteElement);
-		dialogs.closeDialog(dialogs.deleteTaskDialog);
-	};
+	if ($("[role='dialog']").length == 0)
+	{
+		var buttons = {};
+		buttons[wunderlist.language.data.delete_task_no]  = function() { $(this).dialog('close'); };
+		buttons[wunderlist.language.data.delete_task_yes] = function() {
+			tasks.deletes(deleteElement);
+			dialogs.closeDialog(dialogs.deleteTaskDialog);
+		};
 
-	dialogs.deleteTaskDialog = $('<div></div>').dialog({
-		autoOpen    : false,
-		draggable   : false,
-		modal       : true,
-		closeOnEscape: true,
-		dialogClass : 'dialog-delete-task',
-		title       : wunderlist.language.data.delete_task_question,
-		buttons     : buttons,
-		open        : function(event, ui) {
-			$('.ui-dialog-buttonset button:last').focus();
-			$('.ui-dialog-buttonset button:last').addClass("input-bold");
-		}
-	});
+		dialogs.deleteTaskDialog = $('<div></div>').dialog({
+			autoOpen    : false,
+			draggable   : false,
+			modal       : true,
+			closeOnEscape: true,
+			dialogClass : 'dialog-delete-task',
+			title       : wunderlist.language.data.delete_task_question,
+			buttons     : buttons,
+			open        : function(event, ui) {
+				$('.ui-dialog-buttonset button:first').focus();
+				$('.ui-dialog-buttonset button:first').addClass("input-bold");
+			}
+		});
 
-	dialogs.openDialog(dialogs.deleteTaskDialog);
+		dialogs.openDialog(dialogs.deleteTaskDialog);
 	
-	$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+	}
+};
+
+
+/**
+ * Open a prompt asking for the deletion of a note
+ *
+ * @author Adam Renklint
+ */
+dialogs.openNoteDeleteDialog = function() {
+	if ($("[role='dialog']").length == 0)
+	{
+		var buttons = {};
+		buttons[wunderlist.language.data.delete_note_no]  = function() { $(this).dialog('close'); };
+		buttons[wunderlist.language.data.delete_note_yes] = function() {
+			$('textarea#noteTextarea').val('');
+			$('input#save').trigger('deleteNote');
+			dialogs.closeDialog(dialogs.deleteNoteDialog);
+		};
+
+		dialogs.deleteNoteDialog = $('<div></div>').dialog({
+			autoOpen    : false,
+			draggable   : false,
+			modal       : true,
+			closeOnEscape: true,
+			dialogClass : 'dialog-delete-task',
+			title       : wunderlist.language.data.delete_note_question,
+			buttons     : buttons,
+			open        : function(event, ui) {
+				$('.ui-dialog-buttonset button:first').focus();
+				$('.ui-dialog-buttonset button:first').addClass("input-bold");
+			}
+		});
+
+		dialogs.openDialog(dialogs.deleteNoteDialog);
+	
+		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+	}
 };
 
 /**
@@ -293,27 +360,31 @@ dialogs.openTaskDeleteDialog = function(deleteElement) {
  * @author Dennis Schneider
  */
 dialogs.createDeleteListDialog = function(listId, listElement) {	
-	var buttonOptions = {};
-	buttonOptions[wunderlist.language.data.list_delete_no]  = function() { $(this).dialog('close'); $('a.list input').focus(); };
-	buttonOptions[wunderlist.language.data.list_delete_yes] = function() { if (listId != 1) deleteList(listId, listElement); $(this).dialog('close'); };
+	if ($("[role='dialog']").length == 0)
+	{
+		var buttonOptions = {};
+		buttonOptions[wunderlist.language.data.list_delete_no]  = function() { $(this).dialog('close'); $('a.list input').focus(); };
+		buttonOptions[wunderlist.language.data.list_delete_yes] = function() { if (listId != 1) deleteList(listId, listElement); $(this).dialog('close'); };
 
-	delete_dialog = $('<div></div>').dialog({
-		autoOpen    : false,
-		modal       : true,
-		resizable   : false,
-		draggable   : false,
-		closeOnEscape: true,
-		dialogClass : 'dialog-delete-list',
-		title       : wunderlist.language.data.delete_list_question,
-		buttons     : buttonOptions,
-		open        : function() {
-			$('.ui-dialog-buttonset button:last').focus();
-		}
-	});
+		delete_dialog = $('<div></div>').dialog({
+			autoOpen    : false,
+			modal       : true,
+			resizable   : false,
+			draggable   : false,
+			closeOnEscape: true,
+			dialogClass : 'dialog-delete-list',
+			title       : wunderlist.language.data.delete_list_question,
+			buttons     : buttonOptions,
+			open        : function() {
+				$('.ui-dialog-buttonset button:first').focus();
+				$('.ui-dialog-buttonset button:first').addClass("input-bold");
+			}
+		});
 	
-	dialogs.openDialog(delete_dialog);
+		dialogs.openDialog(delete_dialog);
 	
-	$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+	}
 };
 
 /**
@@ -349,7 +420,15 @@ dialogs.openSwitchDateFormatDialog = function() {
 			Titanium.App.Properties.setString('weekstartday', weekstart_day.toString());
 			Titanium.App.Properties.setString('dateformat', new_dateformat);
 	
-			$('div.add input.datepicker').datepicker('destroy');
+			$('input.datepicker').datepicker('destroy');
+			
+			$('ul.mainlist li').each(function() {
+				if ($(this).children('span.showdate').length == 1) {
+					$(this).children('input.datepicker').remove();
+					$(this).children('img.ui-datepicker-trigger').remove();
+				}
+			});
+			
 			html.createDatepicker();
 			html.make_timestamp_to_string();
 	
@@ -460,29 +539,32 @@ dialogs.openSelectAddItemMethodDialog = function() {
  * @author Daniel Marschner
  */
 dialogs.showHelpDialog = function() {
-	var shortcutPrefix     = settings.shortcutkey + ' + ';
-	var deleteListShortcut = (settings.os === 'darwin') ? shortcutPrefix + wunderlist.language.data.hotkey_help_backspace : wunderlist.language.data.hotkey_help_del;
-	var helpHTML  = '<p><b>' + shortcutPrefix + 'L:</b> ' + wunderlist.language.data.hotkey_help_list + '</p>';
-		helpHTML += '<p><b>' +  deleteListShortcut  + ':</b> ' + wunderlist.language.data.hotkey_help_delete + '</p>';
-		helpHTML += '<p><b>' + shortcutPrefix + 'I:</b> ' + wunderlist.language.data.hotkey_help_inbox + '</p>';
-	    helpHTML += '<p><b>' + wunderlist.language.data.hotkey_help_updown_key + ':</b> ' + wunderlist.language.data.hotkey_help_updown + '</p>';
-	    helpHTML += '<p><b>' + shortcutPrefix + 'T/N:</b> ' + wunderlist.language.data.hotkey_help_task + '</p>';
-	    helpHTML += '<p><b>' + shortcutPrefix + 'F:</b> ' + wunderlist.language.data.hotkey_help_search + '</p>';
-	    helpHTML += '<p><b>' + shortcutPrefix + '1-8:</b> ' + wunderlist.language.data.hotkey_help_filters + '</p>';
-	    helpHTML += '<p><b>' + shortcutPrefix + 'B:</b> ' + wunderlist.language.data.hotkey_help_sidebar + '</p>';
+	if ($("[role='dialog']").length == 0)
+	{
+		var shortcutPrefix     = settings.shortcutkey + ' + ';
+		var deleteListShortcut = (settings.os === 'darwin') ? shortcutPrefix + wunderlist.language.data.hotkey_help_backspace : wunderlist.language.data.hotkey_help_del;
+		var helpHTML  = '<p><b>' + shortcutPrefix + 'L:</b> ' + wunderlist.language.data.hotkey_help_list + '</p>';
+			helpHTML += '<p><b>' +  deleteListShortcut  + ':</b> ' + wunderlist.language.data.hotkey_help_delete + '</p>';
+			helpHTML += '<p><b>' + shortcutPrefix + 'I:</b> ' + wunderlist.language.data.hotkey_help_inbox + '</p>';
+		    helpHTML += '<p><b>' + wunderlist.language.data.hotkey_help_updown_key + ':</b> ' + wunderlist.language.data.hotkey_help_updown + '</p>';
+		    helpHTML += '<p><b>' + shortcutPrefix + 'T/N:</b> ' + wunderlist.language.data.hotkey_help_task + '</p>';
+		    helpHTML += '<p><b>' + shortcutPrefix + 'F:</b> ' + wunderlist.language.data.hotkey_help_search + '</p>';
+		    helpHTML += '<p><b>' + shortcutPrefix + '1-8:</b> ' + wunderlist.language.data.hotkey_help_filters + '</p>';
+		    helpHTML += '<p><b>' + shortcutPrefix + 'B:</b> ' + wunderlist.language.data.hotkey_help_sidebar + '</p>';
 	
-	dialogs.helpDialog = $('<div>' + helpHTML + '</div>').dialog({
-		autoOpen  : true,
-		draggable : false,
-		resizable : false,
-		modal     : true,
-		closeOnEscape: true,
-		title     : wunderlist.language.data.hotkey_help_title
-	});
+		dialogs.helpDialog = $('<div>' + helpHTML + '</div>').dialog({
+			autoOpen  : true,
+			draggable : false,
+			resizable : false,
+			modal     : true,
+			closeOnEscape: true,
+			title     : wunderlist.language.data.hotkey_help_title
+		});
 	
-	dialogs.openDialog(dialogs.helpDialog);
+		dialogs.openDialog(dialogs.helpDialog);
 	
-	$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');	
+		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');	
+	}
 };
 
 /**

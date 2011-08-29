@@ -6,12 +6,31 @@ var menu = menu || {};
  * @author Christian Reber
  */
 menu.reset_window_size = function() {
-	var currentWindow = Titanium.UI.getCurrentWindow();
+	var currentWindow = Titanium.UI.getMainWindow();
 	
 	currentWindow.height = 400;
 	currentWindow.width  = 600;
 	currentWindow.x      = Math.round((screen.width / 2) - 300);
 	currentWindow.y      = Math.round((screen.height / 2) - 200);
+}
+
+/**
+ * Reset position of Wunderlist (Mac)
+ *
+ * @author Christian Reber
+ */
+menu.reset_note_window = function() {
+	var currentWindows = Titanium.UI.getOpenWindows();
+	
+	for (x in currentWindows) {
+		if (currentWindows[x].noteId != undefined) {
+			currentWindows[x].height = 400;
+			currentWindows[x].width  = 500;
+			currentWindows[x].x      = Math.round((screen.width / 2) - 250);
+			currentWindows[x].y      = Math.round((screen.height / 2) - 200);
+			currentWindows[x].focus();
+		}
+	}
 }
 
 /**
@@ -28,50 +47,47 @@ menu.initialize = function() {
 	var downloadsMenuItem = new_menu.addItem(wunderlist.language.data.downloads);
 	var aboutUsMenuItem   = new_menu.addItem(wunderlist.language.data.about_us);
 
-	accountMenuItem.addItem(wunderlist.language.data.invitation, wunderlist.account.showInviteDialog);
+	accountMenuItem.addItem(wunderlist.language.data.invitation, function() { wunderlist.account.showInviteDialog(); menu.refocus(); });
 	accountMenuItem.addSeparatorItem();
-
-	var languageMenuItem  = extraMenuItem.addItem(wunderlist.language.data.language);
-
+	
 	// Language Menu
-	languageMenuItem.addItem('Deutsch',    function() {menu.switch_language('de')});
-	languageMenuItem.addItem('English',    function() {menu.switch_language('en')});
-	languageMenuItem.addItem('Español',    function() {menu.switch_language('es')});
-	languageMenuItem.addItem('Català',     function() {menu.switch_language('ca')});
-	languageMenuItem.addItem('Français',   function() {menu.switch_language('fr')});
-	languageMenuItem.addItem('Polski',     function() {menu.switch_language('pl')});
-	languageMenuItem.addItem('Português',  function() {menu.switch_language('pt')});
-	languageMenuItem.addItem('Italiano',   function() {menu.switch_language('it')});
-	languageMenuItem.addItem('Slovensky',  function() {menu.switch_language('sk')});
-	languageMenuItem.addItem('Nederlands', function() {menu.switch_language('nl')});
-	languageMenuItem.addItem('Pусский',    function() {menu.switch_language('ru')});
-	languageMenuItem.addItem('Українське', function() {menu.switch_language('uk')});
-	languageMenuItem.addItem('Dansk',      function() {menu.switch_language('da')});
-	languageMenuItem.addItem('České',      function() {menu.switch_language('cs')});
-	languageMenuItem.addItem('中文',        function() {menu.switch_language('zh')});
-	languageMenuItem.addItem('Türkçe',     function() {menu.switch_language('tr')});
-	languageMenuItem.addItem('عربي',        function() {menu.switch_language('ar')});
-	languageMenuItem.addItem('Svenska',    function() {menu.switch_language('se')});
-	languageMenuItem.addItem('日本語',      function() {menu.switch_language('ja')});
-	languageMenuItem.addItem('Magyar',     function() {menu.switch_language('hu')});
-	languageMenuItem.addItem('한국어',      function() {menu.switch_language('ko')});
-	languageMenuItem.addItem('Hrvatski',   function() {menu.switch_language('hr')});
-	languageMenuItem.addItem('Norsk',      function() {menu.switch_language('no')});
-	languageMenuItem.addItem('Српска',     function() {menu.switch_language('sr')});
-	languageMenuItem.addItem('Galego',     function() {menu.switch_language('gl')});
-	languageMenuItem.addItem('Română',     function() {menu.switch_language('ro')});
-	languageMenuItem.addItem('Português (Brazilian)',     function() {menu.switch_language('pt-br')});	
+	var languageMenuItem = extraMenuItem.addItem(wunderlist.language.data.language);
+	
+	for (var ix in wunderlist.language.availableLang)
+	{
+		languageItem = languageMenuItem.addItem(wunderlist.language.availableLang[ix].translation, function(e) {
+			menu.switch_language(e.getTarget().code);
+		});
+		languageItem.code = wunderlist.language.availableLang[ix].code;
+	}
 
-	extraMenuItem.addItem(wunderlist.language.data.add_item_method, dialogs.openSelectAddItemMethodDialog);
-	extraMenuItem.addItem(wunderlist.language.data.switchdateformat, dialogs.openSwitchDateFormatDialog);
-	extraMenuItem.addItem(wunderlist.language.data.sidebar_position, dialogs.openSidebarDialog);
-	extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, dialogs.openDeletePromptDialog);
+	extraMenuItem.addItem(wunderlist.language.data.add_item_method, function() { dialogs.openSelectAddItemMethodDialog(); menu.refocus(); });
+	extraMenuItem.addItem(wunderlist.language.data.switchdateformat, function() { dialogs.openSwitchDateFormatDialog(); menu.refocus(); });
+	extraMenuItem.addItem(wunderlist.language.data.sidebar_position, function() { dialogs.openSidebarDialog(); menu.refocus(); });
+	extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, function() { dialogs.openDeletePromptDialog(); menu.refocus(); });
 
+	var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition', 0);
+	var enableNaturalDateRecognitionMenuString = wunderlist.language.data.enable_natural_date_recognition;
+	if (isNaturalDateRecognitionEnabled === 1) {
+		enableNaturalDateRecognitionMenuString = wunderlist.language.data.disable_natural_date_recognition;
+	}
+	extraMenuItem.addItem(enableNaturalDateRecognitionMenuString, function () {
+		var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition', 0);
+		if (isNaturalDateRecognitionEnabled === 1) {
+			Titanium.App.Properties.setInt('enable_natural_date_recognition', 0);
+			this.getSubmenu().getItemAt(5).setLabel(wunderlist.language.data.enable_natural_date_recognition);
+		} else {
+			Titanium.App.Properties.setInt('enable_natural_date_recognition', 1);
+			this.getSubmenu().getItemAt(5).setLabel(wunderlist.language.data.disable_natural_date_recognition);
+		}
+	});
+	
 	// Extras Menu
-	extraMenuItem.addItem(wunderlist.language.data.reset_window_size, menu.reset_window_size); // Reset Window Size
+	extraMenuItem.addItem(wunderlist.language.data.reset_window_size, function() { menu.reset_window_size(); menu.refocus(); }); // Reset Window Size
+	extraMenuItem.addItem(wunderlist.language.data.reset_note_window, menu.reset_note_window); // Reset Note Window
 
 	// Create Tutorials
-	extraMenuItem.addItem(wunderlist.language.data.create_tutorials, wunderlist.database.recreateTuts);
+	extraMenuItem.addItem(wunderlist.language.data.create_tutorials, function() { wunderlist.database.recreateTuts(); menu.refocus(); });
 
 	aboutUsMenuItem.addItem('Knowledge Base',    function() {Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb')});
 	//aboutUsMenuItem.addItem(wunderlist.language.data.privacy_policy,  function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
@@ -85,10 +101,11 @@ menu.initialize = function() {
 
 	if (wunderlist.account.isLoggedIn())
 	{
-		accountMenuItem.addItem(wunderlist.language.data.change_login_data, wunderlist.account.editProfile)
-		accountMenuItem.addItem(wunderlist.language.data.delete_account, function() {wunderlist.account.deleteAccount()});
+		accountMenuItem.addItem(wunderlist.language.data.change_login_data, function() { wunderlist.account.editProfile(); menu.refocus(); })
+		accountMenuItem.addItem(wunderlist.language.data.delete_account, function() { wunderlist.account.deleteAccount(); menu.refocus(); });
 		accountMenuItem.addSeparatorItem();
 		accountMenuItem.addItem(wunderlist.language.data.logout, function() {
+			menu.refocus();
 			wunderlist.sync.fireSync(true);
 		});
 	}
@@ -97,6 +114,7 @@ menu.initialize = function() {
 		accountMenuItem.addItem(wunderlist.language.data.sign_in, function() {
 			dialogs.closeEveryone();
 			wunderlist.account.showRegisterDialog();
+			menu.refocus();
 		});
 	}
 
@@ -230,9 +248,9 @@ menu.showWindow = function(wunderlistWindow) {
  *
  * @author Dennis Schneider
  */
-menu.switch_language = function(lang) {
+menu.switch_language = function(code) {
 	settings.save_window_position();
-	Titanium.App.Properties.setString('language', lang);
+	Titanium.App.Properties.setString('language', code);
 	Titanium.App.restart();
 }
 
@@ -246,4 +264,15 @@ menu.remove = function() {
 	{
 		Titanium.UI.menu.clear();
 	}
+}
+
+/**
+ * Refocusses the (hidden) Wunderlist window
+ *
+ * @author Dennis Schneider
+ */
+menu.refocus = function() {
+	var wunderlistWindow = Titanium.UI.getCurrentWindow();
+	wunderlistWindow.show();
+	wunderlistWindow.focus();
 }

@@ -68,21 +68,19 @@ settings.init = function() {
 	settings.position_saved = false;
 	
 	Titanium.API.addEventListener(Titanium.CLOSE, settings.save_window_position);
-	Titanium.API.addEventListener(Titanium.EXIT, settings.save_window_position);
+	Titanium.API.addEventListener(Titanium.EXIT,  settings.save_window_position);
 	
-	Titanium.API.addEventListener(Titanium.CLOSE, function() { settings.save_sidebar_opened_status() });
-	Titanium.API.addEventListener(Titanium.EXIT, function() { settings.save_sidebar_opened_status() });		
+	Titanium.API.addEventListener(Titanium.CLOSE, settings.save_sidebar_opened_status);
+	Titanium.API.addEventListener(Titanium.EXIT,  settings.save_sidebar_opened_status);		
 	
 	// Change the top header color on blur
 	Titanium.API.addEventListener(Titanium.UNFOCUSED, function() {
-		$("#top").addClass("blurred");
-		$("#macmenu a").css("opacity", "0.5");
+		$("body").css("border-top", "1px solid #b9b9b9");
 	});
 	
 	// Change the top header color on blur
 	Titanium.API.addEventListener(Titanium.FOCUSED, function() {
-		$("#top").removeClass("blurred");
-		$("#macmenu a").css("opacity", "1.0");
+		$("body").css("border-top", "1px solid #666");
 	
 	});		
 };
@@ -123,7 +121,22 @@ settings.save_window_position = function() {
 		Titanium.App.Properties.setString('user_x',      currentWindow.x.toString());
 		Titanium.App.Properties.setString('user_y',      currentWindow.y.toString());
 		settings.position_saved = true;
-		currentWindow.hide();
+	}
+};
+
+/**
+ * Save Note Window Size and Position on close
+ *
+ * @author Daniel Marschner
+ */
+settings.save_note_window_position = function(noteWindow) {
+	if (noteWindow.isMinimized() == false)
+	{
+		Titanium.App.Properties.setString('note_maximized',   noteWindow.isMaximized().toString());
+		Titanium.App.Properties.setString('note_user_height', noteWindow.height.toString());
+		Titanium.App.Properties.setString('note_user_width',  noteWindow.width.toString());
+		Titanium.App.Properties.setString('note_user_x',      noteWindow.x.toString());
+		Titanium.App.Properties.setString('note_user_y',      noteWindow.y.toString());
 	}
 };
 

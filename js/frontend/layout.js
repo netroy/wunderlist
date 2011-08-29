@@ -27,15 +27,25 @@ registerProcess = function() {
 		$('input.input-red').removeClass('input-red');
 		$('div.errorwrap p').text('');
 		$(".dialog-login .ui-dialog-title").text(wunderlist.language.data.register_your_account);
+		$('.dialog-login input#register-email').val($('.dialog-login input#login-email').val());
+		$('.dialog-login input#register-password').val($('.dialog-login input#login-password').val());
 		$(".showlogindialog").hide();
 		$(".showregisterdialog").fadeIn("slow");
 		$("#account-loader").hide();
+				
+		if($('input#login-email').val() != ""){
+			$("#registersubmit").click();
+		}
+		
+		console.log(wunderlist.language.english.email);
 	});
 	
 	$("#showloginsubmit").live("click",function(){
 		$('input.input-red').removeClass('input-red');
 		$('div.errorwrap p').text('');
 		$(".dialog-login .ui-dialog-title").text(wunderlist.language.data.register_title);
+		$('.dialog-login input#register-email').val(wunderlist.language.english.email);
+		$('.dialog-login input#register-password').val(wunderlist.language.english.password);
 		$(".showregisterdialog").hide();
 		$(".showlogindialog").fadeIn("slow");	
 		$("#account-loader").hide();
@@ -49,6 +59,10 @@ registerProcess = function() {
 		$(".loginbuttons").hide();
 		$(".forgotpwbuttons").fadeIn();
 		$("#account-loader").hide();
+		
+		
+		$('#forgotpw-email').val($('input#login-email').val()).focus();
+		
 	});
 	
 	$("#cancelforgotpw").live("click",function(){
@@ -57,6 +71,13 @@ registerProcess = function() {
 		$(".dialog-login .ui-dialog-title").text(wunderlist.language.data.register_title);
 		$(".forgotpwbuttons").hide();
 		$(".loginbuttons").fadeIn();	
+	});
+	
+	// Submit Forgot PW on Return	
+	$("#forgotpw-email").live('keyup', function(evt){
+		if(evt.keyCode == 13){
+			$('#forgot-pwd').click();
+		}
 	});
 };
 
@@ -78,8 +99,7 @@ toolTips = function() {
 		var tipWidth = $("#tooltip").width();
 		
 		if($(this).attr("id") == "sync"){tipWidth = "36";}
-
-		$("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-tipWidth/2) + "px").fadeIn("fast");
+		$("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-tipWidth/2) + "px").show();
 				
 		if($(this).parent().attr("id") == "listfunctions") {
 			$("#tooltip").css("top",(offset.top+25));
@@ -220,5 +240,14 @@ $(document).ready(function() {
 	$(".followus").mouseleave(function(){
 		$(this).fadeOut();
 		$(".wklogo").fadeIn();
+	});
+	
+	$(window).resize(function() {
+		var width = $(window).width();
+		if (width > 1920) {
+			$("#bghelp").css("background-size", "100%");
+		} else {
+			$("#bghelp").css("background-size", "auto");
+		}
 	});
 });

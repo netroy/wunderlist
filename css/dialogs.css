@@ -28,7 +28,8 @@
 
 .ui-dialog a {color: #1389d3 } .ui-dialog a:hover {text-decoration:underline}
 
-.register, .input-bold { font-weight:bold}
+.register, .input-bold { font-weight:bold; }
+.input-bold { background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B0B8BE), to(#D5D6D8)); }
 
 /* Close Dialog Button */			
 
@@ -92,7 +93,7 @@ opacity:0.5;
 filter:Alpha(opacity=50);
 -moz-opacity: 0.5;}
 
-.ui-widget-overlay-wood {background: #000 url(/backgrounds/wood.jpg) top center no-repeat ; opacity:1 ;overflow:visible}
+.ui-widget-overlay-wood {top:1px;background: #000 url(/backgrounds/wood.jpg) top center no-repeat ; opacity:1 ;overflow:visible}
 
 .dialog-login{ 
 -webkit-box-shadow:0px 3px 16px #222;
@@ -115,7 +116,7 @@ background:#e3e6ed ;
 -webkit-border-radius:5px;
 -moz-border-radius:5px;
 border-radius:5px;
-/*-webkit-box-shadow:0px 3px 16px #222;*/
+-webkit-box-shadow:0px 3px 16px #222;
 -moz-box-shadow:0px 3px 16px #222;
 box-shadow:0px 3px 16px #222}
 
@@ -168,7 +169,7 @@ color:#4b4e54 ;font-size:14px ; padding:12px 0px ; padding-left:13px  ;text-shad
 .formright {margin-left:130px; margin-top:24px; margin-right:12px}
 
 .input-login {display:block; width:94%; padding:8px; margin-top:8px;
--webkit-box-shadow:0px 1px 1px #fff;-moz-box-shadow:0px 1px 1px #fff;box-shadow:0px 1px 1px #fff;
+-webkit-box-shadow:0px 1px 0px #fff;-moz-box-shadow:0px 1px 0px #fff;box-shadow:0px 1px 0px #fff;
 border:1px solid #adadad;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;background:#fff;font-size:12px;color:#777}
 
 .input-normal {width:96%; padding: 2%; margin-top:12px ;
@@ -182,9 +183,9 @@ background:-webkit-gradient(linear, left top, left bottom, from(#e1e3e8), to(#ca
 background: -moz-linear-gradient(top,  #e1e3e8,  #cacfd9);
 
 color:#424242;
--webkit-box-shadow:inset 0px 1px 1px #fff;
--moz-box-shadow:inset 0px 1px 1px #fff;
-box-shadow:inset 0px 1px 1px #fff;
+-webkit-box-shadow:inset 0px 1px 0px #fff;
+-moz-box-shadow:inset 0px 0px 1px #fff;
+box-shadow:inset 0px 1px 0px #fff;
 border:1px solid #939494;
 padding:7px 12px;
 border-radius:5px;
@@ -202,7 +203,7 @@ background:-webkit-gradient(linear, left top, left bottom, from(#c0c9cf), to(#e6
 background: -moz-linear-gradient(top,  #c0c9cf,  #e6e7e9)}
 
 .button-login {
--webkit-box-shadow:inset 0px 1px 1px #84c7f4; -moz-box-shadow:inset 0px 1px 1px #84c7f4; box-shadow:inset 0px 1px 1px #84c7f4;
+-webkit-box-shadow:inset 0px 1px 0px #84c7f4; -moz-box-shadow:inset 0px 1px 0px #84c7f4; box-shadow:inset 0px 1px 0px #84c7f4;
 color:#fff;border:1px solid #166fa9;text-shadow:1px 1px 1px #166fa9;
 background:#32a3f0;
 background:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3));
@@ -245,7 +246,7 @@ background:url(/images/registertutorial.png)}
 
 /* NOTES DIALOG ---------------------------------------------------------------------------------------- */
 
-.dialog-notes { position:absolute; height:80% !important; width:80% !important;  margin:10%; background:#F5F5F5 !Important}
+.dialog-notes { position:absolute; height:100% !important; width:100% !important; background:#F5F5F5 !Important}
 
 .dialog-notes .notes_buffer { position:absolute; top:50px; right:0px; left:0px; bottom:60px}
 
@@ -259,6 +260,8 @@ word-wrap: break-word}
 .dialog-notes .savednote {overflow:auto}
 
 .dialog-notes .savednote .inner {background: url(/images/notebg.png); padding:5px 20px 0px 20px; color:#333; min-height:98%}
+
+.dialog-notes .savednote .inner a { color: #2b96f1; text-decoration: underline}
 
 .dialog-notes .savednote span.openApp { color:#1389D3}
 .dialog-notes .savednote span.openApp:hover { color:#1389D3; cursor: pointer; text-decoration: underline}
@@ -276,15 +279,6 @@ border-radius:4px;
 padding:1%; background:#fff; border:1px solid #ddd; height:94% !important}
 
 .dialog-notes .ui-widget-header {background:#f5f5f5 ; border:none ; padding-bottom:0px}
-
-.ui-dialog-title {
-position: absolute;
-left:18px;
-right:40px;
-white-space: nowrap;
-overflow:hidden;
-text-overflow: ellipsis}
-
 .dialog-notes .ui-dialog-title {
 font-size:16px;
 left:14px;
@@ -312,7 +306,7 @@ position:absolute; top: 50% !important; left: 50% !important; margin-left: -250p
 
 .dialog-social .invitefriends { font-size:16px; font-weight:bold; margin-top:12px; color:#333}
 
-.dialog-social .wunderlistlogo {width:128px; background:url(/images/wlicon.png) no-repeat}
+.dialog-social .wunderlistlogo {width:128px; background:url(/images/wlicon.png) no-repeat;margin-left:7px;;}
 
 .dialog-social input {margin-left:0px; margin-right:0px}
 

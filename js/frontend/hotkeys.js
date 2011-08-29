@@ -106,10 +106,13 @@ $(function() {
 	});
 	
 	// For removing select all
-	shortcut.add(settings.shortcutkey + '+a', function () { 
-		if ($('textarea:focus').length == 0 && $('input:focus').length == 0)
-			return false;
-	}, {'disable_in_input' : true});
+	shortcut.add(settings.shortcutkey + '+a', function (e) { 
+		if ($('textarea:focus').length == 1) {
+			$('textarea').select();
+		} else if ($('input:focus').length == 1) {
+			$('input').select();
+		}			
+	}, {'disable_in_input' : false});
 	
 	// Shortcut Bind Command (or Ctrl) + L - New list
 	shortcut.add(settings.shortcutkey + "+l",function() {
@@ -294,11 +297,7 @@ $(function() {
 	
 	// Save note and close the dialog
 	shortcut.add(settings.shortcutkey + '+Enter', function (event) {
-		if ($('[role="dialog"]').length == 1 && $('.dialog-notes textarea:visible').length == 1)
-		{
-			notes.saveAndClose();
-		}
-		else if ($('input.input-add:focus').length == 1)
+		if ($('input.input-add:focus').length == 1)
 		{
 			var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
 			

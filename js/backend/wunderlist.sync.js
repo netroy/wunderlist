@@ -153,11 +153,11 @@ wunderlist.sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id) {
 						if (response_data != '' && text != '' && xhrobject != undefined)
 						{					
 							switchSyncSymbol(xhrobject.status);
-		
+                            
 							if (xhrobject.status == 200)
 							{
 								var response = JSON.parse(response_data);
-		
+								
 								switch(response.code)
 								{
 									case wunderlist.sync.status_codes.SYNC_SUCCESS:
@@ -307,6 +307,14 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
 				}
 			}
 		}
+		
+        if (sync_table_step1.delete_tasks != undefined)
+        {
+            for (var x in sync_table_step1.delete_tasks)
+            {
+                wunderlist.database.deleteElements('tasks', sync_table_step1.delete_tasks[x]);
+            }
+        }
 	}
 
 	// SYNC STEP 3
@@ -320,7 +328,7 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
 	data['step']						 = 2;
 	
 	// Only if there is a response or new tasks
-	if (sync_table_step1 != undefined || data['sync_table']['new_tasks'] != undefined)
+	if (sync_table_step1 != undefined || (data['sync_table']['new_tasks'] != undefined && JSON.stringify(data['sync_table']['new_tasks']).length > 2))
 	{
 		// Collect the tasks and lists, that the server requires
 		if (sync_table_step1 != undefined)
@@ -392,7 +400,7 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
 			this.deleteElementsAfterSync(sync_table_step1);
 
 			// Only, if there are new elements from online to fetch and to insert locally
-			if (sync_table_step1.new_lists != undefined || sync_table_step1.new_tasks != undefined)
+			if (sync_table_step1.new_lists != undefined || sync_table_step1.new_tasks != undefined || sync_table_step1.delete_tasks != undefined)
 			{
 				wunderlist.account.loadInterface();
 			}

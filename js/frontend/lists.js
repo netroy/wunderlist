@@ -236,13 +236,26 @@ deleteList = function(listId, listElement) {
 	{
 		if (listId != 'x')
 		{			
+			if (notes.window != undefined) {
+				_return = false;
+				dbTasks = wunderlist.database.getTasks(undefined, listId)
+				
+				if (dbTasks.length > 0) {
+					for (x in dbTasks) {
+						if (_return == false) {
+							_return = notes.closeNoteWindow(dbTasks[x].id);
+						}
+					}
+				}
+			}
+			
 			list.id      = listId;
 			list.deleted = 1;
-			list.update();
+			list.update();		
 		}
 	
 		listElement.remove();
-	
+		
 		openList(1);
 	}
 };
@@ -262,6 +275,7 @@ bindListDeleteMode = function() {
 		}
 		else
 		{
+			cancelSaveList();
 			deleteList($(this).parent().attr('id').replace('list', ''), $(this).parent());
 		}
     });
@@ -336,6 +350,7 @@ makeListsSortable = function() {
 		placeholder : 'placeholder',
 		distance    : 20,
 		items       : '.sortablelist',
+		revert      : 200,
 		update      : saveListPosition
 	});
 };
