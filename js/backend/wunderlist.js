@@ -47,7 +47,7 @@ wunderlist.init = function() {
 	
 	// Enable shutdown fix
 	Titanium.API.addEventListener(Titanium.EXIT, function() {
-		//Titanium.Platform.canShutdown();
+		Titanium.Platform.canShutdown();
 	});
 };
 
