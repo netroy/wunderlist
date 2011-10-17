@@ -14,7 +14,7 @@ wunderlist.sharing = wunderlist.sharing || {};
  * @author Dennis Schneider
  */
 wunderlist.sharing.init = function() {
-	wunderlist.sharing.domain                   = 'https://sync.wunderlist.net'; 
+	wunderlist.sharing.domain                   = '';//'https://sync.wunderlist.net'; 
 	wunderlist.sharing.shareUrl                 = wunderlist.sharing.domain + '/share/1.1.2';
 	wunderlist.sharing.sharedEmailsUrl          = wunderlist.sharing.domain + '/share/1.1.2/emails';
 	wunderlist.sharing.deleteSharedEmailUrl     = wunderlist.sharing.domain + '/share/1.1.2/delete';

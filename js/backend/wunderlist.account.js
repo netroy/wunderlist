@@ -10,7 +10,7 @@ var delete_account_dialog;
 var logging_in = false;
 
 wunderlist.account.init = function() {
-	this.syncDomain 	   = 'https://sync.wunderlist.net';
+	this.syncDomain 	     = '';//'https://sync.wunderlist.net';
 	this.registerUrl       = this.syncDomain + '/register';
 	this.loginUrl          = this.syncDomain + '/login';
 	this.forgotPasswordUrl = this.syncDomain + '/password';

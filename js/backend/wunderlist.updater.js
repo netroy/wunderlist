@@ -7,7 +7,7 @@ wunderlist.updater = wunderlist.updater || {};
  */
 wunderlist.updater.checkVersion = function() {
 	$.ajax({
-		url     : 'https://s3.amazonaws.com/wunderlist/version.txt',
+		url     : '/version.txt',//'https://s3.amazonaws.com/wunderlist/version.txt',
 		type    : 'GET',
 		success : function(response_data, text, xhrobject) {
 			var response   = JSON.parse(xhrobject.responseText);

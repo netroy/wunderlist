@@ -14,7 +14,7 @@ wunderlist.sync = wunderlist.sync || {};
  * @author Dennis Schneider
  */
 wunderlist.sync.init = function() {
-	this.syncDomain 	   = 'https://sync.wunderlist.net/1.2.0';
+	this.syncDomain 	   = '/1.2.0';//'https://sync.wunderlist.net/1.2.0';
 	this.alreadyRegistered = false;
 	this.timeOutInterval   = '';
 	this.isSyncing		   = false;
