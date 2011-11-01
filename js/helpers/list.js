@@ -5,7 +5,7 @@ var list = list || {};
 
 // INSERT a new database list object
 list.insert = function() {
-	return wunderlist.database.insertList();
+	return wunderlist.database.insertList(list);
 };
 
 // UPDATE the database list object
