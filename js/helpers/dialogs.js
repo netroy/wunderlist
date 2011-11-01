@@ -360,11 +360,18 @@ dialogs.openNoteDeleteDialog = function() {
  * @author Dennis Schneider
  */
 dialogs.createDeleteListDialog = function(listId, listElement) {	
-	if ($("[role='dialog']").length == 0)
-	{
+	if ($("[role='dialog']").length == 0) {
 		var buttonOptions = {};
-		buttonOptions[wunderlist.language.data.list_delete_no]  = function() { $(this).dialog('close'); $('a.list input').focus(); };
-		buttonOptions[wunderlist.language.data.list_delete_yes] = function() { if (listId != 1) deleteList(listId, listElement); $(this).dialog('close'); };
+		buttonOptions[wunderlist.language.data.list_delete_no]  = function() {
+		  $(this).dialog('close');
+		  $('a.list input').focus();
+		};
+		buttonOptions[wunderlist.language.data.list_delete_yes] = function() { 
+		  if (listId != 1) {
+		    wunderlist.frontend.lists.deleteList(listId, listElement);
+		  }
+		  $(this).dialog('close');
+		};
 
 		delete_dialog = $('<div></div>').dialog({
 			autoOpen    : false,

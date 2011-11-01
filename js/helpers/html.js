@@ -10,7 +10,7 @@ html.generateNotesDialogHTML = function() {
 			'<textarea></textarea><div class="savednote"><div class="inner"></div></div>' +
 			'</div>' +
     		'<div class="notes_buttons">' +
-    			'<span class="hint">'+ wunderlist.ucfirst(settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
+    			'<span class="hint">'+ wunderlist.utils.ucfirst(settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
     			'<input id="save-and-close" class="input-button button-login" type="submit" value="'+ wunderlist.language.data.save_and_close_changes +'" />' +
     			'<input id="save-note" class="input-button" type="submit" value="'+ wunderlist.language.data.edit_changes +'" />' +
     		'</div>';
@@ -177,7 +177,7 @@ html.generateTaskHTML = function(id, name, list_id, done, important, date, note)
 	}
 	
     var unescapedName = unescape(name);
-    var name          = wunderlist.replace_links(wunderlist.strip_tags(unescape(name)));
+    var name          = html.replace_links(html.strip_tags(unescape(name)));
     
     if (name == '')
          name = wunderlist.language.data.new_task;
@@ -294,7 +294,7 @@ html.generateDeletePromptHTML = function() {
 html.generateAddItemMethodHTML = function() {
     var html_code = '<div id="add-item-method-radios" class="radios">' +
        		'<p><b>' + wunderlist.language.data.add_item_method_content + '</b></p>' +
-			'<p><input id="add_item_method_0" type="radio" name="addItemMethod" value="0" /> <span>' + wunderlist.language.data.return_key + '</span> &nbsp; &nbsp; &nbsp; <input id="add_item_method_1" type="radio" name="addItemMethod" value="1" /> <span>' + wunderlist.ucfirst(settings.shortcutkey) + ' + ' + wunderlist.language.data.return_key + '</span></p>' +
+			'<p><input id="add_item_method_0" type="radio" name="addItemMethod" value="0" /> <span>' + wunderlist.language.data.return_key + '</span> &nbsp; &nbsp; &nbsp; <input id="add_item_method_1" type="radio" name="addItemMethod" value="1" /> <span>' + wunderlist.utils.ucfirst(settings.shortcutkey) + ' + ' + wunderlist.language.data.return_key + '</span></p>' +
  			'</div>' +
     		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
     		
@@ -840,7 +840,7 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 	count  = 0;
 	
 	// If tasks are set and not empty count them
-	if (task != undefined && wunderlist.is_array(tasks) && tasks.length > 0)
+	if (task != undefined && wunderlist.utils.is_array(tasks) && tasks.length > 0)
 		count = tasks.length;
 	
 	if (settings.os === 'darwin') {
@@ -868,28 +868,25 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 	}
 	
 	// Build tasks sorted by list
-	if (count > 0)
-	{
+	if (count > 0) {
 		actual_list    = 0;
 		last_list      = 0;
 		last_task_list = 0;
 		
 		var lists = wunderlist.database.getLists();
 		for (var list in lists) {
-			for (var ix in tasks)
-			{
+			for (var ix in tasks) {
 				if (lists[list].id == tasks[ix].list_id) {
-					if (wunderlist.database.existsById('lists', tasks[ix].list_id))
-					{
-						//alert(tasks[ix].list_id);
-						if (tasks[ix].list_id != last_task_list)
-							actual_list = tasks[ix].list_id;
+					if (wunderlist.database.existsById('lists', tasks[ix].list_id)) {
+						if (tasks[ix].list_id != last_task_list){
+						  actual_list = tasks[ix].list_id;
+						}
 
-						if (last_list != 0 && last_list != actual_list)
-							result += "</ul>";
+						if (last_list != 0 && last_list != actual_list){
+						  result += "</ul>";
+						}
 
-						if (last_list != actual_list)
-						{
+						if (last_list != actual_list) {
 							var dbList = wunderlist.database.getLists(parseInt(tasks[ix].list_id));
 
 							result += '<h3 class="clickable cursor" rel="' + actual_list + '">' + unescape(dbList[0].name) +  '</h3>';
@@ -992,10 +989,7 @@ html.xss_clean = function(str) {
 	results = str.match(/<.*?>/g, str);
 	
 	if(results) {
-		
-		var i
-		for(i=0;i<results.length;i++) 
-		{
+		for(var i = 0; i < results.length; i++) {
 			str = str.replace(results[i], html.html_entity_decode(results[i]));
 		}
 	}
@@ -1007,11 +1001,9 @@ html.xss_clean = function(str) {
 	str = str.replace(/\?>/g,'?&gt;');
 	words = new Array('javascript', 'vbscript', 'script', 'applet', 'alert', 'document', 'write', 'cookie', 'window');
 	
-	for(t in words)
-	{
+	for(t in words) {
 		temp = '';
-		for (i = 0; i < words[t].length; i++)
-		{
+		for (i = 0; i < words[t].length; i++) {
 			temp += words[t].substr( i, 1)+"\\s*";
 		}
 		
@@ -1028,8 +1020,7 @@ html.xss_clean = function(str) {
 	str = str.replace(/(alert|cmd|passthru|eval|exec|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)/gi, "$1$2&#40;$3&#41;");
 	bad = new Array('document.cookie','document.write','window.location',"javascript\s*:","Redirect\s+302");
 	
-	for (val in bad)
-	{
+	for (val in bad) {
 		myRegExp = new RegExp(bad[val], "gi");
 		str = str.replace(myRegExp, bad[val]);   
 	}
@@ -1056,6 +1047,63 @@ html.convertString = function(string, length) {
 	}
 	return string;
 };
+
+
+/**
+ * Removes HTML Tags
+ * @author Dennis Schneider
+ */
+html.strip_tags = function(input, allowed) {
+	allowed = (((allowed || "") + "")
+		.toLowerCase()
+		.match(/<[a-z][a-z0-9]*>/g) || [])
+		.join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
+	var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
+	commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+	return input.replace(commentsAndPhpTags, '').replace(tags, function($0, $1) {
+		return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
+	});
+};
+
+
+
+/**
+ * Replace a link in a given text with a clickable link
+ * @author Dennis Schneider, Marvin Labod
+ */
+html.replace_links = function(text) {
+	// HTTP/HTTPS/FTP Links
+	var exp = /((http|https|ftp):\/\/[\w?=&.\-\/-;#~%-\ü\( \)]+(?![\w\s?&.\/;#~%"=-]*>))/g;
+	text = text.replace(exp,"<a href='$1'>$1</a>");
+	
+	// FILE Links (Windows)
+	var exp = /(file:\/\/\/[a-zA-Z]:\/)(\w.+)\.([a-zA-Z0-9]{1,5})/g;
+	text = text.replace(exp,"<span class='openApp'>$1$2.$3</span>");
+	
+	// Local File System Links (Mac)
+	var exp = /(^|\s)(\/\w.+)\.([a-zA-Z0-9]{1,5})/g;
+	text = text.replace(exp,"<span class='openApp'>$1$2.$3</span>");
+	
+	// Email addresses
+	var exp = /(([a-z0-9*._+]){1,}\@(([a-z0-9]+[-]?){1,}[a-z0-9]+\.){1,}([a-z]{2,4}|museum)(?![\w\s?&.\/;#~%"=-]*>))/g;
+	text = text.replace(exp, '<a href="mailto:$1">$1</a>' );
+	
+	return text;
+};
+
+
+
+
+/**
+ * Replace the normal line break after enter it into a textarea to the HTML line break tag
+ * @author Marvin Labod
+ */
+html.replace_breaks = function(text) {
+	return text.replace(/\n/g, '<br>');
+};
+
+
+
 
 $(function() {
 	// Open every link in the browser

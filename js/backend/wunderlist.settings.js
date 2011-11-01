@@ -59,7 +59,7 @@ settings.init = function() {
 		}
 	
 		// Load the sidebar opened status
-		settings.sidebar_opened_status = Titanium.App.Properties.getString('settings.sidebar_opened_status', 'true');
+		settings.sidebar_opened_status = Titanium.App.Properties.getString('sidebar_opened_status', 'true');
 	
 		// Load the invited status
 		settings.invited = Titanium.App.Properties.getString('invited', 'false');

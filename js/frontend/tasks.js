@@ -187,7 +187,7 @@ tasks.edit = function() {
     var task_name = $('#task-edit').val();
 	var task_id   = $('#task-edit').parent().attr('id');
 	
-	$('#task-edit').parent().find('.description').html(wunderlist.replace_links(unescape(task_name))).show();
+	$('#task-edit').parent().find('.description').html(html.replace_links(unescape(task_name))).show();
 	$('#task-edit').remove();
 	
 	task.id   = task_id;

@@ -36,17 +36,16 @@ note.onReady = function() {
 
 /**
  * Replace the Formatted Note string with the given string
- *
  * @author Marvin Labod, Daniel Marschner
  */
 note.format = function(text, replaceLinks) { 
-	if (replaceLinks == undefined)
-		replaceLinks = true;
-	
-	if (replaceLinks == true)
-		text = wunderlist.replace_links(text);
-	
-	return wunderlist.replace_breaks(text);
+	if (replaceLinks === undefined){
+	  replaceLinks = true;
+	}
+	if (replaceLinks === true){
+	  text = html.replace_links(text);
+	}
+	return html.replace_breaks(text);
 };
 
 note.forceSave = function () {
@@ -88,7 +87,7 @@ $(function() {
 	$('#save-and-close').val(wunderlist.language.data.save_generic);
 	$('#delete').val(wunderlist.language.data.delete_generic);
 	
-	$('span.hint').text(wunderlist.ucfirst(mainWindow.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
+	$('span.hint').text(wunderlist.utils.ucfirst(mainWindow.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
 	
 	$('input#delete').live('click', function() {
 		if (Titanium.App.Properties.getString('delete_prompt', '1') == 1) {

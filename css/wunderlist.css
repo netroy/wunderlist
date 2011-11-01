@@ -309,7 +309,7 @@ left:0px;
 height:36px;
 width:100%}
 
-#left {float: left; padding:8px; padding-right:0px; padding-left:42px}
+#left {float: left; padding:8px; padding-right:0px; padding-left:4px}
 
 #left a.filter {
 -webkit-box-shadow:0px 1px 0px #676767;

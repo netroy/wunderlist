@@ -64,12 +64,10 @@ notes.openNotesWindow = function() {
  * @author Daniel Marschner
  */
 notes.closeNoteWindow = function(taskId) {
-	if (taskId == undefined && notes.window != undefined) {
+	if (taskId === undefined && notes.window !== undefined) {
 		notes.window.close();
-	} 
-	else if (taskId != undefined && notes.window != undefined)
-	{ 
-		if (notes.window.noteId == taskId) {
+	} else if (taskId !== undefined && notes.window !== undefined) { 
+		if (notes.window.noteId === taskId) {
 			notes.window.close();
 			return true;
 		}
@@ -84,13 +82,15 @@ notes.closeNoteWindow = function(taskId) {
  * @author Marvin Labod, Daniel Marschner
  */
 notes.format = function(text, replaceLinks) { 
-	if (replaceLinks == undefined)
-		replaceLinks = true;
+	if (replaceLinks === undefined){
+	  replaceLinks = true;
+	}
 	
-	if (replaceLinks == true)
-		text = wunderlist.replace_links(text);
+	if (replaceLinks === true) {
+		text = html.replace_links(text);
+	}
 	
-	return wunderlist.replace_breaks(text);
+	return html.replace_breaks(text);
 };
 
 // Loaded on start

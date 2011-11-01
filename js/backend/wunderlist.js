@@ -7,15 +7,16 @@
  * @author Christian Reber, Dennis Schneider, Daniel Marschner
  */
 var wunderlist = wunderlist || {};
+wunderlist.backend = {};
+wunderlist.frontend = {};
 
 /**
  * Init the wunderlist framework and all necessary parts
- *
  * @author Daniel Marschner
  */
 wunderlist.init = function() {
 	// Set the app title
-	wunderlist.setTitle('Wunderlist' + (wunderlist.account.isLoggedIn() && wunderlist.account.email != '' ? ' - ' + wunderlist.account.email : ''));
+	wunderlist.utils.setTitle('Wunderlist' + (wunderlist.account.isLoggedIn() && wunderlist.account.email != '' ? ' - ' + wunderlist.account.email : ''));
 	
 	// Set the os version
 	wunderlist.os = Titanium.Platform.name.toLowerCase();
@@ -51,145 +52,7 @@ wunderlist.init = function() {
 	});
 };
 
-/**
- * Set the app title
- *
- * @author Daniel Marschner 
- */
-wunderlist.setTitle = function(title) {
-	document.title = title;
-};
 
-/**
- * Converted from PHP in_array()
- *
- * @author Daniel Marschner
- */
-wunderlist.in_array = function(needle, array){
-    for (var ix = 0; ix < array.length; ix++)
-    {
-        if (needle.toString() == array[ix])
-            return true
-    }
-    
-    return false;
-};
-
-/**
- * Check if the given value is an array
- *
- * @author Daniel Marschner
- */
-wunderlist.is_array = function(value) {
-	if (typeof value === 'object' && value && value instanceof Array)
-		return true;
-
-	return false;
-};
-
-/**
- * Calculates the difference between the current and the given date
- *
- * @author Dennis Schneider
- */
-wunderlist.calculateDayDifference = function(done) {
-	var today         = new Date();
-	var one_day       = 86400; // One day in seconds
-	var unceiled_days = ((today.getTime() / 1000) - done) / (one_day);
-
-	if (unceiled_days > 1)
-		// Calculate difference btw the two dates, and convert to days
-		return Math.floor(unceiled_days);
-	else
-		return 0;
-};
-
-/**
- * Removes HTML Tags
- *
- * @author Dennis Schneider
- */
-wunderlist.strip_tags = function(input, allowed) {
-	allowed = (((allowed || "") + "")
-		.toLowerCase()
-		.match(/<[a-z][a-z0-9]*>/g) || [])
-		.join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
-	var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
-	commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
-	return input.replace(commentsAndPhpTags, '').replace(tags, function($0, $1)
-	{
-		return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
-	});
-};
-
-/**
- * Replace a link in a given text with a clickable link
- *
- * @author Dennis Schneider, Marvin Labod
- */
-wunderlist.replace_links = function(text) {
-	// HTTP/HTTPS/FTP Links
-	var exp = /((http|https|ftp):\/\/[\w?=&.\-\/-;#~%-\ü\( \)]+(?![\w\s?&.\/;#~%"=-]*>))/g;
-	text = text.replace(exp,"<a href='$1'>$1</a>");
-	
-	// FILE Links (Windows)
-	var exp = /(file:\/\/\/[a-zA-Z]:\/)(\w.+)\.([a-zA-Z0-9]{1,5})/g;
-	text = text.replace(exp,"<span class='openApp'>$1$2.$3</span>");
-	
-	// Local File System Links (Mac)
-	var exp = /(^|\s)(\/\w.+)\.([a-zA-Z0-9]{1,5})/g;
-	text = text.replace(exp,"<span class='openApp'>$1$2.$3</span>");
-	
-	// Email addresses
-	var exp = /(([a-z0-9*._+]){1,}\@(([a-z0-9]+[-]?){1,}[a-z0-9]+\.){1,}([a-z]{2,4}|museum)(?![\w\s?&.\/;#~%"=-]*>))/g;
-	text = text.replace(exp, '<a href="mailto:$1">$1</a>' );
-	
-	return text;
-};
-
-/**
- * Replace the normal line break after enter it into a textarea to the HTML line break tag
- *
- * @author Marvin Labod
- */
-wunderlist.replace_breaks = function(text) {
-	return text.replace(/\n/g, '<br>');
-}; 
-
-/**
- * Replace the search string with the given string
- *
- * @author Daniel Marschner
- */
-wunderlist.str_replace = function(search, replace, subject) {
-	return subject.split(search).join(replace);
-};
-
-/**
- * Validates an integer
- *
- * @author Christian Reber
- */
-wunderlist.is_integer = function(s) {
-	return (s.toString().search(/^-?[0-9]+$/) == 0);
-};
-
-/**
- * Validate the email
- *
- * @author Dennis Schneider
- */
-wunderlist.is_email = function(email) {
-	var reg = /^([A-Za-z0-9\+_\-\.\+])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-	
-	if (reg.test(email) == false) 
-	{
-		$('.error').text(wunderlist.language.data.error_invalid_email);
-		return false;
-	}
-	else 
-		return true;
-};
 
 /**
  * Scans for a date in a task and returns a result object
@@ -372,18 +235,6 @@ wunderlist.smartScanForDate = function(string, doNaturalRecognition) {
 	}
 
 	return {};
-};
-
-
-/**
- * Put the first char of the string into upper case
- *
- * @author Daniel Marschner
- */
-wunderlist.ucfirst = function(str) {
-    str += '';
-    var f = str.charAt(0).toUpperCase();
-    return f + str.substr(1);
 };
 
 /*************************************************************************************/

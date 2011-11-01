@@ -1,8 +1,8 @@
-/* global wunderlist */
-
-(function(W, html, global, undefined){
-  var database = W.database || {},
-      DB_NAME  = "wunderlist",
+/* global wunderlist, console */
+wunderlist.database = (function(wunderlist, html, global, undefined){
+  //"use strict";
+  
+  var DB_NAME  = "wunderlist",
       DB_TITLE = "Wunderlist",
       DB_BYTES = 5*1024*1024, // 5MB
       db;
@@ -19,13 +19,14 @@
   }
 
   function execute(sql){
-    function error(){
-      err([args].concat(arguments));
-    }
-    function callback(){
-      log([args].concat(arguments))
-    }
     var args = Array.prototype.slice.call(arguments, 0);
+    var caller = arguments.callee.caller;
+    function error(){
+      err([args, caller.name].concat(arguments));
+    }
+    var callback = function(){
+      log([args, caller.name].concat(arguments));
+    };
     if(typeof args[args.length-1] === 'function'){
       callback = args.pop();
     }
@@ -40,6 +41,7 @@
   
   function executeParallel(queue, callback){
     var output = [], current;
+    callback = callback||log;
     var handler = function(result) {
       var rows = result.rows, outRows = [];
       for(var i = 0, l = rows.length; i < l; i++) {
@@ -63,13 +65,10 @@
                    "name TEXT, list_id TEXT, note TEXT DEFAULT '', date INTEGER DEFAULT 0, done_date INTEGER DEFAULT 0, "+
                    "done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, version INTEGER DEFAULT 0, "+
                    "deleted INTEGER DEFAULT 0)";
-  database.init = function() {
+  function init() {
     db = global.openDatabase(DB_NAME, "", DB_TITLE, DB_BYTES);
-    executeParallel([createlistsSQL, createtasksSQL]);
-  };
-
-  database.initLists = function(lists) {};
-  database.initTasks = function(tasks) {};
+    executeParallel([createlistsSQL, createtasksSQL], nop);
+  }
 
   /**
    * Gets list(s) from the database. 
@@ -79,30 +78,30 @@
    */
   var getListsSQL = "SELECT lists.*, (SELECT COUNT(tasks.id) FROM tasks WHERE tasks.list_id = lists.id AND deleted = 0 AND done = 0) " +
                         "as taskCount FROM lists WHERE lists.deleted = 0 ? ORDER BY lists.inbox DESC, lists.position ASC";
-  database.getLists = function(list_id, callback) {
-    var lists = [];
+  function getLists(list_id, callback) {
     var where = '';
-    callback = callback || log;
+    callback = callback||log;
+
     if (typeof list_id === 'number'){
       where += ' AND lists.id = ' + list_id;
     }
 
     execute(getListsSQL, where, function(result){
-      var rows = result.rows, row;
+      var rows = result.rows, row, lists = [];
       for(var i = 0, l = rows.length; i < l; i++) {
         lists.push(rows.item(i));
       }
       callback(lists);
     });
     
-    return lists;
-  };
+    return [];
+  }
 
   var getTasksSQL = "SELECT * FROM tasks WHERE deleted = 0 AND done = 0 ? ORDER BY important DESC, position ASC";
-  database.getTasks = function(task_id, list_id, callback) {
-    var tasks = [];
+  function getTasks(task_id, list_id, callback) {
     var where = '';
-    callback = callback || log;
+    callback = callback||log;
+
     if (typeof task_id === 'number' && task_id > 0){
       where += " AND id = " + task_id;
     }
@@ -111,53 +110,52 @@
     }
 
     execute(getTasksSQL, where, function(result){
-      var rows = result.rows, row;
+      var rows = result.rows, row, tasks = [];
       for(var i = 0, l = rows.length; i < l; i++) {
-        lists.push(rows.item(i));
+        tasks.push(rows.item(i));
       }
-      callback(lists);
+      callback(tasks);
     });
 
-    return tasks;
-  };
+    return [];
+  }
 
-  database.createStandardElements = function(){};
-
-  database.truncate = function() {
+  function truncate() {
     execute("DELETE FROM lists");
     execute("DELETE FROM tasks");
     execute("DELETE FROM sqlite_sequence WHERE name = 'lists'");
     execute("DELETE FROM sqlite_sequence WHERE name = 'tasks'");
-  };
+  }
   
-  database.existsById = function(type, id) {
-    var result = execute("SELECT id FROM '?' WHERE id = ? AND deleted = 0", type, id);
-    if(result && result.rowCount() > 0)
-      return true;
-    else
-      return false;
-  };
+  function existsById(type, id, callback) {
+    callback = callback||log;
+    execute("SELECT id FROM '?' WHERE id = ? AND deleted = 0", type, id, function(result){
+      callback(result.rows.length > 0);
+    });
+    return false;
+  }
 
-  database.existsByOnlineId = function(type, online_id) {
-    var result = execute("SELECT id FROM '?' WHERE online_id = ? AND deleted = 0", type, online_id);
-    if(result && result.rowCount() > 0)
-      return true;
-    else
-      return false;
-  };
+  function existsByOnlineId(type, online_id, callback) {
+    callback = callback||log;
+    var result = execute("SELECT id FROM '?' WHERE online_id = ? AND deleted = 0", type, online_id, function(result){
+      callback(result.rows.length > 0);
+    });
+    return false;
+  }
 
-  database.hasElementsWithoutOnlineId = function(type, callback) {
+  function hasElementsWithoutOnlineId(type, callback) {
+    callback = callback||log;
     execute("SELECT id FROM ? WHERE online_id = 0", type, function(result){
       callback(result.rows.length > 0);
     });
     return false;
-  };
+  }
 
-  database.getDataForSync = function(type, fields, where, return_object, callback) {
+  function getDataForSync(type, fields, where, return_object, callback) {
     type = type || 'lists';
     return_object = return_object || true;
     fields = fields || '*';
-    callback = callback || log;
+    callback = callback||log;
 
     var sql  = "SELECT " + fields + " FROM " + type;
     var values = {}, i = 0, y, max;
@@ -171,74 +169,69 @@
       for(var i = 0, l = rows.length; i < l; i++) {
         row = rows.item(i);
         if(return_object){
-          values[i] = {};
-          for(y = 0, max = result.fieldCount(); y < max; y++){
-             values[i][row.fieldName(y)] = row.field(y);
-          }
+          values[i] = row;
         } else {
-            for(y = 0, max = result.fieldCount(); y < max; y++){
-              values[row.fieldName(y)] = row.field(y);
-            }
+          values = row;
         }
       }
       callback(values);
     });
 
     return values;
-  };
+  }
 
-  database.deleteNotSyncedElements = function() {
+  function deleteNotSyncedElements() {
     execute("DELETE FROM tasks WHERE deleted = 1 AND online_id = 0");
     execute("DELETE FROM lists WHERE deleted = 1 AND online_id = 0");
-    //filters.updateBadges();
-  };
+  }
 
   var deleteElementsSQL = "DELETE FROM '?' WHERE online_id = ?";
-  database.deleteElements = function(type, online_id) {
+  function deleteElements(type, online_id) {
     execute(deleteElementsSQL, type, online_id);
-  };
+  }
 
   var createListByOnlineIdSQL = "INSERT INTO lists (online_id, name, deleted, position, version, inbox, shared) VALUES(?, '?', ?, ?, ?, ?, ?) ";
-  database.createListByOnlineId = function(id, name, deleted, position, version, inbox, shared) {
+  function createListByOnlineId(id, name, deleted, position, version, inbox, shared) {
     execute(createListByOnlineIdSQL, id, name, deleted, position, version, inbox, shared);
-  };
+  }
 
   var getListOnlineIdByIdSQL = "SELECT online_id FROM lists WHERE id = ?";
-  database.getListOnlineIdById = function(list_id, callback) {
+  function getListOnlineIdById(list_id, callback) {
+    callback = callback||log;
     execute(getListOnlineIdByIdSQL, list_id, function(result){
       if(result.rows.length > 0){
         callback(result.rows.item(0).online_id);
       }
     });
-  };
+  }
 
   var getListIdByOnlineIdSQL = "SELECT id FROM lists WHERE online_id = ?";
-  database.getListIdByOnlineId = function(online_id, callback) {
+  function getListIdByOnlineId(online_id, callback) {
+    callback = callback||log;
     execute(getListIdByOnlineIdSQL, online_id, function(result){
       if(result.rows.length > 0){
         callback(result.rows.item(0).id);
       }
     });
-  };
+  }
 
   var deleteTaskByListIdSQL = "DELETE FROM tasks WHERE list_id = ?";
   var updateListByOnlineIdSQL = "UPDATE lists SET name = '?', deleted = ?, position = ?, version = ?, inbox = ?, shared = ? WHERE online_id = ?";
-  database.updateListByOnlineId = function(id, name, deleted, position, version, inbox, shared) {
+  function updateListByOnlineId(id, name, deleted, position, version, inbox, shared) {
     if (deleted === 1 && shared === 1) {
-      var list_id = database.getListIdByOnlineId(id);
-      execute(deleteTaskByListIdSQL, list_id);
+      getListIdByOnlineId(id, function(list_id){
+        execute(deleteTaskByListIdSQL, list_id);
+      });
     }
     execute(updateListByOnlineIdSQL, name, deleted, position, version, inbox, shared, id);
-  };
+  }
 
-  database.updateTaskByOnlineId = function(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {};
-  database.createTaskByOnlineId = function(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {};
-
-  database.updateBadgeCount = function(filter, callback) {
-    callback = callback || log;
+  function updateBadgeCount(filter, callback) {
     if (filter !== undefined && (filter === 'today' || filter === 'overdue')) {
       var sql  = "SELECT id AS count FROM tasks WHERE ";
       var date = html.getWorldWideDate(); // Current date
+      callback = callback||log;
+
       switch(filter) {
         case 'today':
           sql += "tasks.date = " + date + " AND tasks.date != 0 AND tasks.done = 0 AND tasks.deleted = 0";
@@ -252,21 +245,22 @@
       });
     }
     return 0;
-  };
+  }
 
   var lastDoneTasksSQL = "SELECT tasks.id AS task_id, tasks.name, tasks.done, tasks.important, tasks.position, tasks.date, tasks.list_id, " +
                          "tasks.done_date, tasks.note FROM tasks WHERE tasks.done = 1 AND list_id = '?' AND tasks.deleted = 0 ORDER BY "+
                          "tasks.done_date DESC";
-  database.getLastDoneTasks = function(list_id, callback) {
-    callback = callback || log;
+  function getLastDoneTasks(list_id, callback) {
     var doneListsTasks = [];
+    callback = callback||log;
+
     execute(lastDoneTasksSQL, list_id, function(result){
       var rows = result.rows, row;
       for(var i = 0, l = rows.length; i < l; i++) {
         var values = rows.item(i);
-        var days   = wunderlist.calculateDayDifference(values.done_date);
+        var days   = wunderlist.utils.calculateDayDifference(values.done_date);
         var htmlId = days.toString();
-        if (wunderlist.is_array(doneListsTasks[htmlId]) === false){
+        if (wunderlist.utils.is_array(doneListsTasks[htmlId]) === false){
           doneListsTasks[htmlId] = [];
         }
         var markup = html.generateTaskHTML(values.task_id, values.name, values.list_id, values.done, values.important, values.date, values.note);
@@ -275,16 +269,27 @@
       callback(doneListsTasks);
     });
     return doneListsTasks;
-  };
+  }
 
-  database.insertList = function(list, callback){
-    callback = callback || log;
+  function getLastListPosition(callback) {
+    callback = callback||log;
+    execute("SELECT position FROM lists WHERE deleted = 0 ORDER BY position DESC LIMIT 1",function(result){
+      if(result.rows.length > 0){
+        callback(result.rows.item(0).position);
+      }
+    });
+    return 0;
+  }
+
+  function insertList(list, callback){
+    callback = callback||log;
+
     if (typeof list.name !== 'string' || list.name.length === 0) {
       callback(new Error("Invalid name for the list"));
     }
 
     if (typeof list.position === 'undefined'){
-      list.position = database.getLastListPosition() + 1;
+      list.position = getLastListPosition() + 1;
     }
     list.version = 0;
     list.name    = html.convertString(list.name, 255);
@@ -292,7 +297,7 @@
     var first  = true, fields = '', values = '';
     for (var property in list) {
       if (list[property] !== undefined && $.isFunction(list[property]) === false) {
-        if (wunderlist.in_array(property, list.properties) === true) {
+        if (wunderlist.utils.in_array(property, list.properties) === true) {
           fields += (first === false ? ', ' : '') + property;
           values += (first === false ? ', ' : '') + "'" + list[property] + "'";
           first = false;
@@ -307,47 +312,74 @@
     }
     // Reset the properties of the given list object
     list.setDefault();
-    return false;
-  };
+    return 0;
+  }
 
-  database.getLastListId = function() {
+  function getLastListId(callback) {
+    callback = callback||log;
     execute("SELECT id FROM lists ORDER BY id DESC LIMIT 1", function(result){
       if(result.rows.length > 0){
         callback(result.rows.item(0).id);
       }
     });
     return 0;
+  }
+
+
+
+/***********************************************
+***** TODO: complete the following methods *****
+************************************************/
+  
+  /**
+   * Filter functions
+   * TODO: move out any DOM stuff to frontend
+   */
+
+  function getFilteredTasks(filter, date_type, printing){}
+  function getFilteredTasksForPrinting(type, date_type){}
+
+  function createStandardElements(){}
+  function updateTaskByOnlineId(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {}
+  function createTaskByOnlineId(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {}
+  function createTuts(list_id){}
+  function recreateTuts(){}
+  function fetchData(resultSet){}
+  function updateList(noversion){}
+  function insertTask(){}
+  function updateTask(noVersion){}
+  function getLastTaskPosition(list_id){}
+  function search(query){}
+  function isDeleted(type, online_id){}
+  function isShared(list_id){}
+  function isSynced(list_id){}
+  function updateTaskCount(list_id){}
+  function getListIdsByTaskId(task_id){}
+
+  return {
+    "init": init,
+    "getLists": getLists,
+    "getTasks": getTasks,
+    "createStandardElements": createStandardElements,
+    "truncate": truncate,
+    "existsById": existsById,
+    "existsByOnlineId": existsByOnlineId,
+    "hasElementsWithoutOnlineId": hasElementsWithoutOnlineId,
+    "getDataForSync": getDataForSync,
+    "deleteNotSyncedElements": deleteNotSyncedElements,
+    "deleteElements": deleteElements,
+    "createListByOnlineId": createListByOnlineId,
+    "getListOnlineIdById": getListOnlineIdById,
+    "getListIdByOnlineId": getListIdByOnlineId,
+    "updateListByOnlineId": updateListByOnlineId,
+    "updateTaskByOnlineId": updateTaskByOnlineId,
+    "createTaskByOnlineId": createTaskByOnlineId,
+    "updateBadgeCount": updateBadgeCount,
+    "getLastDoneTasks": getLastDoneTasks,
+    "insertList": insertList,
+    "getLastListId": getLastListId,
+    "getLastListPosition": getLastListPosition,
+    "getFilteredTasks": getFilteredTasks,
+    "getFilteredTasksForPrinting": getFilteredTasksForPrinting
   };
-
-  database.getLastListPosition = function() {
-    execute("SELECT position FROM lists WHERE deleted = 0 ORDER BY position DESC LIMIT 1",function(result){
-      if(result.rows.length > 0){
-        callback(result.rows.item(0).position);
-      }
-    });
-    return 0;
-  };
-
-
-/*
-  database.createTuts = function(list_id) {};
-  database.recreateTuts = function() {};
-  database.fetchData = function(resultSet) {};
-  database.updateList = function(noversion) {};
-  database.insertTask = function() {};
-  database.updateTask = function(noVersion) {};
-  database.getLastTaskPosition = function(list_id) {};
-  database.search = function(search) {};
-  database.isDeleted = function(type, online_id) {};
-  database.isShared = function(list_id) {};
-  database.isSynced = function(list_id) {};
-  database.updateTaskCount = function(list_id) {};
-  database.getListIdsByTaskId = function(task_id) {};
-  database.getFilteredTasks = function(filter, date_type, printing) {};
-  database.getFilteredTasksForPrinting = function(type, date_type) {};
-
-*/
-
-  // Assign back the database object in case its newly created here
-  W.database = database;
 })(wunderlist, html, window);

@@ -116,14 +116,12 @@ $(function() {
 	
 	// Shortcut Bind Command (or Ctrl) + L - New list
 	shortcut.add(settings.shortcutkey + "+l",function() {
-		if ($('[role="dialog"]').length == 0)
-		{
+		if ($('[role="dialog"]').length == 0) {
 			tasks.cancel();
 			$('h3 .add').hide();
-
-			if(listShortcutListener == 0)
-				addList();
-
+			if(listShortcutListener === 0){
+			  wunderlist.frontend.lists.addList();
+			}
 			listShortcutListener++;
 		}
 	}, {'disable_in_input' : true});
@@ -185,34 +183,24 @@ $(function() {
 	
 	// Shortcut Bind Esc - Go to my tasks
 	shortcut.add('Esc', function (evt) {	
-		if (($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true) && documentEscapeActive == false)
-		{
+		if (($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true) && documentEscapeActive == false) {
 			documentEscapeActive = true;
 			
-			if ($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 && !cancelEditTask && $('#lists a.list input').length == 0 && $('#note textarea:focus').length == 0 && $('#note textarea').css('display') == 'none')
-			{
+			if ($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 
+			    && !cancelEditTask && $('#lists a.list input').length == 0 && $('#note textarea:focus').length == 0 
+			    && $('#note textarea').css('display') == 'none') {
 				$("#left a").removeClass("active");
 				$("input#search").val('').blur();
-				openList(1);
-			}
-			else if ($('#note textarea:focus').length == 1 || $('#note textarea').css('display') == 'block')
-			{
+				wunderlist.frontend.lists.openList(1);
+			} else if ($('#note textarea:focus').length == 1 || $('#note textarea').css('display') == 'block') {
 				$('div#note a#cancel-note').click();
-			}
-			else if ($('div#lists a#x:last').length > 0)
-			{
-				cancelSaveList(false);
-			}
-			else if($('a.list input').length > 0)
-			{	
-				cancelSaveList(true);
-			}
-			else if (tasks.datePickerOpen == true)
-			{
+			} else if ($('div#lists a#x:last').length > 0) {
+				wunderlist.frontend.lists.cancelSaveList(false);
+			} else if($('a.list input').length > 0) {	
+				wunderlist.frontend.lists.cancelSaveList(true);
+			} else if (tasks.datePickerOpen == true) {
 				$('.datepicker').datepicker('hide');
-			}
-			else
-			{
+			} else {
 				tasks.cancel();
 				cancelEditTask = true;
 			}
@@ -282,48 +270,42 @@ $(function() {
 	
 	// Hotkey cmd / strg + i - Open the inbox
 	shortcut.add(settings.shortcutkey + '+i', function (event) {
-		if (hotkeys.eventListener == false)
-		{
+		if (hotkeys.eventListener === false) {
 			hotkeys.eventListener = true;
-			
 			// Only open the list when it's not the inbox
-			if ($('div#lists a.ui-state-disabled') != undefined || $('div#lists a.ui-state-disabled').attr('id').replace('list', '') != 1)
-			{
-				openList(1);
+			if ($('div#lists a.ui-state-disabled') != undefined || $('div#lists a.ui-state-disabled').attr('id').replace('list', '') != 1) {
+				wunderlist.frontend.lists.openList(1);
 			}
-			setTimeout(function() { hotkeys.eventListener = false; }, 100);				
+			setTimeout(function() { 
+			  hotkeys.eventListener = false; 
+			}, 100);				
 		}
 	});
 	
 	// Save note and close the dialog
 	shortcut.add(settings.shortcutkey + '+Enter', function (event) {
-		if ($('input.input-add:focus').length == 1)
-		{
+		if ($('input.input-add:focus').length == 1) {
 			var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
-			
-			if (aimSetting == 1)
-			{		
+			if (aimSetting == 1) {		
 				wunderlist.timer.pause();
 				tasks.add();
 				wunderlist.timer.resume();
 			}
-		}
-		else if ($('a.list input:focus').length == 1)
-		{
+		} else if ($('a.list input:focus').length == 1) {
 			var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
 			
-			if (aimSetting == 1)
-			{
+			if (aimSetting === 1) {
 				wunderlist.timer.pause();
 				
 				listEventListener = true;
 				var listElement = $('a.list input').parent('a');
 				var list_id     = listElement.attr('id').replace('list', '');	
 	
-				if (list_id != 'x')
-					saveList(listElement);
-				else
-					saveNewList(listElement);
+				if (list_id !== 'x'){
+					wunderlist.frontend.lists.saveList(listElement);
+				} else {
+					wunderlist.frontend.lists.saveNewList(listElement);
+				}
 					
 				wunderlist.timer.resume();
 			}

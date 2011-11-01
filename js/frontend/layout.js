@@ -37,7 +37,7 @@ registerProcess = function() {
 			$("#registersubmit").click();
 		}
 		
-		console.log(wunderlist.language.english.email);
+		//console.log(wunderlist.language.english.email);
 	});
 	
 	$("#showloginsubmit").live("click",function(){

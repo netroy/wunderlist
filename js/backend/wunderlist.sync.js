@@ -233,6 +233,46 @@ wunderlist.sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id) {
 	}
 };
 
+function syncLists(lists){
+  return function(){
+  	for (var i = 0, max = lists.length; i < max; i++) {
+  	  (function(item){
+  	    var args = [item.online_id, item.name, item.deleted, item.position, item.version, item.inbox, item.shared];
+  			wunderlist.database.existsByOnlineId('lists', item.online_id, function(exists){
+  				if (exists) {
+  					// If list is already in database
+  					wunderlist.database.updateListByOnlineId.apply(null, args);
+  				} else {
+  					// Create a whole new list with the given uid
+  					wunderlist.database.createListByOnlineId.apply(null, args);
+  				}
+  			});
+      })(lists[i]);
+  	}
+  };
+}
+
+function syncTasks(tasks){
+  return function(){
+  	for (var i = 0, max = tasks.length; i < max; i++) {
+  	  (function(item){
+    		wunderlist.database.getListIdByOnlineId(item.list_id, function(sync_offline_list_id){
+          var args = [item.online_id, item.name, item.date, item.done, sync_offline_list_id, item.position, item.important, item.done_date, item.deleted, item.version, item.note];
+          wunderlist.database.existsByOnlineId('tasks', item.online_id, function(exists){
+        		if (exists) {
+        		  // If task is already in database
+        			wunderlist.database.updateTaskByOnlineId();
+        		} else {
+        			// Create a whole new task with the given id
+        			wunderlist.database.createTaskByOnlineId(item.online_id, item.name, item.date, item.done, sync_offline_list_id, item.position, item.important, item.done_date, item.deleted, item.version, item.note);
+        		}
+          });
+    		});
+    	})(tasks[i]);
+  	}
+  };
+}
+
 /**
  * Callback on sync success
  *
@@ -241,112 +281,64 @@ wunderlist.sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id) {
 wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfterSync, list_id) {
     
 	// SYNC STEP 2
-	if (response_step1.sync_table != undefined)
-	{
+	if (response_step1.sync_table != undefined) {
 		var sync_table_step1 = response_step1.sync_table;
 		var synced_lists 	 = sync_table_step1.synced_lists;
 
-		if (synced_lists != undefined)
-		{
-			for(var i = 0, max = synced_lists.length; i < max; i++)
-			{
+		if (synced_lists != undefined) {
+			for(var i = 0, max = synced_lists.length; i < max; i++) {
 				$.each(synced_lists[i], function(offline_id, online_id) {
 					list.id        = offline_id;
 					list.online_id = online_id;
 					list.update(true);
 				});
 			}
-			
 			wunderlist.sync.checkForUnsyncedElements('lists');
 		}
 
 		// Update or create new lists
-		if (sync_table_step1.new_lists != undefined)
-		{
-			var lists = sync_table_step1.new_lists;
-
-			if (lists.length > 0)
-			{
-				for (var i = 0, max = lists.length; i < max; i++)
-				{
-					// If list is already in database
-					if (wunderlist.database.existsByOnlineId('lists', lists[i].online_id))
-					{
-						wunderlist.database.updateListByOnlineId(lists[i].online_id, lists[i].name, lists[i].deleted, lists[i].position, lists[i].version, lists[i].inbox, lists[i].shared);
-					}
-					else
-					{
-						// Create a whole new list with the given uid
-						wunderlist.database.createListByOnlineId(lists[i].online_id, lists[i].name, lists[i].deleted, lists[i].position, lists[i].version, lists[i].inbox, lists[i].shared);
-					}
-				}
-			}
+		var workerQueue = [];
+		if (sync_table_step1.new_lists !== undefined) {
+			workerQueue.push(syncLists(sync_table_step1.new_lists));
 		}
 
-		// Update or create new tasks
-		if (sync_table_step1.new_tasks != undefined)
-		{
-			var tasks = sync_table_step1.new_tasks;
-
-			if (tasks.length > 0)
-			{
-				for (var i = 0, max = tasks.length; i < max; i++)
-				{
-					var sync_offline_list_id = wunderlist.database.getListIdByOnlineId(tasks[i].list_id);
-
-					// If task is already in database
-					if (wunderlist.database.existsByOnlineId('tasks', tasks[i].online_id))
-					{
-						wunderlist.database.updateTaskByOnlineId(tasks[i].online_id, tasks[i].name, tasks[i].date, tasks[i].done, sync_offline_list_id, tasks[i].position, tasks[i].important, tasks[i].done_date, tasks[i].deleted, tasks[i].version, tasks[i].note);
-					}
-					else
-					{
-						// Create a whole new task with the given id
-						wunderlist.database.createTaskByOnlineId(tasks[i].online_id, tasks[i].name, tasks[i].date, tasks[i].done, sync_offline_list_id, tasks[i].position, tasks[i].important, tasks[i].done_date, tasks[i].deleted, tasks[i].version, tasks[i].note);
-					}
-				}
-			}
+    // Update or create new tasks
+		if (sync_table_step1.new_tasks != undefined) {
+			workerQueue.push(syncTasks(sync_table_step1.new_tasks));
 		}
-		
-        if (sync_table_step1.delete_tasks != undefined)
-        {
-            for (var x in sync_table_step1.delete_tasks)
-            {
-                wunderlist.database.deleteElements('tasks', sync_table_step1.delete_tasks[x]);
-            }
-        }
+
+    if (sync_table_step1.delete_tasks != undefined) {
+      for (var x in sync_table_step1.delete_tasks) {
+        wunderlist.database.deleteElements('tasks', sync_table_step1.delete_tasks[x]);
+      }
+    }
 	}
 
 	// SYNC STEP 3
-	data								 = {};
-	data['sync_table']					 = {};
-	data['sync_table']['new_tasks']		 = wunderlist.sync.setTaskListIdToListOnlineId(wunderlist.database.getDataForSync('tasks', '*', 'online_id = 0'));
-	data['sync_table']['required_lists'] = {};
-	data['sync_table']['required_tasks'] = {};
-	data['email']						 = user_credentials['email'];
-	data['password']					 = user_credentials['password'];
-	data['step']						 = 2;
+	data = {
+	  'sync_table': {
+	    'new_tasks': wunderlist.sync.setTaskListIdToListOnlineId(wunderlist.database.getDataForSync('tasks', '*', 'online_id = 0')),
+	    'required_lists': {},
+	    'required_tasks': {},
+	  },
+	  "email": user_credentials['email'],
+	  "password": user_credentials['password'],
+	  "step": 2
+	};
 	
 	// Only if there is a response or new tasks
-	if (sync_table_step1 != undefined || (data['sync_table']['new_tasks'] != undefined && JSON.stringify(data['sync_table']['new_tasks']).length > 2))
-	{
+	if (sync_table_step1 != undefined || (data['sync_table']['new_tasks'] != undefined && JSON.stringify(data['sync_table']['new_tasks']).length > 2)) {
 		// Collect the tasks and lists, that the server requires
-		if (sync_table_step1 != undefined)
-		{
-			if (sync_table_step1.required_tasks != undefined)
-			{
-				for (var i = 0, max = sync_table_step1.required_tasks.length; i < max; i++)
-				{
+		if (sync_table_step1 != undefined) {
+			if (sync_table_step1.required_tasks != undefined) {
+				for (var i = 0, max = sync_table_step1.required_tasks.length; i < max; i++) {
 					data['sync_table']['required_tasks'][i] = wunderlist.database.getDataForSync('tasks', '*', 'online_id = ' + sync_table_step1.required_tasks[i], false);
 				}
-
 				data['sync_table']['required_tasks'] = wunderlist.sync.setTaskListIdToListOnlineId(data['sync_table']['required_tasks']);
 			}
 
-			if (sync_table_step1.required_lists != undefined)
-			{
-				for (var i = 0, max = sync_table_step1.required_lists.length; i < max; i++)
-				{
+			if (sync_table_step1.required_lists != undefined) {
+				for (var i = 0, max = sync_table_step1.required_lists.length; i < max; i++) {
 					data['sync_table']['required_lists'][i] = wunderlist.database.getDataForSync('lists', '*', 'online_id = ' + sync_table_step1.required_lists[i], false);
 				}
 			}
@@ -358,22 +350,17 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
 			data    : data,
 			success : function(response_data, text, xhrobject) {
 				switchSyncSymbol(xhrobject.status);
-				if (xhrobject.status == 200)
-				{
+				if (xhrobject.status == 200) {
 					var response = JSON.parse(response_data);
 					
-					switch(response.code)
-					{
+					switch(response.code) {
 						case wunderlist.sync.status_codes.SYNC_SUCCESS:
-							if(response.sync_table != undefined)
-							{
+							if(response.sync_table != undefined) {
 								// SYNC STEP 4
 								var sync_table   = response.sync_table;
 								var synced_tasks = sync_table.synced_tasks;
-								if(synced_tasks != undefined)
-								{
-									for(var i = 0, max = synced_tasks.length; i < max; i++)
-									{
+								if(synced_tasks != undefined) {
+									for(var i = 0, max = synced_tasks.length; i < max; i++) {
 										$.each(synced_tasks[i], function(offline_id, online_id) {
 											task.id        = offline_id;
 											task.online_id = online_id;
@@ -394,8 +381,7 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
 		});
 
 		// Only if there is a sync table
-		if (sync_table_step1 != undefined)
-		{
+		if (sync_table_step1 != undefined) {
 			// Delete elements from database forever
 			this.deleteElementsAfterSync(sync_table_step1);
 
@@ -468,46 +454,37 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
 
 /**
  * Show a notification for the updated tasks / lists
- *
  * @author Dennis Schneider
  */
 wunderlist.sync.showSyncNotification = function(data, type) {
-	if (type == 'lists')
-	{
+	if (type == 'lists') {
 		$.each(data, function(key, item) {
 			wunderlist.sync.notifyListnames[item.name] = item.name;
 		});
-	}
-	else
-	{
-		$.each(data, function(key, item) 
-		{
-			var dbList = wunderlist.database.getLists(item.list_id);
-			wunderlist.sync.notifyListnames[dbList.name] = dbList.name;
+	} else {
+		$.each(data, function(key, item){
+			wunderlist.database.getLists(item.list_id, function(dbList){
+  			wunderlist.sync.notifyListnames[dbList.name] = dbList.name;
+			});
 		});
 	}
 };
 
 /**
  * Changes the list id temporarily to the online id
- *
  * @author Daniel Marschner
  */
 wunderlist.sync.setTaskListIdToListOnlineId = function(tasks) {
-	if (tasks != undefined)
-	{
+	if (tasks !== undefined) {
 		$.each(tasks, function(pair) {
 			$.each(tasks[pair], function(key, value) {
-				if (key == 'id')
-				{
+				if (key === 'id') {
 					var listIds = wunderlist.database.getListIdsByTaskId(value);
-
 					tasks[pair]['list_id'] = listIds.online_id;
 				}
 			});
 		});
 	}
-
 	return tasks;
 };
 
@@ -546,6 +523,7 @@ wunderlist.sync.deleteElementsAfterSync = function(sync_table) {
 	}
 
 	wunderlist.database.deleteNotSyncedElements();
+  filters.updateBadges();
 };
 
 /**

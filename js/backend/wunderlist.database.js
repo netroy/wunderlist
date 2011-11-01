@@ -195,8 +195,7 @@ wunderlist.database.insertList = function(list) {
 		{
 			if (list[property] != undefined && $.isFunction(list[property]) == false)
 			{
-				if (wunderlist.in_array(property, list.properties) == true)
-				{
+				if (wunderlist.utils.in_array(property, list.properties) == true) {
 					fields += (first == false ? ', ' : '') + property;
 					values += (first == false ? ', ' : '') + "'" + list[property] + "'";
 					first = false;
@@ -256,30 +255,24 @@ wunderlist.database.updateList = function(noversion) {
 		var first = true;
 		var set   = '';
 		
-		for (var property in list)
-		{
-			if (list[property] != undefined && $.isFunction(list[property]) == false)
-			{
-				if (wunderlist.in_array(property, list.properties) == true)
-				{
+		for (var property in list) {
+			if (list[property] != undefined && $.isFunction(list[property]) == false) {
+				if (wunderlist.utils.in_array(property, list.properties) == true) {
 					set += (first == false ? ', ' : '') + property + ' = ' +  ((typeof list[property] == 'string') ? "'" + list[property] + "'" : list[property]); // TODO: Test this combination
 					first = false;
 				}
 			}
 		}
 		
-		if (set != '')
-		{
+		if (set !== '') {
 			wunderlist.database.db.execute("UPDATE lists SET " + set + (noversion == false ? ", version = version + 1" : '') + " WHERE id = " + list_id);
 			wunderlist.timer.stop().set(15).start();
 			
 			// If the list is deleted, delete all tasks too
-			if (list.deleted == 1)
-			{
+			if (list.deleted == 1) {
 				var dbtasks = wunderlist.database.getTasks(undefined, list_id);
 				
-				for (ix in dbtasks)
-				{
+				for (ix in dbtasks) {
 					task.id      = dbtasks[ix].id;
 					task.deleted = 1;
 					task.update();
@@ -326,12 +319,9 @@ wunderlist.database.insertTask = function() {
 		var fields = '';
 		var values = '';
 		
-		for (var property in task)
-		{
-			if (task[property] != undefined && $.isFunction(task[property]) == false)
-			{
-				if (wunderlist.in_array(property, task.properties) == true)
-				{
+		for (var property in task) {
+			if (task[property] != undefined && $.isFunction(task[property]) === false) {
+				if (wunderlist.utils.in_array(property, task.properties) === true) {
 					fields += (first == false ? ', ' : '') + property;
 					values += (first == false ? ', ' : '') + "'" + task[property] + "'";
 					first = false;
@@ -339,8 +329,7 @@ wunderlist.database.insertTask = function() {
 			}
 		}
 		
-		if (fields != '' && values != '')
-		{
+		if (fields !== '' && values !== '') {
 			wunderlist.database.db.execute("INSERT INTO tasks (" + fields + ") VALUES (" + values + ")");
 			
 			var task_id = wunderlist.database.db.lastInsertRowId;
@@ -354,9 +343,9 @@ wunderlist.database.insertTask = function() {
 			task.setDefault();
 
 			return task_id;
-		}
-		else
+		} else {
 			return false;
+		}
 	}
 };
 
@@ -401,7 +390,7 @@ wunderlist.database.updateTask = function(noVersion) {
 		{
 			if (task[property] != undefined && $.isFunction(task[property]) == false)
 			{
-				if (wunderlist.in_array(property, task.properties) == true)
+				if (wunderlist.utils.in_array(property, task.properties) == true)
 				{
 					set += (first == false ? ', ' : '') + property + ' = ' +  ((typeof task[property] == 'string') ? "'" + task[property] + "'" : task[property]); // TODO: Test this combination
 					first = false;
@@ -540,64 +529,6 @@ wunderlist.database.getTasks = function(task_id, list_id) {
 	}
 
 	return tasks;
-};
-
-/**
- * Generate the HTML code for the given lists array and append that to the content
- *
- * TODO: Maybe we have to put that function into the HTML helper 
- *
- * @author Dennis Schneider, Daniel Marschner
- */
-wunderlist.database.initLists = function(lists) {
-	if (lists != undefined && wunderlist.is_array(lists))
-	{
-		$('div#lists').html('');
-			
-		for (var ix in lists)
-		{
-			var listHTML  = '';
-			var listClass = 'sharelist';
-			var actions   = "<div class='deletep'></div><div class='editp'></div><div class='savep'></div>";
-			
-			if (lists[ix].inbox == 1)
-			{
-				actions  = "<div class='editp'></div><div class='savep'></div>";
-				listHTML = "<a id='list" + lists[ix].id + "' class='list'><span>" + lists[ix].taskCount + "</span>" + actions + "<b class='inbox'>" + unescape(lists[ix].name) + "</b></a>";
-			}
-			else if (lists[ix].shared == 1) 
-			{
-				listClass = "sharedlist";
-				listHTML = "<a id='list" + lists[ix].id + "' class='list sortablelist'><span>" + lists[ix].taskCount + "</span>" + actions + "<b class='sharep'>" + unescape(lists[ix].name) + "<div class='" + listClass + "'></div></b></a>";
-			}
-			else
-				listHTML = "<a id='list" + lists[ix].id + "' class='list sortablelist'><span>" + lists[ix].taskCount + "</span>" + actions + "<b class='sharep'>" + unescape(lists[ix].name) + "<div class='" + listClass + "'></div></b></a>";
-
-			$("#lists").append(listHTML);
-	
-			if(lists[ix].name.length > 30)
-				$('div#sidebar a#' + lists[ix].id).children('b').attr('title', unescape(lists[ix].name));
-		}
-	}
-};
-
-/**
- * Generate the HTML code for the given tasks array and return it
- *
- * TODO: Maybe we have to put that function into the HTML helper
- *
- * @author Daniel Marschner
- */
-wunderlist.database.initTasks = function(tasks) {
-	var tasksHTML = '';
-	
-	if (tasks != undefined && wunderlist.is_array(tasks))
-	{
-		for (var ix in tasks)
-			tasksHTML += html.generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
-	}
-	
-	return tasksHTML;
 };
 
 /**
@@ -757,7 +688,6 @@ wunderlist.database.isDeleted = function(type, online_id) {
 wunderlist.database.deleteNotSyncedElements = function() {
 	wunderlist.database.db.execute("DELETE FROM tasks WHERE deleted = 1 AND online_id = 0");
 	wunderlist.database.db.execute("DELETE FROM lists WHERE deleted = 1 AND online_id = 0");
-	filters.updateBadges();
 }
 
 /**
@@ -1060,9 +990,9 @@ wunderlist.database.getLastDoneTasks = function(list_id) {
 			for (var i = 0, max = resultSet.fieldCount(); i < max; i++){
 			  values[resultSet.fieldName(i)] = resultSet.field(i);
 			}
-			var days   = wunderlist.calculateDayDifference(values['done_date']);
+			var days   = wunderlist.utils.calculateDayDifference(values['done_date']);
 			var htmlId = days.toString();
-			if (wunderlist.is_array(doneListsTasks[htmlId]) === false){
+			if (wunderlist.utils.is_array(doneListsTasks[htmlId]) === false){
 			  doneListsTasks[htmlId] = [];
 			}
 			doneListsTasks[htmlId].push(html.generateTaskHTML(values['task_id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
