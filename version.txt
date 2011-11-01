@@ -1,4 +1,0 @@
-{
-	"version" : "1.2.4",
-	"message" : "There is a new version of Wunderlist available for you. Head over to our website to download it. http://www.6wunderkinder.com/wunderlist"
-}

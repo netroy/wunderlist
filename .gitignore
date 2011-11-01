@@ -3,3 +3,5 @@ dist
 .project
 timanifest
 manifest
+*.json
+version.txt
