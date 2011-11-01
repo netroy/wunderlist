@@ -21,7 +21,7 @@
   /**
    * Localization stuff
    */
-  var propertyMap = {};//global.localStorage || 
+  var propertyMap = global.localStorage || {};//
   Properties.getInt= function(property, defaultValue){
     return parseInt(propertyMap[property], 10) || defaultValue;
   };
@@ -118,7 +118,10 @@
   };
   UI.setMenu = function(menu){
     // Do something
-  }
+  };
+  UI.setBadge = function(count){
+    // update some badge
+  };
 
 
 
