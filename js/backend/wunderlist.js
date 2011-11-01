@@ -192,72 +192,6 @@ wunderlist.is_email = function(email) {
 };
 
 /**
- * Clean the string -> HTML or script
- *
- * Ported by: slamidtfyn
- * More info at: www.soerenlarsen.dk/development-projects/xss-clean
- */
-wunderlist.xss_clean = function(str) {
-	str = wunderlist.database.convertString(str);
-	str = str.replace(/\\0/gi, '')
-	str = str.replace(/\\\\0/gi, '')
-	str = str.replace(/#(&\#*\w+)[\x00-\x20]+;#u/g,"$1;")
-	str = str.replace(/#(&\#x*)([0-9A-F]+);*#iu/g,"$1$2;")
-	str = str.replace(/%u0([a-z0-9]{3})/gi, "&#x$1;")
-	str = str.replace(/%([a-z0-9]{2})/gi, "&#x$1;")   
-	
-	results = str.match(/<.*?>/g, str)
-	
-	if (results) 
-	{	
-		var i
-		for (i = 0; i < results.length; i++) 
-		{
-			str = str.replace(results[i], wunderlist.html_entity_decode(results[i]));
-		}
-	}
-	        
-	str = str.replace(/\\t+/g, " ")
-	str = str.replace(/<\?php/g,'&lt;?php');
-	str = str.replace(/<\?PHP/g,'&lt;?PHP');
-	str = str.replace(/<\?/g,'&lt;?');
-	str = str.replace(/\?>/g,'?&gt;');
-	words = new Array('javascript', 'vbscript', 'script', 'applet', 'alert', 'document', 'write', 'cookie', 'window');
-	
-	for (t in words)
-	{
-		temp = '';
-		for (i = 0; i < words[t].length; i++)
-		{
-			temp += words[t].substr( i, 1)+"\\s*";
-		}
-		
-		temp = temp.substr( 0,temp.length-3);
-		myRegExp = new RegExp(temp, "gi")
-		str = str.replace(myRegExp, words[t]);
-	}
-	
-	str = str.replace(/\/<a.+?href=.*?(alert\(|alert&\#40;|javascript\:|window\.|document\.|\.cookie|<script|<xss).*?\>.*?<\/a>/gi,"")
-	str = str.replace(/<img.+?src=.*?(alert\(|alert&\#40;|javascript\:|window\.|document\.|\.cookie|<script|<xss).*?\>/gi,"");
-	str = str.replace(/<(script|xss).*?\>/gi,"")
-	str = str.replace(/(<[^>]+.*?)(onblur|onchange|onclick|onfocus|onload|onmouseover|onmouseup|onmousedown|onselect|onsubmit|onunload|onkeypress|onkeydown|onkeyup|onresize)[^>]*>/gi,"$1");
-	str = str.replace(/<(\/*\s*)(alert|applet|basefont|base|behavior|bgsound|blink|body|embed|expression|form|frameset|frame|head|html|ilayer|iframe|input|layer|link|meta|object|plaintext|style|script|textarea|title|xml|xss)([^>]*)>/ig, "&lt;$1$2$3&gt;");
-	str = str.replace(/(alert|cmd|passthru|eval|exec|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)/gi, "$1$2&#40;$3&#41;");
-	bad = new Array('document.cookie','document.write','window.location',"javascript\s*:","Redirect\s+302")
-	
-	for (val in bad)
-	{
-		myRegExp = new RegExp(bad[val], "gi")
-		str = str.replace(myRegExp, bad[val]);   
-	}
-	
-	str = str.replace(/<!--/g,"&lt;!--")
-	str = str.replace(/-->/g,"--&gt;")
-	
-	return str
-};
-
-/**
  * Scans for a date in a task and returns a result object
  *
  * @author Dennis Schneider
@@ -440,22 +374,6 @@ wunderlist.smartScanForDate = function(string, doNaturalRecognition) {
 	return {};
 };
 
-/**
- * Is needed for the function xss_clean
- *
- * Ported by: slamidtfyn
- * More info at: www.soerenlarsen.dk/development-projects/xss-clean
- */
-wunderlist.html_entity_decode = function(str) {
-	var ta = document.createElement("textarea");
-  	ta.innerHTML = str.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  	
-  	result = ta.value;
-  	result = result.replace(/&#x([0-9a-f]{2,5})/g, String.fromCharCode("$1"));
-  	result = result.replace(/&#([0-9]{2,4})/g, String.fromCharCode("$1"));
-  	
-  	return result;		
-};
 
 /**
  * Put the first char of the string into upper case

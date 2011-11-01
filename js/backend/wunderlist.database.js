@@ -147,21 +147,6 @@ wunderlist.database.truncate = function() {
 	wunderlist.database.db.execute("DELETE FROM sqlite_sequence WHERE name = 'tasks'");
 };
 
-/**
- * Removes HTML tags and escapes single quotes
- *
- * @author Daniel Marschner
- */
-wunderlist.database.convertString = function(string, length) { 
-	string = string.split('<').join(escape('<'));
-	string = string.split('>').join(escape('>'));
-	string = string.split("'").join(escape("'"));
-	
-	if (length != undefined && length > 0)
-		string = string.substr(0, length);
-	
-	return string;
-};
 
 /**
  * Fetch the data from a result set to array with objects
@@ -193,14 +178,14 @@ wunderlist.database.fetchData = function(resultSet) {
  *
  * @author Daniel Marschner
  */
-wunderlist.database.insertList = function() {
+wunderlist.database.insertList = function(list) {
 	if (list.name != undefined && list.name != '')
 	{
 		if (list.position == undefined)
 			list.position = wunderlist.database.getLastListPosition() + 1;
 		
 		list.version = 0;
-		list.name    = wunderlist.database.convertString(list.name, 255);
+		list.name    = html.convertString(list.name, 255);
 		
 		var first  = true;
 		var fields = '';
@@ -266,7 +251,7 @@ wunderlist.database.updateList = function(noversion) {
 			list.inbox = 0;
 		
 		if (list.name != undefined && list.name != '')
-			list.name = wunderlist.database.convertString(list.name, 255);
+			list.name = html.convertString(list.name, 255);
 		
 		var first = true;
 		var set   = '';
@@ -328,14 +313,14 @@ wunderlist.database.insertTask = function() {
 			task.date = 0;
 
 		task.version = 0;
-		task.name    = wunderlist.database.convertString(task.name, 255);
+		task.name    = html.convertString(task.name, 255);
 
         // If the task name is empty somehow, abort the adding of the task
         if (task.name == '') return false;
 
 		// Convert the task note for the database if note is set
 		if (task.note != undefined && task.note != '')
-			task.note = wunderlist.database.convertString(task.note, 5000);
+			task.note = html.convertString(task.note, 5000);
 
 		var first  = true;
 		var fields = '';
@@ -403,11 +388,11 @@ wunderlist.database.updateTask = function(noVersion) {
 
 		// Convert the task name for the database if name is set
 		if (task.name != undefined && task.name != '')
-			task.name = wunderlist.database.convertString(task.name, 255);
+			task.name = html.convertString(task.name, 255);
 
 		// Convert the task note for the database if note is set
 		if (task.note != undefined && task.note != '')
-			task.note = wunderlist.database.convertString(task.note, 5000);
+			task.note = html.convertString(task.note, 5000);
 		
 		var first = true;
 		var set   = '';
@@ -1068,71 +1053,20 @@ wunderlist.database.getLastDoneTasks = function(list_id) {
 	    sql += "ORDER BY tasks.done_date DESC";
 
 	var resultSet = wunderlist.database.db.execute(sql);
-
-    if (resultSet.rowCount() > 0)
-    {
-	    var doneListsTasks = [];
-
-		while(resultSet.isValidRow())
-	    {
-	        var values = {};
-
-			for (var i = 0, max = resultSet.fieldCount(); i < max; i++)
-				values[resultSet.fieldName(i)] = resultSet.field(i);
-
+  if (resultSet.rowCount() > 0) {
+	  var doneListsTasks = [];
+		while(resultSet.isValidRow()) {
+	    var values = {};
+			for (var i = 0, max = resultSet.fieldCount(); i < max; i++){
+			  values[resultSet.fieldName(i)] = resultSet.field(i);
+			}
 			var days   = wunderlist.calculateDayDifference(values['done_date']);
 			var htmlId = days.toString();
-
-			if (wunderlist.is_array(doneListsTasks[htmlId]) == false)
-				doneListsTasks[htmlId] = [];
-
-	        doneListsTasks[htmlId].push(html.generateTaskHTML(values['task_id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
-
-	        resultSet.next();
+			if (wunderlist.is_array(doneListsTasks[htmlId]) === false){
+			  doneListsTasks[htmlId] = [];
+			}
+			doneListsTasks[htmlId].push(html.generateTaskHTML(values['task_id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
+      resultSet.next();
 		}
-
-		for(listId in doneListsTasks)
-		{
-			var day_string = wunderlist.language.data.day_ago;
-			var heading    = '<h3>';
-
-			if (listId == 0) 
-			{
-				day_string = wunderlist.language.data.done_today;days_text = '';
-				heading = '<h3 class="head_today">';
-			}
-			else if (listId == 1)
-			{
-				day_string = wunderlist.language.data.done_yesterday;days_text = '';
-			}
-			else 
-			{
-				day_string = wunderlist.language.data.days_ago;days_text = listId;
-			}
-
-			// Check for older tasks and append new div
-			if (listId > 1 && ($('#older_tasks').length == 0))
-			{
-				$('#content').append('<button id="older_tasks_head">' + wunderlist.language.data.older_tasks + '</button><div id="older_tasks"></div>');
-			}
-
-			if ($('ul#donelist_' + listId).length == 0)
-			{
-				var appendHTML = heading + days_text + ' ' + day_string + '</h3><ul id="donelist_' + (listId == 0 ? 'list_today' : listId) + '" class="donelist">' + doneListsTasks[listId].join('') + '</ul>';
-
-				if ($('#older_tasks').length == 0)
-				{
-					$('#content').append(appendHTML);
-				}
-				else
-				{
-					$('#older_tasks').append(appendHTML);
-				}
-			}
-		}
-
-		// If there are older tasks, then append a hide button
-		if ($('#older_tasks ul').length > 0)
-			$('#content').append('<button id="hide_older_tasks">' + wunderlist.language.data.hide_older_tasks + '</button>');
 	}
 };

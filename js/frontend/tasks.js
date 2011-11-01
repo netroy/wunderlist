@@ -13,7 +13,7 @@ tasks.add = function() {
 	{
 		// Add Task to List
 		list_id       = $("ul.mainlist").attr("rel");
-		task_name     = wunderlist.database.convertString($("input.input-add").val());
+		task_name     = html.convertString($("input.input-add").val());
 		
 		// Tasks default not be important
 		var important = 0;
@@ -191,7 +191,7 @@ tasks.edit = function() {
 	$('#task-edit').remove();
 	
 	task.id   = task_id;
-	task.name = wunderlist.database.convertString(task_name);
+	task.name = html.convertString(task_name);
 	task.update();
 
 	filters.updateBadges();

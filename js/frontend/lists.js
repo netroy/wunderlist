@@ -133,7 +133,7 @@ saveList = function(listElement) {
 	var listElementInput = listElement.children('input');
 	var listElementTitle = listElement.children('b');
 	
-    var listElementName  = wunderlist.strip_tags(wunderlist.database.convertString(listElementInput.val()));
+    var listElementName  = wunderlist.strip_tags(html.convertString(listElementInput.val()));
 
 	if (listElementName == '')
 		listElementName = wunderlist.language.data.new_list;
@@ -186,7 +186,7 @@ cancelSaveList = function(cancelEdit) {
  */
 saveNewList = function(listElement) {
     var listElementInput = listElement.children('input');
-	var listElementName  = wunderlist.database.convertString(listElementInput.val());
+	var listElementName  = html.convertString(listElementInput.val());
 
 	if (listElementName == '')
 		listElementName = wunderlist.language.data.new_list;
@@ -288,9 +288,47 @@ bindListDeleteMode = function() {
  */
 var listOpenHandler = false;
 
-openList = function(list_id) {
-	if (listOpenHandler === false)
-	{
+function renderLastDoneTasks(doneListsTasks){
+	for(listId in doneListsTasks) {
+		var day_string = wunderlist.language.data.day_ago;
+		var heading    = '<h3>';
+
+		if (listId == 0){
+			day_string = wunderlist.language.data.done_today;
+			days_text = '';
+			heading = '<h3 class="head_today">';
+		} else if (listId == 1) {
+			day_string = wunderlist.language.data.done_yesterday;
+			days_text = '';
+		} else {
+			day_string = wunderlist.language.data.days_ago;
+			days_text = listId;
+		}
+
+		// Check for older tasks and append new div
+		if (listId > 1 && ($('#older_tasks').length == 0)) {
+			$('#content').append('<button id="older_tasks_head">' + wunderlist.language.data.older_tasks + '</button><div id="older_tasks"></div>');
+		}
+
+		if ($('ul#donelist_' + listId).length == 0) {
+			var appendHTML = heading + days_text + ' ' + day_string + '</h3><ul id="donelist_' + (listId == 0 ? 'list_today' : listId) + '" class="donelist">' + doneListsTasks[listId].join('') + '</ul>';
+
+			if ($('#older_tasks').length == 0) {
+				$('#content').append(appendHTML);
+			} else {
+				$('#older_tasks').append(appendHTML);
+			}
+		}
+	}
+
+	// If there are older tasks, then append a hide button
+	if ($('#older_tasks ul').length > 0){
+	  $('#content').append('<button id="hide_older_tasks">' + wunderlist.language.data.hide_older_tasks + '</button>');
+	}
+}
+
+function openList(list_id) {
+	if (listOpenHandler === false) {
 		listOpenHandler = true;
 	
 		// Clear content
@@ -303,18 +341,22 @@ openList = function(list_id) {
 		if (wunderlist.database.existsById('lists', list_id) == false)
 			list_id = 1;
 	
-		var dbList  = wunderlist.database.getLists(list_id);
-		var dbTasks = wunderlist.database.getTasks(undefined, list_id);
-		
-		$('#content').append(html.generateListContentHTML(dbList[0].id, dbList[0].name));
-		$("#list").append(wunderlist.database.initTasks(dbTasks));
+		var dbList  = wunderlist.database.getLists(list_id, console.log.bind(console));
+		var dbTasks = wunderlist.database.getTasks(undefined, list_id, console.log.bind(console));
+
+		if(dbList.length > 0){
+		  $('#content').append(html.generateListContentHTML(dbList[0].id, dbList[0].name));
+		}
+
+		if(dbTasks.length > 0){
+		  $("#list").append(wunderlist.database.initTasks(dbTasks));
+		}
 
 		makeSortable();
 		
-		wunderlist.database.getLastDoneTasks(list_id);
+		wunderlist.database.getLastDoneTasks(list_id, renderLastDoneTasks);
 	
 		html.make_timestamp_to_string();
-	
 		settings.save_last_opened_list(list_id);
 		html.createDatepicker();
 		wunderlist.timer.resume();
@@ -327,13 +369,14 @@ openList = function(list_id) {
 	    
 		content.fadeIn('fast');
 		
-		setTimeout(function() { listOpenHandler = false }, 100);
+		setTimeout(function() { 
+		  listOpenHandler = false 
+		}, 100);
 		
 		// If there is another list in edit mode, save it after opening the other list
-        if ($('a.list input').length == 1)
-        {
-            $('a.list input').focusout();
-        }
+    if ($('a.list input').length == 1) {
+      $('a.list input').focusout();
+    }
 	}
 };
 

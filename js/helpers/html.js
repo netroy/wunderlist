@@ -223,7 +223,7 @@ html.generateNewListElementHTML = function(listId, listElementName, listElementI
     	html_code += "<div class='deletep'></div>";
     	html_code += "<div class='savep'></div>";
     	html_code += "<div class='editp'></div>";
-    	html_code += "<input class='" + listElementInputClass + "' maxlength='255' type='text' value='" + wunderlist.database.convertString(listElementName) + "' />";
+    	html_code += "<input class='" + listElementInputClass + "' maxlength='255' type='text' value='" + html.convertString(listElementName) + "' />";
     	html_code += "</a>";
 
 	return html_code;
@@ -956,6 +956,24 @@ html.convertString = function(string, length) {
 	return string;
 };
 
+
+/**
+ * Is needed for the function xss_clean
+ *
+ * Ported by: slamidtfyn
+ * More info at: www.soerenlarsen.dk/development-projects/xss-clean
+ */
+html.html_entity_decode = function(str) {
+	var ta = document.createElement("textarea");
+  	ta.innerHTML = str.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  	
+  	result = ta.value;
+  	result = result.replace(/&#x([0-9a-f]{2,5})/g, String.fromCharCode("$1"));
+  	result = result.replace(/&#([0-9]{2,4})/g, String.fromCharCode("$1"));
+  	
+  	return result;		
+};
+
 /**
  * Clean the string -> HTML or script
  *
@@ -1020,6 +1038,23 @@ html.xss_clean = function(str) {
 	str = str.replace(/-->/g,"--&gt;");
 	
 	return str;
+};
+
+
+/**
+ * Removes HTML tags and escapes single quotes
+ *
+ * @author Daniel Marschner
+ */
+html.convertString = function(string, length) { 
+	string = string.split('<').join(escape('<'));
+	string = string.split('>').join(escape('>'));
+	string = string.split("'").join(escape("'"));
+	
+	if (length !== undefined && length > 0){
+	  string = string.substr(0, length);
+	}
+	return string;
 };
 
 $(function() {
