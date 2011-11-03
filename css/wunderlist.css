@@ -557,18 +557,18 @@ opacity:1.0 !important}
   cursor: pointer;
 }
 
-#right .bgone { background:url(/images/icon_wood.png)}
-#right .bgtwo { background:url(/images/icon_wheat.png)}
-#right .bgthree { background:url(/images/icon_bokeh.png)}
-#right .bgfour { background:url(/images/icon_blue.png)}
-#right .bgfive { background:url(/images/icon_royal_purple.png)}
-#right .bgsix { background:url(/images/icon_darkfade.png)}
-#right .bgseven { background:url(/images/icon_whitefade.png)}
-#right .bgeight { background:url(/images/icon_monster.png)}
-#right .bgnine { background:url(/images/icon_darkwood.png)}
-#right .bgten { background:url(/images/icon_chalkboard.png)}
-#right .bgeleven { background:url(/images/icon_forrest.png)}
-#right .bgtwelve { background:url(/images/icon_leaf.png)}
+#right .bgone { background:url(/backgrounds/icons/icon_wood.png)}
+#right .bgtwo { background:url(/backgrounds/icons/icon_wheat.png)}
+#right .bgthree { background:url(/backgrounds/icons/icon_bokeh.png)}
+#right .bgfour { background:url(/backgrounds/icons/icon_blue.png)}
+#right .bgfive { background:url(/backgrounds/icons/icon_royal_purple.png)}
+#right .bgsix { background:url(/backgrounds/icons/icon_darkfade.png)}
+#right .bgseven { background:url(/backgrounds/icons/icon_whitefade.png)}
+#right .bgeight { background:url(/backgrounds/icons/icon_monster.png)}
+#right .bgnine { background:url(/backgrounds/icons/icon_darkwood.png)}
+#right .bgten { background:url(/backgrounds/icons/icon_chalkboard.png)}
+#right .bgeleven { background:url(/backgrounds/icons/icon_forrest.png)}
+#right .bgtwelve { background:url(/backgrounds/icons/icon_leaf.png)}
 
 span#credits { float:right; font-weight: bold; padding:2px 5px; cursor:pointer}
 
