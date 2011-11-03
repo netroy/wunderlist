@@ -28,16 +28,6 @@ body {
   background-position: top center;
 }
 
-/*
-#bghelp {
-position:absolute; 
-top:1px; 
-left:0px; 
-right: 0px; 
-bottom:0px
-}
-*/
-
 .red{color:#c30}
 
 .cursor{cursor:pointer}
@@ -414,6 +404,11 @@ border-radius:10px}
   height:14px;
   width:14px;
   background-image: url(/images/sync_arrow.png);
+  
+  -webkit-transition: 0.8s -webkit-transform linear;
+  -moz-transition: 0.8s -moz-transform linear;
+  -o-transition: 0.8s -o-transform linear;
+  transition: 0.8s transform linear;
 }
 
 .togglesidebar {

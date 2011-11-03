@@ -5,7 +5,8 @@ var connect = require('connect'),
      fs = require('fs'),
     port = process.env.StaticPort || 8888;
 
-var syncData = ['', fs.readFileSync(__dirname + "/step1.json"), fs.readFileSync(__dirname + "/step2.json")];
+var syncData = ['', fs.readFileSync(__dirname + "/data/step1.json"), fs.readFileSync(__dirname + "/data/step2.json")];
+var versionData = fs.readFileSync(__dirname + "/data/version.txt");
 
 app.use(connect.bodyParser());
 app.use(connect.static(process.cwd()));
@@ -18,6 +19,11 @@ app.use(connect.router(function(router){
   router.post("/1.2.0", function(req, resp){
     resp.writeHead(200, "Content-type: text/json");
     resp.write(syncData[req.body.step || 0]);
+    resp.end();
+  });
+  router.get("/version.txt", function(req, resp){
+    resp.writeHead(200, "Content-type: text/json");
+    resp.write(versionData);
     resp.end();
   });
 }));

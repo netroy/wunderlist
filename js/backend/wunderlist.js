@@ -35,10 +35,13 @@ wunderlist.init = function() {
 	// TODO: add the wunderlist prefix
 	wunderlist.account.init();
 	wunderlist.timer.init();
-	menu.initializeTrayIcon();
+	wunderlist.menu.initializeTrayIcon();
 	wunderlist.sharing.init();
 	wunderlist.notifications.init();
 	share.init();
+	
+	// Init the layout
+	wunderlist.layout.init();
 	
 	// Check for a new version
 	wunderlist.updater.checkVersion();	
@@ -239,4 +242,6 @@ wunderlist.smartScanForDate = function(string, doNaturalRecognition) {
 
 /*************************************************************************************/
 // Start the wunderlist framework
-$(function() { wunderlist.init(); });
+$(function() {
+  wunderlist.init(); 
+});

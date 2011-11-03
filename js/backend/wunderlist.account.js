@@ -148,8 +148,7 @@ wunderlist.account.loadInterface = function() {
 	
 	var taskInput = $("input.input-add").val();
 	
-	menu.initialize();
-	
+	wunderlist.menu.initialize();
 	wunderlist.database.getLists(null, wunderlist.frontend.lists.initLists);
 
 	filters.init();
@@ -201,7 +200,7 @@ wunderlist.account.showRegisterDialog = function() {
 	// Set wood background for login dialog
 	setTimeout(function() { $('.ui-widget-overlay').addClass('ui-widget-overlay-wood');	}, 1);
 
-	Layout.stopLoginAnimation();
+	wunderlist.layout.stopLoginAnimation();
 
 	// Unbind the live functionality
 	$('#cancelreg').die();
@@ -212,7 +211,7 @@ wunderlist.account.showRegisterDialog = function() {
 
 	// Close Register Dialog
 	$('#cancelreg').live('click', function() {
-		Layout.startLoginAnimation();
+		wunderlist.layout.startLoginAnimation();
 		wunderlist.database.createStandardElements();
 		wunderlist.account.loadInterface();
 		$('div.sharelist').remove();
@@ -258,7 +257,7 @@ wunderlist.account.showRegisterDialog = function() {
 		wunderlist.account.forgotpw();
 	});
 
-	menu.remove();
+	wunderlist.menu.remove();
 };
 
 /**
@@ -384,7 +383,7 @@ wunderlist.account.login = function() {
 		
 		data['password'] = Titanium.Codec.digestToHex(Titanium.Codec.MD5, data['password']);
 		
-		Layout.startLoginAnimation();
+		wunderlist.layout.startLoginAnimation();
 
 		$.ajax({
 			url     : this.loginUrl,
@@ -417,14 +416,14 @@ wunderlist.account.login = function() {
 
 						case wunderlist.account.status_codes.LOGIN_FAILURE:
 
-							Layout.stopLoginAnimation();
+							wunderlist.layout.stopLoginAnimation();
 							wunderlist.account.showPasswordError(wunderlist.language.data.error_login_failed);
 
 							break;
 
 						case wunderlist.account.status_codes.LOGIN_DENIED:
 
-							Layout.stopLoginAnimation();
+							wunderlist.layout.stopLoginAnimation();
 							wunderlist.account.showPasswordError(wunderlist.language.data.error_login_failed);
 
 							break;
@@ -454,23 +453,22 @@ wunderlist.account.login = function() {
 									title: wunderlist.language.data.register_question,
 									buttons: buttonOptions
 							});
-							Layout.stopLoginAnimation();
+							wunderlist.layout.stopLoginAnimation();
 							dialogs.openDialog(create_user_dialog);
 							
 							break;
 
 						default:
-							Layout.stopLoginAnimation();
+							wunderlist.layout.stopLoginAnimation();
 							dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
 
 							break;
 					}
 				}
 			},
-			error: function(xhrobject)
-			{
+			error: function(xhrobject) {
 				dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
-				Layout.stopLoginAnimation();
+				wunderlist.layout.stopLoginAnimation();
 			}
 		});
 	}
@@ -552,7 +550,7 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 
 		data['password'] = Titanium.Codec.digestToHex(Titanium.Codec.MD5, data['password']);
 		
-		Layout.startLoginAnimation();
+		wunderlist.layout.startLoginAnimation();
 
 		$.ajax({
 			url     : this.registerUrl,
@@ -591,13 +589,10 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 
 						case wunderlist.account.status_codes.REGISTER_DUPLICATE:
 
-							if(onlyRegister == true)
-							{
+							if(onlyRegister === true) {
 								dialogs.showErrorDialog(wunderlist.language.data.error_duplicated_email);
-								Layout.stopLoginAnimation();
-							}
-							else
-							{
+								wunderlist.layout.stopLoginAnimation();
+							} else {
 								wunderlist.login();
 								dialogs.closeDialog(register_dialog);
 							}
@@ -606,31 +601,30 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 
 						case wunderlist.account.status_codes.REGISTER_INVALID_EMAIL:
 
-							Layout.stopLoginAnimation();
+							wunderlist.layout.stopLoginAnimation();
 							wunderlist.account.showEmailError(wunderlist.language.data.invalid_email);
 
 							break;
 
 						case wunderlist.account.status_codes.REGISTER_FAILURE:
 
-							Layout.stopLoginAnimation();
+							wunderlist.layout.stopLoginAnimation();
 							wunderlist.account.showEmailError(wunderlist.language.data.registration_failed);
 
 							break;
 
 						default:
 
-							Layout.stopLoginAnimation();
+							wunderlist.layout.stopLoginAnimation();
 							dialogs.showErrorDialog(language.error_occurred);
 
 							break;
 					}
 				}
 			},
-			error: function(xhrobject)
-			{
+			error: function(xhrobject) {
 				dialogs.showErrorDialog(wunderlist.language.data.register_error);
-				Layout.stopLoginAnimation();
+				wunderlist.layout.stopLoginAnimation();
 			}
 		});
 	}
@@ -944,7 +938,7 @@ wunderlist.account.logout = function() {
 		// Clear Interface
 		$('#content').html('');
 		$('#lists a.list').remove();
-		menu.remove();
+		wunderlist.menu.remove();
 		
 		dialogs.closeEveryone();
 		

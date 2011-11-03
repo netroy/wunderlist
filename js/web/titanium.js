@@ -25,15 +25,19 @@
   Properties.getInt= function(property, defaultValue){
     return parseInt(propertyMap[property], 10) || defaultValue;
   };
+
   Properties.setInt= function(property, value){
     propertyMap[property] = value;
   };
+
   Properties.getString = function(property, defaultValue){
     return propertyMap[property] || defaultValue;
   };
+
   Properties.setString = function(property, value){
     propertyMap[property] = value.toString();
   };
+
   Properties.hasProperty = function(property){
     return propertyMap.hasOwnProperty(property);
   };
@@ -93,35 +97,34 @@
   /**
    * UI
    */
-  UI.createWindow = function(){
+  UI.createWindow = function() {
     
   };
-  UI.getCurrentWindow = function(){
-    return global;
-  };
-  UI.getMainWindow = function(){
+
+  UI.getCurrentWindow = function() {
     return global;
   };
 
-  // TODO: Implement a DOM based menu
-  function Item(){}
-  Item.prototype = {
-    addItem: function(){
-      return new Item();
-    },
-    addSeparatorItem: function(){
-      
-    }
+  UI.getMainWindow = function() {
+    return global;
   };
-  UI.createMenu = function(){
-    return new Item();
+
+
+  /**
+   * Menus
+   */
+  UI.createMenu = function() {
+    wunderlist.menu.createMenu();
   };
-  UI.setMenu = function(menu){
-    // Do something
+
+  UI.setMenu = function(menu) {
+    wunderlist.menu.setMenu(menu);
   };
-  UI.setBadge = function(count){
-    // update some badge
+
+  UI.setBadge = function() {
+    wunderlist.menu.setBadge();
   };
+
 
 
 

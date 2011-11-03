@@ -127,9 +127,6 @@ wunderlist.background = (function(undefined){
 
     // Load Default Active State
     //$(".bgchooser a.bgone").addClass("active");
-
-    // Hide bghelp container at start
-    // $("#bghelp").hide();
   */
   }
 
