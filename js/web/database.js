@@ -7,9 +7,13 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
       DB_BYTES = 5*1024*1024, // 5MB
       db;
 
-  var log = console.log.bind(console);
+  var log = function(){
+    console.log.apply(console, arguments);
+  };//console.log.bind(console);
   var err = console.error.bind(console);
-  var nop = function(){};
+  var nop = function(){
+    return;
+  };
 
   function printf(text){
     var i = 1, args = arguments;
@@ -41,7 +45,6 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
   
   function executeParallel(queue, callback){
     var output = [], current;
-    callback = callback||log;
     var handler = function(result) {
       var rows = result.rows, outRows = [];
       for(var i = 0, l = rows.length; i < l; i++) {
@@ -226,6 +229,16 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     execute(updateListByOnlineIdSQL, name, deleted, position, version, inbox, shared, id);
   }
 
+  var updateTaskByOnlineIdSQL = "UPDATE tasks SET name = '?', date = ?, done = ?, list_id = ?, position = ?, important = ?, done_date = ?, deleted = ?, version = ?, note = '?' WHERE online_id = ?";
+  function updateTaskByOnlineId(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {
+    execute(updateTaskByOnlineIdSQL, name, date || 0, done, list_id, position, important, done_date, deleted, version, note, online_id);
+  }
+
+  var createTaskByOnlineIdSQL = "INSERT INTO tasks (online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) VALUES(?, '?', ?, ?, ?, ?, ?, ?, ?, ?, '?')";
+  function createTaskByOnlineId(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {
+    execute(createTaskByOnlineIdSQL, online_id, name, date || 0, done, list_id, position, important, done_date, deleted, version, note);
+  }
+
   function updateBadgeCount(filter, callback) {
     if (filter !== undefined && (filter === 'today' || filter === 'overdue')) {
       var sql  = "SELECT id AS count FROM tasks WHERE ";
@@ -340,8 +353,6 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
   function getFilteredTasksForPrinting(type, date_type){}
 
   function createStandardElements(){}
-  function updateTaskByOnlineId(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {}
-  function createTaskByOnlineId(online_id, name, date, done, list_id, position, important, done_date, deleted, version, note) {}
   function createTuts(list_id){}
   function recreateTuts(){}
   function fetchData(resultSet){}
