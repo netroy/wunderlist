@@ -10,6 +10,9 @@ wunderlist.sidebar = (function(undefined){
    * @author Dennis Schneider, Marvin Labod
    */
   function initPosition() {
+    isPositionRight = (Properties.getString('sidebar_position', 'right') !== "right");
+    openStatus = (Properties.getString('sidebar_opened_status', 'true') === "true");
+
     toggleButton.toggleClass("hidden", openStatus);
     body.toggleClass("sidebarleft", isPositionRight);
     body.toggleClass("sidebarClosed", openStatus);
@@ -33,9 +36,6 @@ wunderlist.sidebar = (function(undefined){
    * @author Daniel Marschner, Dennis Schneider
    */
   function init() {
-    isPositionRight = (Properties.getString('sidebar_position', 'right') !== "right");
-    openStatus = (Properties.getString('sidebar_opened_status', 'true') === "true");
-
     body = $("body");
     toggleButton = $(".togglesidebar");
 
