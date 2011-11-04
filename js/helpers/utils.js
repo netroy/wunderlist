@@ -1,5 +1,5 @@
-/* global wunderlist, console */
-wunderlist.utils = (function(wunderlist, html, global, undefined){
+/* global wunderlist */
+wunderlist.utils = (function(wunderlist, html, undefined){
 
   /**
    * Converted from PHP in_array()
@@ -15,10 +15,6 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
   }
 
 
-
-
-
-
   /**
    * Check if the given value is an array
    * @author Daniel Marschner
@@ -31,10 +27,6 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
   }
 
 
-
-
-
-
   /**
    * Set the app title
    * @author Daniel Marschner 
@@ -44,12 +36,9 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
   }
 
 
-
-
-
-
   /**
    * Calculates the difference between the current and the given date
+   * returns difference between the two dates as number of days
    * @author Dennis Schneider
    */
   function calculateDayDifference(done) {
@@ -58,15 +47,11 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
     var unceiled_days = ((today.getTime() / 1000) - done) / (one_day);
 
     if (unceiled_days > 1){
-      // Calculate difference btw the two dates, and convert to days
       return Math.floor(unceiled_days);
     } else {
       return 0;
     }
   }
-
-
-
 
 
   /**
@@ -78,13 +63,8 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
   }
 
 
-
-
-
-
   /**
    * Validates an integer
-   *
    * @author Christian Reber
    */
   function is_integer(s) {
@@ -92,28 +72,20 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
   }
 
 
-
-
-
   /**
    * Validate the email
-   *
    * @author Dennis Schneider
    */
   function is_email(email) {
     var reg = /^([A-Za-z0-9\+_\-\.\+])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-    if (reg.test(email) === false) 
-    {
+    if (reg.test(email) === false) {
       $('.error').text(wunderlist.language.data.error_invalid_email);
       return false;
-    }
-    else 
+    } else {
       return true;
+    }
   }
-
-
-
 
 
   /**
@@ -127,8 +99,6 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
   }
 
 
-
-
   return {
     "in_array": in_array,
     "is_array": is_array,
@@ -139,4 +109,5 @@ wunderlist.utils = (function(wunderlist, html, global, undefined){
     "is_email": is_email,
     "ucfirst": ucfirst
   };
-})();
+
+})(wunderlist, html);
