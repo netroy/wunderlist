@@ -16,7 +16,7 @@ wunderlist.updater.checkVersion = function() {
 			
 			if (response.version !== undefined && curVersion !== newVersion && newVersion > curVersion) {
 				var updateHTML = '<p>' + html.replace_links(response.message) + '</p>';
-				dialogs.openDialog(dialogs.generateDialog('Update Message', updateHTML));
+				wunderlist.dialogs.openDialog(wunderlist.dialogs.generateDialog('Update Message', updateHTML));
 			}
 		}
 	});

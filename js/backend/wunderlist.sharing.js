@@ -124,10 +124,9 @@ wunderlist.sharing.init = function() {
 				buttons       : buttonOptions
 			});
 			
-			dialogs.openDialog(wunderlist.sharing.deleteSharedEmailDialog);
+			wunderlist.dialogs.openDialog(wunderlist.sharing.deleteSharedEmailDialog);
 
-			if (shareListItems.length == 0)
-			{
+			if (shareListItems.length === 0) {
 				$('p.invitedpeople').remove();
 			}
 
@@ -143,7 +142,7 @@ wunderlist.sharing.init = function() {
 		// Check if the email is empty
 		if ($('#share-list-email').val() == '')
 		{
-			dialogs.showErrorDialog(wunderlist.language.data.invalid_email);
+			wunderlist.dialogs.showErrorDialog(wunderlist.language.data.invalid_email);
 			return false;
 		}	
 	
@@ -172,7 +171,7 @@ wunderlist.sharing.init = function() {
 				wunderlist.sharing.shareLists(list_id);
 			}
 
-			dialogs.closeDialog(wunderlist.sharing.shareListDialog);
+			wunderlist.dialogs.closeDialog(wunderlist.sharing.shareListDialog);
 			
 			setTimeout(function() {wunderlist.sharing.sendInvitation = false}, 2000);
 		}
@@ -230,38 +229,34 @@ wunderlist.sharing.deleteSharedEmail = function(list_id, deletedElement) {
 		type: 'POST',
 		data: data,
 		timeout: settings.REQUEST_TIMEOUT,
-		success: function(response_data, text, xhrobject)
-		{
-			if (response_data != '' && text != '' && xhrobject != undefined)
-			{
-				if (xhrobject.status == 200)
-				{			
+		success: function(response_data, text, xhrobject) {
+			if (response_data !== '' && text !== '' && xhrobject !== undefined) {
+				if (xhrobject.status === 200) {			
 					var response = JSON.parse(response_data);
 
-					switch (response.code)
-					{
+					switch (response.code) {
 						case wunderlist.sharing.status_codes.SHARE_SUCCESS:
 							deletedElement.remove();
 							wunderlist.sharing.unshareList(offline_list_id);
-							dialogs.showDeletedDialog(wunderlist.language.data.shared_delete_title, wunderlist.language.data.shared_delete_success);
+							wunderlist.dialogs.showDeletedDialog(wunderlist.language.data.shared_delete_title, wunderlist.language.data.shared_delete_success);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_FAILURE:
-							dialogs.showErrorDialog(wunderlist.language.data.share_failure);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_failure);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_DENIED:
 							wunderlist.sharing.unshareList(offline_list_id);
-							dialogs.showErrorDialog(wunderlist.language.data.share_denied);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_denied);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_NOT_EXIST:
 							wunderlist.sharing.unshareList(offline_list_id);
-							dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
 							break;
 
 						default:
-							dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
 							break;
 					}
 				}
@@ -269,7 +264,7 @@ wunderlist.sharing.deleteSharedEmail = function(list_id, deletedElement) {
 		},
 		error: function(xhrobject)
 		{
-			dialogs.showErrorDialog(wunderlist.language.data.sync_error);
+			wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_error);
 		}
 	});
 };
@@ -295,7 +290,7 @@ wunderlist.sharing.sendSharedList = function(list_id) {
 		}
 	} else { // If no emails are available
 		if (wunderlist.sharing.deletedMails.length === 0) {
-			dialogs.showErrorDialog(wunderlist.language.data.shared_not_changed);
+			wunderlist.dialogs.showErrorDialog(wunderlist.language.data.shared_not_changed);
 			if ($('.sharelistusers').children('li').length === 0) {
 				$('div#lists a#list' + offline_list_id + ' b div.sharedlist').removeClass('sharedlist').addClass('sharelist');
 				
@@ -321,7 +316,7 @@ wunderlist.sharing.sendSharedList = function(list_id) {
 	
 	// Remove the user email if found
 	if (idx != -1) {	
-		dialogs.showErrorDialog(wunderlist.language.data.share_own_email);
+		wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_own_email);
 		data['add'].splice(idx, 1);
 	}
 	
@@ -342,31 +337,31 @@ wunderlist.sharing.sendSharedList = function(list_id) {
 					switch (response.code) {
 						case wunderlist.sharing.status_codes.SHARE_SUCCESS:
 							$('div#lists a#list' + offline_list_id + ' b div.sharelist').removeClass('sharelist').addClass('sharedlist');
-							dialogs.showSharedSuccessDialog(wunderlist.language.data.shared_successfully);
+							wunderlist.dialogs.showSharedSuccessDialog(wunderlist.language.data.shared_successfully);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_FAILURE:
-							dialogs.showErrorDialog(wunderlist.language.data.share_failure);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_failure);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_DENIED:
-							dialogs.showErrorDialog(wunderlist.language.data.share_denied);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_denied);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_NOT_EXIST:
 							wunderlist.sharing.unshareList(offline_list_id);
-							dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
 							break;
 
 						default:
-							dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
 							break;
 					}
 				}
 			}
 		},
 		error: function(xhrobject) {
-			dialogs.showErrorDialog(wunderlist.language.data.sync_error);
+			wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_error);
 		}
 	});
 };
@@ -435,7 +430,7 @@ wunderlist.sharing.getSharedEmails = function(list_id) {
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_FAILURE:
-							dialogs.showErrorDialog(wunderlist.language.data.share_failure);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_failure);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_DENIED:
@@ -443,7 +438,7 @@ wunderlist.sharing.getSharedEmails = function(list_id) {
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_NOT_EXIST:
-							dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_NOT_SHARED:
@@ -452,14 +447,14 @@ wunderlist.sharing.getSharedEmails = function(list_id) {
 							break;
 
 						default:
-							dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
 							break;
 					}
 				}
 			}
 		},
 		error: function(xhrobject) {
-			dialogs.showErrorDialog(wunderlist.language.data.sync_error);
+			wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_error);
 		}
 	});
 };
@@ -484,29 +479,29 @@ wunderlist.sharing.getOwnerOfList = function(online_list_id) {
 					switch (response.code) {
 						case wunderlist.sharing.status_codes.SHARE_SUCCESS:
 							if (response.list_id == online_list_id) {
-								dialogs.showErrorDialog(wunderlist.language.data.share_denied + '<br /><b>' + response.owner + '</b>');
+								wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_denied + '<br /><b>' + response.owner + '</b>');
 							} else {
-								dialogs.showErrorDialog(wunderlist.language.data.share_denied);
+								wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_denied);
 							}
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_FAILURE:
-							dialogs.showErrorDialog(wunderlist.language.data.share_failure);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_failure);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_NOT_EXIST:
-							dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
 							break;
 
 						default:
-							dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
 							break;
 					}
 				}
 			}
 		},
 		error: function(xhrobject) {
-			dialogs.showErrorDialog(wunderlist.language.data.sync_error);
+			wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_error);
 		}
 	});
 };
@@ -535,24 +530,24 @@ wunderlist.sharing.deleteAllSharedEmails = function(list_id) {
 					switch (response.code) {
 						case wunderlist.sharing.status_codes.SHARE_SUCCESS:
 							wunderlist.sharing.shareListDialog.dialog('close');
-							dialogs.showDeletedDialog(wunderlist.language.data.shared_delete_all_success);
+							wunderlist.dialogs.showDeletedDialog(wunderlist.language.data.shared_delete_all_success);
 							
 							wunderlist.sharing.unshareList(list_id);
 							break;
 
 						case wunderlist.sharing.status_codes.SHARE_FAILURE:
-							dialogs.showErrorDialog(wunderlist.language.data.share_failure);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_failure);
 							break;
 
 						default:
-							dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
+							wunderlist.dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
 							break;
 					}
 				}
 			}
 		},
 		error: function() {
-			dialogs.showErrorDialog(wunderlist.language.data.share_failure);
+			wunderlist.dialogs.showErrorDialog(wunderlist.language.data.share_failure);
 		}
 	});
 };
@@ -563,8 +558,8 @@ wunderlist.sharing.deleteAllSharedEmails = function(list_id) {
  * @author Marvin Labod
  */
 wunderlist.sharing.openShareListDialog = function(list_id) {
-	wunderlist.sharing.shareListDialog = dialogs.generateDialog(wunderlist.language.data.sharing_is_caring + list_name, html.generateShareListDialogHTML(list_id),'dialog-sharelist');
-	dialogs.openDialog(wunderlist.sharing.shareListDialog);
+	wunderlist.sharing.shareListDialog = wunderlist.dialogs.generateDialog(wunderlist.language.data.sharing_is_caring + list_name, html.generateShareListDialogHTML(list_id),'dialog-sharelist');
+	wunderlist.dialogs.openDialog(wunderlist.sharing.shareListDialog);
 };
 
 /**
@@ -575,7 +570,7 @@ wunderlist.sharing.openShareListDialog = function(list_id) {
 wunderlist.sharing.openNoInternetShareDialog = function() {
 	if (wunderlist.sharing.openedNoInternetDialog == false) {
 		wunderlist.sharing.openedNoInternetDialog = true;
-		dialogs.showErrorDialog('Sharing is only possible if you have an active internet connection');
+		wunderlist.dialogs.showErrorDialog('Sharing is only possible if you have an active internet connection');
 		setTimeout(function() {wunderlist.sharing.openedNoInternetDialog = false}, 1000);
 	}
 };
