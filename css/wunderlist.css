@@ -13,6 +13,7 @@ li {list-style:none}
 html {
   background: #333;
   height: 100%;
+  overflow: hidden;
 }
 
 
@@ -80,7 +81,7 @@ a {
   bottom: 36px;
   top: 59px;
   */
-  margin-left: 10px;
+  margin-left: 11px;
 }
 
 #sidebar h3 {
@@ -89,7 +90,7 @@ a {
   background: -moz-linear-gradient(top, #F6F7F8, #E7EAF2);
   border-bottom: 1px solid #D1D2D4;
   margin-left: 10px;
-  padding: 20px 0;
+  padding: 21px 0;
 }
 
 #sidebar h3 a{
@@ -124,29 +125,30 @@ a {
   background:#fff url(/images/searchicon.png) 5% 50% no-repeat;
 }
 
-#sidebar .searchside input {
-  border:none;
-  background:none;
-  width:145px;
-  color:#555;
-  padding:5px;
-  margin-left:5px;
+input#search {
+  border: 0 none;
+  background: none;
+  width: 160px;
+  color: #444;
+  padding: 5px;
+  margin-left: 5px;
+  font-size: 11px;
 }
 
 #sidebar .searchside .clearsearch {
-display:none;
-position:absolute;
--ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-opacity:0.7; 
--moz-opacity: 0.7;
-background:url(/images/icons/delete_active.png);
-position:absolute;
-right:100px;
-top:4px;
-cursor:pointer;
-right:6px;
-height:14px;
-width:14px;
+  display:none;
+  position:absolute;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+  opacity:0.7; 
+  -moz-opacity: 0.7;
+  background:url(/images/icons/delete_active.png);
+  position:absolute;
+  right:100px;
+  top:4px;
+  cursor:pointer;
+  right:6px;
+  height:14px;
+  width:14px;
 }
 
 #sidebar .searchside:hover .clearsearch {
@@ -195,16 +197,17 @@ position:absolute; right:0px; top:-1px; width:17px; height:17px; background:url(
 #sidebar b.sharep .sharedlist:hover, #sidebar b.sharep .sharelist:hover {opacity:1.0}
 
 #sidebar .list {
-cursor:pointer;
-color:#444;
-text-shadow: #fff 0px 1px 2px;
-padding:10px 8px 0px 12px;
-background: #f8f8f8;
-background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
-background: -moz-linear-gradient(top,  #f8f8f8,  #f3f4f6);
-display:block;
-height:23px;
-border-bottom:1px solid #e1e2e4}
+  cursor:pointer;
+  color:#444;
+  text-shadow: #fff 0px 1px 2px;
+  padding:10px 8px 0px 12px;
+  background: #f8f8f8;
+  background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
+  background: -moz-linear-gradient(top,  #f8f8f8,  #f3f4f6);
+  display:block;
+  height:23px;
+  border-bottom:1px solid #e1e2e4;
+}
 
 #sidebar .list:first-child {border-top:1px solid #fff}
 
@@ -412,13 +415,11 @@ border-radius:10px}
 }
 
 .togglesidebar {
-  width:19px;
-  height:19px;
+  margin: 0 0 0 -1px;
+  width: 19px;
+  height: 19px;
   cursor:pointer;
-  position:fixed;
   background:url(/images/sidebartogglen.png) no-repeat;
-  right:21px;
-  bottom:7px
 }
 
 .hidden {
@@ -433,7 +434,7 @@ border-radius:10px}
 
 #right {
   float:right;
-  padding:10px 40px 8px 0px;
+  padding:10px 16px 8px 0px;
 }
 
 #right a {
@@ -617,6 +618,8 @@ span#credits { float:right; font-weight: bold; padding:2px 5px; cursor:pointer}
 
 #content ul {
   min-width:300px !important;
+  margin: 0;
+  padding: 0;
 }
 
 #content .mainlist, #content .donelist { margin-bottom:12px }
