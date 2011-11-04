@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
+<html lang="en">
+<!-- manifest="appcache.manifest">-->
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="apple-touch-icon" href="/images/wunderlist.png" />
+	<link rel="favicon" href="/favicon.ico" />
 	<title>Wunderlist</title>
 
+	<link type="text/css" rel="stylesheet" href="css/normalize.css"/>
 	<link type="text/css" rel="stylesheet" href="css/wunderlist.css"/>
 	<link type="text/css" rel="stylesheet" href="css/dialogs.css"/>
 
@@ -15,6 +19,49 @@
 	<script type="text/javascript" src="js/libraries/jquery.async.js"></script>
 	<script type="text/javascript" src="js/libraries/shortcuts.js"></script>
 	<script type="text/javascript" src="js/libraries/encoder.js"></script>
+</head>
+
+<body>
+	<div id="sidebar">
+		<h3>
+			<a class="add" href="#" title="">add</a>
+			<div class="searchside">
+				<span class="clearsearch"></span>
+				<input type="text" id="search"/>
+			</div>
+		</h3>
+		<div id="lists"></div>
+		<div id="notification"><div></div></div>
+	</div>
+	<div id="content"></div>
+	<div id="menublur"></div>
+	<div id="bottombar">
+		<div id="left">
+				<span id="sync" class="more"><span id="syncing"></span></span>
+    		<a class="filter loggedinas ui-droppable"><span>aditya@netroy.in</span></a>
+    		<ul class="menu"></ul>
+				<a id="all" class="filter roundedleft more"><img src="icons/filterall.png" alt="all"/></a>
+				<a id="starred" class="filter more"><img src="icons/filterstar.png" alt="all"/></a>
+				<a id="done" class="filter roundedright more"><img src="icons/filterdone.png" alt="all"/></a>
+				<a id="today" class="filter roundedleft">Today</a>
+				<a id="tomorrow" class="filter">Tomorrow</a>
+				<a id="thisweek" class="filter">Next 7 Days</a>
+				<a id="someday" class="filter">Someday</a>
+				<a id="withoutdate" class="filter roundedright">Without Date</a>
+			<div id="login_data"></div>
+		</div>		
+		<div id="right">
+		  <a class="addlist"></a>
+			<a class="showhelp">?</a>
+			<a class="backgroundswitcher">
+			  <span id="activebackground"></span>
+			  <span id="backgroundList"></span>
+			</a>
+			<a class="togglesidebar"></a>
+		</div>
+	</div>
+	
+	<!-- App Scripts -->
 
 	<!-- Loading core functions -->
 	<script type="text/javascript" src="js/backend/wunderlist.js"></script>
@@ -25,13 +72,13 @@
   <script type="text/javascript" src="js/web/md5.js"></script>
 
 	<!-- Loading helpers -->
-	<script type="text/javascript" src="js/helpers/utils.js"></script>
 	<script type="text/javascript" src="js/helpers/dialogs.js"></script>
 	<script type="text/javascript" src="js/helpers/html.js"></script>
 	<script type="text/javascript" src="js/helpers/background.js"></script>
 	<script type="text/javascript" src="js/helpers/sidebar.js"></script>
 	<script type="text/javascript" src="js/helpers/list.js"></script>
 	<script type="text/javascript" src="js/helpers/task.js"></script>
+	<script type="text/javascript" src="js/helpers/utils.js"></script>
 <!--
 	<script type="text/javascript" src="js/backend/wunderlist.database.js"></script>
 -->
@@ -52,49 +99,9 @@
 	<script type="text/javascript" src="js/frontend/lists.js"></script>
 	<script type="text/javascript" src="js/frontend/sortdrop.js"></script>
 	<script type="text/javascript" src="js/frontend/notes.js"></script>
-	<script type="text/javascript" src="js/frontend/menu.js"></script>
+	<!--<script type="text/javascript" src="js/frontend/menu.js"></script>-->
+	<script type="text/javascript" src="js/web/menu.js"></script>
 	<script type="text/javascript" src="js/frontend/layout.js"></script>
 	<script type="text/javascript" src="js/frontend/hotkeys.js"></script>
-</head>
-
-<body>
-
-	<div id="bghelp"></div>
-	<div id="sidebar">
-		<h3>
-			<a class="add" href="#" title="">add</a>
-			<div class="searchside">
-				<span class="clearsearch"></span>
-				<input type="text" id="search"/>
-			</div>
-		</h3>
-		<div id="lists"></div>
-		<div id="notification"><div></div></div>
-	</div>
-	
-	<div id="content"></div>
-	
-	<div id="menublur"></div>
-	
-	<div id="bottombar">
-		<div id="left">
-				<span id="sync" class="more"><span id="syncing"></span></span>
-				<a id="all" class="filter roundedleft more"><img src="icons/filterall.png" alt="all"/></a>
-				<a id="starred" class="filter more"><img src="icons/filterstar.png" alt="all"/></a>
-				<a id="done" class="filter roundedright more"><img src="icons/filterdone.png" alt="all"/></a>
-				<a id="today" class="filter roundedleft">Today</a>
-				<a id="tomorrow" class="filter">Tomorrow</a>
-				<a id="thisweek" class="filter">Next 7 Days</a>
-				<a id="someday" class="filter">Someday</a>
-				<a id="withoutdate" class="filter roundedright">Without Date</a>
-			<div id="login_data"></div>
-		</div>		
-		<div id="right">
-			<a class="showhelp">?</a>
-			<span id="backgroundList"><span class="arrow"></span></span>
-			<span class="togglesidebar"></span>	
-			<a class="addlist"></a>
-		</div>
-	</div>
 </body>
 </html>
