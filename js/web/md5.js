@@ -170,5 +170,5 @@
 		return hex(md51(s));
 	}
 	
-	global["md5"] = md5;
+	global.md5 = md5;
 })(window);
