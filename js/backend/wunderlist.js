@@ -40,6 +40,9 @@ wunderlist.init = function() {
 	wunderlist.notifications.init();
 	share.init();
 	
+	// Init the dialogs
+	wunderlist.dialogs.init();
+
 	// Init the layout
 	wunderlist.layout.init();
 	
