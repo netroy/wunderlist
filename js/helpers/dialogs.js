@@ -466,11 +466,9 @@ wunderlist.dialogs = (function(undefined){
       });
   
       $('input#confirm-settings').live('click', function() {
-        var new_sidebar_position = ($('div.radios#sidebar-position-radios input:checked').val() === 0) ? 'right' : 'left';
+        var new_sidebar_position = ($('div.radios#sidebar-position-radios input:checked').val() === "0") ? 'right' : 'left';
         Titanium.App.Properties.setString('sidebar_position', new_sidebar_position);
-        
         wunderlist.sidebar.initPosition();
-            
         closeDialog(sidebarDialog);
       });
     }
