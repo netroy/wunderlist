@@ -1,0 +1,328 @@
+/* SIDEBAR ----------------------------------------------------------------------------------------------- */
+
+#sidebar {
+  right: 0px;
+  background: url(/images/sidebar.png) right repeat-y;
+  width: 269px;
+  height: 100%;
+  top: 0px;
+  position: fixed;
+  overflow-x: hidden;
+}
+
+#lists {
+  /*
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: fixed;
+  right: 0px;
+  bottom: 36px;
+  top: 59px;
+  */
+  width: 258px;
+  margin-left: 11px;
+}
+
+#sidebar h3 {
+  margin: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F6F7F8), to(#E7EAF2));
+  background: -moz-linear-gradient(top, #F6F7F8, #E7EAF2);
+  border-bottom: 1px solid #D1D2D4;
+  margin-left: 10px;
+  padding: 21px 0;
+}
+
+#sidebar h3 a{
+  display: inline-block;
+  text-indent: -9999px;
+}
+
+#sidebar .separator {
+  border-bottom: 1px solid #e8e9f0;
+  height: 2px;
+  width: 238px;
+  right: 0px;
+  position: absolute;
+  top: 56px
+}
+
+#sidebar .searchside {
+  position:absolute;  
+  right:10px;
+  top:5px;
+  width:204px;
+  padding:0px 14px 0px 18px;
+  margin-left:20px;
+  margin-top:12px;
+  -webkit-box-shadow:0px 1px 1px #fff;
+  -moz-box-shadow:0px 1px 1px #fff;
+  box-shadow:0px 1px 1px #fff;
+  border:1px solid #c8cddd;
+  -webkit-border-radius:15px;
+  -moz-border-radius:15px;
+  border-radius:15px;
+  background:#fff url(/images/searchicon.png) 5% 50% no-repeat;
+}
+
+input#search {
+  border: 0 none;
+  background: none;
+  width: 160px;
+  color: #444;
+  padding: 5px;
+  margin-left: 5px;
+  font-size: 11px;
+}
+
+#sidebar .searchside .clearsearch {
+  display:none;
+  position:absolute;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+  opacity:0.7; 
+  -moz-opacity: 0.7;
+  background:url(/images/icons/delete_active.png);
+  position:absolute;
+  right:100px;
+  top:4px;
+  cursor:pointer;
+  right:6px;
+  height:14px;
+  width:14px;
+}
+
+#sidebar .searchside:hover .clearsearch {
+  display: block;
+}
+
+#sidebar div.deletep { 
+background:url(/images/icons/delete_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; 
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
+
+#sidebar div.deletep:hover {opacity:1.0}
+
+#sidebar div.editp { background:url(/images/icons/edit_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none;
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
+
+#sidebar div.editp:hover {opacity:1.0}
+
+#sidebar div.savep { background:url(/images/icons/editdone_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none;
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
+
+#sidebar div.savep:hover {opacity:1.0}
+
+#sidebar b.inbox {padding-left:24px; background:url(/images/icons/inbox.png) no-repeat; background-position:0px 0px;}
+
+/* Share List Icon Behavior */
+
+#sidebar b.sharep {padding-right:22px;position:relative}
+
+#sidebar b.sharep .sharelist, #sidebar b.sharep .sharedlist {
+position:absolute; right:0px; top:-1px; width:17px; height:17px; background:url(/images/icons/sharelist.png) top right no-repeat; cursor:pointer !important}
+
+#sidebar b.sharep .sharelist {display:none}
+
+#sidebar .list:hover .sharelist {display:block; opacity:0.6}
+
+#sidebar .ui-state-disabled .sharelist {background:url(/images/icons/sharelist_white.png) top right no-repeat !important}
+
+#sidebar .ui-state-disabled .sharedlist {background:url(/images/icons/sharelist_white.png) top right no-repeat !important; opacity:1.0 !important}
+
+#sidebar b.sharep .sharedlist:hover, #sidebar b.sharep .sharelist:hover {opacity:1.0}
+
+#sidebar .list {
+  cursor:pointer;
+  color:#444;
+  text-shadow: #fff 0px 1px 2px;
+  padding:10px 8px 0px 12px;
+  background: #f8f8f8;
+  background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
+  background: -moz-linear-gradient(top,  #f8f8f8,  #f3f4f6);
+  display:block;
+  height:23px;
+  border-bottom:1px solid #e1e2e4;
+}
+
+#sidebar .list:first-child {border-top:1px solid #fff}
+
+#sidebar .list:hover, #sidebar .list.hover {
+background:#fff;
+background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));
+background: -moz-linear-gradient(top,  #fff,  #f7f8fa)}
+
+#sidebar .list b {
+white-space:nowrap;
+text-overflow:ellipsis;
+overflow:hidden;
+display:block;
+float:left;
+max-width: 130px}
+
+#sidebar .placeholder {
+cursor:pointer;
+background:#e7eaf2;
+text-shadow: #fff 0px 1px 2px;
+padding:10px 10px 0px 14px;
+display:block;
+height:23px;
+border-bottom:1px solid #fff}
+
+#sidebar .list input, #sidebar .list .input-list { 
+outline:none !important; background:#fff;  border:1px solid #bbb; padding:4px 8px; margin-top:-4px; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px; font-size:12px; font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
+box-shadow: inset 1px 1px 3px #999; -webkit-box-shadow: inset 1px 1px 3px #999; -moz-box-shadow: inset 1px 1px 3px #999; width:134px !important}
+
+/* List Edit Icons */
+
+#sidebar .ui-state-disabled input , #sidebar .ui-dropped-disabled input {
+background: #21638c; color:#fff; 
+-webkit-box-shadow: inset 1px 1px 3px #174460; 
+-moz-box-shadow: inset 1px 1px 3px #174460;
+box-shadow: inset 1px 1px 3px #174460}
+
+#sidebar .ui-state-disabled div.deletep , #sidebar .ui-dropped-disabled div.deletep {background:url(/images/icons/delete_white.png)}
+#sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/images/icons/edit_white.png)}
+#sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/images/icons/editdone_white.png)}
+#sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-position:0px -14px}
+
+#sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+opacity:0.5; 
+-moz-opacity: 0.5}
+
+#sidebar .ui-state-disabled div:hover , #sidebar .ui-dropped-disabled div:hover {opacity:1.0}
+
+#sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
+background:#33a3ef !important;
+background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
+background: -moz-linear-gradient(top,  #33a3ef,  #168ad4) !important;
+border-bottom:1px solid #177bbd; color:#fff;text-shadow: #125a8a 0px 1px 2px}
+
+#sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+opacity:1.0; 
+-moz-opacity: 1.0}
+
+#sidebar .ui-state-disabled span, #sidebar .ui-dropped-disabled span {background:url(/images/taskcounth.png) no-repeat}
+
+.list span {
+text-shadow:none; font-size:11px;
+float:right; width:31px; height:16px;
+background:url(/images/taskcount.png) no-repeat;
+text-align:center; display:block;
+padding-top:3px;
+margin-top:-3px;
+font-weight:bold}
+
+#sidebar #notification {
+background:#e7eaf2;
+border-top:1px solid #fff;
+bottom: 36px;
+position: absolute;
+right:0px;
+height:32px;
+padding-top:10px;
+width: 259px}
+
+#sidebar #notification div {
+text-align:center;
+cursor:pointer;
+font-weight:bold;
+background:url(/images/overdue.png) top left no-repeat;
+margin:0 auto;
+height:19px;
+text-shadow: 0px 1px 1px #2c0a0a;
+padding-top:6px;
+width:214px;
+color:#fff}
+
+
+/* SIDEBAR LEFT ---------------------------------------------------------------------------- */
+
+.sidebarleft #content {
+  right: 0px;
+  left: 260px;
+}
+
+.sidebarleft #sidebar {
+  background:url(/images/sidebar_left.png);
+  left: 0;
+}
+
+.sidebarleft #lists {
+  margin-left: 0;
+  margin-right: 11px;
+}
+
+.sidebarleft #sidebar h3 {
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+.sidebarleft .searchside {
+  left: -10px;
+}
+
+.sidebarleft #left {
+  position: absolute;
+  left: 268px;
+}
+
+.sidebarleft #right {
+  float: left;
+  padding-left: 37px;
+}
+
+.sidebarleft .togglesidebar {
+  left: 8px;
+  right: auto;
+  background-position: -19px 0px;
+}
+
+.sidebarleft .hidden {
+  background-position: 0px 0px;
+}
+
+.sidebarleft #right a {
+  float: left !important;
+}
+
+/*.sidebarleft #backgroundList {left:16px}*/
+
+.sidebarleft #notification {
+  left: 0px;
+}
+
+.sidebarleft #sync {
+  left: 276px;
+}
+.sidebarleft #syncing {
+  left: 281px;
+}
+
+.sidebarleft .showhelp {
+  margin: 0px 8px 0px 0px!important;
+}
+
+
+
+/* Animate the sidebar sliding ---------------- */
+.slideTransition {
+  -webkit-transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
+     -moz-transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
+       -o-transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
+          transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
+}
+
+body.sidebarClosed #sidebar {
+  width: 0;
+}
+
+body.sidebarClosed #content {
+  left: 0;
+  right: 0;
+}

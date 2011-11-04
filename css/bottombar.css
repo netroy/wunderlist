@@ -1,0 +1,268 @@
+
+
+/* LEFT BOTTOM BAR -------------------------------------------------------------------------------*/
+
+#bottombar {
+  background:url(/images/bottombar.png) repeat-x;
+  position:fixed;
+  bottom:0px;
+  left:0px;
+  height:36px;
+  width:100%;
+}
+
+#left {float: left; padding:8px; padding-right:0px; padding-left:4px}
+
+#left a.filter {
+-webkit-box-shadow:0px 1px 0px #676767;
+-moz-box-shadow:0px 1px 0px #676767;
+box-shadow:0px 1px 0px #676767;
+padding:0px 8px;
+text-shadow: #333 0px 1px 2px;
+background:url(/images/bottombar_menu.png) repeat-x;
+font-size:10px;
+padding-top:3px;
+border-left:1px solid #434343;
+float:left;
+color:#cccccc;
+display:block;
+cursor:pointer;
+height:16px;
+font-size:11px;
+border-top:1px solid #343434;
+border-bottom: 1px solid #343434
+}
+
+#left .roundedleft {
+border-left:1px solid #343434;
+border-radius: 10px 0px 0px 10px;
+-webkit-border-radius: 10px 0px 0px 10px;
+-moz-border-radius: 10px 0px 0px 10px}
+
+#left .roundedright {
+border-right:1px solid #343434;
+-webkit-border-radius: 0px 10px 10px 0px;
+border-radius: 0px 10px 10px 0px;
+-moz-border-radius: 0px 10px 10px 0px;
+margin-right:12px}
+
+#left roundedboth {
+-moz-border-radius:10px;
+-webkit-border-radius:10px;
+border-radius:10px}
+
+#left a.loggedinas {
+  min-width:100px;
+  text-align:center;
+  padding-left: 15px;
+  border-right: 1px solid #343434;
+  border-left: 1px solid #343434;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  margin-right: 6px;
+  position:relative;
+}
+
+#left a.loggedinas span::before {
+  background: url(/images/menuopen.png);
+  width: 8px;
+  height: 4px;
+  top: 8px;
+  left: 8px;
+  position: absolute;
+  content: " ";
+  background-repeat: no-repeat;
+}
+
+#left a.filter:hover, #left a.active, #left a.droppable {
+  color:#fff;
+  background:url(/images/bottombar_active.png) top left repeat-x;
+  text-shadow:0px 1px 1px #176ea5
+}
+
+#sync {
+  /*position:fixed; bottom:6px; left:9px;*/
+  position: relative;
+  display:inline-block;
+  float:left;
+  background-image: url(/images/sync_green.png);
+  background-repeat: no-repeat;
+  height:22px;
+  width:28px;
+  cursor: pointer;
+}
+
+#sync.sync_red {
+  background:url(/images/sync_red.png);
+}
+
+#syncing {
+  /*position:fixed; bottom:11px; left:14px;*/
+  position: absolute;
+  display: inline-block;
+  top: 3px;
+  left: 5px;
+  height:14px;
+  width:14px;
+  background-image: url(/images/sync_arrow.png);
+  
+  -webkit-transition: 0.8s -webkit-transform linear;
+  -moz-transition: 0.8s -moz-transform linear;
+  -o-transition: 0.8s -o-transform linear;
+  transition: 0.8s transform linear;
+}
+
+.togglesidebar {
+  margin: 0 0 0 -1px;
+  width: 19px;
+  height: 19px;
+  cursor:pointer;
+  background:url(/images/sidebartogglen.png) no-repeat;
+}
+
+.hidden {
+  background-position: -19px 0px;
+}
+
+.togglesidebar:hover {
+  background-image:url(/images/sidebartoggleh.png);
+}
+
+/* RIGHT BOTTOMBAR ------------------------------------------------------------*/
+
+#right {
+  float:right;
+  padding:10px 16px 8px 0px;
+}
+
+#right a {
+  width: 19px;
+  height: 19px;
+  display: inline-block;
+  text-indent: -9999px;
+  margin-right: 5px;
+  float: left;
+  background-repeat: no-repeat;
+}
+
+
+/* BG Switcher START */
+
+a.backgroundswitcher {
+  background:url(/images/bgswitch.png);
+  padding-left:17px;
+  position: relative;
+}
+
+a.backgroundswitcher:hover, a.backgroundswitcheractive {
+  background-position: 0px -19px;
+}
+
+#activebackground { 
+  width:14px;
+  height:19px;
+  background-position: top right !important;
+  display:block;
+  background-repeat: no-repeat !important;
+}
+
+#backgroundList {
+  border:1px solid #323232;
+  z-index:5;
+  background:#4b4b4b;
+  width:70px;
+  position:absolute;
+  bottom: 35px;
+  left: -20px;
+  padding:5px 0px 0px 5px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border-radius:3px;
+  -webkit-box-shadow:inset 0px 1px 1px #6d6d6d;
+  -moz-box-shadow:inset 0px 1px 1px #6d6d6d;
+  box-shadow:inset 0px 1px 1px #6d6d6d;
+}
+
+#backgroundList::after {
+  border: 6px solid transparent;
+  border-top-color: #4B4B4B;
+  border-style: solid;
+  position: absolute;
+  z-index: 6;
+  left: 32px;
+  bottom: -12px;
+  width: 0;
+  height: 0;
+  content: ' ';
+}
+
+#backgroundList a {
+  margin-bottom: 5px;
+  width: 18px;
+}
+
+#backgroundList a.active {
+  -webkit-box-shadow: 0 0 6px #fff;
+  -moz-box-shadow: 0 0 6px #fff;
+  box-shadow: 0 0 6px #fff;
+}
+
+/* Add List */
+
+#right a.addlist {
+-webkit-box-shadow:0px 1px 0px #676767;
+-moz-box-shadow:0px 1px 0px #676767;
+box-shadow:0px 1px 0px #676767;
+padding:0px 10px;
+font-size:10px;
+padding-top:3px;
+width:auto !important;
+color:#ccc !important;
+display:block;
+text-indent: 0px !important;
+cursor:pointer;
+font-size:11px;
+border:1px solid #343434;
+margin-top:-2px;
+border-radius:10px;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+height:16px !important;
+color:#fff !important;
+background:url(/images/bottombar_active.png) top left repeat-x;
+text-shadow:0px 1px 1px #135680 !important; /*176ea5*/
+font-weight:bold;
+opacity:1.0 !important}
+
+/* Show Help */
+
+.showhelp {
+  margin:0px 10px 0px 6px !important;
+  background:url(/images/showhelp.png);
+  width:19px !important;
+  height:19px;
+}
+
+.showhelp:hover {
+  background-position: 19px 0px;
+}
+
+#right a:hover {
+  cursor: pointer;
+}
+
+#right .bgone { background:url(/backgrounds/icons/icon_wood.png)}
+#right .bgtwo { background:url(/backgrounds/icons/icon_wheat.png)}
+#right .bgthree { background:url(/backgrounds/icons/icon_bokeh.png)}
+#right .bgfour { background:url(/backgrounds/icons/icon_blue.png)}
+#right .bgfive { background:url(/backgrounds/icons/icon_royal_purple.png)}
+#right .bgsix { background:url(/backgrounds/icons/icon_darkfade.png)}
+#right .bgseven { background:url(/backgrounds/icons/icon_whitefade.png)}
+#right .bgeight { background:url(/backgrounds/icons/icon_monster.png)}
+#right .bgnine { background:url(/backgrounds/icons/icon_darkwood.png)}
+#right .bgten { background:url(/backgrounds/icons/icon_chalkboard.png)}
+#right .bgeleven { background:url(/backgrounds/icons/icon_forrest.png)}
+#right .bgtwelve { background:url(/backgrounds/icons/icon_leaf.png)}
+
+span#credits { float:right; font-weight: bold; padding:2px 5px; cursor:pointer}
