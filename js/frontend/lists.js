@@ -246,8 +246,8 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
     // Delete tasks button
     $('#lists div.deletep').live('click', function() {
       if (settings.getDeleteprompt() === 1) {
-        dialogs.createDeleteListDialog($(this).parent().attr('id').replace('list', ''), $(this).parent());
-        dialogs.openDialog(delete_dialog);
+        wunderlist.dialogs.createDeleteListDialog($(this).parent().attr('id').replace('list', ''), $(this).parent());
+        wunderlist.dialogs.openDialog(delete_dialog);
       } else {
         cancelSaveList();
         deleteList($(this).parent().attr('id').replace('list', ''), $(this).parent());
@@ -355,9 +355,16 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
       var content = $('#content');
       content.html('').hide();
 
-      if (list_id === undefined){
+      if (typeof list_id === 'undefined') {
         list_id = settings.load_last_opened_list(); // Default 1
       }
+
+      if (typeof list_id === 'string'){
+        try {
+          list_id = parseInt(list_id, 10); 
+        } catch(e) {}
+      }
+      
 
       wunderlist.database.existsById('lists', list_id, function(exists){
         if(!exists) {
@@ -374,24 +381,25 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
             $("#list").append(initTasks(tasks));
           }
         });
+
+        wunderlist.database.getLastDoneTasks(list_id, renderLastDoneTasks);
+
+        makeSortable();
+
+        html.make_timestamp_to_string();
+        settings.save_last_opened_list(list_id);
+        html.createDatepicker();
+        wunderlist.timer.resume();
+        wunderlist.search.clear();
+
+        // Make everything droppable
+        $("a.list").droppable({ disabled: false });
+        $("#lists a#list" + list_id).droppable({ disabled: true }); // Activate list
+        $('#bottombar #left a').removeClass('active');
+
+        content.fadeIn('fast');
+
       });
-
-      makeSortable();
-
-      wunderlist.database.getLastDoneTasks(list_id, renderLastDoneTasks);
-
-      html.make_timestamp_to_string();
-      settings.save_last_opened_list(list_id);
-      html.createDatepicker();
-      wunderlist.timer.resume();
-      Search.clear();
-
-      // Make everything droppable
-      $("a.list").droppable({ disabled: false });
-      $("#lists a#list" + list_id).droppable({ disabled: true }); // Activate list
-      $('#bottombar #left a').removeClass('active');
-
-      content.fadeIn('fast');
 
       setTimeout(function() { 
         listOpenHandler = false; 
@@ -566,6 +574,7 @@ $(function() {
 
   return {
     "addList": addList,
+    "deleteList": deleteList,
     "cancelSaveList": cancelSaveList,
     "saveList": saveList,
     "saveNewList": saveNewList,

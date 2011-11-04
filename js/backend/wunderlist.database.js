@@ -733,20 +733,15 @@ wunderlist.database.isSynced = function(list_id) {
  * @author Dennis Schneider, Daniel Marschner
  */
 wunderlist.database.updateTaskCount = function(list_id) {
-	if (list_id != undefined && list_id > 0)
-	{
+	if (list_id !== undefined && list_id > 0) {
 		wunderlist.database.db.execute("SELECT id FROM tasks WHERE list_id = ? AND done = 0 AND deleted = 0", list_id);
 		$('div#lists a#list' + list_id + ' span').html(wunderlist.database.db.rowsAffected);
-	}
-	else
-	{
+	} else {
 		var result = wunderlist.database.db.execute("SELECT id FROM lists");
 		
-		while (result.isValidRow())
-		{	
+		while (result.isValidRow()) {	
 			wunderlist.database.db.execute("SELECT id FROM tasks WHERE list_id = ? AND done = 0 AND deleted = 0", result.field(0));
 			$('div#lists a#list' + result.field(0) + ' span').html(wunderlist.database.db.rowsAffected);
-			
 			result.next();
 		}
 	}

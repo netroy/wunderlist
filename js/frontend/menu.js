@@ -2,7 +2,6 @@ var menu = menu || {};
 
 /**
  * Reset position of Wunderlist (Mac)
- *
  * @author Christian Reber
  */
 menu.reset_window_size = function() {
@@ -60,10 +59,22 @@ menu.initialize = function() {
     languageItem.code = wunderlist.language.availableLang[ix].code;
   }
 
-  extraMenuItem.addItem(wunderlist.language.data.add_item_method, function() { dialogs.openSelectAddItemMethodDialog(); menu.refocus(); });
-  extraMenuItem.addItem(wunderlist.language.data.switchdateformat, function() { dialogs.openSwitchDateFormatDialog(); menu.refocus(); });
-  extraMenuItem.addItem(wunderlist.language.data.sidebar_position, function() { dialogs.openSidebarDialog(); menu.refocus(); });
-  extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, function() { dialogs.openDeletePromptDialog(); menu.refocus(); });
+  extraMenuItem.addItem(wunderlist.language.data.add_item_method, function() {
+    wunderlist.dialogs.openSelectAddItemMethodDialog();
+    menu.refocus();
+  });
+  extraMenuItem.addItem(wunderlist.language.data.switchdateformat, function() {
+    wunderlist.dialogs.openSwitchDateFormatDialog();
+    menu.refocus();
+  });
+  extraMenuItem.addItem(wunderlist.language.data.sidebar_position, function() {
+    wunderlist.dialogs.openSidebarDialog();
+    menu.refocus();
+  });
+  extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, function() {
+    wunderlist.dialogs.openDeletePromptDialog();
+    menu.refocus();
+  });
 
   var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition', 0);
   var enableNaturalDateRecognitionMenuString = wunderlist.language.data.enable_natural_date_recognition;
@@ -88,10 +99,12 @@ menu.initialize = function() {
   // Create Tutorials
   extraMenuItem.addItem(wunderlist.language.data.create_tutorials, function() { wunderlist.database.recreateTuts(); menu.refocus(); });
 
-  aboutUsMenuItem.addItem('Knowledge Base',    function() {Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb')});
+  aboutUsMenuItem.addItem('Knowledge Base', function() {
+    Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb');
+  });
   //aboutUsMenuItem.addItem(wunderlist.language.data.privacy_policy,  function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
-  aboutUsMenuItem.addItem(wunderlist.language.data.credits,         openCreditsDialog);  // About Us Dialog
-  aboutUsMenuItem.addItem(wunderlist.language.data.backgrounds,     openBackgroundsDialog);  // Background Credits
+  aboutUsMenuItem.addItem(wunderlist.language.data.credits,         wunderlist.dialogs.openCreditsDialog);  // About Us Dialog
+  aboutUsMenuItem.addItem(wunderlist.language.data.backgrounds,     wunderlist.dialogs.openBackgroundsDialog);  // Background Credits
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder,    function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_tw, function() {Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder')});
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_fb, function() {Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder')});
@@ -99,8 +112,14 @@ menu.initialize = function() {
   //aboutUsMenuItem.addItem(wunderlist.language.data.changelog, function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist/changelog')});
 
   if (wunderlist.account.isLoggedIn()) {
-    accountMenuItem.addItem(wunderlist.language.data.change_login_data, function() { wunderlist.account.editProfile(); menu.refocus(); })
-    accountMenuItem.addItem(wunderlist.language.data.delete_account, function() { wunderlist.account.deleteAccount(); menu.refocus(); });
+    accountMenuItem.addItem(wunderlist.language.data.change_login_data, function() {
+      wunderlist.account.editProfile();
+      menu.refocus();
+    });
+    accountMenuItem.addItem(wunderlist.language.data.delete_account, function() {
+      wunderlist.account.deleteAccount();
+      menu.refocus();
+    });
     accountMenuItem.addSeparatorItem();
     accountMenuItem.addItem(wunderlist.language.data.logout, function() {
       menu.refocus();
@@ -108,7 +127,7 @@ menu.initialize = function() {
     });
   } else {
     accountMenuItem.addItem(wunderlist.language.data.sign_in, function() {
-      dialogs.closeEveryone();
+      wunderlist.dialogs.closeEveryone();
       wunderlist.account.showRegisterDialog();
       menu.refocus();
     });

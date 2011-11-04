@@ -250,20 +250,19 @@ $(function() {
 	
 	// Cmd+Backspace / Del - Delete selected list
 	shortcut.add(deleteListShortcut, function (event) {
-		if ($('textarea:focus').length == 0 && $('input:focus').length == 0)
-		{
-			if (hotkeys.eventListener == false)
-			{
+		if ($('textarea:focus').length === 0 && $('input:focus').length === 0) {
+			if (hotkeys.eventListener === false) {
 				hotkeys.eventListener = true;
 				
 				var listElement = $('div#lists a.ui-state-disabled');
 				
-				if (listElement.length === 1 && listElement.attr('id').replace('list', '') != 1)
-				{			
-					dialogs.createDeleteListDialog();
+				if (listElement.length === 1 && listElement.attr('id').replace('list', '') !== 1) {			
+					wunderlist.dialogs.createDeleteListDialog();
 				}	
 			
-				setTimeout(function() { hotkeys.eventListener = false; }, 100);				
+				setTimeout(function() {
+				  hotkeys.eventListener = false;
+				}, 100);				
 			}
 		}
 	}, {"propagate" : true});

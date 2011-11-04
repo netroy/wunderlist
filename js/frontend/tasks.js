@@ -49,20 +49,15 @@ tasks.add = function() {
 			*/
 		}
 		
-		if (task_name != '')
-		{
-		    if (timestamp == 0)
-		    {
-			    timestamp = $(".add .showdate").attr('rel');
+		if (task_name !== '') {
+		  if (timestamp === 0) {
+			  timestamp = $(".add .showdate").attr('rel');
 			}
 
-			if (timestamp == undefined)
-				timestamp = 0;
-			
+      timestamp = timestamp || 0;
 			important = important || 0;
 			
-			if (isNaN(parseInt(list_id)) || $('#left a.active').length == 1)
-			{
+			if (isNaN(parseInt(list_id)) || $('#left a.active').length == 1) {
 				var activeFilter = $('#left a.active');
 				
 				if (list_id == 'today' || activeFilter.attr('id') == 'today')
@@ -85,8 +80,7 @@ tasks.add = function() {
 			
 			var taskHTML = html.generateTaskHTML(task_id, task_name, list_id, 0, important, timestamp);
 			
-			if ($("ul.filterlist").length > 0 || $('#left a.active').length == 1)
-			{
+			if ($("ul.filterlist").length > 0 || $('#left a.active').length === 1) {
 				var ulElement = $('ul#filterlist' + list_id);
 				
 				if (ulElement != undefined && ulElement.is('ul'))
@@ -521,10 +515,11 @@ $(function() {
 		var description  = $(this).find('span.description');
 		var deletebutton = $(this).find('span.delete');
 
-		if(description.length == 1)
-			deletebutton.show();
-		else
-			deletebutton.hide();
+		if(description.length === 1) {
+		  deletebutton.show();
+		} else {
+		  deletebutton.hide();
+		}
 	});
 
 	$(".mainlist li, .donelist li").live('mouseout', function () {
@@ -532,15 +527,16 @@ $(function() {
 	});
 
 	// Delete function for the clicked task
-    $('div.add').live('click', function() {
-		$('input.input-add').focus();
+  $('div.add').live('click', function() {
+	  $('input.input-add').focus();
 	});
 
 	// Delete function for the clicked task
-    $("li span.delete").live('click', function() {
-		if (settings.getDeleteprompt() == 1)
-			dialogs.openTaskDeleteDialog($(this));
-		else
-			tasks.deletes($(this));
+  $("li span.delete").live('click', function() {
+		if (settings.getDeleteprompt() === 1) {
+		  wunderlist.dialogs.openTaskDeleteDialog($(this));
+		} else {
+		  tasks.deletes($(this));
+		}
 	});
 });

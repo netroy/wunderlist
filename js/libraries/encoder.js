@@ -5,8 +5,8 @@ Encoder = {
 
 	isEmpty : function(val){
 		if(val){
-			return ((val===null) || val.length==0 || /^\s+$/.test(val));
-		}else{
+			return ((val === null) || val.length === 0 || /^\s+$/.test(val));
+		} else {
 			return true;
 		}
 	},
@@ -31,11 +31,9 @@ Encoder = {
 		if(this.isEmpty(s)) return "";
 
 		var e = "";
-		for (var i = 0; i < s.length; i++)
-		{
+		for (var i = 0; i < s.length; i++) {
 			var c = s.charAt(i);
-			if (c < " " || c > "~")
-			{
+			if (c < " " || c > "~") {
 				c = "&#" + c.charCodeAt() + ";";
 			}
 			e += c;
@@ -54,18 +52,18 @@ Encoder = {
 		d = this.HTML2Numerical(d);
 		
 		// look for numerical entities &#34;
-		arr=d.match(/&#[0-9]{1,5};/g);
+		arr = d.match(/&#[0-9]{1,5};/g);
 		
 		// if no matches found in string then skip
-		if(arr!=null){
-			for(var x=0;x<arr.length;x++){
+		if(arr !== null){
+			for(var x=0; x < arr.length; x++){
 				m = arr[x];
 				c = m.substring(2,m.length-1); //get numeric part which is refernce to unicode character
 				// if its a valid number we can decode
 				if(c >= -32768 && c <= 65535){
 					// decode every single match within string
 					d = d.replace(m, String.fromCharCode(c));
-				}else{
+				} else {
 					d = d.replace(m, ""); //invalid so replace with nada
 				}
 			}			

@@ -7,25 +7,48 @@ var filters = filters || {};
  */
 filters.init = function() {
 	$('.list').click(filters.clearActiveStates);
-	$('a#someday').click(function() {wunderlist.database.getFilteredTasks('date', 'withdate')});
-	$('a#withoutdate').click(function() {wunderlist.database.getFilteredTasks('date', 'nodate')});
-	$('a#all').click(function() {wunderlist.database.getFilteredTasks('all')});
-	$('a#starred').click(function() {wunderlist.database.getFilteredTasks('starred')});
-	$('a#today').click(function() {wunderlist.database.getFilteredTasks('today')});
-	$('a#tomorrow').click(function() {wunderlist.database.getFilteredTasks('tomorrow')});
-	$('a#thisweek').click(function() {wunderlist.database.getFilteredTasks('thisweek')});
-	$('a#done').click(function() {wunderlist.database.getFilteredTasks('done')});
+
+	$('a#someday').click(function() {
+	  wunderlist.database.getFilteredTasks('date', 'withdate');
+	});
+
+	$('a#withoutdate').click(function() {
+	  wunderlist.database.getFilteredTasks('date', 'nodate');
+	});
+
+	$('a#all').click(function() {
+	  wunderlist.database.getFilteredTasks('all');
+	});
+
+	$('a#starred').click(function() {
+	  wunderlist.database.getFilteredTasks('starred');
+	});
+
+	$('a#today').click(function() {
+	  wunderlist.database.getFilteredTasks('today');
+	});
+
+	$('a#tomorrow').click(function() {
+	  wunderlist.database.getFilteredTasks('tomorrow');
+	});
+
+	$('a#thisweek').click(function() {
+	  wunderlist.database.getFilteredTasks('thisweek');
+	});
+
+	$('a#done').click(function() {
+	  wunderlist.database.getFilteredTasks('done');
+	});
 	
 	// Activates a filter
 	$('#bottombar #left a.filter').click(function() {
-		if ($(this).hasClass('loggedinas') == false)
-		{
+		if ($(this).hasClass('loggedinas') === false) {
 			filters.setActiveState(this);
 			$("a.list").droppable({disabled: false});
 			html.make_timestamp_to_string();
+		} else {
+		  $(this).addClass('active');
 		}
-		else
-			$(this).addClass('active');
 	});
 
 	// Show overdue tasks if click on "overdue alert"
@@ -77,49 +100,38 @@ filters.updateBadges = function() {
 	var todaycount	 = wunderlist.database.updateBadgeCount('today');
 	var overduecount = wunderlist.database.updateBadgeCount('overdue');
 
-	var today_has_no_badge	 = $('#bottombar #left a#today span').length == 0;
-	var overdue_has_no_badge = $('#bottombar #left a#overdue span').length == 0;
+	var today_has_no_badge	 = $('#bottombar #left a#today span').length === 0;
+	var overdue_has_no_badge = $('#bottombar #left a#overdue span').length === 0;
 
-	if(today_has_no_badge == true)
-	{
+	if(today_has_no_badge === true) {
 		$('#left a#today').append('<span>' + todaycount + '</span>');
-	}
-	else
-	{
+	} else {
 		$('#left a#today span').text(todaycount);
 		//$('#left a#today span').fadeOut('fast').fadeIn('fast');
 		$("#lists").css("bottom","74px");
 		$("#note").css("bottom","74px");
 	}
 
-	if(overduecount > 1)
-	{
+	if(overduecount > 1) {
 		overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_pl;
 		$('div#sidebar div#notification').fadeIn('fast');
 		$("#lists").css("bottom","74px");
 		$("#note").css("bottom","74px");
-	}
-	else if(overduecount == 1)
-	{
+	} else if(overduecount === 1) {
 		overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_sl;
 		$('div#sidebar div#notification').fadeIn('fast');
 		$("#lists").css("bottom","74px");
 		$("#note").css("bottom","74px");
-	}
-	else
-	{
+	} else {
 		overdue_text = '';
 		$('div#sidebar div#notification').fadeOut('fast');
 		$("#lists").css("bottom","36px");
 		$("#note").css("bottom","36px");
 	}
 
-	if(overdue_has_no_badge)
-	{
+	if(overdue_has_no_badge) {
 		$('div#sidebar div#notification div').text(overdue_text);
-	}
-	else
-	{
+	} else {
 		$('div#sidebar div#notification div').text(overduecount);
 		//$('div#sidebar div#notification').fadeOut('fast').fadeIn('fast');
 		$("#lists").css("bottom","74px");
@@ -127,17 +139,13 @@ filters.updateBadges = function() {
 
 	var countAll = overduecount + todaycount;
 
-	if(todaycount == 0)
-	{
+	if(todaycount === 0) {
 		$('#left a#today span').remove();
 	}
 
-	if(countAll == 0)
-	{
+	if(countAll === 0) {
 		Titanium.UI.setBadge(null);
-	}
-	else
-	{
+	} else {
 		Titanium.UI.setBadge(countAll.toString());
 	}
 };
