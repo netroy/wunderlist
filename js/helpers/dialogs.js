@@ -25,6 +25,14 @@ wunderlist.dialogs = (function(undefined){
 
   function createAlertDialog(title, content) {
     // TODO: fill this stub
+    $("<div/>").append($("<p class='pl8'/>").html(content)).dialog({
+      autoOpen  : true,
+      draggable : false,
+      resizable : false,
+      modal     : true,
+      width     : 450,
+      title     : title
+    });
   }
 
   /**
@@ -611,6 +619,7 @@ wunderlist.dialogs = (function(undefined){
 
   return {
     "init": init,
+    "createAlertDialog": createAlertDialog,
     "closeEveryone": closeEveryone,
     "generateDialog": generateDialog,
     "openDialog": openDialog,
