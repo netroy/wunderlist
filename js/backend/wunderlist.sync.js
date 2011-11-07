@@ -32,7 +32,7 @@ wunderlist.sync.init = function() {
         wunderlist.sync.fireSync();
         return false;      
       } else {
-        wunderlist.dialogs.createAlertDialog(wunderlist.language.data.sync_error, wunderlist.language.data.no_internet_sync);
+        wunderlist.dialogs.createAlertDialog(wunderlist.language.data.sync_error, wunderlist.language.data.no_internet);
       }                    
     }
   });
