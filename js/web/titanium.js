@@ -1,4 +1,7 @@
-(function($, global){
+(function($, window, navigator, wunderlist, undefined){
+  "use strict";
+
+
   if(typeof Titanium !== 'undefined'){
     return;
   }
@@ -21,7 +24,7 @@
   /**
    * Localization stuff
    */
-  var propertyMap = global.localStorage || {};//
+  var propertyMap = window.localStorage || {};//
   Properties.getInt= function(property, defaultValue){
     return parseInt(propertyMap[property], 10) || defaultValue;
   };
@@ -102,11 +105,11 @@
   };
 
   UI.getCurrentWindow = function() {
-    return global;
+    return window;
   };
 
   UI.getMainWindow = function() {
-    return global;
+    return window;
   };
 
 
@@ -159,8 +162,8 @@
   Codec.MD5 = "md5";
   Codec.digestToHex = function(codec, string){
     if(codec === Codec.MD5){
-      return md5(string);
-    }else{
+      return window.md5(string);
+    } else {
       throw new Error("invalid codec supplied, only MD5 currently supported");
     }
   };
@@ -172,7 +175,7 @@
    * JSON utils
    */
   JSON.parse = function(){
-    return global.JSON.parse.apply(global.JSON, arguments);
+    return window.JSON.parse.apply(window.JSON, arguments);
   };
 
 
@@ -181,7 +184,7 @@
   /**
    * Network utils
    */
-  Network.online = global.navigator.onLine;
+  Network.online = false;//DEBUG: window.navigator.onLine;
   $(window).bind("offline",function(e){
     Network.online = false;
   }).bind("online",function(e){
@@ -191,5 +194,5 @@
 
 
   // Re-assign the variable to the global scope
-  global.Titanium = Titanium;
-})(jQuery, window);
+  window.Titanium = Titanium;
+})(jQuery, window, window.navigator, wunderlist);
