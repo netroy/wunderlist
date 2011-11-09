@@ -63,10 +63,11 @@ note.saveAndClose = function() {
 
   noteElement.html(newNote);
   note.text = $('textarea#noteTextarea').val();
-  
-  mainWindow.task.id   = note.noteId;
-  mainWindow.task.note = note.text;
-  mainWindow.task.update();
+
+  wunderlist.helpers.task.set({
+    id: note.noteId,
+    note: note.text
+  }).update();
   
   note.close();
 };
@@ -85,11 +86,11 @@ $(function() {
   $('#save-and-close').val(wunderlist.language.data.save_generic);
   $('#delete').val(wunderlist.language.data.delete_generic);
   
-  $('span.hint').text(wunderlist.utils.ucfirst(mainWindow.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
+  $('span.hint').text(wunderlist.helpers.utils.ucfirst(mainWindow.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
   
   $('input#delete').live('click', function() {
     if (Titanium.App.Properties.getString('delete_prompt', '1') == 1) {
-      wunderlist.dialogs.openNoteDeleteDialog();
+      wunderlist.helpers.dialogs.openNoteDeleteDialog();
     } else {
       $('input#save').trigger('deleteNote');
     }
@@ -135,10 +136,11 @@ $(function() {
       $('textarea#noteTextarea').hide();
       
       note.text = $('textarea#noteTextarea').val();
-      
-      mainWindow.task.id   = note.noteId;
-      mainWindow.task.note = note.text;
-      mainWindow.task.update();
+
+      wunderlist.helpers.task.set({
+        id: note.noteId,
+        note: note.text
+      }).update();
       
       note.close();
     }

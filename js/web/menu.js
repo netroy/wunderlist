@@ -27,11 +27,11 @@ wunderlist.menu = (function(undefined){
     $('a.invitation', menuUl).click( wunderlist.account.showInviteDialog );
     $('a.logout', menuUl).click( wunderlist.account.logout );
 
-    $('a.credits', menuUl).click( wunderlist.dialogs.openCreditsDialog );
-    $('a.backgrounds', menuUl).click( wunderlist.dialogs.openBackgroundsDialog );
-    $('a.switchdateformat', menuUl).click( wunderlist.dialogs.openSwitchDateFormatDialog );
-    $('a.deleteprompt', menuUl).click( wunderlist.dialogs.openDeletePromptDialog );
-    $('a.sidebarposition', menuUl).click( wunderlist.dialogs.openSidebarPositionDialog );
+    $('a.credits', menuUl).click( wunderlist.helpers.dialogs.openCreditsDialog );
+    $('a.backgrounds', menuUl).click( wunderlist.helpers.dialogs.openBackgroundsDialog );
+    $('a.switchdateformat', menuUl).click( wunderlist.helpers.dialogs.openSwitchDateFormatDialog );
+    $('a.deleteprompt', menuUl).click( wunderlist.helpers.dialogs.openDeletePromptDialog );
+    $('a.sidebarposition', menuUl).click( wunderlist.helpers.dialogs.openSidebarPositionDialog );
     $('a.create_tutorials', menuUl).click( recreateTutorials );
     $('a.lang', menuUl).click(function() {
         language.switchLang($(this).attr('rel'));

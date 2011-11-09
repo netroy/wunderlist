@@ -15,10 +15,10 @@ makeListsDropable = function() {
 			var list_id  = $(this).attr('id').replace('list','');
 			
 			ui.draggable.hide('fast', function() {
-				task.id      = $(this).attr('id');
-				task.list_id = list_id;
-				task.updateList();
-				wunderlist.task.update();
+			  wunderlist.helpers.task.set({
+			    id: $(this).attr('id'),
+			    list_id: list_id
+			  }).updateList().update();
 			});
 		}
     });
@@ -47,44 +47,37 @@ makeFilterDropable = function() {
 			var acceptFilter           = false;
 			
 			// UPDATE task by dropping on filter starred
-			if (droppedFilter == 'starred')
-			{
+			if (droppedFilter === 'starred') {
 				acceptFilter = true;
 				
-				if (activeFilter != 'starred' || !isNaN(parseInt(activeFilter)))
-				{
-					if (droppedTask.children('span.favina').length == 1)
-					{
-						task.id        = taskID;
-						task.important = 1;
-						task.updateImportant();
-						wunderlist.task.update();
+				if (activeFilter !== 'starred' || !isNaN(parseInt(activeFilter))) {
+					if (droppedTask.children('span.favina').length === 1) {
+					  wunderlist.helpers.task.set({
+					    id: taskID,
+					    important: 1
+					  }).updateImportant().update();
 					}
 				}
 			}
 			
 			// UPDATE task by dropping on filter today
-			if (droppedFilter == 'today')
-			{
+			if (droppedFilter === 'today') {
 				acceptFilter = true;
 				
-				if (activeFilter != 'today' || !isNaN(parseInt(activeFilter)))
-				{
-					if (droppedTaskDate.hasClass('timestamp') == false || droppedTaskDate.attr('rel') != today)
-					{
-						if (droppedTaskDate.length == 0) {	
-												
+				if (activeFilter !== 'today' || !isNaN(parseInt(activeFilter))) {
+					if (droppedTaskDate.hasClass('timestamp') === false || droppedTaskDate.attr('rel') !== today) {
+						if (droppedTaskDate.length === 0) {
 							droppedTaskDateInput.remove();
 							droppedTaskDateTrigger.remove();
 							droppedTask.children('.description').after('<span class="showdate timestamp" rel="' + today + '">&nbsp;</span>');
-								
 						} else {
 							droppedTaskDate.addClass('timestamp').attr('rel', today);
 						}
-						
-						task.id   = taskID;
-						task.date = today;
-						wunderlist.task.update();
+
+						wunderlist.helpers.task.set({
+						  id: taskID,
+						  date: today
+						}).update();
 						
 						html.make_timestamp_to_string();
 					}
@@ -93,28 +86,23 @@ makeFilterDropable = function() {
 			}
 			
 			// UPDATE task by dropping on filter tomorrow
-			if (droppedFilter == 'tomorrow')
-			{
+			if (droppedFilter === 'tomorrow') {
 				acceptFilter = true;
 														
-				if (activeFilter != 'tomorrow' || !isNaN(parseInt(activeFilter)))
-				{
-					if (droppedTaskDate.hasClass('timestamp') == false || droppedTaskDate.attr('rel') != tomorrow)
-					{
-					
-						if (droppedTaskDate.length == 0) {	
-												
+				if (activeFilter !== 'tomorrow' || !isNaN(parseInt(activeFilter, 10))) {
+					if (droppedTaskDate.hasClass('timestamp') === false || droppedTaskDate.attr('rel') !== tomorrow) {
+						if (droppedTaskDate.length === 0) {
 							droppedTaskDateInput.remove();
 							droppedTaskDateTrigger.remove();
 							droppedTask.children('.description').after('<span class="showdate timestamp" rel="' + tomorrow + '">&nbsp;</span>');
-								
 						} else {
 							droppedTaskDate.addClass('timestamp').attr('rel', tomorrow);
 						}					
-						
-						task.id   = taskID;
-						task.date = tomorrow;
-						wunderlist.task.update();
+
+            wunderlist.helpers.task.set({
+              id: taskID,
+              date: tomorrow
+            }).update();
 						
 						html.make_timestamp_to_string();
 					}
@@ -122,41 +110,35 @@ makeFilterDropable = function() {
 			}
 			
 			// UPDATE task by dropping on filter withoutdate
-			if (droppedFilter == 'withoutdate')
-			{
+			if (droppedFilter === 'withoutdate') {
 				acceptFilter = true;
 				
-				if (activeFilter != 'withoutdate' || !isNaN(parseInt(activeFilter)))
-				{
-					if (droppedTaskDate.hasClass('timestamp') == true)
-					{											
+				if (activeFilter !== 'withoutdate' || !isNaN(parseInt(activeFilter, 10))) {
+					if (droppedTaskDate.hasClass('timestamp') === true) {											
 						droppedTaskDate.remove();
 						droppedTask.children('.description').after("<input type='hidden' class='datepicker'/>");
 						html.createDatepicker();
-						
-						task.id   = taskID;
-						task.date = 0;
-						wunderlist.task.update();
+
+						wunderlist.helpers.task.set({
+						  id: taskID,
+						  date: 0
+						}).update();
 					}
 				}
 			}
 			
-			if ($('ul.filterlist').length > 0 && acceptFilter == true)
-			{				
-				if ((droppedFilter != 'starred' && activeFilter != 'thisweek' && activeFilter != 'all' && activeFilter != droppedFilter) || 
-				    (activeFilter == 'thisweek' && droppedFilter == 'withoutdate'))
-				{
-					if (droppedTaskParent.children('li').length == 2)
-					{
+			if ($('ul.filterlist').length > 0 && acceptFilter === true) {				
+				if ((droppedFilter !== 'starred' && activeFilter !== 'thisweek' && activeFilter !== 'all' && activeFilter !== droppedFilter) || 
+				    (activeFilter === 'thisweek' && droppedFilter === 'withoutdate')) {
+					if (droppedTaskParent.children('li').length === 2) {
 						droppedTaskParent.prev().remove();
 						droppedTaskParent.remove();
-					}	
-					
+					}
 					droppedTask.remove();
 				}
 			}
 		}
-    });
+  });
 };
 
 /**
@@ -168,15 +150,17 @@ makeSortable = function() {
 	// Sortable Tasks
 	$("ul.sortable").sortable({
    		scroll      : true,
-		containment : 'document',
+		  containment : 'document',
    		delay       : 100,
    		appendTo    : 'body',
-   		helper      : function() { return $("<div class='dragging'></div>"); },
+   		helper      : function() {
+   		  return $("<div class='dragging'></div>");
+   		},
    		cursorAt    : {top : 15, left : 15},
    		cursor      : 'pointer',
    		placeholder : 'placeholder',
    		update      : function(ev, ui) {
-   			task.updatePositions();
+   			wunderlist.helpers.task.updatePositions();
    		}
     });
 };

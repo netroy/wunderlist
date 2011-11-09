@@ -601,9 +601,7 @@ html.addRemoveDateButton = function(object) {
 					}
 				}
 			}
-		}
-		else
-		{
+		} else {
 			$('#add-input-date').fadeOut(250, function () {
 				$('div.addwrapper').animate({ right: '15px' }, 300);
 				object.children('div.addwrapper').children('span.showdate').remove();
@@ -618,14 +616,14 @@ html.addRemoveDateButton = function(object) {
 		
 		$('#ui-datepicker-div').hide();
 		
-		if (object.hasClass('add') != true)
-		{
-			task.id   = object.attr('id');
-			task.date = 0;
-			wunderlist.task.update();
+		if (object.hasClass('add') !== true) {
+		  wunderlist.helpers.task.set({
+		    id: object.attr('id'),
+		    date: 0
+		  }).update();
 		}
 
-        setTimeout(function() {datePickerOpen = false}, 10);
+    setTimeout(function() {datePickerOpen = false}, 10);
 	});
 };
 
@@ -776,15 +774,16 @@ html.createDatepicker = function() {
 					$(this).parent().find('.datepicker').hide();
 				}
 				
-				task.id   = $(this).parent().attr("id");
-				task.date = $(this).parent().find('span.timestamp').attr('rel');
-				wunderlist.task.update();
+				wunderlist.helpers.task.set({
+				  id: $(this).parent().attr("id"),
+				  date: $(this).parent().find('span.timestamp').attr('rel')
+				}).update();
 					
 				
 				if ($('a#withoutdate').hasClass('active')) {
 					var parentList = $(this).parent().parent();
 					$(this).parent().remove();
-					if ( $(parentList).children('li').size() < 1 ) {
+					if ($(parentList).children('li').size() < 1) {
 						$(parentList).prev().remove();
 						$(parentList).remove();
 					}

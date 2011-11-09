@@ -89,26 +89,31 @@ wunderlist.database.createStandardElements = function() {
  * @author Daniel Marschner
  */
 wunderlist.database.createTuts = function(list_id) {
-	if (list_id != undefined) {
+  var addon, important, done, done_date;
+	if (list_id !== undefined) {
 		for (var ix = 1; ix <= 8; ix++) {
-			var addon = '';
+			addon = '';
+			important = done = done_date = undefined;
 			
 			if ((ix == 2 || ix == 3 || ix == 5 || ix == 6) && wunderlist.os === 'darwin'){
 			  addon = '_mac';
 			}
-
-			task.name     = wunderlist.language.data['default_task_' + ix + addon];
-			task.list_id  = list_id;
-			task.position = ix; 
 			
 			if (ix === 1) {
-				task.important = 1;
+				important = 1;
 			} else if (ix === 7) {
-				task.done      = 1;
-				task.done_date = new Date().getTime() / 1000;
+				done = 1;
+				done_date = new Date().getTime() / 1000;
 			}
-			
-			wunderlist.task.insert();
+
+			wunderlist.helpers.task.set({
+			  name: wunderlist.language.data['default_task_' + ix + addon],
+			  list_id: list_id,
+			  position: ix,
+			  important: important,
+			  done: done,
+			  done_date: done_date
+			}).insert();
 		}
 	}
 };
@@ -267,9 +272,10 @@ wunderlist.database.updateList = function(noversion) {
 				var dbtasks = wunderlist.database.getTasks(undefined, list_id);
 				
 				for (ix in dbtasks) {
-					task.id      = dbtasks[ix].id;
-					task.deleted = 1;
-					wunderlist.task.update();
+				  wunderlist.helpers.task.set({
+				    id: dbtasks[ix].id,
+				    deleted: 1
+				  }).update();
 				}
 			}
 			
@@ -285,29 +291,31 @@ wunderlist.database.updateList = function(noversion) {
 
 /**
  * Insert a new task by the given task object
- *
  * @attention Do not use the variable "task" for any other function in this project
- *
  * @author Daniel Marschner
  */
 wunderlist.database.insertTask = function() {		
-	if (task.name != undefined && task.name != '')
-	{		
-		if (task.position == undefined)
+	if (task.name !== undefined && task.name !== '') {		
+		if (task.position === undefined) {
 			task.position = wunderlist.database.getLastTaskPosition(task.list_id) + 1;
+		}
 
-		if ((task.date != undefined && task.date == '') || task.date == undefined)
+		if ((task.date !== undefined && task.date === '') || task.date === undefined) {
 			task.date = 0;
+		}
 
 		task.version = 0;
 		task.name    = html.convertString(task.name, 255);
 
-        // If the task name is empty somehow, abort the adding of the task
-        if (task.name == '') return false;
+    // If the task name is empty somehow, abort the adding of the task
+    if (task.name === '') {
+      return false;
+    }
 
 		// Convert the task note for the database if note is set
-		if (task.note != undefined && task.note != '')
+		if (task.note !== undefined && task.note !== '') {
 			task.note = html.convertString(task.note, 5000);
+		}
 
 		var first  = true;
 		var fields = '';
@@ -315,7 +323,7 @@ wunderlist.database.insertTask = function() {
 		
 		for (var property in task) {
 			if (task[property] != undefined && $.isFunction(task[property]) === false) {
-				if (wunderlist.helpers.utils.in_array(property, wunderlist.task.properties) === true) {
+				if (wunderlist.helpers.utils.in_array(property, wunderlist.helpers.task.properties) === true) {
 					fields += (first == false ? ', ' : '') + property;
 					values += (first == false ? ', ' : '') + "'" + task[property] + "'";
 					first = false;
@@ -334,7 +342,7 @@ wunderlist.database.insertTask = function() {
 			filters.updateBadges();
 			
 			// Reset the properties of the given task object
-			wunderlist.task.setDefaults();
+			wunderlist.helpers.task.setDefaults();
 
 			return task_id;
 		} else {
@@ -381,7 +389,7 @@ wunderlist.database.updateTask = function(noVersion) {
 		
 		for (var property in task) {
 			if (task[property] !== undefined && $.isFunction(task[property]) === false) {
-				if (wunderlist.helpers.utils.in_array(property, wunderlist.task.properties) === true) {
+				if (wunderlist.helpers.utils.in_array(property, wunderlist.helpers.task.properties) === true) {
 					set += (first == false ? ', ' : '') + property + ' = ' +  ((typeof task[property] == 'string') ? "'" + task[property] + "'" : task[property]); // TODO: Test this combination
 					first = false;
 				}
@@ -396,7 +404,7 @@ wunderlist.database.updateTask = function(noVersion) {
 			filters.updateBadges();
 			
 			// Reset the properties of the given task object
-			wunderlist.task.setDefaults();
+			wunderlist.helpers.task.setDefaults();
 			
 			return true;
 		} else {

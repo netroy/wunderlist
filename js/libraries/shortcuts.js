@@ -32,9 +32,10 @@ shortcut = {
     // 6Wunderkinder
     
     var keys = shortcut_combination.split("+");
-    if (keys[0] == 'command')
+    if (keys[0] === 'command') {
       shortcut_combination = 'meta+' + keys[1];
-    
+    }
+
     /*************************************************************/
     
     //The function to be called at keypress
@@ -244,4 +245,4 @@ shortcut = {
       ele['on'+type] = false;
     }
   }
-}
+};

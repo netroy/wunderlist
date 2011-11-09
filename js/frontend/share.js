@@ -77,11 +77,12 @@ share.share_with_cloudapp = function() {
 			new_task.push($(this).children('span.description').html());
 
 			// Add date
-			if ($(this).children('span.showdate').hasClass('timestamp'))
+			if ($(this).children('span.showdate').hasClass('timestamp')) {
 				new_task.push(parseInt($(this).children('span.timestamp').attr('rel')) + 86400);
-			else
+			} else {
 				new_task.push(0);
-			
+			}
+
 			// Add note
 			if ($(this).children('span.note').html() != '')
 				new_task.push($(this).children('span.note').html());

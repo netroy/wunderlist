@@ -338,9 +338,10 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
                 if(synced_tasks != undefined) {
                   for(var i = 0, max = synced_tasks.length; i < max; i++) {
                     $.each(synced_tasks[i], function(offline_id, online_id) {
-                      task.id        = offline_id;
-                      task.online_id = online_id;
-                      wunderlist.task.update(true);
+                      wunderlist.helpers.task.set({
+                        id: offline_id,
+                        online_id: online_id
+                      }).update(true);
                     });
                   }
                 }

@@ -9,8 +9,7 @@ tasks.addNewTaskToTop = false;
 
 // ADD a new task to the db and frontend
 tasks.add = function() {
-	if ($("input.input-add").val() != '')
-	{
+	if ($("input.input-add").val() !== '') {
 		// Add Task to List
 		list_id       = $("ul.mainlist").attr("rel");
 		task_name     = html.convertString($("input.input-add").val());
@@ -19,7 +18,7 @@ tasks.add = function() {
 		var important = 0;
 		
 		// Check if task should be prio
-		if (task_name.indexOf('*') == 0) {
+		if (task_name.indexOf('*') === 0) {
 			task_name = task_name.substr(1);
 			important = 1;
 		}
@@ -70,20 +69,21 @@ tasks.add = function() {
 				// On Filters set it to the inbox
 				list_id = 1;
 			}
+
+      wunderlist.helpers.task.set({
+  			name: task_name,
+  			list_id: list_id,
+  			date: timestamp,
+  			important: important
+      });
 			
-			task.name      = task_name;
-			task.list_id   = list_id;
-			task.date      = timestamp;
-			task.important = important;
-			
-			var task_id  = wunderlist.task.insert();	
-			
+			var task_id  = wunderlist.helpers.task.insert();	
 			var taskHTML = html.generateTaskHTML(task_id, task_name, list_id, 0, important, timestamp);
 			
 			if ($("ul.filterlist").length > 0 || $('#left a.active').length === 1) {
 				var ulElement = $('ul#filterlist' + list_id);
 				
-				if (ulElement != undefined && ulElement.is('ul'))
+				if (ulElement != undefined && ulElement.is('ul')) {
 					if (tasks.addNewTaskToTop) {
 						//ulElement.prepend(taskHTML).find('li:first').hide().fadeIn(225);
 						if (important) {
@@ -105,12 +105,11 @@ tasks.add = function() {
 						} else {
 							$(ulElement).append(taskHTML).find("li:last").hide().fadeIn(225);
 						}
-					}
-				else
-				{
+					} 
+				} else {
 					listHTML  = '<h3 class="clickable cursor" rel="' + list_id + '">' + $('a#list' + list_id + ' b').text() + '</h3>';
 					listHTML += '<ul id="filterlist' + list_id + '" rel="' + ulElement.attr('rel') + '" class="mainlist sortable filterlist">' + taskHTML + '</ul>';
-					
+				
 					// If adding to inbox in filter view, the inbox should be inserted before any other list
 					var theLists = wunderlist.database.getLists(list_id);
 					if (theLists[0].inbox == 1) {
@@ -119,10 +118,7 @@ tasks.add = function() {
 						$('div#content').append(listHTML);
 					}
 				}
-			}
-			else
-			{
-				// ORDINARY LIST
+			} else { // ORDINARY LIST
 				if (tasks.addNewTaskToTop) {
 					if (important) {
 						$("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
@@ -161,8 +157,8 @@ tasks.add = function() {
 			html.make_timestamp_to_string();
 			
 			if (tasks.addNewTaskToTop) {
-				task.updatePositions();
-				task.addNewTaskToTop = false;
+				wunderlist.helpers.task.updatePositions();
+				tasks.addNewTaskToTop = false;
 			}
 		}
 		else
@@ -178,21 +174,21 @@ tasks.add = function() {
 tasks.edit = function() {
 	tasks.focusOutEnabled = false;
 
-    var task_name = $('#task-edit').val();
-	var task_id   = $('#task-edit').parent().attr('id');
+  var task_name = $('#task-edit').val();
+	var task_id = $('#task-edit').parent().attr('id');
 	
 	$('#task-edit').parent().find('.description').html(html.replace_links(unescape(task_name))).show();
 	$('#task-edit').remove();
 	
-	task.id   = task_id;
-	task.name = html.convertString(task_name);
-	wunderlist.task.update();
-
+	wunderlist.helpers.task.set({
+	  id: task_id,
+	  name: html.convertString(task_name)
+	}).update();
 	filters.updateBadges();
 
-	$('html').find('.description').html();
-
-    tasks.focusOutEnabled = true;
+  // TODO: What would this line do ??
+	//$('html').find('.description').html();
+  tasks.focusOutEnabled = true;
 };
 
 /**
@@ -203,9 +199,9 @@ tasks.edit = function() {
 tasks.cancel = function() {
 	tasks.focusOutEnabled = false;
 
-    var listElement = $('#task-edit').parent();
+  var listElement = $('#task-edit').parent();
 	listElement.children('input#task-edit').remove();
-    listElement.children('span.description').show();
+  listElement.children('span.description').show();
 };
 
 /**
@@ -215,12 +211,11 @@ tasks.cancel = function() {
  */
 tasks.deletes = function(deleteElement) {
 	var liElement = deleteElement.parent();
-	
-	task.id      = liElement.attr('id');
-	task.list_id = liElement.attr('rel');
-	task.deleted = 1;
-	task.updateDeleted();
-	wunderlist.task.update();
+	wunderlist.helpers.task.set({
+	  id: liElement.attr('id'),
+	  list_id: liElement.attr('rel'),
+	  deleted: 1
+	}).updateDeleted().update();
 };
 
 // On DOM ready
@@ -444,71 +439,61 @@ $(function() {
 	});
 
 	$(".add input").live('focusout', function () {
-		if($(this).val() == '') {
-			
+		if($(this).val() === '') {
 			wunderlist.timer.resume();
 		}
 	});
 	
 	// Do the check or uncheck a task magic
 	$('.checkboxcon').live('click', function(event) {
-        if(tasks.checkClicked == false)
-        {
-            tasks.checkClicked = true;
-            
-            $(this).toggleClass("checked");
-
-            var is_checked = $(this).hasClass("checked");
-							
-        	task.id      = $(this).parent().attr("id");
-            task.list_id = $(this).parent().attr("rel").replace('list', '');
+    if(tasks.checkClicked === false) {
+      tasks.checkClicked = true;
+      $(this).toggleClass("checked");
 
 			// If it is not checked, check and append to done list
-            if(is_checked)
-            {
-				task.done      = 1;
-				task.done_date = html.getWorldWideDate();	
-      		}
-      		// If is already checked, append to upper list
-            else
-            {
-				task.done      = 0;
-				task.done_date = 0;
-           	}
-			
-			task.updateDone();
-			wunderlist.task.update();
-         }
+			var done, done_date;
+      if($(this).hasClass("checked")) {
+				done = 1;
+				done_date = html.getWorldWideDate();	
+      } else { // If is already checked, append to upper list
+				done = 0;
+				done_date = 0;
+      }
 
-         setTimeout(function() { tasks.checkClicked = false; }, 100);
-    });
+      wunderlist.helpers.task.set({
+        id: $(this).parent().attr("id"),
+        list_id: $(this).parent().attr("rel").replace('list', ''),
+        done: done,
+        done_date: done_date
+      }).updateDone().update();
+    }
+
+    setTimeout(function() { 
+      tasks.checkClicked = false;
+    }, 100);
+  });
     
-    // Make this task unimportant
-    $("ul.mainlist span.fav").live("click", function() {
-    	if($('a#done.active').length == 0)
-		{
-			// Make this task unimportant
-	        task.id        = $(this).parent('li').attr("id");
-	        task.important = 0;
-	        task.updateImportant();
-	        wunderlist.task.update();
-	        task.updatePositions();
-		}
-    });
+  // Make this task unimportant
+  $("ul.mainlist span.fav").live("click", function() {
+  	if($('a#done.active').length === 0) {
+		// Make this task unimportant
+		  wunderlist.helpers.task.set({
+		    id: $(this).parent('li').attr("id"),
+		    important: 0
+		  }).updateImportant().update().updatePositions();
+	  }
+  });
 
-    // Make this task important
-    $("ul.mainlist span.favina").live("click", function() {
+  // Make this task important
+  $("ul.mainlist span.favina").live("click", function() {
 		var liElement = $(this).parent('li');
-		
-		if ($('a#done.active').length == 0 && liElement.hasClass('done') == false)
-		{
-			task.id        = liElement.attr('id');
-			task.important = 1;
-			task.updateImportant();
-	        wunderlist.task.update();
-	        task.updatePositions();
-		}
-    });
+		if ($('a#done.active').length === 0 && liElement.hasClass('done') === false) {
+		  wunderlist.helpers.task.set({
+		    id: liElement.attr('id'),
+		    important: 1
+		  }).updateImportant().update().updatePositions();
+	  }
+  });
     
     // Delete Button Mouse Over
 	$("ul.mainlist li, ul.donelist li").live('mouseover', function () {
