@@ -2,7 +2,7 @@ var share = share || {};
 
 share.init = function() {
 	$('#listfunctions a.list-email').live("click", share.share_by_email);
-	$('#listfunctions a.list-cloud').live("click", wunderlist.dialogs.showCloudAppDialog);
+	$('#listfunctions a.list-cloud').live("click", wunderlist.helpers.dialogs.showCloudAppDialog);
 	$('#listfunctions a.list-print').live("click", share.print);
 	
 	// Open URL on click
@@ -49,7 +49,7 @@ share.share_by_email = function() {
 	}
 	else
 	{
-		wunderlist.dialogs.showErrorDialog(wunderlist.language.data.empty_list);
+		wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.empty_list);
 	}
 };
 
@@ -113,7 +113,7 @@ share.share_with_cloudapp = function() {
 	}
 	else
 	{
-		wunderlist.dialogs.showErrorDialog(wunderlist.language.data.empty_list);
+		wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.empty_list);
 	}
 };
 
@@ -195,7 +195,7 @@ share.print = function() {
 	}
 	else
 	{
-		wunderlist.dialogs.showErrorDialog(wunderlist.language.data.empty_list);
+		wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.empty_list);
 	}
 };
 

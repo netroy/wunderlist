@@ -1,35 +1,59 @@
-var task = task || {};
+/* global wunderlist, jQuery */
+wunderlist.task = (function($, wunderlist, undefined){
+  "use strict";
 
-/*********************************************************************/
-// Functions of the task object
 
-// INSERT a new database task object
-task.insert = function(nohtml) {
-  return wunderlist.database.insertTask(nohtml);
-};
+  // Instance object
+  // TODO: take a decision if this should be an object or a class
+  // A class can bind itself to dom nodes MVC style
+  var instance = {}, self;
 
-// UPDATE the database task object
-task.update = function(noVersion, callback) {
-  var returnValue = wunderlist.database.updateTask(noVersion);
-  
-  if (returnValue === true && callback !== undefined)
-    callback();
-};
+  // fields in the task object
+  var properties = ['list_id', 'online_id', 'name', 'note', 'date', 'important', 'position', 'deleted', 'done', 'done_date'];
 
-// SET the current task object to default
-task.setDefault = function() {
-  task.id        = undefined;
-  task.list_id   = undefined;
-  task.online_id = undefined;
-  task.name      = undefined;
-  task.note      = undefined;
-  task.date      = undefined;
-  task.important = undefined;
-  task.position  = undefined;
-  task.deleted   = undefined;
-  task.done      = undefined;
-  task.done_date = undefined;
-};
+  // Set values on the instance
+  function set(map){
+    for(var prop in map) {
+      // set only if property by that name already exists
+      if(instance.hasOwnProperty(prop)) {
+        instance[prop] = map [prop];
+      }
+    }
+    return self;
+  }
+
+  // INSERT a new database task object
+  function insert (callback) {
+    wunderlist.database.insertTask(callback);
+  }
+
+  // UPDATE the database task object
+  function update(noVersion, callback) {
+    wunderlist.database.updateTask(noVersion, callback);
+  }
+
+  // Reset the task object to defaults
+  function setDefaults() {
+    instance.id = undefined;
+    for(var i = 0, count = properties.length; i < count; i++){
+      instance[properties[i]] = undefined;
+    }
+  }
+
+  // Initial the task object for first time
+  setDefaults();
+
+  return {
+    "properties": properties,
+    "insert": insert,
+    "update": update,
+    "setDefault": setDefaults
+  };
+
+})(jQuery, wunderlist);
+
+var task = wunderlist.task;
+
 
 // UPDATE the task done status in HTML
 task.updateDone = function() {
@@ -84,7 +108,6 @@ task.updateDone = function() {
         }
         
         liElement.remove();
-        
         return;
       }
 
@@ -159,7 +182,7 @@ task.updatePositions = function() {
             task.id       = tasks.eq(i).attr("id");
             task.position = i + 1;
             task.list_id  = tasks.eq(i).attr('rel');
-            task.update();
+            update();
             i++;
         }
     });
@@ -288,10 +311,3 @@ task.updateDeleted = function() {
     notes.closeNoteWindow(task.id);
   }
 };
-
-/*********************************************************************/
-// SET the editable properties of a list object
-task.properties = ['list_id', 'online_id', 'name', 'note', 'date', 'important', 'position', 'deleted', 'done', 'done_date'];
-
-// Initial call to undefine the task properties
-task.setDefault();

@@ -18,7 +18,7 @@ makeListsDropable = function() {
 				task.id      = $(this).attr('id');
 				task.list_id = list_id;
 				task.updateList();
-				task.update();
+				wunderlist.task.update();
 			});
 		}
     });
@@ -58,7 +58,7 @@ makeFilterDropable = function() {
 						task.id        = taskID;
 						task.important = 1;
 						task.updateImportant();
-						task.update();
+						wunderlist.task.update();
 					}
 				}
 			}
@@ -84,7 +84,7 @@ makeFilterDropable = function() {
 						
 						task.id   = taskID;
 						task.date = today;
-						task.update();
+						wunderlist.task.update();
 						
 						html.make_timestamp_to_string();
 					}
@@ -114,7 +114,7 @@ makeFilterDropable = function() {
 						
 						task.id   = taskID;
 						task.date = tomorrow;
-						task.update();
+						wunderlist.task.update();
 						
 						html.make_timestamp_to_string();
 					}
@@ -136,7 +136,7 @@ makeFilterDropable = function() {
 						
 						task.id   = taskID;
 						task.date = 0;
-						task.update();
+						wunderlist.task.update();
 					}
 				}
 			}

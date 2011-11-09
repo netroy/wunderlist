@@ -1,12 +1,15 @@
 /* global wunderlist */
-wunderlist.dialogs = (function(undefined){
+wunderlist.helpers.dialogs = (function(window, $, wunderlist, share, tasks, html, settings, Titanium, undefined){
+  "use strict";
+
 
   // Settings
   var modalDialog = false;
 
   // Dialogs
   var confirmationDialog, okDialog, shareOwnEmailDialog, deleteDialog, 
-      whileSyncDialog, cloudAppDialog, shareSuccessDialog, deleteTaskDialog;
+      whileSyncDialog, cloudAppDialog, shareSuccessDialog, deleteTaskDialog,
+      sidebarDialog, switchDateFormatDialog, deletePromptDialog, deleteNoteDialog;
   // TODO: instead of destroying the dialogs everytime, re-use them
 
 
@@ -143,7 +146,7 @@ wunderlist.dialogs = (function(undefined){
       inBody = false;
     } 
   
-    content = '';
+    var content = '';
   
     if (inBody === true) {
       content = '<p>' + title + '</p>';
@@ -166,10 +169,10 @@ wunderlist.dialogs = (function(undefined){
   
     openDialog(okDialog);
   
-    dialogElement  = $('div.ui-dialog');
+    var dialogElement = $('div.ui-dialog');
     dialogElement.width(800);
-    spanWidth = $('span.ui-dialog-title').innerWidth();
-    newDialogWidth = spanWidth + 60;
+    var spanWidth = $('span.ui-dialog-title').innerWidth();
+    var newDialogWidth = spanWidth + 60;
     dialogElement.width(newDialogWidth);
     dialogElement.css({
       left:'50%',
@@ -241,7 +244,9 @@ wunderlist.dialogs = (function(undefined){
   function showCloudAppDialog() {
     if ($("[role='dialog']").length === 0) {
       var buttons = {};
-      buttons[wunderlist.language.data.no]  = function() { $(this).dialog('close'); };
+      buttons[wunderlist.language.data.no]  = function() {
+        $(this).dialog('close');
+      };
       buttons[wunderlist.language.data.yes] = function() {
         share.share_with_cloudapp();
         $(this).dialog('close');
@@ -336,7 +341,7 @@ wunderlist.dialogs = (function(undefined){
       buttons[wunderlist.language.data.delete_note_no] = function() { 
         $(this).dialog('close');
       };
-      button[wunderlist.language.data.delete_note_yes] = function() {
+      buttons[wunderlist.language.data.delete_note_yes] = function() {
         $('textarea#noteTextarea').val('');
         $('input#save').trigger('deleteNote');
         closeDialog(deleteNoteDialog);
@@ -381,7 +386,7 @@ wunderlist.dialogs = (function(undefined){
         $(this).dialog('close');
       };
 
-      delete_dialog = $('<div></div>').dialog({
+      var delete_dialog = $('<div></div>').dialog({
         autoOpen    : false,
         modal       : true,
         resizable   : false,
@@ -476,7 +481,7 @@ wunderlist.dialogs = (function(undefined){
       $('input#confirm-settings').live('click', function() {
         var new_sidebar_position = ($('div.radios#sidebar-position-radios input:checked').val() === "0") ? 'right' : 'left';
         Titanium.App.Properties.setString('sidebar_position', new_sidebar_position);
-        wunderlist.sidebar.initPosition();
+        wunderlist.helpers.sidebar.initPosition();
         closeDialog(sidebarDialog);
       });
     }
@@ -514,7 +519,7 @@ wunderlist.dialogs = (function(undefined){
 
 
   function openSidebarPositionDialog() {
-      var sidebarDialog = generateDialog(language.data.sidebar_pos_menu, html.generateSidebarPosHTML());
+      var sidebarDialog = generateDialog(wunderlist.language.data.sidebar_pos_menu, html.generateSidebarPosHTML());
       openDialog(sidebarDialog);
       $('input#cancel-settings').die();
       $('input#confirm-settings').die();
@@ -530,7 +535,7 @@ wunderlist.dialogs = (function(undefined){
           $("#sidebar").fadeOut(500);
           $("#bottombar").fadeOut(500);
           $("#content").fadeOut(500, function() {
-              location.reload();
+              window.location.reload();
           });
       });
   }
@@ -542,7 +547,7 @@ wunderlist.dialogs = (function(undefined){
    */
   function openSelectAddItemMethodDialog() {
     if ($("[role='dialog']").length === 0) {
-      addItemMethodDialog = generateDialog(wunderlist.language.data.add_item_method, html.generateAddItemMethodHTML());
+      var addItemMethodDialog = generateDialog(wunderlist.language.data.add_item_method, html.generateAddItemMethodHTML());
       openDialog(addItemMethodDialog);
     
       $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
@@ -583,7 +588,7 @@ wunderlist.dialogs = (function(undefined){
         helpHTML += '<p><b>' + shortcutPrefix + '1-8:</b> ' + wunderlist.language.data.hotkey_help_filters + '</p>';
         helpHTML += '<p><b>' + shortcutPrefix + 'B:</b> ' + wunderlist.language.data.hotkey_help_sidebar + '</p>';
   
-      helpDialog = $('<div>' + helpHTML + '</div>').dialog({
+      var helpDialog = $('<div>' + helpHTML + '</div>').dialog({
         autoOpen  : true,
         draggable : false,
         resizable : false,
@@ -643,4 +648,4 @@ wunderlist.dialogs = (function(undefined){
     "openBackgroundsDialog": openBackgroundsDialog
   };
 
-})();
+})(window, jQuery, wunderlist, share, tasks, html, settings, Titanium);

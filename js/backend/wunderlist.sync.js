@@ -32,7 +32,7 @@ wunderlist.sync.init = function() {
         wunderlist.sync.fireSync();
         return false;      
       } else {
-        wunderlist.dialogs.createAlertDialog(wunderlist.language.data.sync_error, wunderlist.language.data.no_internet);
+        wunderlist.helpers.dialogs.createAlertDialog(wunderlist.language.data.sync_error, wunderlist.language.data.no_internet);
       }                    
     }
   });
@@ -71,7 +71,7 @@ wunderlist.sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id) {
   }
   
   if (Titanium.Network.online === false) {
-    wunderlist.dialogs.showErrorDialog(wunderlist.language.data.no_internet);
+    wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.no_internet);
     
     if (logOutAfterSync === true) {
       wunderlist.sync.isSyncing = false;
@@ -92,9 +92,9 @@ wunderlist.sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id) {
                    '<input class="input-button" type="submit" id="notloggedin-cancel" value="' + 
                    wunderlist.language.data.sync_not_logged_in_no + '" /></div>';
 
-    var notloggedin_dialog = wunderlist.dialogs.generateDialog(wunderlist.language.data.sync_not_logged_in_title, html_code);
+    var notloggedin_dialog = wunderlist.helpers.dialogs.generateDialog(wunderlist.language.data.sync_not_logged_in_title, html_code);
 
-    wunderlist.dialogs.openDialog(notloggedin_dialog);
+    wunderlist.helpers.dialogs.openDialog(notloggedin_dialog);
     $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 
     $('#notloggedin-yes').die();
@@ -157,19 +157,19 @@ wunderlist.sync.fireSync = function(logOutAfterSync, exitAfterSync, list_id) {
                   case wunderlist.sync.status_codes.SYNC_DENIED:
                     wunderlist.sync.isSyncing = false;
                     wunderlist.account.logout();
-                    wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_denied);
+                    wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.sync_denied);
                     break;
     
                   case wunderlist.sync.status_codes.SYNC_NOT_EXIST:
                     wunderlist.sync.isSyncing = false;
                     wunderlist.account.logout();
-                    wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
+                    wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
                     break;
     
                   default:
                     wunderlist.sync.isSyncing = false;
                     wunderlist.sync.checkForLogout(syncSuccessful, logOutAfterSync);
-                    wunderlist.dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
+                    wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.error_occurred);
                     break;
                 }
               }
@@ -257,14 +257,15 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
   // SYNC STEP 2
   if (response_step1.sync_table != undefined) {
     var sync_table_step1 = response_step1.sync_table;
-    var synced_lists    = sync_table_step1.synced_lists;
+    var synced_lists = sync_table_step1.synced_lists;
 
     if (synced_lists != undefined) {
       for(var i = 0, max = synced_lists.length; i < max; i++) {
         $.each(synced_lists[i], function(offline_id, online_id) {
-          list.id        = offline_id;
-          list.online_id = online_id;
-          list.update(true);
+          wunderlist.helpers.list.set({
+        	  id: offline_id,
+        	  online_id: online_id
+        	}).update(true);
         });
       }
       wunderlist.sync.checkForUnsyncedElements('lists');
@@ -339,7 +340,7 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
                     $.each(synced_tasks[i], function(offline_id, online_id) {
                       task.id        = offline_id;
                       task.online_id = online_id;
-                      task.update(true);
+                      wunderlist.task.update(true);
                     });
                   }
                 }
@@ -351,7 +352,7 @@ wunderlist.sync.syncSuccess = function(response_step1, logOutAfterSync, exitAfte
         }
       },
       error: function(xhrobject) {
-        wunderlist.dialogs.showErrorDialog(wunderlist.language.data.sync_error);
+        wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.sync_error);
       }
     });
 
@@ -491,6 +492,6 @@ wunderlist.sync.deleteElementsAfterSync = function(sync_table) {
 wunderlist.sync.checkForUnsyncedElements = function(type) {
   var hasUnsyncedElements = wunderlist.database.hasElementsWithoutOnlineId(type);
   if (hasUnsyncedElements === true) {
-    wunderlist.dialogs.showErrorDialog(wunderlist.language.data.unsynced_data);
+    wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.unsynced_data);
   }
 };

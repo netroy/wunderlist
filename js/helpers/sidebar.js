@@ -1,5 +1,8 @@
 /* global wunderlist */
-wunderlist.sidebar = (function(undefined){
+wunderlist.helpers.sidebar = (function($, Titanium, undefined){
+  "use strict";
+
+
   var Properties = Titanium.App.Properties;
   var isPositionRight, openStatus;
   var body, toggleButton;
@@ -48,4 +51,4 @@ wunderlist.sidebar = (function(undefined){
     "init": init,
     "initPosition": initPosition
   };
-})();
+})(jQuery, Titanium);

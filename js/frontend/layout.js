@@ -208,7 +208,7 @@ wunderlist.layout = (function(undefined) {
     /**
      * Init the sidebar. Based on settings put it on left or right
      */
-    wunderlist.sidebar.init();
+    wunderlist.helpers.sidebar.init();
 
     /**
      * Init the Search
@@ -220,7 +220,7 @@ wunderlist.layout = (function(undefined) {
      * @author Marvin Labod
      * @author Daniel Marschner
      */
-    wunderlist.background.init();
+    wunderlist.helpers.background.init();
 
     // Fixes a problem with webkit and jquery sortable icon
     document.onselectstart = function () {
@@ -234,7 +234,7 @@ wunderlist.layout = (function(undefined) {
     }
 
     $('a.showhelp').bind('click', function() {
-      wunderlist.dialogs.showHelpDialog();
+      wunderlist.helpers.dialogs.showHelpDialog();
     });
   
     $(".wklogo").mouseenter(function(){

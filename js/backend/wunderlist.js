@@ -9,14 +9,17 @@
 var wunderlist = wunderlist || {};
 wunderlist.backend = {};
 wunderlist.frontend = {};
+wunderlist.helpers = {};
+
 
 /**
  * Init the wunderlist framework and all necessary parts
  * @author Daniel Marschner
  */
 wunderlist.init = function() {
+
 	// Set the app title
-	wunderlist.utils.setTitle('Wunderlist' + (wunderlist.account.isLoggedIn() && wunderlist.account.email != '' ? ' - ' + wunderlist.account.email : ''));
+	wunderlist.helpers.utils.setTitle('Wunderlist' + (wunderlist.account.isLoggedIn() && wunderlist.account.email != '' ? ' - ' + wunderlist.account.email : ''));
 	
 	// Set the os version
 	wunderlist.os = Titanium.Platform.name.toLowerCase();
@@ -41,7 +44,7 @@ wunderlist.init = function() {
 	share.init();
 	
 	// Init the dialogs
-	wunderlist.dialogs.init();
+	wunderlist.helpers.dialogs.init();
 
 	// Init the layout
 	wunderlist.layout.init();

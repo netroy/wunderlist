@@ -60,19 +60,19 @@ menu.initialize = function() {
   }
 
   extraMenuItem.addItem(wunderlist.language.data.add_item_method, function() {
-    wunderlist.dialogs.openSelectAddItemMethodDialog();
+    wunderlist.helpers.dialogs.openSelectAddItemMethodDialog();
     menu.refocus();
   });
   extraMenuItem.addItem(wunderlist.language.data.switchdateformat, function() {
-    wunderlist.dialogs.openSwitchDateFormatDialog();
+    wunderlist.helpers.dialogs.openSwitchDateFormatDialog();
     menu.refocus();
   });
   extraMenuItem.addItem(wunderlist.language.data.sidebar_position, function() {
-    wunderlist.dialogs.openSidebarDialog();
+    wunderlist.helpers.dialogs.openSidebarDialog();
     menu.refocus();
   });
   extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, function() {
-    wunderlist.dialogs.openDeletePromptDialog();
+    wunderlist.helpers.dialogs.openDeletePromptDialog();
     menu.refocus();
   });
 
@@ -103,8 +103,8 @@ menu.initialize = function() {
     Titanium.Desktop.openURL('http://support.6wunderkinder.com/kb');
   });
   //aboutUsMenuItem.addItem(wunderlist.language.data.privacy_policy,  function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
-  aboutUsMenuItem.addItem(wunderlist.language.data.credits,         wunderlist.dialogs.openCreditsDialog);  // About Us Dialog
-  aboutUsMenuItem.addItem(wunderlist.language.data.backgrounds,     wunderlist.dialogs.openBackgroundsDialog);  // Background Credits
+  aboutUsMenuItem.addItem(wunderlist.language.data.credits,         wunderlist.helpers.dialogs.openCreditsDialog);  // About Us Dialog
+  aboutUsMenuItem.addItem(wunderlist.language.data.backgrounds,     wunderlist.helpers.dialogs.openBackgroundsDialog);  // Background Credits
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder,    function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_tw, function() {Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder')});
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_fb, function() {Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder')});
@@ -127,7 +127,7 @@ menu.initialize = function() {
     });
   } else {
     accountMenuItem.addItem(wunderlist.language.data.sign_in, function() {
-      wunderlist.dialogs.closeEveryone();
+      wunderlist.helpers.dialogs.closeEveryone();
       wunderlist.account.showRegisterDialog();
       menu.refocus();
     });

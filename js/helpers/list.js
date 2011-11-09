@@ -1,32 +1,56 @@
-var list = list || {};
+/* global wunderlist, jQuery */
+wunderlist.helpers.list = (function($, wunderlist, undefined){
+  "use strict";
 
-/*********************************************************************/
-// Functions of the list object
 
-// INSERT a new database list object
-list.insert = function() {
-	return wunderlist.database.insertList(list);
-};
+  // Instance object
+  // TODO: take a decision if this should be an object or a class
+  // A class can bind itself to dom nodes MVC style
+  var instance = {}, self;
 
-// UPDATE the database list object
-list.update = function(noversion) {
-	wunderlist.database.updateList(noversion);
-};
+  // fields in the list object
+  var properties = ['online_id', 'name', 'position', 'deleted', 'shared', 'inbox'];
 
-// SET the current list object to default
-list.setDefault = function() {
-	list.id        = undefined;
-	list.online_id = undefined;
-	list.name      = undefined;
-	list.position  = undefined;
-	list.deleted   = undefined;
-	list.shared    = undefined;
-	list.inbox     = undefined;
-};
+  // Set values on the instance
+  function set(map){
+    for(var prop in map) {
+      // set only if property by that name already exists
+      if(instance.hasOwnProperty(prop)) {
+        instance[prop] = map [prop];
+      }
+    }
+    return self;
+  }
 
-/*********************************************************************/
-// SET the editable properties of a list object
-list.properties = ['online_id', 'name', 'position', 'deleted', 'shared'];
+  // INSERT a new database list object
+  function insert (callback) {
+    wunderlist.database.insertList(instance, callback);
+  }
 
-// Initial call to undefine the list properties
-list.setDefault();
+  // UPDATE the database list object
+  function update(noVersion, callback) {
+    wunderlist.database.updateList(noVersion, instance, callback);
+  }
+
+  // Reset the list object to defaults
+  function setDefaults() {
+    instance.id = undefined;
+    for(var i = 0, count = properties.length; i < count; i++){
+      instance[properties[i]] = undefined;
+    }
+  }
+
+  // Initial the list object for first time
+  setDefaults();
+
+  self = {
+    "properties": properties,
+    "insert": insert,
+    "update": update,
+    "set": set,
+    "setDefault": setDefaults
+  };
+
+  return self;
+
+})(jQuery, wunderlist);

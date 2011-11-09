@@ -1,5 +1,6 @@
 /* global wunderlist */
-wunderlist.utils = (function(wunderlist, html, undefined){
+wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefined){
+  "use strict";
 
   /**
    * Converted from PHP in_array()
@@ -76,15 +77,9 @@ wunderlist.utils = (function(wunderlist, html, undefined){
    * Validate the email
    * @author Dennis Schneider
    */
+  var emailReg = /^([A-Za-z0-9\+_\-\.\+])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
   function is_email(email) {
-    var reg = /^([A-Za-z0-9\+_\-\.\+])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-
-    if (reg.test(email) === false) {
-      $('.error').text(wunderlist.language.data.error_invalid_email);
-      return false;
-    } else {
-      return true;
-    }
+    return emailReg.test(email);
   }
 
 
@@ -110,4 +105,4 @@ wunderlist.utils = (function(wunderlist, html, undefined){
     "ucfirst": ucfirst
   };
 
-})(wunderlist, html);
+})(window, document, wunderlist, html);

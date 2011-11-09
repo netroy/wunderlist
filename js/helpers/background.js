@@ -1,7 +1,8 @@
 /* global wunderlist */
-wunderlist.background = (function(undefined){
-  var Properties = Titanium.App.Properties;
+wunderlist.helpers.background = (function($, Titanium, undefined){
+  "use strict";
 
+  var Properties = Titanium.App.Properties;
   var body, backgroundList, activeBackground;
 
   /**
@@ -36,9 +37,9 @@ wunderlist.background = (function(undefined){
     'bgtwelve' : {bgPath: 'leaf.jpg',         bgPosition: defaultBgPosition, bgColor: '#000'}
   };
 
-  function switchBg(name) {
+  function switchBg(e, name) {
     if(typeof name !== 'string' || typeof bgList[name] === 'undefined') {
-      name = $(this).attr("class");
+      name = $(e.target).attr("class");
     }
 
     // set active menu switch
@@ -79,7 +80,7 @@ wunderlist.background = (function(undefined){
     });
 
     var theme = Properties.getString("active_theme");
-    switchBg(theme);
+    switchBg(null, theme);
 
   /*
     var menuTimer;
@@ -134,4 +135,4 @@ wunderlist.background = (function(undefined){
   return {
     "init": init
   };
-})();
+})(jQuery, Titanium);

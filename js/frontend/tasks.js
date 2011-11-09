@@ -76,7 +76,7 @@ tasks.add = function() {
 			task.date      = timestamp;
 			task.important = important;
 			
-			var task_id  = task.insert();	
+			var task_id  = wunderlist.task.insert();	
 			
 			var taskHTML = html.generateTaskHTML(task_id, task_name, list_id, 0, important, timestamp);
 			
@@ -186,7 +186,7 @@ tasks.edit = function() {
 	
 	task.id   = task_id;
 	task.name = html.convertString(task_name);
-	task.update();
+	wunderlist.task.update();
 
 	filters.updateBadges();
 
@@ -220,7 +220,7 @@ tasks.deletes = function(deleteElement) {
 	task.list_id = liElement.attr('rel');
 	task.deleted = 1;
 	task.updateDeleted();
-	task.update();
+	wunderlist.task.update();
 };
 
 // On DOM ready
@@ -477,7 +477,7 @@ $(function() {
            	}
 			
 			task.updateDone();
-			task.update();
+			wunderlist.task.update();
          }
 
          setTimeout(function() { tasks.checkClicked = false; }, 100);
@@ -491,7 +491,7 @@ $(function() {
 	        task.id        = $(this).parent('li').attr("id");
 	        task.important = 0;
 	        task.updateImportant();
-	        task.update();
+	        wunderlist.task.update();
 	        task.updatePositions();
 		}
     });
@@ -505,7 +505,7 @@ $(function() {
 			task.id        = liElement.attr('id');
 			task.important = 1;
 			task.updateImportant();
-	        task.update();
+	        wunderlist.task.update();
 	        task.updatePositions();
 		}
     });
@@ -534,7 +534,7 @@ $(function() {
 	// Delete function for the clicked task
   $("li span.delete").live('click', function() {
 		if (settings.getDeleteprompt() === 1) {
-		  wunderlist.dialogs.openTaskDeleteDialog($(this));
+		  wunderlist.helpers.dialogs.openTaskDeleteDialog($(this));
 		} else {
 		  tasks.deletes($(this));
 		}

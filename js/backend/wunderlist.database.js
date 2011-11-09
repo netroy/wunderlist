@@ -58,23 +58,22 @@ wunderlist.database.create = function() {
 
 /**
  * Creates the standard database rows
- *
  * @author Daniel Marschner, Christian Reber, Dennis Schneider
  */
 wunderlist.database.createStandardElements = function() {
 	var resultSet = wunderlist.database.db.execute("SELECT id FROM lists WHERE id = '1' AND lists.deleted = 0 LIMIT 1");
 	
-	if(resultSet.rowCount() == 0)
-	{
+	if(resultSet.rowCount() === 0) {
 		// Truncate database and create inbox
 		wunderlist.database.truncate();
 		
 		// Add the property "inbox", only for registration reasons
 		list.properties.push('inbox');
-		
-		list.name  = wunderlist.language.data.inbox;
-		list.inbox = 1;
-		list_id    = list.insert();
+
+		wunderlist.helpers.list.set({
+  	  name: wunderlist.language.data.inbox,
+  	  inbox: 1
+  	}).insert();
 		
 		// Remove the property "inbox", only a reason of security
 		list.properties.pop();
@@ -87,46 +86,42 @@ wunderlist.database.createStandardElements = function() {
 
 /**
  * Create the tutorial tasks
- *
  * @author Daniel Marschner
  */
 wunderlist.database.createTuts = function(list_id) {
-	if (list_id != undefined)
-	{
-		for (var ix = 1; ix <= 8; ix++)
-		{
+	if (list_id != undefined) {
+		for (var ix = 1; ix <= 8; ix++) {
 			var addon = '';
 			
-			if ((ix == 2 || ix == 3 || ix == 5 || ix == 6) && wunderlist.os == 'darwin')
-				addon = '_mac';
-			
+			if ((ix == 2 || ix == 3 || ix == 5 || ix == 6) && wunderlist.os === 'darwin'){
+			  addon = '_mac';
+			}
+
 			task.name     = wunderlist.language.data['default_task_' + ix + addon];
 			task.list_id  = list_id;
 			task.position = ix; 
 			
-			if (ix == 1)
-			{
+			if (ix === 1) {
 				task.important = 1;
-			}
-			else if (ix == 7)
-			{
+			} else if (ix === 7) {
 				task.done      = 1;
 				task.done_date = new Date().getTime() / 1000;
 			}
 			
-			task.insert();
+			wunderlist.task.insert();
 		}
 	}
 };
 
 /**
  * Recreate tutorial tasks
- *
  * @author Christian Reber, Daniel Marschner
  */
 wunderlist.database.recreateTuts = function() {
-	list.name = wunderlist.language.data.tutorials;
-	list_id   = list.insert();
+	var list = wunderlist.helpers.list.set({
+	  name: wunderlist.language.data.tutorials
+	});
+	var list_id = list.insert();
 	
 	wunderlist.database.createTuts(list_id);
 	
@@ -137,7 +132,6 @@ wunderlist.database.recreateTuts = function() {
 
 /**
  * Truncates the whole database
- *
  * @author Dennis Schneider
  */
 wunderlist.database.truncate = function() {
@@ -195,7 +189,7 @@ wunderlist.database.insertList = function(list) {
 		{
 			if (list[property] != undefined && $.isFunction(list[property]) == false)
 			{
-				if (wunderlist.utils.in_array(property, list.properties) == true) {
+				if (wunderlist.helpers.utils.in_array(property, list.properties) == true) {
 					fields += (first == false ? ', ' : '') + property;
 					values += (first == false ? ', ' : '') + "'" + list[property] + "'";
 					first = false;
@@ -257,7 +251,7 @@ wunderlist.database.updateList = function(noversion) {
 		
 		for (var property in list) {
 			if (list[property] != undefined && $.isFunction(list[property]) == false) {
-				if (wunderlist.utils.in_array(property, list.properties) == true) {
+				if (wunderlist.helpers.utils.in_array(property, list.properties) == true) {
 					set += (first == false ? ', ' : '') + property + ' = ' +  ((typeof list[property] == 'string') ? "'" + list[property] + "'" : list[property]); // TODO: Test this combination
 					first = false;
 				}
@@ -275,7 +269,7 @@ wunderlist.database.updateList = function(noversion) {
 				for (ix in dbtasks) {
 					task.id      = dbtasks[ix].id;
 					task.deleted = 1;
-					task.update();
+					wunderlist.task.update();
 				}
 			}
 			
@@ -321,7 +315,7 @@ wunderlist.database.insertTask = function() {
 		
 		for (var property in task) {
 			if (task[property] != undefined && $.isFunction(task[property]) === false) {
-				if (wunderlist.utils.in_array(property, task.properties) === true) {
+				if (wunderlist.helpers.utils.in_array(property, wunderlist.task.properties) === true) {
 					fields += (first == false ? ', ' : '') + property;
 					values += (first == false ? ', ' : '') + "'" + task[property] + "'";
 					first = false;
@@ -340,7 +334,7 @@ wunderlist.database.insertTask = function() {
 			filters.updateBadges();
 			
 			// Reset the properties of the given task object
-			task.setDefault();
+			wunderlist.task.setDefaults();
 
 			return task_id;
 		} else {
@@ -359,8 +353,7 @@ wunderlist.database.insertTask = function() {
 wunderlist.database.updateTask = function(noVersion) {
 	if (task.id != undefined && task.id > 0)
 	{
-	    if (noVersion == undefined)
-	    {
+	    if (noVersion === undefined) {
 	        noVersion = false;
 	    }
 	
@@ -386,20 +379,16 @@ wunderlist.database.updateTask = function(noVersion) {
 		var first = true;
 		var set   = '';
 		
-		for (var property in task)
-		{
-			if (task[property] != undefined && $.isFunction(task[property]) == false)
-			{
-				if (wunderlist.utils.in_array(property, task.properties) == true)
-				{
+		for (var property in task) {
+			if (task[property] !== undefined && $.isFunction(task[property]) === false) {
+				if (wunderlist.helpers.utils.in_array(property, wunderlist.task.properties) === true) {
 					set += (first == false ? ', ' : '') + property + ' = ' +  ((typeof task[property] == 'string') ? "'" + task[property] + "'" : task[property]); // TODO: Test this combination
 					first = false;
 				}
 			}
 		}
 		
-		if (set != '')
-		{		    
+		if (set !== '') {		    
 			wunderlist.database.db.execute("UPDATE tasks SET " + set + (noVersion == false ? ", version = version + 1" : '') + " WHERE id = " + task_id);
 			wunderlist.database.updateTaskCount();
 			wunderlist.timer.stop().set(15).start();
@@ -407,12 +396,12 @@ wunderlist.database.updateTask = function(noVersion) {
 			filters.updateBadges();
 			
 			// Reset the properties of the given task object
-			task.setDefault();
+			wunderlist.task.setDefaults();
 			
 			return true;
+		} else {
+		  return false;
 		}
-		else
-			return false;
 	}
 };
 
@@ -985,9 +974,9 @@ wunderlist.database.getLastDoneTasks = function(list_id) {
 			for (var i = 0, max = resultSet.fieldCount(); i < max; i++){
 			  values[resultSet.fieldName(i)] = resultSet.field(i);
 			}
-			var days   = wunderlist.utils.calculateDayDifference(values['done_date']);
+			var days   = wunderlist.helpers.utils.calculateDayDifference(values['done_date']);
 			var htmlId = days.toString();
-			if (wunderlist.utils.is_array(doneListsTasks[htmlId]) === false){
+			if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
 			  doneListsTasks[htmlId] = [];
 			}
 			doneListsTasks[htmlId].push(html.generateTaskHTML(values['task_id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));

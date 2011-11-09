@@ -10,7 +10,7 @@ html.generateNotesDialogHTML = function() {
 			'<textarea></textarea><div class="savednote"><div class="inner"></div></div>' +
 			'</div>' +
     		'<div class="notes_buttons">' +
-    			'<span class="hint">'+ wunderlist.utils.ucfirst(settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
+    			'<span class="hint">'+ wunderlist.helpers.utils.ucfirst(settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
     			'<input id="save-and-close" class="input-button button-login" type="submit" value="'+ wunderlist.language.data.save_and_close_changes +'" />' +
     			'<input id="save-note" class="input-button" type="submit" value="'+ wunderlist.language.data.edit_changes +'" />' +
     		'</div>';
@@ -294,7 +294,7 @@ html.generateDeletePromptHTML = function() {
 html.generateAddItemMethodHTML = function() {
     var html_code = '<div id="add-item-method-radios" class="radios">' +
        		'<p><b>' + wunderlist.language.data.add_item_method_content + '</b></p>' +
-			'<p><input id="add_item_method_0" type="radio" name="addItemMethod" value="0" /> <span>' + wunderlist.language.data.return_key + '</span> &nbsp; &nbsp; &nbsp; <input id="add_item_method_1" type="radio" name="addItemMethod" value="1" /> <span>' + wunderlist.utils.ucfirst(settings.shortcutkey) + ' + ' + wunderlist.language.data.return_key + '</span></p>' +
+			'<p><input id="add_item_method_0" type="radio" name="addItemMethod" value="0" /> <span>' + wunderlist.language.data.return_key + '</span> &nbsp; &nbsp; &nbsp; <input id="add_item_method_1" type="radio" name="addItemMethod" value="1" /> <span>' + wunderlist.helpers.utils.ucfirst(settings.shortcutkey) + ' + ' + wunderlist.language.data.return_key + '</span></p>' +
  			'</div>' +
     		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
     		
@@ -622,7 +622,7 @@ html.addRemoveDateButton = function(object) {
 		{
 			task.id   = object.attr('id');
 			task.date = 0;
-			task.update();
+			wunderlist.task.update();
 		}
 
         setTimeout(function() {datePickerOpen = false}, 10);
@@ -778,7 +778,7 @@ html.createDatepicker = function() {
 				
 				task.id   = $(this).parent().attr("id");
 				task.date = $(this).parent().find('span.timestamp').attr('rel');
-				task.update();
+				wunderlist.task.update();
 					
 				
 				if ($('a#withoutdate').hasClass('active')) {
@@ -840,7 +840,7 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 	count  = 0;
 	
 	// If tasks are set and not empty count them
-	if (task != undefined && wunderlist.utils.is_array(tasks) && tasks.length > 0)
+	if (task != undefined && wunderlist.helpers.utils.is_array(tasks) && tasks.length > 0)
 		count = tasks.length;
 	
 	if (settings.os === 'darwin') {

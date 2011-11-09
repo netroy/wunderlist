@@ -9,8 +9,8 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
 
   var log = function(){
     console.log.apply(console, arguments);
-  };//console.log.bind(console);
-  var err = console.error.bind(console);
+  };
+
   var nop = function(){
     return;
   };
@@ -26,7 +26,7 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     var args = Array.prototype.slice.call(arguments, 0);
     var caller = arguments.callee.caller;
     function error(){
-      err([args, caller.name].concat(arguments));
+      log([args, caller.name].concat(arguments));
     }
     var callback = function(){
       log([args, caller.name].concat(arguments));
@@ -271,9 +271,9 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
       var rows = result.rows, row;
       for(var i = 0, l = rows.length; i < l; i++) {
         var values = rows.item(i);
-        var days   = wunderlist.utils.calculateDayDifference(values.done_date);
+        var days   = wunderlist.helpers.utils.calculateDayDifference(values.done_date);
         var htmlId = days.toString();
-        if (wunderlist.utils.is_array(doneListsTasks[htmlId]) === false){
+        if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
           doneListsTasks[htmlId] = [];
         }
         var markup = html.generateTaskHTML(values.task_id, values.name, values.list_id, values.done, values.important, values.date, values.note);
@@ -310,7 +310,7 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     var first  = true, fields = '', values = '';
     for (var property in list) {
       if (list[property] !== undefined && $.isFunction(list[property]) === false) {
-        if (wunderlist.utils.in_array(property, list.properties) === true) {
+        if (wunderlist.helpers.utils.in_array(property, list.properties) === true) {
           fields += (first === false ? ', ' : '') + property;
           values += (first === false ? ', ' : '') + "'" + list[property] + "'";
           first = false;
@@ -327,6 +327,12 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     list.setDefault();
     return 0;
   }
+
+
+  function updateList(noVersion, list, callback){
+    
+  }
+
 
   function getLastListId(callback) {
     callback = callback||log;
@@ -352,13 +358,13 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
   function getFilteredTasks(filter, date_type, printing){}
   function getFilteredTasksForPrinting(type, date_type){}
 
+  function insertTask(noHtml, callback){}
+  function updateTask(noVersion, callback){}
+
   function createStandardElements(){}
   function createTuts(list_id){}
   function recreateTuts(){}
   function fetchData(resultSet){}
-  function updateList(noversion){}
-  function insertTask(){}
-  function updateTask(noVersion){}
   function getLastTaskPosition(list_id){}
   function search(query){}
   function isDeleted(type, online_id){}
@@ -388,6 +394,7 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     "updateBadgeCount": updateBadgeCount,
     "getLastDoneTasks": getLastDoneTasks,
     "insertList": insertList,
+    "updateList": updateList,
     "getLastListId": getLastListId,
     "getLastListPosition": getLastListPosition,
     "getFilteredTasks": getFilteredTasks,
