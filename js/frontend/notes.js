@@ -47,7 +47,7 @@ wunderlist.frontend.notes = (function($, wunderlist, html, undefined){
 
       notesWindow.addEventListener(Titanium.CLOSE, function(e) {
         if (notesWindow.editMode) {
-          notesWindow.forceSave();
+          wunderlist.helpers.note.forceSave();
         }
         //settings.save_note_window_position(notesWindow);
         notes.windows[notesWindow.noteId] = null;

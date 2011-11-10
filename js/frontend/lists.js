@@ -1,5 +1,5 @@
 /* global wunderlist:true, settings:false, html:false, $ */
-wunderlist.frontend.lists = (function(wunderlist, undefined){
+wunderlist.frontend.lists = (function($, wunderlist, undefined){
   //"use strict";
 
   /**
@@ -9,12 +9,6 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
   var listEventListener = false;
   var ListElementName   = '';
   var delete_dialog;
-
-  /**
-   * Stops the "keydown" event by using the shortcut CTRL+L to add a new list
-   * @author Daniel Marschner
-   */
-  var listShortcutListener = 0;
 
   /**
    * Calls the function to adds a new list on clicking the add button
@@ -136,10 +130,11 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
     var listElementTitleSplit = listElementTitle.html().split("<");
     newTitle = unescape(listElementName) + "<" + listElementTitleSplit[1];
     listElementTitle.html(newTitle).fadeIn();
-  
-    list.id   = listElement.attr('id').replace('list', '');
-    list.name = listElementName;
-    list.update();
+
+    wunderlist.helpers.list.set({
+      id: listElement.attr('id').replace('list', ''),
+      name: listElementName
+    }).update();
   
     listElement.children('.savep').hide();
     listElement.children('.deletep').hide();
@@ -177,9 +172,12 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
     if (listElementName === ''){
       listElementName = wunderlist.language.data.new_list;
     }
-  
-    list.name  = listElementName;
+
+    var list = wunderlist.helpers.list.set({
+      name: listElementName
+    });
     var listId = list.insert();
+
     listElementInput.remove();
     var listHTML = '<b class="sharep">' + html.strip_tags(unescape(listElementName)) + '<div class="sharelist"></div></b>';
 
@@ -223,14 +221,16 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
           if (dbTasks.length > 0) {
             for (var x in dbTasks) {
               if (_return === false) {
-                _return = notes.closeNoteWindow(dbTasks[x].id);
+                _return = wunderlist.frontend.notes.closeNoteWindow(dbTasks[x].id);
               }
             }
           }
         }
-        list.id      = listId;
-        list.deleted = 1;
-        list.update();    
+
+        wunderlist.helpers.list.set({
+          id: listId,
+          deleted: 1
+        }).update();   
       }
   
       listElement.remove();
@@ -246,8 +246,8 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
     // Delete tasks button
     $('#lists div.deletep').live('click', function() {
       if (settings.getDeleteprompt() === 1) {
-        wunderlist.dialogs.createDeleteListDialog($(this).parent().attr('id').replace('list', ''), $(this).parent());
-        wunderlist.dialogs.openDialog(delete_dialog);
+        wunderlist.helpers.dialogs.createDeleteListDialog($(this).parent().attr('id').replace('list', ''), $(this).parent());
+        wunderlist.helpers.dialogs.openDialog(delete_dialog);
       } else {
         cancelSaveList();
         deleteList($(this).parent().attr('id').replace('list', ''), $(this).parent());
@@ -260,7 +260,7 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
    * @author Dennis Schneider, Daniel Marschner
    */
   function initLists(lists) {
-    if (lists !== undefined && wunderlist.utils.is_array(lists)) {
+    if (lists !== undefined && wunderlist.helpers.utils.is_array(lists)) {
       $('div#lists').html('');
       for (var ix in lists) {
         var listHTML  = '';
@@ -293,7 +293,7 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
    */
   function initTasks(tasks) {
     var tasksHTML = '';
-    if (tasks !== undefined && wunderlist.utils.is_array(tasks)) {
+    if (tasks !== undefined && wunderlist.helpers.utils.is_array(tasks)) {
       for (var ix in tasks){
         tasksHTML += html.generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
       }
@@ -390,7 +390,7 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
         settings.save_last_opened_list(list_id);
         html.createDatepicker();
         wunderlist.timer.resume();
-        wunderlist.search.clear();
+        wunderlist.frontend.search.clear();
 
         // Make everything droppable
         $("a.list").droppable({ disabled: false });
@@ -443,10 +443,10 @@ wunderlist.frontend.lists = (function(wunderlist, undefined){
         delay : 0,
         bulk  : 0,
         loop  : function() {
-          list.id       = lists.eq(i).attr("id").replace('list', '');
-          list.position = i + 1;
-          list.update();
-          i++;
+          wunderlist.helpers.list.set({
+            id: lists.eq(i).attr("id").replace('list', ''),
+            position: ++i
+          }).update();
         }
       });
   }
@@ -582,4 +582,4 @@ $(function() {
     "initLists": initLists,
     "initTasks": initTasks
   };
-})(wunderlist);
+})(jQuery, wunderlist);

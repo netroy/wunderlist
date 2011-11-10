@@ -43,7 +43,8 @@ wunderlist.init = function() {
 	wunderlist.notifications.init();
 	share.init();
 	
-	// Init frontend components
+	// Init notes
+	wunderlist.helpers.note.init();
 	wunderlist.frontend.notes.init();
 	
 	// Init the dialogs
