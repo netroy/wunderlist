@@ -178,10 +178,10 @@ wunderlist.database.fetchData = function(resultSet) {
  * @author Daniel Marschner
  */
 wunderlist.database.insertList = function(list) {
-	if (list.name != undefined && list.name != '')
-	{
-		if (list.position == undefined)
+	if (list.name != undefined && list.name != '') {
+		if (list.position === undefined) {
 			list.position = wunderlist.database.getLastListPosition() + 1;
+		}
 		
 		list.version = 0;
 		list.name    = html.convertString(list.name, 255);
@@ -190,11 +190,9 @@ wunderlist.database.insertList = function(list) {
 		var fields = '';
 		var values = '';
 		
-		for (var property in list)
-		{
-			if (list[property] != undefined && $.isFunction(list[property]) == false)
-			{
-				if (wunderlist.helpers.utils.in_array(property, list.properties) == true) {
+		for (var property in list) {
+			if (list[property] != undefined && $.isFunction(list[property]) === false) {
+				if (wunderlist.helpers.utils.in_array(property, list.properties) === true) {
 					fields += (first == false ? ', ' : '') + property;
 					values += (first == false ? ', ' : '') + "'" + list[property] + "'";
 					first = false;
@@ -202,8 +200,7 @@ wunderlist.database.insertList = function(list) {
 			}
 		}
 		
-		if (fields != '' && values != '')
-		{
+		if (fields !== '' && values !== '') {
 			wunderlist.database.db.execute("INSERT INTO lists (" + fields + ") VALUES (" + values + ")");
 			
 			var list_id = wunderlist.database.db.lastInsertRowId;
@@ -211,12 +208,12 @@ wunderlist.database.insertList = function(list) {
 			wunderlist.timer.stop().set(15).start();
 			
 			// Reset the properties of the given list object
-			list.setDefault();
+			wunderlist.helpers.list.setDefault();
 					
 			return list_id;
-		}
-		else
+		} else {
 			return false;
+		}
 	}
 };
 
@@ -280,7 +277,7 @@ wunderlist.database.updateList = function(noversion) {
 			}
 			
 			// Reset the properties of the given list object
-			list.setDefault();
+			wunderlist.helpers.list.setDefault();
 			
 			return true;
 		}
@@ -353,24 +350,22 @@ wunderlist.database.insertTask = function() {
 
 /**
  * Update the task by the given task object
- *
  * @attention Do not use the variable "task" for any other function in this project
- *
  * @author Daniel Marschner
  */
 wunderlist.database.updateTask = function(noVersion) {
-	if (task.id != undefined && task.id > 0)
-	{
-	    if (noVersion === undefined) {
-	        noVersion = false;
-	    }
+	if (task.id != undefined && task.id > 0) {
+	  if (noVersion === undefined) {
+	    noVersion = false;
+	  }
 	
 		var task_id = task.id;
 		task.id = undefined;
 		
 		// TODO: Is valid date?
-		if (task.date != undefined && task.date == '')
+		if (task.date !== undefined && task.date === '') {
 			task.date = 0;
+		}
 			
 		// TODO: Is valid date?
 		if (task.done_date != undefined && task.done_date == '')
