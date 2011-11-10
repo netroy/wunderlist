@@ -1,4 +1,6 @@
-wunderlist.search = (function(undefined){
+/* global wunderlist */
+wunderlist.frontend.search = (function($, wunderlist, html, undefined){
+  "use strict";
 
   var cancelEditTask = false;
   var focusSearch    = 0;
@@ -9,9 +11,9 @@ wunderlist.search = (function(undefined){
   }
 
 
-  function search(event) {
-    var value = $(this).val();
-    if(event.keyCode == 13) {
+  function search(e) {
+    var value = $(e.target).val();
+    if(e.keyCode == 13) {
       if(value !== '') {
         wunderlist.database.search(value);
         html.make_timestamp_to_string();
@@ -47,4 +49,4 @@ wunderlist.search = (function(undefined){
     "init": init,
     "clear": clear
   };
-})();
+})(jQuery, wunderlist, html);

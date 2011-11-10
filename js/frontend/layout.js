@@ -213,7 +213,7 @@ wunderlist.layout = (function(undefined) {
     /**
      * Init the Search
      */
-    wunderlist.search.init();
+    wunderlist.frontend.search.init();
 
     /**
      * Init background Switcher & the page background
