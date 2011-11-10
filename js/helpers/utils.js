@@ -88,11 +88,20 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefin
    * @author Daniel Marschner
    */
   function ucfirst(str) {
-      str += '';
-      var f = str.charAt(0).toUpperCase();
-      return f + str.substr(1);
+     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
+  /**
+   * Find the next occurance of the day-month combo passed as a date object
+   */
+  function setToFuture(date) {
+    var vDate = new Date();
+    if (vDate > date) {
+      date.setFullYear(date.getFullYear() + 1);
+      return setToFuture(date);
+    }
+    return date;
+  }
 
   return {
     "in_array": in_array,
@@ -102,7 +111,8 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefin
     "str_replace": str_replace,
     "is_integer": is_integer,
     "is_email": is_email,
-    "ucfirst": ucfirst
+    "ucfirst": ucfirst,
+    "setToFuture": setToFuture
   };
 
 })(window, document, wunderlist, html);
