@@ -9,7 +9,8 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, share, tasks, html
   // Dialogs
   var confirmationDialog, okDialog, shareOwnEmailDialog, deleteDialog, 
       whileSyncDialog, cloudAppDialog, shareSuccessDialog, deleteTaskDialog,
-      sidebarDialog, switchDateFormatDialog, deletePromptDialog, deleteNoteDialog;
+      sidebarDialog, switchDateFormatDialog, deletePromptDialog, deleteNoteDialog,
+      viewEditNoteDialog;
   // TODO: instead of destroying the dialogs everytime, re-use them
 
 
@@ -332,6 +333,18 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, share, tasks, html
 
 
   /**
+   * View or Edit notes for the current record
+   */
+  function openViewEditNoteDialog(title, content){
+    content = window.unescape(html.replace_breaks(html.replace_links(content)));
+    viewEditNoteDialog = wunderlist.helpers.dialogs.generateDialog("", html.generateNotesDialogHTML(), 'dialog-notes');
+    viewEditNoteDialog.dialog({
+      title: title
+    }).find(".inner").html(content);
+    return viewEditNoteDialog;
+  }
+
+  /**
    * Open a prompt asking for the deletion of a note
    * @author Adam Renklint
    */
@@ -637,6 +650,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, share, tasks, html
     "showWhileSyncDialog": showWhileSyncDialog,
     "openTaskDeleteDialog": openTaskDeleteDialog,
     "openNoteDeleteDialog": openNoteDeleteDialog,
+    "openViewEditNoteDialog": openViewEditNoteDialog,
     "createDeleteListDialog": createDeleteListDialog,
     "openSwitchDateFormatDialog": openSwitchDateFormatDialog,
     "openSidebarDialog": openSidebarDialog,

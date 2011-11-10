@@ -1,5 +1,5 @@
 /* global wunderlist, jQuery */
-wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, makeSortable, notes, undefined){
+wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, makeSortable, undefined){
   "use strict";
 
 
@@ -309,7 +309,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, mak
       }
       liElement.remove();
 
-      notes.closeNoteWindow(instance.id);
+      wunderlist.frontend.notes.closeNoteWindow(instance.id);
     }
 
     return self;
@@ -329,4 +329,4 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, mak
   
   return self;
 
-})(window, jQuery, wunderlist, html, taskDroped, makeSortable, notes);
+})(window, jQuery, wunderlist, html, taskDroped, makeSortable);

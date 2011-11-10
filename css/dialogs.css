@@ -232,7 +232,8 @@ top:-80px;
 text-indent: -29856px;
 width:162px;
 height:223px;
-background:url(/images/registertutorial.png)}
+background:url(/images/registertutorial.png);
+}
 
 	.forgotpwbuttons {position:relative}
 
@@ -246,7 +247,14 @@ background:url(/images/registertutorial.png)}
 
 /* NOTES DIALOG ---------------------------------------------------------------------------------------- */
 
-.dialog-notes { position:absolute; height:100% !important; width:100% !important; background:#F5F5F5 !Important}
+.dialog-notes {
+  position:absolute;
+  height: 80%;
+  min-height: 300px;
+  width: 80%;
+  min-width: 500px;
+  background:#F5F5F5 !important
+}
 
 .dialog-notes .notes_buffer { position:absolute; top:50px; right:0px; left:0px; bottom:60px}
 
