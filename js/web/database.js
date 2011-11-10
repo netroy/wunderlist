@@ -50,6 +50,11 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     });
   }
   
+  /**
+   * Executes bunch of SQLs in parallel & calls a function at the end
+   * @param queue - array of SQLs
+   * @param callback - function to call at the end
+   */
   function executeParallel(queue, callback){
     var output = [], current;
     var handler = function(result) {
@@ -68,6 +73,11 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     }
   }
 
+  /**
+   * Init the DB
+   * for WebSQL & Titanium - open the database & create the tables for tasks & lists
+   * for AJAX - nothing to initialize
+   */
   var createlistsSQL = "CREATE TABLE IF NOT EXISTS lists (id INTEGER PRIMARY KEY AUTOINCREMENT, online_id INTEGER DEFAULT 0, "+
                    "name TEXT, position INTEGER DEFAULT 0, version INTEGER DEFAULT 0, deleted INTEGER DEFAULT 0, "+
                    "inbox INTEGER DEFAULT 0, shared INTEGER DEFAULT 0)";
@@ -107,6 +117,12 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     return [];
   }
 
+  /**
+   * Gets Task(s) from the database
+   * @param task_id (Optional) - id of task to fetch
+   * @param list_id (Optional) - id of list to look into
+   * @param callback - function to call with array of fetched task objects
+   */
   var getTasksSQL = "SELECT * FROM tasks WHERE deleted = 0 AND done = 0 ? ORDER BY important DESC, position ASC";
   function getTasks(task_id, list_id, callback) {
     var where = '';
@@ -130,13 +146,24 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     return [];
   }
 
+
+  /**
+   * Clean up the DB
+   */
   function truncate() {
     execute("DELETE FROM lists");
     execute("DELETE FROM tasks");
     execute("DELETE FROM sqlite_sequence WHERE name = 'lists'");
     execute("DELETE FROM sqlite_sequence WHERE name = 'tasks'");
   }
-  
+
+
+  /**
+   * Check if Task or List exists by offline id
+   * @param type - tasks/lists
+   * @param id - offline id to look for
+   * @callback - function to call with boolean value true if entity exists, else false
+   */
   function existsById(type, id, callback) {
     callback = callback||log;
     execute("SELECT id FROM '?' WHERE id = ? AND deleted = 0", type, id, function(result){
@@ -145,6 +172,13 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
     return false;
   }
 
+
+  /**
+  * Check if Task or List exists by online id
+  * @param type - tasks/lists
+  * @param online_id - online id to look for
+  * @callback - function to call with boolean value true if entity exists, else false
+   */
   function existsByOnlineId(type, online_id, callback) {
     callback = callback||log;
     var result = execute("SELECT id FROM '?' WHERE online_id = ? AND deleted = 0", type, online_id, function(result){
@@ -312,7 +346,7 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
       list.position = getLastListPosition() + 1;
     }
     list.version = 0;
-    list.name    = html.convertString(list.name, 255);
+    list.name = html.convertString(list.name, 255);
 
     var first  = true, fields = '', values = '';
     for (var property in list) {
@@ -330,8 +364,9 @@ wunderlist.database = (function(wunderlist, html, global, undefined){
         callback(result.insertId);
       });
     }
+
     // Reset the properties of the given list object
-    list.setDefault();
+    wunderlist.helpers.list.setDefault();
     return 0;
   }
 
