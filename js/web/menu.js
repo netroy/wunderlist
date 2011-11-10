@@ -34,7 +34,7 @@ wunderlist.menu = (function(undefined){
     $('a.sidebarposition', menuUl).click( wunderlist.helpers.dialogs.openSidebarPositionDialog );
     $('a.create_tutorials', menuUl).click( recreateTutorials );
     $('a.lang', menuUl).click(function() {
-        language.switchLang($(this).attr('rel'));
+        wunderlist.language.switchLang($(this).attr('rel'));
     });
   }
 

@@ -616,7 +616,7 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 						default:
 
 							wunderlist.layout.stopLoginAnimation();
-							wunderlist.helpers.dialogs.showErrorDialog(language.error_occurred);
+							wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.error_occurred);
 
 							break;
 					}
@@ -878,7 +878,7 @@ wunderlist.account.delete_account_data = function() {
 			timeout : settings.REQUEST_TIMEOUT,			
 			success : function(response_data, text, xhrobject) {
 				if (xhrobject.status == 0) {
-					showErrorDialog(language.no_internet);
+					showErrorDialog(wunderlist.language.no_internet);
 				} else if (xhrobject.status == 200) {
 					var response = JSON.parse(response_data);
 
