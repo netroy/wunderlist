@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.helpers.dialogs = (function(window, $, wunderlist, share, tasks, html, settings, Titanium, undefined){
+wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, settings, Titanium, undefined){
   "use strict";
 
 
@@ -249,7 +249,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, share, tasks, html
         $(this).dialog('close');
       };
       buttons[wunderlist.language.data.yes] = function() {
-        share.share_with_cloudapp();
+        wunderlist.frontend.share.share_with_cloudapp();
         $(this).dialog('close');
       };
 
@@ -662,4 +662,4 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, share, tasks, html
     "openBackgroundsDialog": openBackgroundsDialog
   };
 
-})(window, jQuery, wunderlist, share, tasks, html, settings, Titanium);
+})(window, jQuery, wunderlist, tasks, html, settings, Titanium);

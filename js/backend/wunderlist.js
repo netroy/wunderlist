@@ -2,7 +2,7 @@
  * Init the wunderlist framework and all necessary parts
  * @author Christian Reber, Dennis Schneider, Daniel Marschner
  */
-wunderlist.init = (function(W, settings, share, Titanium){ 
+wunderlist.init = (function($, W, settings, Titanium){ 
   "use strict";
 
   return function() {
@@ -31,7 +31,6 @@ wunderlist.init = (function(W, settings, share, Titanium){
     W.menu.initializeTrayIcon();
     W.sharing.init();
     W.notifications.init();
-    share.init();
   
     // Init notes
     W.helpers.note.init();
@@ -47,15 +46,17 @@ wunderlist.init = (function(W, settings, share, Titanium){
     W.updater.checkVersion();  
   
     // Add the wunderlist object to the current window
-    Titanium.UI.getCurrentWindow().wunderlist = wunderlist;
+    Titanium.UI.getCurrentWindow().wunderlist = W;
   
     // Enable shutdown fix
     Titanium.API.addEventListener(Titanium.EXIT, function() {
       Titanium.Platform.canShutdown();
     });
+
+    $("body").show();
   };
 
-})(wunderlist, settings, share, Titanium);
+})(jQuery, wunderlist, settings, Titanium);
 
 
 /*************************************************************************************/

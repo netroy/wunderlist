@@ -125,10 +125,12 @@ wunderlist.account.deleteUserCredentials = function() {
  */
 wunderlist.account.load = function() {
 	if (wunderlist.account.isLoggedIn()) {
+	  $("body").removeClass("login");
 		wunderlist.account.loadInterface();
 		wunderlist.timer.set(4).start();
 		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 	} else {
+	  $("body").addClass("login");
 		wunderlist.account.showRegisterDialog();
 	}
 };
@@ -147,13 +149,20 @@ wunderlist.account.loadInterface = function() {
 	}
 	
 	var taskInput = $("input.input-add").val();
-	
-	wunderlist.menu.initialize();
-	wunderlist.database.getLists(null, wunderlist.frontend.lists.initLists);
 
-	wunderlist.frontend.filters.init();
+  // Init lists 
+	wunderlist.database.getLists(null, wunderlist.frontend.lists.initLists);
 	wunderlist.frontend.lists.openList();
-	
+
+  // Init Menu
+	wunderlist.menu.initialize();
+
+  // Init share
+  wunderlist.frontend.share.init();
+
+  // Init Filters
+	wunderlist.frontend.filters.init();
+
 	makeListsDropable();
 	makeFilterDropable();
 	
@@ -168,7 +177,6 @@ wunderlist.account.loadInterface = function() {
 
 /**
  * Shows the register Dialog
- *
  * @author Dennis Schneider
  */
 wunderlist.account.showRegisterDialog = function() {

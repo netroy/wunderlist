@@ -24,9 +24,21 @@ body {
   font-size: 12px;
   color: #4e4e4e;
   border-top: 0px solid #666;
-  background-image: url('../backgrounds/wood.jpg');
   background-repeat: no-repeat;
   background-position: top center;
+  display: none;
+}
+
+body.login {
+  height: auto;
+  overflow: auto;
+  background: black url('../backgrounds/wood.jpg') top center no-repeat fixed;
+  padding-top: 300px;
+  padding-bottom: 200px;
+}
+
+body.login #content , body.login #bottombar , body.login #listfunctions{
+  display: none;
 }
 
 .red{color:#c30}
@@ -64,24 +76,51 @@ a {
 
 /* -- Share Functions Of Lists ---------------------------------------------------------------- */
 
-#listfunctions {position:absolute; right:20px; height:17px; top:10px; z-index:2}
+#listfunctions {
+  position: absolute;
+  right: 280px;
+  height: 17px;
+  top: 10px;
+  z-index: 2;
+}
+
+body.sidebarClosed #listfunctions {
+  right: 20px;
+}
 
 #listfunctions a {
-width:17px; height:17px; background:#000; display:block; float:left;
--ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-opacity:0.5; 
--moz-opacity: 0.5;
-cursor:pointer; margin-left:10px}
+  width: 17px;
+  height: 17px;
+  background: #000;
+  display: block;
+  float: left;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  opacity: 0.5; 
+  -moz-opacity: 0.5;
+  cursor: pointer;
+  margin-left: 10px;
+}
 
 #listfunctions a:hover {
--ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-opacity:1.0; 
--moz-opacity: 1.0}
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  opacity: 1.0; 
+  -moz-opacity: 1.0;
+}
 
 #listfunctions .list-print {background:url(/images/icons/print.png) no-repeat}
 #listfunctions .list-email {background:url(/images/icons/sendmail.png) no-repeat}
 #listfunctions .list-cloud {background:url(/images/icons/cloudapp.png) no-repeat}
 #listfunctions .list-share {background:url(/images/icons/sharelist_white.png) no-repeat}
+
+#printFrame {
+  width: 1px;
+  height: 1px;
+  border: 0 none;
+  position: absolute;
+  top: -999px;
+  left: -999px;
+}
+
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 

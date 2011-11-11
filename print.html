@@ -20,7 +20,7 @@
 			* html ul.wunderlist li span {left: -30px;} /* IE 6 */
 		</style>
 	</head>
-	<body onload="window.setTimeout('window.print()', 200);">
+	<body>
 		<div class="wunderlist-wrapper">
 			<h1>####LIST####</h1>
 			####TASKS####
@@ -28,5 +28,12 @@
 					These tasks are generated with Wunderlist
 			</p>
 		</div>
+		<script type="text/javascript">
+		  window.setTimeout(function(){
+		    window.focus();
+		    window.print();
+		    window.blur();
+		  }, 200);
+		</script>
 	</body>
 </html>
