@@ -44,17 +44,12 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
       todayBadges.text(todaycount);
       //todayBadges.fadeOut('fast').fadeIn('fast');
       lists.css("bottom","74px");
-      $("#note").css("bottom","74px");
+      note.css("bottom","74px");
     }
 
     var overdue_text;
-    if(overduecount > 1) {
-      overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_pl;
-      notifications.fadeIn('fast');
-      lists.css("bottom","74px");
-      note.css("bottom","74px");
-    } else if(overduecount === 1) {
-      overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_sl;
+    if(overduecount >= 1) {
+      overdue_text = overduecount + ' ' + (overduecount > 1)? wunderlist.language.data.overdue_text_pl : wunderlist.language.data.overdue_text_sl;
       notifications.fadeIn('fast');
       lists.css("bottom","74px");
       note.css("bottom","74px");
@@ -70,7 +65,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     } else {
       $('div', notifications).text(overduecount);
       //notifications.fadeOut('fast').fadeIn('fast');
-      $("#lists").css("bottom","74px");
+      lists.css("bottom","74px");
     }
 
     if(todaycount === 0) {
@@ -98,6 +93,33 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
 
 
   /**
+   * Switch filters on click & fire a DB call
+   */
+  function switchFilter(e){
+    var node = $(e.target);
+    var id = node.attr("id");
+    if (node.hasClass('loggedinas') || typeof id === 'undefined') {
+      node.addClass('active');
+    } else {
+      setActiveState(node);
+      $("a.list").droppable({
+        disabled: false
+      });
+
+      if(!!id.match(/^(all|starred|done|today|tomorrow|thisweek)$/)) {
+        wunderlist.database.getFilteredTasks(id);
+      } else if(id === "someday"){
+        wunderlist.database.getFilteredTasks('date', 'withdate');
+      } else if(id === "withoutdate") {
+        wunderlist.database.getFilteredTasks('date', 'nodate');
+      }
+
+      html.make_timestamp_to_string();
+    }
+  }
+
+
+  /**
    * Initiates all filter functions on the bottom (buttons on the bottom)
    * @author Christian Reber
    */
@@ -113,55 +135,17 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     // Attach events
     $('.list').click(clearActiveStates);
 
-    $('a#someday').click(function() {
-      wunderlist.database.getFilteredTasks('date', 'withdate');
-    });
-
-    $('a#withoutdate').click(function() {
-      wunderlist.database.getFilteredTasks('date', 'nodate');
-    });
-
-    $('a#all').click(function() {
-      wunderlist.database.getFilteredTasks('all');
-    });
-
-    $('a#starred').click(function() {
-      wunderlist.database.getFilteredTasks('starred');
-    });
-
-    $('a#today').click(function() {
-      wunderlist.database.getFilteredTasks('today');
-    });
-
-    $('a#tomorrow').click(function() {
-      wunderlist.database.getFilteredTasks('tomorrow');
-    });
-
-    $('a#thisweek').click(function() {
-      wunderlist.database.getFilteredTasks('thisweek');
-    });
-
-    $('a#done').click(function() {
-      wunderlist.database.getFilteredTasks('done');
-    });
-
-    // Activates a filter
-    $('a.filter', bottomBarLeft).click(function(e) {
-      var node = $(e.target);
-      if (node.hasClass('loggedinas') === false) {
-        setActiveState(node);
-        $("a.list").droppable({disabled: false});
-        html.make_timestamp_to_string();
-      } else {
-        $(node).addClass('active');
-      }
-    });
+    // Filter buttons on the bottom bar 
+    // Activates filter on click
+    bottomBarLeft.delegate("a.filter", "click", switchFilter);
 
     // Show overdue tasks if click on "overdue alert"
     $('div', notifications).click(function() {
       wunderlist.database.getFilteredTasks('overdue');
       html.make_timestamp_to_string();
-      $("a.list").droppable({disabled: false});
+      $("a.list").droppable({
+        disabled: false
+      });
       $('a', bottomBarLeft).removeClass('active');
     });
 
