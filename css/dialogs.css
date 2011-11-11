@@ -53,9 +53,26 @@ html[xmlns] .clearfix {display: block}
 
 /* LOGIN DIALOG --------------------------------------------------------------------------------------- */
 
-p.pwd { padding-top:6px !important; float:left; font-size:12px; font-weight:bold; text-shadow:0px 1px 1px #fff;  color:#737781}
-p.pwd a {font-size:12px; font-weight:bold; text-shadow:0px 1px 1px #fff;  color:#737781}
-p.pwd input {margin-right:8px}
+p.pwd {
+  padding-top: 6px !important;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 0px 1px 1px #fff;
+  color: #737781;
+}
+
+p.pwd a {
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 0px 1px 1px #fff;
+  color: #737781;
+  text-decoration: none;
+}
+
+p.pwd input {
+  margin-right: 8px;
+}
 
 #account-buttons #account-loader {display: none; position: absolute; bottom: 12px; right: 200px; background:transparent}
 
@@ -83,7 +100,6 @@ margin-left:12px}
 
 a.facebooklogin:hover {background-position:0px -31px}
 
-.dialog-login .ui-dialog-buttonset {padding:0px !important; border-radius:0px;-webkit-border-radius:0px; border:none !important}
 
 .ui-widget-overlay {
 position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -93,19 +109,66 @@ opacity:0.5;
 filter:Alpha(opacity=50);
 -moz-opacity: 0.5;}
 
-.ui-widget-overlay-wood {top:1px;background: #000 url(/backgrounds/wood.jpg) top center no-repeat ; opacity:1 ;overflow:visible}
+.ui-widget-overlay-wood {
+  top: 1px;
+  background: #000 url(/backgrounds/wood.jpg) top center no-repeat ;
+  opacity: 1;
+  overflow: visible;
+}
 
-.dialog-login{ 
--webkit-box-shadow:0px 3px 16px #222;
-position:relative !important; top:50% !important; left:auto !important;  margin:-125px auto -250px auto !important; height: 250px !important; width:500px !important }
 
-.dialog-edit-profile {width:470px !important; margin-left: -240px !important;}
+.dialog-login, .dialog-login div {
+  overflow: visible;
+}
 
-	div.errorwrap {height:14px; padding-top:4px}
-	
-	.forgotpwbuttons div.errorwrap {clear:both; display:none}
+.dialog-login .ui-dialog-buttonset {
+  padding:0px !important;
+  border-radius:0px;
+  -webkit-border-radius:0px;
+  border:none !important;
+}
 
-	div.errorwrap p {text-align:left; color:#c83021; font-size:11px; font-weight:bold; text-shadow:0px 1px 1px #fff; padding:0px !important}
+div.dialog-login {
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  margin-left: -240px;
+  height: 250px;
+  width: 480px;
+  text-align: center;
+  -webkit-box-shadow:0px 3px 16px #222;
+  -moz-box-shadow:0px 3px 16px #222;
+  box-shadow:0px 3px 16px #222;
+}
+
+div.dialog-login .ui-dialog-titlebar {
+  text-align: left;
+}
+
+
+.dialog-edit-profile {
+  width: 470px !important;
+  margin-left: -240px !important;
+}
+
+div.errorwrap {
+  height: 14px;
+  padding-top: 4px;
+}
+
+.forgotpwbuttons div.errorwrap {
+  clear: both;
+  display: none;
+}
+
+div.errorwrap p {
+  text-align:left;
+  color:#c83021;
+  font-size:11px;
+  font-weight:bold;
+  text-shadow:0px 1px 1px #fff;
+  padding:0px !important;
+}
 	
 	.input-red {border-color: #c83021 !important}
 
@@ -126,9 +189,14 @@ box-shadow:0px 3px 16px #222}
 box-shadow:none;
 border:none}
 
-	.ui-widget-content p { padding:10px 0px; line-height:18px}
+.ui-widget-content p {
+  padding: 10px 0px;
+  line-height: 0;
+}
 	
-	.ui-widget-content .small { line-height:12px }
+.ui-widget-content .small {
+  line-height: 12px;
+}
 
 .ui-dialog .ui-dialog-content {
 min-height:0px !important;
@@ -168,9 +236,22 @@ color:#4b4e54 ;font-size:14px ; padding:12px 0px ; padding-left:13px  ;text-shad
 
 .formright {margin-left:130px; margin-top:24px; margin-right:12px}
 
-.input-login {display:block; width:94%; padding:8px; margin-top:8px;
--webkit-box-shadow:0px 1px 0px #fff;-moz-box-shadow:0px 1px 0px #fff;box-shadow:0px 1px 0px #fff;
-border:1px solid #adadad;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;background:#fff;font-size:12px;color:#777}
+.input-login {
+  display: block;
+  width: 94%;
+  padding: 8px;
+  margin-top: 8px;
+  -webkit-box-shadow: 0px 1px 0px #fff;
+  -moz-box-shadow: 0px 1px 0px #fff;
+  box-shadow: 0px 1px 0px #fff;
+  border: 1px solid #adadad;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 12px;
+  color: #888;
+}
 
 .input-normal {width:96%; padding: 2%; margin-top:12px ;
 -webkit-box-shadow:0px 1px 1px #fff;-moz-box-shadow:0px 1px 1px #fff;box-shadow:0px 1px 1px #fff;
@@ -395,55 +476,181 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 		background: #f3f4f6}
 				
 .delete-all-shared-lists {position:absolute; bottom:12px; right:12px; width:auto !important}
-	
-/* FOLLOW LINKS @ LOGIN DIALOG --------------------------------------------------------------------------- */
-
-.followus { position:relative; clear:both; display: none}
-
-.dialog-login, .dialog-login div {overflow:visible}
-
-.followus p {position:absolute; bottom:-190px; left: -50px; background:url(/images/followus.png) 0px 10px no-repeat; padding-left:80px; width:460px}
-.followus p a { margin-left:2px; margin-right:8px; -webkit-box-shadow:0px 1px 3px #666; -moz-box-shadow:0px 1px 3px #666; box-shadow:0px 1px 3px #666; float:left;}
-.followus p a:hover { -webkit-box-shadow:0px 1px 3px #333; box-shadow:0px 1px 3px #333; box-shadow:0px 1px 3px #333}
 
 /* HEADLINE @ LOGIN DIALOG --------------------------------------------------------------------------- */
 
-.dialog-login h1 {text-indent: -9678px; height:57px; width:303px; position:absolute; left:85px;  top: -72px; background:url(/images/headline.png) no-repeat}
-.dialog-login h2, .dialog-login h3 {display:none}
+#loginheader,  #loginfooter {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
 
-.seefeatures {Position:absolute; height:44px; width:179px; top:-70px; left:150px;background:url(/images/seefeatures.png) no-repeat; text-indent: -45123px}
-.seefeatures:hover {background-position:0px -44px}
+#loginheader {
+  top: 100px;
+}
 
-.wkseparator {position:absolute; width:560px; height:2px; background:url(/images/wkseparator.png); left:-30px; bottom:-130px;}
+#loginfooter {
+  top: 580px;
+}
 
-.wkdownload {position:absolute; width:570px; height:88px; left:-44px; bottom:-110px; text-align:center}
+#loginfooter > div {
+  margin-left: auto;
+  margin-right: auto;
+}
 
-	.wkdownload a {width:114px; height:88px; display:inline-block; text-indent: -23718px; background:url(/images/download.png);}
+#loginheader h1 {
+  text-indent: -9678px;
+  height: 120px;
+  width: 640px;
+  background: url(../images/headline.png) no-repeat;
+  margin: 0 auto 10px auto;
+}
+
+#loginheader h2, #loginheader h3 {
+  display:none;
+}
+
+.seefeatures, .visitblog {
+  text-indent: -45123px;
+  display: inline-block;
+  height: 44px;
+  width: 179px;
+}
+
+.seefeatures {
+  left: 150px;
+  background: url(../images/seefeatures.png) no-repeat;
+  margin-right: 11px;
+}
+.seefeatures:hover {
+  background-position: 0px -44px;
+}
+
+.visitblog {
+  left: 245px;
+  background: url(../images/visitblog.png) no-repeat;
+}
+.visitblog:hover {
+  background-position: 0px -44px;
+}
+
+
+.freewunderlist {
+  background: url(../images/free.png);
+  width: 95px;
+  height: 103px;
+  position: absolute;
+  top: -3px;
+  right: -16px;
+  text-indent: -4303px;
+}
+
+.wkdownload {
+  width: 700px;
+  height: 110px;
+}
+
+.wkdownload a {width:114px; height:88px; display:inline-block; text-indent: -23718px; background:url(/images/download.png);}
+
+.wkdownload .iphone {background-position: 0px -88px}
+.wkdownload .iphone:hover {background-position: 0px 0px}
+
+.wkdownload .ipad {background-position: 456px -88px}
+.wkdownload .ipad:hover {background-position: 456px 0px}
+
+.wkdownload .android {background-position: 342px -88px}
+.wkdownload .android:hover {background-position: 342px 0px}
+
+.wkdownload .windows {background-position: 228px -88px}
+.wkdownload .windows:hover {background-position: 228px 0px}
+
+.wkdownload .mac {background-position: 114px -88px}
+.wkdownload .mac:hover {background-position: 114px 0px}
+
+.wkdownload .notyet {opacity:0.5}
+.wkdownload .notyet:hover {background-position: 342px -88px; cursor:default}
+
+.wkseparator {
+  width: 560px;
+  height: 2px;
+  background: url(../images/wkseparator.png);
+}
+
+.freewunderlist {
+  background: url(/images/free.png);
+  width: 95px;
+  height: 103px;
+  text-indent: -4303px;
+}
+
 	
-		.wkdownload .iphone {background-position: 0px -88px}
-		.wkdownload .iphone:hover {background-position: 0px 0px}
-		
-		.wkdownload .ipad {background-position: 456px -88px}
-		.wkdownload .ipad:hover {background-position: 456px 0px}
-		
-		.wkdownload .android {background-position: 342px -88px}
-		.wkdownload .android:hover {background-position: 342px 0px}
-		
-		.wkdownload .windows {background-position: 228px -88px}
-		.wkdownload .windows:hover {background-position: 228px 0px}
-		
-		.wkdownload .mac {background-position: 114px -88px}
-		.wkdownload .mac:hover {background-position: 114px 0px}
-		
-		.wkdownload .notyet {opacity:0.5}
-		.wkdownload .notyet:hover {background-position: 342px -88px; cursor:default}
+/* FOLLOW LINKS @ LOGIN DIALOG --------------------------------------------------------------------------- */
 
-.wklogo {position:absolute; width:580px; height:50px; background: url(/images/wklogo.png) 247px 9px no-repeat; 
-bottom:-190px; left:-38px; cursor: pointer; text-indent: -34129px}
+.followus {
+  clear: both;
+  width: 580px;
+  height: 50px;
+  overflow: hidden;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
 
-.wklogowhite {display: block; width:329px; height:49px; position:absolute; left:191px; bottom:-185px; background: url(/images/wklogowhite.png); text-indent: -34129px}
+.followus p {
+  background: url(/images/followus.png) 0px 10px no-repeat;
+  padding-left: 80px;
+  width: 460px;
+  overflow: auto;
+}
 
-.freewunderlist {background:url(/images/free.png);width:95px;height:103px;position:absolute;top:-3px;right:-16px; text-indent: -4303px}
+.followus p a {
+  margin-left:2px;
+  margin-right:8px;
+  -webkit-box-shadow:0px 1px 3px #666;
+  -moz-box-shadow:0px 1px 3px #666;
+  box-shadow:0px 1px 3px #666;
+  float:left;
+}
+
+.followus p a:hover {
+  -webkit-box-shadow:0px 1px 5px #333;
+  -moz-box-shadow:0px 1px 5px #333;
+  box-shadow:0px 1px 5px #333;
+}
+
+.followus .wklogo {
+  width: 580px;
+  height: 50px;
+  background: url(/images/wklogo.png) 247px 9px no-repeat; 
+  cursor: pointer;
+  text-indent: -34129px;
+}
+
+.followus:hover .wklogo {
+  margin-top: -60px;
+  opacity: 0.2;
+}
+
+.followus a.followtwitter, .followus a.followfacebook {
+  margin-top: 10px;
+}
+
+.followus a.wklogowhite {
+  display: block;
+  width: 329px;
+  height: 49px;
+  background: url(/images/wklogowhite.png);
+  text-indent: -34129px;
+  opacity: 0.2;
+}
+
+.followus:hover a.wklogowhite {
+  opacity: 1.0;
+}
+
+.wklogo, .wklogowhite {
+  -webkit-transition: opacity 0.6s ease-out, margin-top 0.4s ease-in-out;  
+}
 
 /* DATEPICKER DIALOG ------------------------------------------------------------------------------------ */
 

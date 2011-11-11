@@ -178,35 +178,61 @@ wunderlist.account.loadInterface = function() {
 /**
  * Shows the register Dialog
  * @author Dennis Schneider
+ * TODO: move dom stuff to frontend
  */
 wunderlist.account.showRegisterDialog = function() {
-	if ($("[role='dialog']").length == 0)
-	{
+	if ($("[role='dialog']").length === 0) {
 		register_dialog = $('<div></div>')
 			.html(html.generateLoginRegisterDialogHTML())
 			.dialog({
-				autoOpen: false,
+				autoOpen: true,
 				draggable: false,
 				resizable: false,
-				modal: true,
+				modal: false,
 				closeOnEscape: false,
 				dialogClass: 'dialog-login',
 				title: wunderlist.language.english.register_title,
-				open: function()
-				{
+				open: function() {
 					$('input#login-email').val('');
 					$('input#login-password').val('');
 					$('.error').hide().fadeIn("fast").text('');
 					$('input#login-email').blur();
 				}
 		});
-	
 
-		wunderlist.helpers.dialogs.openDialog(register_dialog);
+    var header = $("<div id='loginheader'></div>");
+    header.append($("<h1/>").html(wunderlist.language.english.register_dialog_h1));
+    header.append($("<h2/>").html(wunderlist.language.english.register_dialog_h2));
+    header.append('<a class="seefeatures" href="http://6wunderkinder.com/wunderlist" target="_blank">see the features of Wunderlist</a>');
+    header.append('<a class="visitblog" href="http://blog.wunderlist.com/" target="_blank">visit the blog of Wunderlist</a>');
+    register_dialog.append('<div class="freewunderlist">free for every device</div>');
+    
+    var footer = $("<div id='loginfooter'></div>");
+    var downloads = $('<div class="wkdownload"></div>');
+		if (settings.os !== 'darwin') {
+      downloads.append('<a class="mac" href="http://itunes.apple.com/app/wunderlist/id410628904?mt=12&ls=1">Download for Mac OSX</a>');
+		}
+		if (settings.os !== 'windows'){
+      downloads.append('<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-win.msi">Download for Windows</a>');
+		}
+    downloads.append('<a class="ipad" href="http://itunes.apple.com/us/app/wunderlist-hd/id420670429">Download for iPad</a>');
+    downloads.append('<a class="iphone" href="http://itunes.apple.com/us/app/wunderlist-to-do-listen/id406644151">Download for iPhone</a>');
+    downloads.append('<a class="android" href="https://market.android.com/details?id=com.wunderkinder.wunderlistandroid">Download for Android</a>');
+    downloads.append('<a class="notyet" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.4-linux-64.tgz">Download for Linux</a>');
+    
+    footer.append(downloads);
+    footer.append('<div class="wkseparator"></div>');
+    var followus = footer.append('<div class="followus"></div>').find(".followus");
+    var p = $("<p/>");
+    p.append('<a class="followtwitter" target="_blank" href="http://www.twitter.com/6wunderkinder">Follow us on Twitter</a>');
+    p.append('<a class="followfacebook" target="_blank" href="http://www.facebook.com/6wunderkinder">Follow Us on Facebook</a>');
+    p.append('<a class="wklogowhite" href="http://www.6wunderkinder.com">6Wunderkinder</a>');
+    followus.append('<div class="wklogo">6W</div>');
+    followus.append(p);
+
+	  register_dialog.parent().before(header).after(footer).attr("style", "");
+
 	}
-
-	// Set wood background for login dialog
-	setTimeout(function() { $('.ui-widget-overlay').addClass('ui-widget-overlay-wood');	}, 1);
 
 	wunderlist.layout.stopLoginAnimation();
 
@@ -227,36 +253,35 @@ wunderlist.account.showRegisterDialog = function() {
 
 	// Login
 	$('#loginsubmit').live('click', function() {
-		if (logging_in == false)
-		{
+		if (logging_in === false) {
 			logging_in = true;
 			wunderlist.account.login();
-			setTimeout(function() {logging_in = false}, 2000);
+			setTimeout(function() {
+			  logging_in = false;
+			}, 2000);
 			return false;
 		}
 	});
 
 	// Register
 	$('#registersubmit').live('click', function() {
-		if (logging_in == false)
-		{
+		if (logging_in === false) {
 			logging_in = true;
 			wunderlist.account.register(true);
-			setTimeout(function() {logging_in = false}, 2000);
+			setTimeout(function() {
+			  logging_in = false;
+			}, 2000);
 			return false;
 		}
 	});
 
 	// Login or Register on RETURN and close dialog on ESCAPE
 	$('#login-email,#login-password').live('keyup', function(evt) {
-		if (evt.keyCode == 13 && logging_in == false)
-		{
+		if (evt.keyCode === 13 && logging_in === false) {
 			logging_in = true;
 			wunderlist.account.login();
 			setTimeout(function() {logging_in = false}, 2000);
-		}
-		else if (evt.keyCode == 27)
-		{
+		} else if (evt.keyCode === 27) {
 			wunderlist.account.loadInterface('no_thanks');
 		}
 	})

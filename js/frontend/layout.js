@@ -230,13 +230,15 @@ wunderlist.layout = (function(undefined) {
     // If program has been opened 5 times, open the invite dialog
     runtime = Titanium.App.Properties.getString('runtime');
     if(runtime % 10 === 0 && settings.invited === 'false') {
+      // DEBUG: disable invite popup, gets really annoying
       // wunderlist.account.showInviteDialog();
     }
 
     $('a.showhelp').bind('click', function() {
       wunderlist.helpers.dialogs.showHelpDialog();
     });
-  
+
+/*
     $(".wklogo").mouseenter(function(){
       $(this).fadeOut();
       $(".followus").fadeIn();
@@ -246,6 +248,7 @@ wunderlist.layout = (function(undefined) {
       $(this).fadeOut();
       $(".wklogo").fadeIn();
     });
+*/
   }
 
 

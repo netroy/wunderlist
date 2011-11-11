@@ -1,12 +1,15 @@
 /* RESET -------------------------------------------------------*/
 
+/*
 * {
-margin:0px;
-padding:0px;
-outline:none !important;
-text-decoration:none}
+margin: 0px;
+padding: 0px;
+outline: none !important;
+text-decoration: none;
+}
 
 li {list-style:none}
+*/
 
 /* GENERAL ----------------------------------------------------- */
 
@@ -18,30 +21,35 @@ html {
 
 
 body {
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-  height: 100%;
+  display: none;
+  font-family: 'Lucida Grande', Arial, sans-serif;
   font-size: 12px;
   color: #4e4e4e;
+  overflow: hidden;
+  height: 100%;
   border-top: 0px solid #666;
+  background-image: url('../backgrounds/wood.jpg');
   background-repeat: no-repeat;
-  background-position: top center;
-  display: none;
+  /*background-position: center center;*/
+  background-attachment: fixed;
+  background-origin: padding-box;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
 }
 
 body.login {
-  height: auto;
   overflow: auto;
-  background: black url('../backgrounds/wood.jpg') top center no-repeat fixed;
-  padding-top: 300px;
-  padding-bottom: 200px;
+  position: relative;
 }
 
-body.login #content , body.login #bottombar , body.login #listfunctions{
+body.login #content , body.login #bottombar , body.login #listfunctions, body.login #sidebar{
   display: none;
 }
 
-.red{color:#c30}
+.red{
+  color: #c30;
+}
 
 .cursor{cursor:pointer}
 

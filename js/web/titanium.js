@@ -186,7 +186,7 @@
   /**
    * Network utils
    */
-  Network.online = false;//DEBUG: window.navigator.onLine;
+  Network.online = window.navigator.onLine;
   $(window).bind("offline",function(e){
     Network.online = false;
   }).bind("online",function(e){

@@ -25,7 +25,7 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
   var bgList = {
     'bgone'    : {bgPath: 'wood.jpg',         bgPosition: defaultBgPosition, bgColor: defaultBgColor},
     'bgtwo'    : {bgPath: 'wheat.jpg',        bgPosition: 'center center',   bgColor: defaultBgColor},
-    'bgthree'  : {bgPath: 'bokeh.jpg',         bgPosition: 'center center',  bgColor: defaultBgColor},
+    'bgthree'  : {bgPath: 'bokeh.jpg',        bgPosition: 'center center',   bgColor: defaultBgColor},
     'bgfour'   : {bgPath: 'blue.jpg',         bgPosition: defaultBgPosition, bgColor: '#2b1023'},
     'bgfive'   : {bgPath: 'royal_purple.jpg', bgPosition: defaultBgPosition, bgColor: defaultBgColor},
     'bgsix'    : {bgPath: 'darkfade.jpg',     bgPosition: defaultBgPosition, bgColor: '#242424'},
@@ -76,7 +76,7 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
     $.each(bgList, function(bgClass) {
       var a = $('<a class="' + bgClass + '"> </a>');
       a.bind('click', switchBg);
-      backgroundList.prepend(a);
+      backgroundList.append(a);
     });
 
     var theme = Properties.getString("active_theme");

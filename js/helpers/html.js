@@ -37,8 +37,7 @@ html.generateShareListDialogHTML = function(list_id) {
  * @author Daniel Marschner
  */
 html.generateLoginRegisterDialogHTML = function() {
-	var html_code = '<h1>Welcome to Wunderlist</h1><h2>Your free and easy task management tool</h2>' +
-		'<div class="wunderlistlogo"><img src="/images/iosicon.png" alt="Wunderlist Icon"/></div>' +
+	var html_code = '<div class="wunderlistlogo"><img src="/images/iosicon.png" alt="Wunderlist Icon"/></div>' +
 		
 		// LOGIN DIALOG
 		
@@ -95,28 +94,6 @@ html.generateLoginRegisterDialogHTML = function() {
 		'<input class="input-button register" type="submit" id="showloginsubmit" value="Cancel" /> ' +
 	    '<img src="images/ajax-loader.gif" id="account-loader"/>' +
 		'</div>' +
-		'</div>' +
-		
-		// SITE ELEMENTS
-		
-		'<div class="wkdownload">' +
-		'<a class="iphone" href="http://itunes.apple.com/us/app/wunderlist-to-do-listen/id406644151">Download for iPhone</a>' +
-		'<a class="ipad" href="http://itunes.apple.com/us/app/wunderlist-hd/id420670429">Download for iPad</a>' +
-		'<a class="android" href="https://market.android.com/details?id=com.wunderkinder.wunderlistandroid">Download for Android</a>';
-		
-		// TODO: If we launch a linux version we have to optimize that
-		if (settings.os === 'darwin')
-			html_code += '<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-win.msi">Download for Windows</a>';
-		else
-			html_code += '<a class="mac" href="http://itunes.apple.com/app/wunderlist/id410628904?mt=12&ls=1">Download for Mac OSX</a>';		
-		
-		html_code += '</div>' +
-		'<div class="wklogo">6W</div>' +
-		'<div class="wkseparator"></div>' +
-		'<div class="followus"><p>'+
-		'<a class="followtwitter" target="_blank" href="http://www.twitter.com/6wunderkinder">Follow us on Twitter</a>' +
-		'<a class="followfacebook" target="_blank" href="http://www.facebook.com/6wunderkinder">Follow Us on Facebook</a></p>' +
-		'<a href="http://www.6wunderkinder.com" class="wklogowhite">6Wunderkinder</a>' +
 		'</div>';
 
 	return html_code;
