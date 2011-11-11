@@ -7,7 +7,8 @@
 3. implement indexedDB backend in database.js
 4. cache long object lookups like wunderlist.helpers.utils. in local variables like UTILS (at the end)
 5. backend should be completely independent of DOM & modules should go in W.backend
-5. write unit tests 
+6. CSS lint all stylesheet & convert them to LESS/Stylus eventually
+7. write unit tests 
 
 <br/>
 ***
