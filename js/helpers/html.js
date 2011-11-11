@@ -2,7 +2,6 @@ var html = html || {};
 
 /**
  * Generates the HTML structure for the settings dialog
- *
  * @author Marvin Labod
  */
 html.generateNotesDialogHTML = function() {
@@ -20,7 +19,6 @@ html.generateNotesDialogHTML = function() {
 
 /**
  * Returns the HTML structure of the login/register Dialog
- *
  * @author Marvin Labod
  */
 html.generateShareListDialogHTML = function(list_id) {
@@ -36,11 +34,10 @@ html.generateShareListDialogHTML = function(list_id) {
 
 /**
  * Returns the HTML structure of the login/register Dialog
- *
  * @author Daniel Marschner
  */
 html.generateLoginRegisterDialogHTML = function() {
-	var html_code = '<h1>Wunderlist</h1>' +
+	var html_code = '<h1>Welcome to Wunderlist</h1><h2>Your free and easy task management tool</h2>' +
 		'<div class="wunderlistlogo"><img src="/images/iosicon.png" alt="Wunderlist Icon"/></div>' +
 		
 		// LOGIN DIALOG
@@ -136,16 +133,11 @@ html.generateListContentHTML = function(list_id, list_name) {
 	if (settings.os === 'darwin') {
 		wunderlist.language.data.add_task_hint = wunderlist.language.data.add_task_hint.replace('Alt', '⌥');
 	}
-	
+
 	var taskName = wunderlist.lastSavedTaskName || '';
 	
 	var html_code = '';
 
-	if(list_id != 1 && wunderlist.account.isLoggedIn() == true)
-		html_code += "<div id='listfunctions'><a rel='" + wunderlist.language.data.print_tasks + "' class='list-print'></a><a rel='" + wunderlist.language.data.send_by_mail + "' class='list-email'></a><a rel='" + wunderlist.language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + wunderlist.language.data.copy_link + "</span><span class='link'></span></div></div>";
-	else
-		html_code += "<div id='listfunctions'><a rel='" + wunderlist.language.data.print_tasks + "' class='list-print'></a><a rel='" + wunderlist.language.data.send_by_mail + "' class='list-email'></a><a rel='" + wunderlist.language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>" + wunderlist.language.data.copy_link + "</span><span class='link'></span></div></div>";
-	
 	html_code += "<h1>" + unescape(list_name) + "</h1>";
 	html_code += "<div class='add'>";
 	html_code += "<div class='addwrapper'><input type='text' class='input-add' placeholder='" + wunderlist.language.data.add_task + "' value='" + taskName + "' /><span class='add_task_hint'>" + wunderlist.language.data.add_task_hint + "</span></div>";
@@ -165,39 +157,36 @@ html.generateListContentHTML = function(list_id, list_name) {
 html.generateTaskHTML = function(id, name, list_id, done, important, date, note) {
 	var taskHTML = "<li class='more" + (done == 1 ? " done" : "") + "' rel='" + list_id + "' id='" + id + "'>";
 	
-	if (done == 1)
-	{
+	if (done == 1) {
 		taskHTML += "<div class='checkboxcon checked'>";
 		taskHTML += "<input tabIndex='-1' class='input-checked' type='checkbox' checked='checked' />";
-	}
-	else
-	{
+	} else {
 		taskHTML += "<div class='checkboxcon'>";
 		taskHTML += "<input tabIndex='-1' class='input-checked' type='checkbox' />";
 	}
 	
-    var unescapedName = unescape(name);
-    var name          = html.replace_links(html.strip_tags(unescape(name)));
-    
-    if (name == '')
-         name = wunderlist.language.data.new_task;
+  var unescapedName = unescape(name);
+  var name          = html.replace_links(html.strip_tags(unescape(name)));
+  name = name || wunderlist.language.data.new_task;       
 
 	taskHTML += '</div>';
 	taskHTML += '<span class="icon ' + (important == 1 ? 'fav' : 'favina') + '"></span>';
 	taskHTML += '<span class="description">' + name + '</span>';
 
-	if (date != '' && date != '0')
-		taskHTML += '<span class="showdate timestamp" rel="' + date + '"></span>';
-	else
-		taskHTML += '<input type="hidden" class="datepicker" value="0"/>';
-	
+	if (date !== '' && date !== '0') {
+	  taskHTML += '<span class="showdate timestamp" rel="' + date + '"></span>';
+	} else {
+	  taskHTML += '<input type="hidden" class="datepicker" value="0"/>';
+	}
+
 	taskHTML += '<span class="icon delete"></span>';
 
-	if (note != '' && note != undefined)
-		taskHTML += '<span class="icon note activenote">' + note + '</span>';
-	else
-		taskHTML += '<span class="icon note"></span>';
-	
+	if (note !== '' && note !== undefined) {
+	  taskHTML += '<span class="icon note activenote">' + note + '</span>';
+	} else {
+	  taskHTML += '<span class="icon note"></span>';
+	}
+
 	taskHTML += '</li>';
 
 	return taskHTML;
