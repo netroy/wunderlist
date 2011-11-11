@@ -47,21 +47,22 @@
 }
 
 #sidebar .searchside {
-  position:absolute;  
-  right:10px;
-  top:5px;
-  width:204px;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 204px;
   padding:0px 14px 0px 18px;
-  margin-left:20px;
-  margin-top:12px;
+  margin-left: 20px;
+  margin-top: 12px;
+  border: 1px solid #c8cddd;
+  background: #fff url(/images/searchicon.png) 5% 50% no-repeat;
+
+  box-shadow:0px 1px 1px #fff;
   -webkit-box-shadow:0px 1px 1px #fff;
   -moz-box-shadow:0px 1px 1px #fff;
-  box-shadow:0px 1px 1px #fff;
-  border:1px solid #c8cddd;
+  border-radius:15px;
   -webkit-border-radius:15px;
   -moz-border-radius:15px;
-  border-radius:15px;
-  background:#fff url(/images/searchicon.png) 5% 50% no-repeat;
 }
 
 input#search {
@@ -194,51 +195,66 @@ box-shadow: inset 1px 1px 3px #174460}
 opacity:0.5; 
 -moz-opacity: 0.5}
 
-#sidebar .ui-state-disabled div:hover , #sidebar .ui-dropped-disabled div:hover {opacity:1.0}
+#sidebar .ui-state-disabled div:hover , #sidebar .ui-dropped-disabled div:hover {
+  opacity: 1.0;
+}
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
-background:#33a3ef !important;
-background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
-background: -moz-linear-gradient(top,  #33a3ef,  #168ad4) !important;
-border-bottom:1px solid #177bbd; color:#fff;text-shadow: #125a8a 0px 1px 2px}
+  background:#33a3ef !important;
+  background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
+  background: -moz-linear-gradient(top,  #33a3ef,  #168ad4) !important;
+  border-bottom:1px solid #177bbd;
+  color: #fff;
+  text-shadow: #125a8a 0px 1px 2px;
+}
 
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
--ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-opacity:1.0; 
--moz-opacity: 1.0}
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  opacity:1.0; 
+  -moz-opacity: 1.0;
+}
 
-#sidebar .ui-state-disabled span, #sidebar .ui-dropped-disabled span {background:url(/images/taskcounth.png) no-repeat}
+#sidebar .ui-state-disabled span, #sidebar .ui-dropped-disabled span {
+  background:url(/images/taskcounth.png) no-repeat;
+}
 
 .list span {
-text-shadow:none; font-size:11px;
-float:right; width:31px; height:16px;
-background:url(/images/taskcount.png) no-repeat;
-text-align:center; display:block;
-padding-top:3px;
-margin-top:-3px;
-font-weight:bold}
+  text-shadow: none;
+  font-size: 11px;
+  float: right;
+  width: 31px;
+  height: 16px;
+  background: url(/images/taskcount.png) no-repeat;
+  text-align: center;
+  display: block;
+  padding-top: 3px;
+  margin-top: -3px;
+  font-weight: bold;
+}
 
 #sidebar #notification {
-background:#e7eaf2;
-border-top:1px solid #fff;
-bottom: 36px;
-position: absolute;
-right:0px;
-height:32px;
-padding-top:10px;
-width: 259px}
+  background: #e7eaf2;
+  border-top: 1px solid #fff;
+  bottom: 36px;
+  position: absolute;
+  right: 0px;
+  height: 32px;
+  padding-top: 10px;
+  width: 259px;
+}
 
 #sidebar #notification div {
-text-align:center;
-cursor:pointer;
-font-weight:bold;
-background:url(/images/overdue.png) top left no-repeat;
-margin:0 auto;
-height:19px;
-text-shadow: 0px 1px 1px #2c0a0a;
-padding-top:6px;
-width:214px;
-color:#fff}
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  background: url(/images/overdue.png) top left no-repeat;
+  margin: 0 auto;
+  height: 19px;
+  text-shadow: 0px 1px 1px #2c0a0a;
+  padding-top: 6px;
+  width: 214px;
+  color: #fff;
+}
 
 
 /* SIDEBAR LEFT ---------------------------------------------------------------------------- */
