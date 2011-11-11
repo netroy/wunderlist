@@ -1,20 +1,6 @@
 /**
- * wunderlist.js
- *
- * Main Wunderlist core containing some helper functions
- * and the initialization of the program
- * 
- * @author Christian Reber, Dennis Schneider, Daniel Marschner
- */
-var wunderlist = wunderlist || {};
-wunderlist.backend = {};
-wunderlist.frontend = {};
-wunderlist.helpers = {};
-
-
-/**
  * Init the wunderlist framework and all necessary parts
- * @author Daniel Marschner
+ * @author Christian Reber, Dennis Schneider, Daniel Marschner
  */
 wunderlist.init = (function(W, settings, share, Titanium){ 
   "use strict";
@@ -70,10 +56,6 @@ wunderlist.init = (function(W, settings, share, Titanium){
   };
 
 })(wunderlist, settings, share, Titanium);
-
-
-
-
 
 
 /*************************************************************************************/
