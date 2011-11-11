@@ -17,6 +17,7 @@
   var Notification = Titanium.Notification = {};
   var Codec = Titanium.Codec = {};
   var Network = Titanium.Network = {};
+  var Desktop = Titanium.Desktop = {};
   
 
 
@@ -65,6 +66,7 @@
     // over HTTP there is no base resource directory
     return "";
   };
+  Filesystem.getApplicationDataDirectory = Filesystem.getApplicationDirectory = Filesystem.getResourcesDirectory;
 
   Filesystem.getFile = function(dir, filename){
     var data;
@@ -192,6 +194,12 @@
   });
 
 
+  /**
+   * Desktop Utils
+   */
+  Desktop.openURL = function(url){
+    window.open(url);
+  };
 
   // Re-assign the variable to the global scope
   window.Titanium = Titanium;
