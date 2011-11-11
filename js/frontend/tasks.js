@@ -322,7 +322,7 @@ tasks.add = function() {
       $('.datepicker').val('');
       
       makeSortable();
-      filters.updateBadges();
+      wunderlist.frontend.filters.updateBadges();
       html.make_timestamp_to_string();
       
       if (tasks.addNewTaskToTop) {
@@ -353,7 +353,7 @@ tasks.edit = function() {
     id: task_id,
     name: html.convertString(task_name)
   }).update();
-  filters.updateBadges();
+  wunderlist.frontend.filters.updateBadges();
 
   // TODO: What would this line do ??
   //$('html').find('.description').html();

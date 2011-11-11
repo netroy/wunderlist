@@ -336,7 +336,7 @@ wunderlist.database.insertTask = function() {
 			wunderlist.database.updateTaskCount();		
 			wunderlist.timer.stop().set(15).start();
 			
-			filters.updateBadges();
+			wunderlist.frontend.filters.updateBadges();
 			
 			// Reset the properties of the given task object
 			wunderlist.helpers.task.setDefaults();
@@ -396,7 +396,7 @@ wunderlist.database.updateTask = function(noVersion) {
 			wunderlist.database.updateTaskCount();
 			wunderlist.timer.stop().set(15).start();
 			
-			filters.updateBadges();
+			wunderlist.frontend.filters.updateBadges();
 			
 			// Reset the properties of the given task object
 			wunderlist.helpers.task.setDefaults();

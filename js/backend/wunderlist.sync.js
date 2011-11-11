@@ -483,7 +483,7 @@ wunderlist.sync.deleteElementsAfterSync = function(sync_table) {
   }
 
   wunderlist.database.deleteNotSyncedElements();
-  filters.updateBadges();
+  wunderlist.frontend.filters.updateBadges();
 };
 
 /**

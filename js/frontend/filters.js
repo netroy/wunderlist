@@ -1,162 +1,182 @@
-var filters = filters || {};
+wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, undefined){
+  "use strict";
 
-/**
- * Initiates all filter functions on the bottom (buttons on the bottom)
- *
- * @author Christian Reber
- */
-filters.init = function() {
-	$('.list').click(filters.clearActiveStates);
+  var bottomBarLeft, today, overdue, notifications;
 
-	$('a#someday').click(function() {
-	  wunderlist.database.getFilteredTasks('date', 'withdate');
-	});
+  /**
+   * Add class="active" on filters
+   * @author Dennis Schneider
+   */
+  function setActiveState(node) {
+    $('a', bottomBarLeft).removeClass('active');
+    $('.list').removeClass('ui-state-disabled');
+    $(node).addClass('active');
+  }
 
-	$('a#withoutdate').click(function() {
-	  wunderlist.database.getFilteredTasks('date', 'nodate');
-	});
+  /**
+   * Removes class="active" on filters
+   * @author Christian Reber
+   */
+  function clearActiveStates(e) {
+    $('a', bottomBarLeft).removeClass('active');
+  }
 
-	$('a#all').click(function() {
-	  wunderlist.database.getFilteredTasks('all');
-	});
+  /**
+   * Creates those tiny little red badges on the filters and on the Dock Icon (only on Mac OS X)
+   * to remind the user of "overdue" and "today" tasks
+   * TODO: Has to be updated, because of a freaky badge count behaviour. 
+   * If a sort a task, the badge will hide/show for every task in the list.
+   * @author Dennis Schneider, Christian Reber
+   */
+  function updateBadges() {
+    // Generate Badges
+    var todaycount   = wunderlist.database.updateBadgeCount('today');
+    var overduecount = wunderlist.database.updateBadgeCount('overdue');
+    var todayBadges = $('span', today), overdueBadges = $('span', overdue);
+    var lists = $("#lists"), note = $("#note");
 
-	$('a#starred').click(function() {
-	  wunderlist.database.getFilteredTasks('starred');
-	});
+    var today_has_no_badge   = todayBadges.length === 0;
+    var overdue_has_no_badge = overdueBadges.length === 0;
 
-	$('a#today').click(function() {
-	  wunderlist.database.getFilteredTasks('today');
-	});
+    if(today_has_no_badge === true) {
+      todayBadges = today.append('<span>' + todaycount + '</span>').find("span");
+    } else {
+      todayBadges.text(todaycount);
+      //todayBadges.fadeOut('fast').fadeIn('fast');
+      lists.css("bottom","74px");
+      $("#note").css("bottom","74px");
+    }
 
-	$('a#tomorrow').click(function() {
-	  wunderlist.database.getFilteredTasks('tomorrow');
-	});
+    var overdue_text;
+    if(overduecount > 1) {
+      overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_pl;
+      notifications.fadeIn('fast');
+      lists.css("bottom","74px");
+      note.css("bottom","74px");
+    } else if(overduecount === 1) {
+      overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_sl;
+      notifications.fadeIn('fast');
+      lists.css("bottom","74px");
+      note.css("bottom","74px");
+    } else {
+      overdue_text = '';
+      notifications.fadeOut('fast');
+      lists.css("bottom","36px");
+      note.css("bottom","36px");
+    }
 
-	$('a#thisweek').click(function() {
-	  wunderlist.database.getFilteredTasks('thisweek');
-	});
+    if(overdue_has_no_badge) {
+      $('div', notifications).text(overdue_text);
+    } else {
+      $('div', notifications).text(overduecount);
+      //notifications.fadeOut('fast').fadeIn('fast');
+      $("#lists").css("bottom","74px");
+    }
 
-	$('a#done').click(function() {
-	  wunderlist.database.getFilteredTasks('done');
-	});
-	
-	// Activates a filter
-	$('#bottombar #left a.filter').click(function() {
-		if ($(this).hasClass('loggedinas') === false) {
-			filters.setActiveState(this);
-			$("a.list").droppable({disabled: false});
-			html.make_timestamp_to_string();
-		} else {
-		  $(this).addClass('active');
-		}
-	});
+    if(todaycount === 0) {
+      todayBadges.remove();
+    }
 
-	// Show overdue tasks if click on "overdue alert"
-	$('div#sidebar div#notification div').click(function() {
-		wunderlist.database.getFilteredTasks('overdue');
-		html.make_timestamp_to_string();
-		$("a.list").droppable({disabled: false});
-		$('#bottombar #left a').removeClass('active');
-	});
-	
-	// By clicking on the list headline open the list
-	$('h3.clickable').live('click', function() {
-		$('a#list' + $(this).attr('rel')).click();
-	});
-	
-	setTimeout(filters.updateBadges, 10);
-};
+    var countAll = overduecount + todaycount;
+    if(countAll === 0) {
+      Titanium.UI.setBadge('');
+    } else {
+      Titanium.UI.setBadge(countAll.toString());
+    }
+  }
 
-/**
- * Add class="active" on filters
- *
- * @author Dennis Schneider
- */
-filters.setActiveState = function(object) {
-	$('#bottombar #left a').removeClass('active');
-	$('.list').removeClass('ui-state-disabled');
-	$(object).addClass('active');
-};
 
-/**
- * Removes class="active" on filters
- *
- * @author Christian Reber
- */
-filters.clearActiveStates = function(object) {
-	$('#bottombar #left a').removeClass('active');
-};
+  /**
+   * Clears all little red badges
+   * @author Christian Reber
+   */
+  function clearBadges() {
+    Titanium.UI.setBadge('');
+    $('span', today).remove();
+    notifications.hide();
+  }
 
-/**
- * Creates those tiny little red badges on the filters and on the Dock Icon (only on Mac OS X)
- * to remind the user of "overdue" and "today" tasks
- *
- * TODO: Has to be updated, because of a freaky badge count behaviour. If a sort a task, the badge will hide/show for every task in the list.
- *
- * @author Dennis Schneider, Christian Reber
- */
-filters.updateBadges = function() {
-	// Generate Badges
-	var todaycount	 = wunderlist.database.updateBadgeCount('today');
-	var overduecount = wunderlist.database.updateBadgeCount('overdue');
 
-	var today_has_no_badge	 = $('#bottombar #left a#today span').length === 0;
-	var overdue_has_no_badge = $('#bottombar #left a#overdue span').length === 0;
+  /**
+   * Initiates all filter functions on the bottom (buttons on the bottom)
+   * @author Christian Reber
+   */
+  function init() {
 
-	if(today_has_no_badge === true) {
-		$('#left a#today').append('<span>' + todaycount + '</span>');
-	} else {
-		$('#left a#today span').text(todaycount);
-		//$('#left a#today span').fadeOut('fast').fadeIn('fast');
-		$("#lists").css("bottom","74px");
-		$("#note").css("bottom","74px");
-	}
+    // Pre-cache the common queried results from jquery
+    bottomBarLeft = $("#left");
+    today = $('#today');
+    overdue = $('#overdue');
+    notifications = $('#notification');
 
-	if(overduecount > 1) {
-		overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_pl;
-		$('div#sidebar div#notification').fadeIn('fast');
-		$("#lists").css("bottom","74px");
-		$("#note").css("bottom","74px");
-	} else if(overduecount === 1) {
-		overdue_text = overduecount + ' ' + wunderlist.language.data.overdue_text_sl;
-		$('div#sidebar div#notification').fadeIn('fast');
-		$("#lists").css("bottom","74px");
-		$("#note").css("bottom","74px");
-	} else {
-		overdue_text = '';
-		$('div#sidebar div#notification').fadeOut('fast');
-		$("#lists").css("bottom","36px");
-		$("#note").css("bottom","36px");
-	}
+    
+    // Attach events
+    $('.list').click(clearActiveStates);
 
-	if(overdue_has_no_badge) {
-		$('div#sidebar div#notification div').text(overdue_text);
-	} else {
-		$('div#sidebar div#notification div').text(overduecount);
-		//$('div#sidebar div#notification').fadeOut('fast').fadeIn('fast');
-		$("#lists").css("bottom","74px");
-	}
+    $('a#someday').click(function() {
+      wunderlist.database.getFilteredTasks('date', 'withdate');
+    });
 
-	var countAll = overduecount + todaycount;
+    $('a#withoutdate').click(function() {
+      wunderlist.database.getFilteredTasks('date', 'nodate');
+    });
 
-	if(todaycount === 0) {
-		$('#left a#today span').remove();
-	}
+    $('a#all').click(function() {
+      wunderlist.database.getFilteredTasks('all');
+    });
 
-	if(countAll === 0) {
-		Titanium.UI.setBadge(null);
-	} else {
-		Titanium.UI.setBadge(countAll.toString());
-	}
-};
+    $('a#starred').click(function() {
+      wunderlist.database.getFilteredTasks('starred');
+    });
 
-/**
- * Clears all little red badges
- *
- * @author Christian Reber
- */
-filters.clearBadges = function() {
-	Titanium.UI.setBadge('');
-	$('#left a#today span').remove();
-	$('div#sidebar div#notification').hide();
-};
+    $('a#today').click(function() {
+      wunderlist.database.getFilteredTasks('today');
+    });
+
+    $('a#tomorrow').click(function() {
+      wunderlist.database.getFilteredTasks('tomorrow');
+    });
+
+    $('a#thisweek').click(function() {
+      wunderlist.database.getFilteredTasks('thisweek');
+    });
+
+    $('a#done').click(function() {
+      wunderlist.database.getFilteredTasks('done');
+    });
+
+    // Activates a filter
+    $('a.filter', bottomBarLeft).click(function(e) {
+      var node = $(e.target);
+      if (node.hasClass('loggedinas') === false) {
+        setActiveState(node);
+        $("a.list").droppable({disabled: false});
+        html.make_timestamp_to_string();
+      } else {
+        $(node).addClass('active');
+      }
+    });
+
+    // Show overdue tasks if click on "overdue alert"
+    $('div', notifications).click(function() {
+      wunderlist.database.getFilteredTasks('overdue');
+      html.make_timestamp_to_string();
+      $("a.list").droppable({disabled: false});
+      $('a', bottomBarLeft).removeClass('active');
+    });
+
+    // By clicking on the list headline open the list
+    $('h3.clickable').live('click', function() {
+      $('a#list' + $(this).attr('rel')).click();
+    });
+
+    window.setTimeout(updateBadges, 10);
+  }
+
+
+  return {
+    "init": init,
+    "updateBadges": updateBadges
+  };
+
+})(window, jQuery, wunderlist, html, Titanium);

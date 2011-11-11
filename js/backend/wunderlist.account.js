@@ -151,7 +151,7 @@ wunderlist.account.loadInterface = function() {
 	wunderlist.menu.initialize();
 	wunderlist.database.getLists(null, wunderlist.frontend.lists.initLists);
 
-	filters.init();
+	wunderlist.frontend.filters.init();
 	wunderlist.frontend.lists.openList();
 	
 	makeListsDropable();
@@ -161,7 +161,7 @@ wunderlist.account.loadInterface = function() {
 		$('.input-add').focus().blur();
 	}
 	
-	if (taskInput != '') {
+	if (taskInput !== '') {
 		$("input.input-add").val(taskInput);
 	}
 };
