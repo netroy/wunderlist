@@ -154,15 +154,6 @@ wunderlist.account.loadInterface = function() {
 	wunderlist.database.getLists(null, wunderlist.frontend.lists.initLists);
 	wunderlist.frontend.lists.openList();
 
-  // Init Menu
-	wunderlist.menu.initialize();
-
-  // Init share
-  wunderlist.frontend.share.init();
-
-  // Init Filters
-	wunderlist.frontend.filters.init();
-
 	makeListsDropable();
 	makeFilterDropable();
 	
@@ -424,16 +415,12 @@ wunderlist.account.login = function() {
 			data    : data,
 			timeout : settings.REQUEST_TIMEOUT,
 			success : function(response_data, text, xhrobject) {
-				if (xhrobject.status == 0)
-				{
+				if (xhrobject.status == 0) {
 					wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.no_internet);
-				}
-				else if (xhrobject.status == 200)
-				{
+				} else if (xhrobject.status === 200) {
 					var response = JSON.parse(response_data);
 
-					switch (response.code)
-					{
+					switch (response.code) {
 						case wunderlist.account.status_codes.LOGIN_SUCCESS:
 
 							// Clear old database

@@ -41,6 +41,15 @@ wunderlist.init = (function($, W, settings, Titanium){
 
     // Init the layout
     W.layout.init();
+
+    // Init Menu
+  	wunderlist.menu.initialize();
+
+    // Init share
+    wunderlist.frontend.share.init();
+
+    // Init Filters
+  	wunderlist.frontend.filters.init();
   
     // Check for a new version
     W.updater.checkVersion();  
