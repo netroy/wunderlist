@@ -628,7 +628,7 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 
 .followus:hover .wklogo {
   margin-top: -60px;
-  opacity: 0.2;
+  opacity: 0;
 }
 
 .followus a.followtwitter, .followus a.followfacebook {
@@ -641,7 +641,7 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
   height: 49px;
   background: url(/images/wklogowhite.png);
   text-indent: -34129px;
-  opacity: 0.2;
+  opacity: 0;
 }
 
 .followus:hover a.wklogowhite {
