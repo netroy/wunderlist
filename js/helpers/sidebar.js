@@ -13,12 +13,12 @@ wunderlist.helpers.sidebar = (function($, Titanium, undefined){
    * @author Dennis Schneider, Marvin Labod
    */
   function initPosition() {
-    isPositionRight = (Properties.getString('sidebar_position', 'right') !== "right");
+    isPositionRight = !(Properties.getString('sidebar_position', 'right') === "right");
     openStatus = (Properties.getString('sidebar_opened_status', 'true') === "true");
 
-    toggleButton.toggleClass("hidden", openStatus);
+    toggleButton.toggleClass("hidden", !openStatus);
     body.toggleClass("sidebarleft", isPositionRight);
-    body.toggleClass("sidebarClosed", openStatus);
+    body.toggleClass("sidebarClosed", !openStatus);
   }
 
 
@@ -26,12 +26,13 @@ wunderlist.helpers.sidebar = (function($, Titanium, undefined){
    * Set the sidebar position based on the settings
    * @author Dennis Schneider
    */
-  function toggleSidebar() { 
-    openStatus = !openStatus;
-    Properties.setString('sidebar_opened_status', openStatus);
+  function toggleSidebar() {
     toggleButton.toggleClass("hidden", openStatus);
     // body.toggleClass("sidebarleft", !isPositionRight);
     body.toggleClass("sidebarClosed", openStatus);
+
+    openStatus = !openStatus;
+    Properties.setString('sidebar_opened_status', openStatus);
   }
 
   /**
