@@ -49,7 +49,11 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
     activeBackground.attr("class", name);
 
     // update the background-image for the body
-    body.css('background-image','url(' + bgPath + ')');
+    body.css({
+      'background-image': 'url(' + bgPath + ')',
+      'background-position': bg.bgPosition,
+      'background-color': bg.bgColor
+    });
 
     // Highlight the currently selected
     $("a.active", backgroundList).removeClass("active");
