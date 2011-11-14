@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
 var connect = require('connect'),
-    app = connect.createServer(),
-     fs = require('fs'),
-    port = process.env.StaticPort || 8888;
+    app = module.exports = connect.createServer(),
+    fs = require('fs'),
+    port = 8888;
 
-var syncData = ['', fs.readFileSync(__dirname + "/data/step1.json"), fs.readFileSync(__dirname + "/data/step2.json")];
+var syncData = ['', 
+                fs.readFileSync(__dirname + "/data/step1.json"), 
+                fs.readFileSync(__dirname + "/data/step2.json")
+               ];
 var versionData = fs.readFileSync(__dirname + "/data/version.txt");
 
 app.use(connect.bodyParser());
@@ -28,6 +31,7 @@ app.use(connect.router(function(router){
   });
 }));
 
-app.listen(parseInt(port, 10));
-
-console.log("Static HTTP server at => http://localhost:" + port + "/\nPress CTRL + C to stop");
+if (!module.parent) {
+  app.listen(parseInt(process.env.app_port, 10) || port);
+  console.log("Static HTTP server at => http://localhost:" + port + "/\nPress CTRL + C to stop");
+}
