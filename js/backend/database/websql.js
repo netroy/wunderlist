@@ -11,10 +11,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     window.console.log.apply(window.console, arguments);
   }
 
-  function nop(){
-    return;
-  }
-
   function printf(text){
     var i = 1, args = arguments;
     return text.replace(/\?/g, function(){
@@ -55,7 +51,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
                    "done INTEGER DEFAULT 0, position INTEGER DEFAULT 0, important INTEGER DEFAULT 0, version INTEGER DEFAULT 0, "+
                    "deleted INTEGER DEFAULT 0)";
   function createTables(callback) {
-    async.forEach([createlistsSQL, createtasksSQL], execute, nop);
+    async.forEach([createlistsSQL, createtasksSQL], execute, wunderlist.nop);
   }
 
 
@@ -100,8 +96,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
       }
       callback(null, lists);
     });
-    
-    return [];
   }
 
   /**
@@ -132,8 +126,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
       }
       callback(null, tasks);
     });
-
-    return [];
   }
 
 
@@ -239,8 +231,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
 
       callback(null, values);
     });
-
-    return values;
   }
 
 
@@ -493,15 +483,17 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   function updateTask(noVersion, callback){}
 
   function createStandardElements(){}
+  
+  function search(query, callback){}
+  function isDeleted(type, online_id, callback){}
+  function isShared(list_id, callback){}
+  function isSynced(list_id, callback){}
 
   function createTuts(list_id){}
   function recreateTuts(){}
+
   function fetchData(resultSet){}
   function getLastTaskPosition(list_id){}
-  function search(query){}
-  function isDeleted(type, online_id){}
-  function isShared(list_id){}
-  function isSynced(list_id){}
   function updateTaskCount(list_id){}
   function getListIdsByTaskId(task_id){}
 
