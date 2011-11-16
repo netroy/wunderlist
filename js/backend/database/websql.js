@@ -438,6 +438,11 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    * @params callback - function to call with inserted id
    */
   function insertList(list, callback){
+    // name is a string, needs quotes around it
+    if("name" in list){
+      list.name = "'"+list.name+"'";
+    }
+
     var fields = [], values = [];
     for(var property in list) {
       fields.push(property);

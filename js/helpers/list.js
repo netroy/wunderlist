@@ -25,6 +25,8 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
   // INSERT a new database list object
   function insertPhase2(callback){
     instance.version = 0;
+    instance.deleted = 0;
+    instance.shared = 0;
     instance.name = html.convertString(instance.name, 255);
 
     var list = {};

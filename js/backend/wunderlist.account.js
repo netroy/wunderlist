@@ -149,9 +149,6 @@ wunderlist.account.loadInterface = function() {
 	
 	var taskInput = $("input.input-add").val();
 
-  // Init lists
-	wunderlist.frontend.lists.init();
-
 	makeListsDropable();
 	makeFilterDropable();
 	
@@ -718,15 +715,13 @@ wunderlist.account.change_profile_data = function() {
 	
 	// Does the user wants to save a new email address?
 	new_email_address = $('input#new_email').val().toLowerCase();
-	if (new_email_address != '')
-	{
-		if (wunderlist.account.validateEmail(new_email_address))
-			data['new_email'] = new_email_address;
-		else
-		{
-			wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.invalid_email);
-			return false;
+	if (new_email_address !== '') {
+		if (wunderlist.account.validateEmail(new_email_address)){
+		  data['new_email'] = new_email_address;
 		}
+	} else {
+		wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.invalid_email);
+		return false;
 	}
 
 	// Does the user wants to save a new password?

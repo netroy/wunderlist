@@ -1,4 +1,4 @@
-/* global wunderlist:true, settings:false, html:false, $ */
+/* global wunderlist $ */
 wunderlist.frontend.lists = (function($, wunderlist, undefined){
   //"use strict";
 
@@ -15,9 +15,9 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
    * @author Dennis Schneider
    */
   function bindListAddMode() {
-    $('.addlist').live('click', function() {
-      if (settings.sidebar_opened_status === 'false') {
-        $('div#right span.togglesidebar').click();
+    $('#right .addlist').click(function() {
+      if (!wunderlist.helpers.sidebar.isOpen()) {
+        wunderlist.helpers.sidebar.toggleSidebar();
       }
       addList();
       makeListsSortable();
@@ -33,7 +33,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     $('div#lists').append(html.generateNewListElementHTML());
 
     // Hide add button
-    $('h3 .add').hide();
+    // $('h3 .add').hide();
 
     // Show edit & delete button
     $('input.input-list').parent().children('.savep').show();
@@ -45,8 +45,6 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     setTimeout(function(){
       listShortcutListener = 0;
     }, 50);
-
-    makeListsSortable();
   }
 
   /**
@@ -90,7 +88,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
   }
 
   /**
-   * Calls a funktion to save a new/edited list
+   * Calls a function to save a new/edited list
    * @author Daniel Marschner
    */
   function bindListSaveMode() {
@@ -177,22 +175,28 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
       name: listElementName
     });
 
-    var listId = list.insert();
-
     listElementInput.remove();
     var listHTML = '<b class="sharep">' + html.strip_tags(unescape(listElementName)) + '<div class="sharelist"></div></b>';
 
     listElement.children('.savep').hide();
     listElement.children('.deletep').hide();
     listElement.find('span').before(listHTML);
-    listElement.attr('id', 'list' + listId);
 
     if (listElementName.length > 30){
       listElement.children('b').attr('title', unescape(listElementName));
     }
-    $('h3 .add').fadeIn();
+
+    list.insert(function(err, listId){
+      if(err){
+        listElement.remove();
+      } else {
+        listElement.attr('id', 'list' + listId);
+        listElement.click();
+      }
+    });
+
+    //$('h3 .add').fadeIn();
     makeListsDropable();
-    listElement.click();
   
     if (wunderlist.account.isLoggedIn() === false) {
       $('div.sharelist').remove();
@@ -560,9 +564,15 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
   }
 
 
+  function redraw(){
+    wunderlist.database.getLists(null, function(err, lists) {
+      initLists(lists);
+      openList();
+    });
+  }
 
   function init(){
-    
+
     makeListsSortable();
 
     // Binding the list functionality
@@ -573,7 +583,6 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
 
     
     $("a.list").live('click', listClick).live('mouseover', listMouseOver).live('mouseout', listMouseOut);
-
     $('a.list input').live('keyup', listInputKeyUp).live('focusout', listInputFocusOut);
 
     // Kills the "focusout" eventlistener
@@ -589,10 +598,8 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     $('button#older_tasks_head').live('click', showOlderTasks);
     $('button#hide_older_tasks').live('click', hideOlderTasks);
 
-    wunderlist.database.getLists(null, function(err, lists) {
-      initLists(lists);
-      openList();
-    });
+    redraw();
+
   }
 
   return {
@@ -604,7 +611,8 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     "saveNewList": saveNewList,
     "openList": openList,
     "initLists": initLists,
-    "initTasks": initTasks
+    "initTasks": initTasks,
+    "redraw": redraw
   };
 
 })(jQuery, wunderlist);

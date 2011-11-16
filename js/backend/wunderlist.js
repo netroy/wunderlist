@@ -31,6 +31,9 @@ wunderlist.init = (function($, wunderlist, settings, Titanium){
     wunderlist.menu.initializeTrayIcon();
     wunderlist.sharing.init();
     wunderlist.notifications.init();
+
+    // Init lists
+  	wunderlist.frontend.lists.init();
   
     // Init notes
     wunderlist.helpers.note.init();
