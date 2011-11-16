@@ -18,6 +18,11 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     });
   }
 
+  /**
+   * Execute SQL
+   * @param sql - sql string or template
+   * other arguments are used for rendering templates & last argument if a function, is used for callback
+   */
   function execute(sql){
     var args = Array.prototype.slice.call(arguments, 0);
     //var caller = arguments.callee.caller.name;
@@ -36,6 +41,19 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
         callback(err);
       });
     });
+  }
+
+
+  /**
+   * Convert results object to an array of row objects
+   * @param - SQLResult object
+   */
+  function resultToArray(result){
+    var rows = result.rows, row, arr = [];
+    for(var i = 0, l = rows.length; i < l; i++) {
+      arr.push(rows.item(i));
+    }
+    return arr;
   }
 
 
@@ -90,11 +108,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
         callback(err);
         return;
       }
-      var rows = result.rows, row, lists = [];
-      for(var i = 0, l = rows.length; i < l; i++) {
-        lists.push(rows.item(i));
-      }
-      callback(null, lists);
+      callback(null, resultToArray(result));
     });
   }
 
@@ -120,11 +134,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
         callback(err);
         return;
       }
-      var rows = result.rows, row, tasks = [];
-      for(var i = 0, l = rows.length; i < l; i++) {
-        tasks.push(rows.item(i));
-      }
-      callback(null, tasks);
+      callback(null, resultToArray(result));
     });
   }
 
@@ -445,11 +455,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
 
-  function updateList(noVersion, list, callback){
-    
-  }
-
-
   function getLastListId(callback) {
     execute("SELECT id FROM lists ORDER BY id DESC LIMIT 1", function(err, result){
       if(err) {
@@ -466,17 +471,70 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
 
+  function getFilteredTasks(filter, type, callback){
+    var date = html.getWorldWideDate(), // Current date
+        sql = "SELECT * FROM tasks ", 
+        where = "",
+        date_type;
+
+    switch(filter) {
+      case 'starred':
+        where = "WHERE tasks.important = 1 AND tasks.done = 0";
+        break;
+      case 'today':
+        where = "WHERE tasks.date = " + date + " AND tasks.date != 0 AND tasks.done = 0";
+        break;
+      case 'tomorrow':
+        where = "WHERE tasks.date = " + (date + 86400) + " AND tasks.done = 0 AND tasks.deleted = 0";
+        break;
+      case 'thisweek':
+        where = "WHERE tasks.date BETWEEN " + date + " AND " + (date + (86400 * 7)) + " AND tasks.done = 0 AND tasks.date != 0";
+        break;
+      case 'done':
+        where = "WHERE tasks.done = 1";
+        break;
+      case 'all':
+        where = "WHERE tasks.done = 0";
+        break;
+      case 'overdue':
+        where = "WHERE tasks.done = 0 AND tasks.date < " + date + " AND tasks.date != 0";
+        break;
+      case 'date':
+        if (type === 'nodate') {
+          date = 0;
+          date_type = '=';
+        } else {
+          date = (date + 86400);
+          date_type = '>';
+        }
+        where = "WHERE tasks.date " + date_type + " " + date + " AND tasks.done = 0";
+        break;
+      default:
+        return;
+    }
+
+    sql += where + " AND tasks.deleted = 0 ORDER BY tasks.list_id ASC, tasks.important DESC, tasks.date ASC, tasks.position ASC";
+    execute(sql, function(err, result){
+      if(err) {
+        callback(err);
+        return;
+      }
+      callback(null, resultToArray(result));
+    });
+  }
+
 
 /***********************************************
 ***** TODO: complete the following methods *****
 ************************************************/
-  
+
+  function updateList(noVersion, list, callback){}
+
   /**
    * Filter functions
    * TODO: move out any DOM stuff to frontend
    */
 
-  function getFilteredTasks(filter, date_type, printing){}
   function getFilteredTasksForPrinting(type, date_type){}
 
   function insertTask(noHtml, callback){}

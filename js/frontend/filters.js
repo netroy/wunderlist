@@ -28,54 +28,51 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
    * If a sort a task, the badge will hide/show for every task in the list.
    * @author Dennis Schneider, Christian Reber
    */
-  // Generate Badges
   function updateBadgesInfo(todaycount, overduecount){ 
-   var todayBadges = $('span', today), overdueBadges = $('span', overdue);
-   var lists = $("#lists"), note = $("#note");
+    var todayBadges = $('span', today), overdueBadges = $('span', overdue);
+    var lists = $("#lists"), note = $("#note");
 
-   var today_has_no_badge   = todayBadges.length === 0;
-   var overdue_has_no_badge = overdueBadges.length === 0;
+    if(todayBadges.length === 0) {
+      todayBadges = today.append('<span>' + todaycount + '</span>').find("span");
+    } else {
+      todayBadges.text(todaycount);
+      //todayBadges.fadeOut('fast').fadeIn('fast');
+      lists.css("bottom","74px");
+      note.css("bottom","74px");
+    }
 
-   if(today_has_no_badge === true) {
-     todayBadges = today.append('<span>' + todaycount + '</span>').find("span");
-   } else {
-     todayBadges.text(todaycount);
-     //todayBadges.fadeOut('fast').fadeIn('fast');
-     lists.css("bottom","74px");
-     note.css("bottom","74px");
-   }
+    var overdue_text;
+    if(overduecount > 0) {
+      overdue_text = (overduecount > 1)? wunderlist.language.data.overdue_text_pl : wunderlist.language.data.overdue_text_sl;
+      overdue_text = overduecount + ' ' + overdue_text;
+      notifications.fadeIn('fast');
+      lists.css("bottom","74px");
+      note.css("bottom","74px");
+    } else {
+      overdue_text = '';
+      notifications.fadeOut('fast');
+      lists.css("bottom","36px");
+      note.css("bottom","36px");
+    }
 
-   var overdue_text;
-   if(overduecount >= 1) {
-     overdue_text = overduecount + ' ' + (overduecount > 1)? wunderlist.language.data.overdue_text_pl : wunderlist.language.data.overdue_text_sl;
-     notifications.fadeIn('fast');
-     lists.css("bottom","74px");
-     note.css("bottom","74px");
-   } else {
-     overdue_text = '';
-     notifications.fadeOut('fast');
-     lists.css("bottom","36px");
-     note.css("bottom","36px");
-   }
+    if(overdueBadges.length === 0) {
+      $('div', notifications).text(overdue_text);
+    } else {
+      $('div', notifications).text(overduecount);
+      //notifications.fadeOut('fast').fadeIn('fast');
+      lists.css("bottom","74px");
+    }
 
-   if(overdue_has_no_badge) {
-     $('div', notifications).text(overdue_text);
-   } else {
-     $('div', notifications).text(overduecount);
-     //notifications.fadeOut('fast').fadeIn('fast');
-     lists.css("bottom","74px");
-   }
+    if(todaycount === 0) {
+      todayBadges.remove();
+    }
 
-   if(todaycount === 0) {
-     todayBadges.remove();
-   }
-
-   var countAll = overduecount + todaycount;
-   if(countAll === 0) {
-     Titanium.UI.setBadge('');
-   } else {
-     Titanium.UI.setBadge(countAll.toString());
-   }
+    var countAll = overduecount + todaycount;
+    if(countAll === 0) {
+      Titanium.UI.setBadge('');
+    } else {
+      Titanium.UI.setBadge(countAll.toString());
+    }
   }
 
   // Fetch info from DB & then call updateBadgesInfo method with badge counts 
@@ -103,6 +100,70 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
   /**
    * Switch filters on click & fire a DB call
    */
+  function getFilteredTasks(filter, type, printing, callback){
+    var title = '', show_add = false, date_type;
+    switch(filter) {
+      case 'starred':
+        show_add = true;
+        title = wunderlist.language.data.all_starred_tasks;
+        break;
+      case 'today':
+        show_add = true;
+        title = wunderlist.language.data.all_today_tasks;
+        break;
+      case 'tomorrow':
+        show_add = true;
+        title = wunderlist.language.data.all_tomorrow_tasks;
+        break;
+      case 'thisweek':
+        title = wunderlist.language.data.all_thisweeks_tasks;
+        break;
+      case 'done':
+        title = wunderlist.language.data.all_done_tasks;
+        break;
+      case 'all':
+        show_add = true;
+        title = wunderlist.language.data.all_tasks;
+        break;
+      case 'overdue':
+        title = wunderlist.language.data.overdue_tasks;
+        break;
+      case 'date':
+        if (type === 'nodate') {
+          show_add = true;
+          title = wunderlist.language.data.all_someday_tasks;
+          date_type = '=';
+        } else {
+          title = wunderlist.language.data.all_later_tasks;
+          date_type = '>';
+        }
+        break;
+      default:
+        return;
+    }
+
+    wunderlist.database.getFilteredTasks(filter, type, function(err, results){
+      if (printing === true){
+        callback(results);
+        return;
+      }
+
+      html.buildFilteredList(title, results, show_add, filter, function(err, markup){
+        $("#content").html('').hide().append(markup);
+        // TODO: move sort stuff to wunderlist namespace
+        window.makeSortable();
+        if (filter == 'all' || filter == 'starred' || date_type == '='){
+          html.createDatepicker();
+        }
+        html.make_timestamp_to_string();
+        $("#content").fadeIn('fast');
+        $("a.list").droppable({
+          disabled: false
+        });
+      });
+    });
+  }
+
   function switchFilter(e){
     var node = $(e.target);
     var id = node.attr("id");
@@ -110,19 +171,14 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
       node.addClass('active');
     } else {
       setActiveState(node);
-      $("a.list").droppable({
-        disabled: false
-      });
 
       if(!!id.match(/^(all|starred|done|today|tomorrow|thisweek)$/)) {
-        wunderlist.database.getFilteredTasks(id);
+        getFilteredTasks(id);
       } else if(id === "someday"){
-        wunderlist.database.getFilteredTasks('date', 'withdate');
+        getFilteredTasks('date', 'withdate');
       } else if(id === "withoutdate") {
-        wunderlist.database.getFilteredTasks('date', 'nodate');
+        getFilteredTasks('date', 'nodate');
       }
-
-      html.make_timestamp_to_string();
     }
   }
 
@@ -139,7 +195,6 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     overdue = $('#overdue');
     notifications = $('#notification');
 
-    
     // Attach events
     $('.list').click(clearActiveStates);
 
@@ -148,12 +203,8 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     bottomBarLeft.delegate("a.filter", "click", switchFilter);
 
     // Show overdue tasks if click on "overdue alert"
-    $('div', notifications).click(function() {
-      wunderlist.database.getFilteredTasks('overdue');
-      html.make_timestamp_to_string();
-      $("a.list").droppable({
-        disabled: false
-      });
+    $(notifications).click(function() {
+      getFilteredTasks('overdue');
       $('a', bottomBarLeft).removeClass('active');
     });
 

@@ -797,74 +797,66 @@ wunderlist.database.getListIdsByTaskId = function(task_id) {
  * @author Dennis Schneider, Daniel Marschner
  */
 wunderlist.database.getFilteredTasks = function(filter, date_type, printing) {
-	if (printing == undefined)
-		printing = false;
-	
+	if (printing === undefined) {
+	  printing = false;
+	}
+
 	var title    = '';
 	var show_add = false;
 	var date     = html.getWorldWideDate(); // Current date
-	var sql      = "SELECT * FROM tasks ";
+	var sql      = "SELECT * FROM tasks ", where = "";
 
-	switch(filter)
-	{
-		case 'starred':		show_add = true;
-							title    = wunderlist.language.data.all_starred_tasks;
-								
-							sql += "WHERE tasks.important = 1 AND tasks.done = 0";
-							break;
-
-		case 'today':		show_add = true;
-							title    = wunderlist.language.data.all_today_tasks;
-							
-							sql += "WHERE tasks.date = " + date + " AND tasks.date != 0 AND tasks.done = 0";
-							break;
-
-		case 'tomorrow':	show_add = true;
-							title    = wunderlist.language.data.all_tomorrow_tasks;
-							
-							sql += "WHERE tasks.date = " + (date + 86400) + " AND tasks.done = 0 AND tasks.deleted = 0";
-							break;
-
-		case 'thisweek':	title = wunderlist.language.data.all_thisweeks_tasks;
-							
-							sql += "WHERE tasks.date BETWEEN " + date + " AND " + (date + (86400 * 7)) + " AND tasks.done = 0 AND tasks.date != 0";
-							break;
-
-		case 'done':		title = wunderlist.language.data.all_done_tasks;
-							
-							sql += "WHERE tasks.done = 1";
-							break;
-
-		case 'all':			show_add = true;
-							title    = wunderlist.language.data.all_tasks;
-							
-							sql += "WHERE tasks.done = 0";
-							break;
-
-		case 'overdue':		title = wunderlist.language.data.overdue_tasks;
-							
-							sql += "WHERE tasks.done = 0 AND tasks.date < " + date + " AND tasks.date != 0";
-							break;
-
-		case 'date':		if (date_type == 'nodate')
-							{
-								show_add  = true;
-								title     = wunderlist.language.data.all_someday_tasks;	
-								date      = 0;
-								date_type = '=';		
-							}
-							else
-							{
-								title     = wunderlist.language.data.all_later_tasks;
-								date      = (date + 86400);
-								date_type = '>';
-							}
-							
-							sql += "WHERE tasks.date " + date_type + " " + date + " AND tasks.done = 0";
-							break;
+	switch(filter) {
+		case 'starred':
+		  show_add = true;
+			title = wunderlist.language.data.all_starred_tasks;
+			where = "WHERE tasks.important = 1 AND tasks.done = 0";
+			break;
+		case 'today':
+		  show_add = true;
+			title = wunderlist.language.data.all_today_tasks;
+			where = "WHERE tasks.date = " + date + " AND tasks.date != 0 AND tasks.done = 0";
+			break;
+		case 'tomorrow':
+		  show_add = true;
+			title = wunderlist.language.data.all_tomorrow_tasks;
+			where = "WHERE tasks.date = " + (date + 86400) + " AND tasks.done = 0 AND tasks.deleted = 0";
+			break;
+		case 'thisweek':
+		  title = wunderlist.language.data.all_thisweeks_tasks;
+			where = "WHERE tasks.date BETWEEN " + date + " AND " + (date + (86400 * 7)) + " AND tasks.done = 0 AND tasks.date != 0";
+			break;
+		case 'done':
+		  title = wunderlist.language.data.all_done_tasks;
+			where = "WHERE tasks.done = 1";
+			break;
+		case 'all':
+      show_add = true;
+			title = wunderlist.language.data.all_tasks;
+			where = "WHERE tasks.done = 0";
+			break;
+		case 'overdue':
+		  title = wunderlist.language.data.overdue_tasks;
+			where = "WHERE tasks.done = 0 AND tasks.date < " + date + " AND tasks.date != 0";
+			break;
+		case 'date':
+			if (date_type === 'nodate') {
+  			show_add = true;
+  			title = wunderlist.language.data.all_someday_tasks;	
+  			date = 0;
+  			date_type = '=';
+			} else {
+				title = wunderlist.language.data.all_later_tasks;
+				date = (date + 86400);
+				date_type = '>';
+			}
+			where = "WHERE tasks.date " + date_type + " " + date + " AND tasks.done = 0";
+			break;
+		default:
+		  return;
 	}
 
-	sql += " AND tasks.deleted = 0 ORDER BY tasks.list_id ASC, tasks.important DESC, tasks.date ASC, tasks.position ASC";
+	sql += where + " AND tasks.deleted = 0 ORDER BY tasks.list_id ASC, tasks.important DESC, tasks.date ASC, tasks.position ASC";
 
 	var result = wunderlist.database.db.execute(sql);
 
@@ -876,9 +868,9 @@ wunderlist.database.getFilteredTasks = function(filter, date_type, printing) {
 	
 	makeSortable();
 	
-	if (filter == 'all' || filter == 'starred' || date_type == '=')
-		html.createDatepicker();
-	
+	if (filter == 'all' || filter == 'starred' || date_type == '='){
+	  html.createDatepicker();
+	}
 	html.make_timestamp_to_string();
 	
 	$("#content").fadeIn('fast');
@@ -933,18 +925,17 @@ wunderlist.database.getDataForSync = function(type, fields, where, return_object
 	values = {};
 	i = 0;
 
-    while(result.isValidRow())
-    {
-    	if(return_object)
-			values[i] = {};
-
-		if(return_object)
-			for(var y = 0, max = result.fieldCount(); y < max; y++)
-				values[i][result.fieldName(y)] = result.field(y);
-
-		if(!return_object)
-			for(var y = 0, max = result.fieldCount(); y < max; y++)
-				values[result.fieldName(y)] = result.field(y);
+    while(result.isValidRow()){
+    	if(return_object){
+    	  values[i] = {};
+  			for(var y = 0, max = result.fieldCount(); y < max; y++){
+  				values[i][result.fieldName(y)] = result.field(y);
+  			}
+    	}else{
+    		for(var y = 0, max = result.fieldCount(); y < max; y++){
+    			values[result.fieldName(y)] = result.field(y);
+    		}
+    	}
 
 		i++;
 		result.next();

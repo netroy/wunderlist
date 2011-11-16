@@ -150,7 +150,7 @@ html.generateTaskHTML = function(id, name, list_id, done, important, date, note)
 	taskHTML += '<span class="icon ' + (important == 1 ? 'fav' : 'favina') + '"></span>';
 	taskHTML += '<span class="description">' + name + '</span>';
 
-	if (date !== '' && date !== '0') {
+	if (!!(+date)) {
 	  taskHTML += '<span class="showdate timestamp" rel="' + date + '"></span>';
 	} else {
 	  taskHTML += '<input type="hidden" class="datepicker" value="0"/>';
@@ -797,76 +797,70 @@ html.replace_http_link = function(text) {
  *
  * @author Daniel Marschner
  */
-html.buildFilteredList = function(title, tasks, show_add, filter) {
-	if (show_add == undefined)
-		show_add = false;
-	
+html.buildFilteredList = function(title, tasks, show_add, filter, callback) {
+	show_add = show_add || false;
 	result = '';
 	count  = 0;
 	
 	// If tasks are set and not empty count them
-	if (task != undefined && wunderlist.helpers.utils.is_array(tasks) && tasks.length > 0)
-		count = tasks.length;
+	if (tasks !== undefined && (tasks instanceof Array) && tasks.length > 0){
+	  count = tasks.length;
+	}
 	
 	if (settings.os === 'darwin') {
 		wunderlist.language.data.add_task_hint = wunderlist.language.data.add_task_hint.replace('Alt', '⌥');
 	}
 	
-	// If there are tasks add the share functionality
-	result += "<div id='listfunctions'>";
-	result += "<a rel='" + wunderlist.language.data.print_tasks + "' class='list-print'></a>";
-	result += "<a rel='" + wunderlist.language.data.send_by_mail + "' class='list-email'></a>";
-	result += "<a rel='" + wunderlist.language.data.share_with_cloud + "' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='link'></span></div>";
-	result += '</div>';		
-	
 	// Add the title for the filter
 	result += '<h1>' + title + '</h1>';
 
 	// Add the "Add new task" field
-	if (show_add === true)
-	{
+	if (show_add === true) {
 		result += '<div class="add">';
-		result += '<div class="addwrapper ' + (filter != 'all' && filter != 'starred' ? 'filter-add' : '') + '"><input type="text" class="input-add" placeholder="' + wunderlist.language.data.add_task + '" /><span class="add_task_hint">' + wunderlist.language.data.add_task_hint + '</span></div>';
-		if (filter == 'all' || filter == 'starred')
-			result += '<input type="hidden" class="datepicker" />';
+		result += '<div class="addwrapper ' + (filter != 'all' && filter != 'starred' ? 'filter-add' : '') + '">';
+		result += '<input type="text" class="input-add" placeholder="' + wunderlist.language.data.add_task + '" />';
+		result += '<span class="add_task_hint">' + wunderlist.language.data.add_task_hint + '</span></div>';
+		if (filter === 'all' || filter === 'starred') {
+		  result += '<input type="hidden" class="datepicker" />';
+		}
 		result += '</div>';
 	}
 	
 	// Build tasks sorted by list
 	if (count > 0) {
-		actual_list    = 0;
-		last_list      = 0;
+		actual_list = 0;
+		last_list = 0;
 		last_task_list = 0;
 		
-		var lists = wunderlist.database.getLists();
-		for (var list in lists) {
-			for (var ix in tasks) {
-				if (lists[list].id == tasks[ix].list_id) {
-					if (wunderlist.database.existsById('lists', tasks[ix].list_id)) {
-						if (tasks[ix].list_id != last_task_list){
-						  actual_list = tasks[ix].list_id;
-						}
+		wunderlist.database.getLists(undefined, function(err, lists){
+		  var listMap = {}, i, l, list;
+		  for(i = 0, l = lists.length; i < l; i++){
+		    list = lists[i];
+		    listMap[list.id] = list;
+		  }
 
-						if (last_list != 0 && last_list != actual_list){
-						  result += "</ul>";
-						}
+      for(i = 0, l = tasks.length; i < l; i++){
+		    task = tasks[i];
+		    list = listMap[task.list_id];
+		    if(typeof list !== 'undefined') {
+		      if (task.list_id !== last_task_list){
+					  actual_list = task.list_id;
+					}  
+          if(last_list !== actual_list){
+  					if (last_list !== 0){
+  					  result += "</ul>";
+  					}
+  					result += '<h3 class="clickable cursor" rel="' + actual_list + '">' + unescape(list.name) +  '</h3>';
+						result += '<ul id="filterlist' + actual_list + '" rel="' + (filter != '' ? filter : 'x') + '" class="mainlist filterlist' + (filter == 'done' ? ' donelist' : ' sortable') + '">';
+          }
+          result += html.generateTaskHTML(task.id, task.name, task.list_id, task.done, task.important, task.date, task.note);
+					last_list = actual_list;
+					last_task_list = task.list_id;
+		    }
+		  }
+  		callback(null, result);
+		});
 
-						if (last_list != actual_list) {
-							var dbList = wunderlist.database.getLists(parseInt(tasks[ix].list_id));
-
-							result += '<h3 class="clickable cursor" rel="' + actual_list + '">' + unescape(dbList[0].name) +  '</h3>';
-							result += '<ul id="filterlist' + actual_list + '" rel="' + (filter != '' ? filter : 'x') + '" class="mainlist filterlist' + (filter == 'done' ? ' donelist' : ' sortable') + '">';
-						}
-
-						result += html.generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
-
-						last_list      = actual_list;
-						last_task_list = tasks[ix].list_id;
-					}
-				}
-				
-			}
-		}
 		
 		/*
 		for (var ix in tasks)
@@ -894,12 +888,12 @@ html.buildFilteredList = function(title, tasks, show_add, filter) {
 			}
 		}
 		*/
+	} else {
+	  if (show_add === false){
+	    result += '<h3>' + wunderlist.language.data.no_results + '</h3>';
+	  }
+	  callback(null, result);
 	}
-	
-	if (show_add === false && count == 0)
-		result += '<h3>' + wunderlist.language.data.no_results + '</h3>';
-
-	return result;
 };
 
 /**
