@@ -1,52 +1,61 @@
 /**
  * wunderlist.sync.js
- *
  * Class for logging in into sync server, sync sending and retrieval
- *
  * @author Dennis Schneider
  */
+wunderlist.sync = (function(wunderlist, async, undefined){
+  "use strict";
 
-wunderlist.sync = wunderlist.sync || {};
+  return {
+    
+  };
+});
+
+var syncUrlBase = '/1.2.0',//'https://sync.wunderlist.net/1.2.0';
+    alreadyRegistered = false,
+    timeOutInterval, user_credentials;
+
+// Response Status codes
+var status_codes = {
+  'SYNC_SUCCESS'   : 300,
+  'SYNC_FAILURE'   : 301,
+  'SYNC_DENIED'    : 302,
+  'SYNC_NOT_EXIST' : 303
+};
+
+// Flags used for keeping states in syncing
+var syncSuccessful = false,
+    logOutAfterSync = false,
+    exitAfterSync = false,
+    syncListId = 0;
+
+
+function syncClick() {
+  user_credentials = user_credentials || wunderlist.account.getUserCredentials();
+
+  if (wunderlist.sync.isSyncing === false) {
+    if (Titanium.Network.online === true) {
+      wunderlist.timer.stop();
+      wunderlist.sync.fireSync();
+      return false;      
+    } else {
+      wunderlist.helpers.dialogs.createAlertDialog(wunderlist.language.data.sync_error, wunderlist.language.data.no_internet);
+    }                    
+  }
+}
 
 /**
- * Initializes the sync class
+ * Initializes sync module
  * @author Dennis Schneider
  */
-var syncUrlBase = '/1.2.0';//'https://sync.wunderlist.net/1.2.0';
 wunderlist.sync.init = function() {
-  this.alreadyRegistered = false;
-  this.timeOutInterval   = '';
-  this.isSyncing       = false;
-
-  this.status_codes = {
-    'SYNC_SUCCESS'   : 300,
-    'SYNC_FAILURE'   : 301,
-    'SYNC_DENIED'    : 302,
-    'SYNC_NOT_EXIST' : 303
-  };
-
-  $('#sync').click(function() {
-    if (wunderlist.sync.isSyncing == false) {
-      if (Titanium.Network.online == true) {
-        wunderlist.timer.stop();
-        wunderlist.sync.fireSync();
-        return false;      
-      } else {
-        wunderlist.helpers.dialogs.createAlertDialog(wunderlist.language.data.sync_error, wunderlist.language.data.no_internet);
-      }                    
-    }
-  });
+  this.isSyncing = false;
+  $('#sync').click(syncClick);
 };
 
 
 
 
-
-// Flags used for keeping states in syncing
-var syncSuccessful = false;
-var logOutAfterSync = false;
-var exitAfterSync = false;
-var syncListId = 0;
 
 /**
  * Check if a logout should be done
@@ -71,24 +80,24 @@ function syncStep1Success(response_data, text, xhrobject) {
       var response = JSON.parse(response_data);
 
       switch(response.code) {
-        case wunderlist.sync.status_codes.SYNC_SUCCESS:
+        case status_codes.SYNC_SUCCESS:
           syncSuccess(response);
           syncSuccessful = true;
-          clearInterval(wunderlist.sync.timeOutInterval);
-          wunderlist.sync.timeOutInterval = '';
+          clearInterval(timeOutInterval);
+          timeOutInterval = null;
           break;
 
-        case wunderlist.sync.status_codes.SYNC_FAILURE:
+        case status_codes.SYNC_FAILURE:
           wunderlist.sync.isSyncing = false;
           break;
 
-        case wunderlist.sync.status_codes.SYNC_DENIED:
+        case status_codes.SYNC_DENIED:
           wunderlist.sync.isSyncing = false;
           wunderlist.account.logout();
           wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.sync_denied);
           break;
 
-        case wunderlist.sync.status_codes.SYNC_NOT_EXIST:
+        case status_codes.SYNC_NOT_EXIST:
           wunderlist.sync.isSyncing = false;
           wunderlist.account.logout();
           wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.sync_not_exist);
@@ -169,15 +178,15 @@ wunderlist.sync.fireSync = function(_logOutAfterSync, _exitAfterSync, _syncListI
     if (Titanium.Network.online === true) {    
       if (wunderlist.sync.isSyncing === false) {
         // SYNC STEP 1
-        var data = {};
         syncSuccessful = false;
         wunderlist.sync.isSyncing = true;
 
-        user_credentials = wunderlist.account.getUserCredentials();
-        data['email'] = user_credentials['email'];
-        data['password'] = user_credentials['password'];
-        data['step'] = 1;
-        data['sync_table'] = {};
+        var data = {
+          'email': user_credentials.email,
+          'password': user_credentials.password,
+          'step': 1,
+          'sync_table': {}
+        };
 
         var queue = [
           ['lists', 'lists', 'online_id, version', 'online_id != 0'],
@@ -187,7 +196,7 @@ wunderlist.sync.fireSync = function(_logOutAfterSync, _exitAfterSync, _syncListI
 
         async.forEach(queue, function(item, callback){
           function handler(err, results){
-            data['sync_table'][item[0]] = results;
+            data.sync_table[item[0]] = results;
             callback(null);
           }
           wunderlist.database.getDataForSync.apply(undefined, item.slice(1).concat([undefined, handler]));
@@ -212,14 +221,15 @@ wunderlist.sync.fireSync = function(_logOutAfterSync, _exitAfterSync, _syncListI
   
     // Create a timeout interval, if not already created
     // and check for a successful sync
-    if (wunderlist.sync.timeOutInterval === '') {
+    if (timeOutInterval === null) {
       setTimeout(function() {
-        wunderlist.sync.timeOutInterval = setInterval(function() {
+        timeOutInterval = setInterval(function() {
           if(syncSuccessful === false) {
             wunderlist.layout.switchSyncSymbol(0);
             wunderlist.sync.isSyncing = false;
           } else {
-            clearInterval(wunderlist.sync.timeOutInterval);
+            clearInterval(timeOutInterval);
+            timeOutInterval = null;
           }
         }, 2000);
       }, 100000);
@@ -232,6 +242,19 @@ wunderlist.sync.fireSync = function(_logOutAfterSync, _exitAfterSync, _syncListI
 
 
 
+function updateListIds(offline_id, online_id) {
+  wunderlist.helpers.list.set({
+    id: offline_id,
+    online_id: online_id
+  }).update(true);
+}
+
+function updateTaskIds(offline_id, online_id) {
+  wunderlist.helpers.task.set({
+    id: offline_id,
+    online_id: online_id
+  }).update(true);
+}
 
 
 function syncLists(lists){
@@ -267,79 +290,108 @@ function deleteTasks(tasks) {
   };
 }
 
+
+function syncStep3Success(response_data, text, xhrobject) {
+  wunderlist.layout.switchSyncSymbol(xhrobject.status);
+  if (xhrobject.status == 200) {
+    var response = JSON.parse(response_data);
+    
+    if(response.code === status_codes.SYNC_SUCCESS && response.sync_table !== undefined) {
+      // SYNC STEP 4
+      var sync_table   = response.sync_table;
+      var synced_tasks = sync_table.synced_tasks;
+      if(synced_tasks !== undefined) {
+        for(var i = 0, max = synced_tasks.length; i < max; i++) {
+          $.each(synced_tasks[i], updateTaskIds);
+        }
+      }
+      checkForUnsyncedElements('tasks');
+    }
+  }
+}
+
+
 /**
  * Callback on sync success
  * @author Dennis Schneider
  */
-function syncSuccess(response_step1) {
+function syncSuccess(response_step1) { 
+  var i, length;
+
+  if (response_step1.sync_table === undefined) {
+    return;
+  }
 
   // SYNC STEP 2
-  if (response_step1.sync_table !== undefined) {
-    var sync_table_step1 = response_step1.sync_table;
-    var synced_lists = sync_table_step1.synced_lists;
+  var sync_table_step1 = response_step1.sync_table;
+  var synced_lists = sync_table_step1.synced_lists;
 
-    if (synced_lists !== undefined) {
-      for(var i = 0, max = synced_lists.length; i < max; i++) {
-        $.each(synced_lists[i], function(offline_id, online_id) {
-          wunderlist.helpers.list.set({
-        	  id: offline_id,
-        	  online_id: online_id
-        	}).update(true);
-        });
-      }
-      wunderlist.sync.checkForUnsyncedElements('lists');
+  if (synced_lists !== undefined) {
+    for(i = 0, length = synced_lists.length; i < length; i++) {
+      $.each(synced_lists[i], updateListIds);
     }
-    
-    var workerQueue = [];
-    // Update or create new lists
-    if (sync_table_step1.new_lists !== undefined) {
-      workerQueue.push(syncLists(sync_table_step1.new_lists));
-    }
+    checkForUnsyncedElements('lists');
+  }
+  
+  var workerQueue = [];
+  // Update or create new lists
+  if (sync_table_step1.new_lists !== undefined) {
+    workerQueue.push(syncLists(sync_table_step1.new_lists));
+  }
 
-    // Update or create new tasks
-    if (sync_table_step1.new_tasks !== undefined) {
-      workerQueue.push(syncTasks(sync_table_step1.new_tasks));
-    }
+  // Update or create new tasks
+  if (sync_table_step1.new_tasks !== undefined) {
+    workerQueue.push(syncTasks(sync_table_step1.new_tasks));
+  }
 
-    // Delete tasks that got removed on other devices
-    if (sync_table_step1.delete_tasks !== undefined) {
-      workerQueue.push(deleteTasks(sync_table_step1.delete_tasks));
-    }
+  // Delete tasks that got removed on other devices
+  if (sync_table_step1.delete_tasks !== undefined) {
+    workerQueue.push(deleteTasks(sync_table_step1.delete_tasks));
+  }
 
-    if(workerQueue.length > 0) {    
-      async.series(workerQueue, function(){
-        console.log([arguments, "Done syncing dude"]);
-      });
-    }
+  if(workerQueue.length > 0) {    
+    async.series(workerQueue);
   }
 
 
+// DEBUG
+//return;
+
   // SYNC STEP 3
-  data = {
+  var new_tasks;
+  wunderlist.database.getDataForSync('tasks', '*', 'online_id = 0', undefined, function(err, values){
+    setTaskListIdToListOnlineId(function(err){
+      new_tasks = {};
+    });
+  });
+
+
+  var data = {
     'sync_table': {
-      'new_tasks': wunderlist.sync.setTaskListIdToListOnlineId(wunderlist.database.getDataForSync('tasks', '*', 'online_id = 0')),
+      'new_tasks': new_tasks,
       'required_lists': {},
-      'required_tasks': {},
+      'required_tasks': {}
     },
-    "email": user_credentials['email'],
-    "password": user_credentials['password'],
+    "email": user_credentials.email,
+    "password": user_credentials.password,
     "step": 2
   };
   
+  
   // Only if there is a response or new tasks
-  if (sync_table_step1 != undefined || (data['sync_table']['new_tasks'] != undefined && JSON.stringify(data['sync_table']['new_tasks']).length > 2)) {
+  if (sync_table_step1 !== undefined || (data.sync_table.new_tasks !== undefined && JSON.stringify(data.sync_table.new_tasks).length > 2)) {
     // Collect the tasks and lists, that the server requires
-    if (sync_table_step1 != undefined) {
-      if (sync_table_step1.required_tasks != undefined) {
-        for (var i = 0, max = sync_table_step1.required_tasks.length; i < max; i++) {
-          data['sync_table']['required_tasks'][i] = wunderlist.database.getDataForSync('tasks', '*', 'online_id = ' + sync_table_step1.required_tasks[i], false);
+    if (sync_table_step1 !== undefined) {
+      if (sync_table_step1.required_tasks !== undefined) {
+        for (i = 0, length = sync_table_step1.required_tasks.length; i < length; i++) {
+          data.sync_table.required_tasks[i] = wunderlist.database.getDataForSync('tasks', '*', 'online_id = ' + sync_table_step1.required_tasks[i], false);
         }
-        data['sync_table']['required_tasks'] = wunderlist.sync.setTaskListIdToListOnlineId(data['sync_table']['required_tasks']);
+        data.sync_table.required_tasks = setTaskListIdToListOnlineId(data.sync_table.required_tasks);
       }
 
-      if (sync_table_step1.required_lists != undefined) {
-        for (var i = 0, max = sync_table_step1.required_lists.length; i < max; i++) {
-          data['sync_table']['required_lists'][i] = wunderlist.database.getDataForSync('lists', '*', 'online_id = ' + sync_table_step1.required_lists[i], false);
+      if (sync_table_step1.required_lists !== undefined) {
+        for (i = 0, length = sync_table_step1.required_lists.length; i < length; i++) {
+          data.sync_table.required_lists[i] = wunderlist.database.getDataForSync('lists', '*', 'online_id = ' + sync_table_step1.required_lists[i], false);
         }
       }
     }
@@ -348,60 +400,32 @@ function syncSuccess(response_step1) {
       url     : syncUrlBase,
       type    : 'POST',
       data    : data,
-      success : function(response_data, text, xhrobject) {
-        wunderlist.layout.switchSyncSymbol(xhrobject.status);
-        if (xhrobject.status == 200) {
-          var response = JSON.parse(response_data);
-          
-          switch(response.code) {
-            case wunderlist.sync.status_codes.SYNC_SUCCESS:
-              if(response.sync_table != undefined) {
-                // SYNC STEP 4
-                var sync_table   = response.sync_table;
-                var synced_tasks = sync_table.synced_tasks;
-                if(synced_tasks != undefined) {
-                  for(var i = 0, max = synced_tasks.length; i < max; i++) {
-                    $.each(synced_tasks[i], function(offline_id, online_id) {
-                      wunderlist.helpers.task.set({
-                        id: offline_id,
-                        online_id: online_id
-                      }).update(true);
-                    });
-                  }
-                }
-                
-                wunderlist.sync.checkForUnsyncedElements('tasks');
-              }
-              break;
-          }
-        }
-      },
-      error: function(xhrobject) {
+      success : syncStep3Success,
+      error: function() {
         wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.sync_error);
       }
     });
 
     // Only if there is a sync table
-    if (sync_table_step1 != undefined) {
+    if (sync_table_step1 !== undefined) {
       // Delete elements from database forever
-      this.deleteElementsAfterSync(sync_table_step1);
+      deleteElementsAfterSync(sync_table_step1);
 
       // Only, if there are new elements from online to fetch and to insert locally
-      if (sync_table_step1.new_lists != undefined || sync_table_step1.new_tasks != undefined || 
-          sync_table_step1.delete_tasks != undefined) {
+      if (sync_table_step1.new_lists !== undefined || sync_table_step1.new_tasks !== undefined || sync_table_step1.delete_tasks !== undefined) {
         wunderlist.account.loadInterface();
       }
 
       wunderlist.sync.notifyListnames = {};
 
       // Notifications for received new lists
-      if (sync_table_step1.new_lists != undefined && sync_table_step1.new_lists.length > 0) {
-        wunderlist.sync.showSyncNotification(sync_table_step1.new_lists, 'lists');
+      if (sync_table_step1.new_lists !== undefined && sync_table_step1.new_lists.length > 0) {
+        showSyncNotification(sync_table_step1.new_lists, 'lists');
       }
 
       // Notifications for received new tasks
-      if (sync_table_step1.new_tasks != undefined && sync_table_step1.new_tasks.length > 0) {
-        wunderlist.sync.showSyncNotification(sync_table_step1.new_tasks, 'tasks');
+      if (sync_table_step1.new_tasks !== undefined && sync_table_step1.new_tasks.length > 0) {
+        showSyncNotification(sync_table_step1.new_tasks, 'tasks');
       }
       
       // Show Notifications
@@ -424,11 +448,11 @@ function syncSuccess(response_step1) {
   wunderlist.layout.stopSyncAnimation();
 
   // The callback for the sharing functionality
-  if (list_id > 0) {
+  if (syncListId > 0) {
     // Only share the list, if it is already shared and already synced
-    if (wunderlist.database.isShared(list_id) === true && wunderlist.database.isSynced(list_id) === true) {
+    if (wunderlist.database.isShared(syncListId) === true && wunderlist.database.isSynced(syncListId) === true) {
       setTimeout(function() {
-        wunderlist.sharing.sendSharedList(list_id);
+        wunderlist.sharing.sendSharedList(syncListId);
       }, 100);
     }
   }
@@ -440,83 +464,80 @@ function syncSuccess(response_step1) {
   }
 
   // Exit after sync callback
-  if (exitAfterSync == true) {
+  if (exitAfterSync === true) {
     Titanium.App.exit();
   }
-};
+}
 
 /**
  * Show a notification for the updated tasks / lists
  * @author Dennis Schneider
  */
-wunderlist.sync.showSyncNotification = function(data, type) {
+function showSyncNotification(data, type) {
   if (type == 'lists') {
     $.each(data, function(key, item) {
       wunderlist.sync.notifyListnames[item.name] = item.name;
     });
   } else {
     $.each(data, function(key, item){
-      wunderlist.database.getLists(item.list_id, function(dbList){
+      wunderlist.database.getLists(item.list_id, function(err, dbList){
         wunderlist.sync.notifyListnames[dbList.name] = dbList.name;
       });
     });
   }
-};
+}
 
 /**
  * Changes the list id temporarily to the online id
  * @author Daniel Marschner
  */
-wunderlist.sync.setTaskListIdToListOnlineId = function(tasks) {
+function setTaskListIdToListOnlineId(tasks, callback) {
   if (tasks !== undefined) {
     $.each(tasks, function(pair) {
       $.each(tasks[pair], function(key, value) {
         if (key === 'id') {
           var listIds = wunderlist.database.getListIdsByTaskId(value);
-          tasks[pair]['list_id'] = listIds.online_id;
+          tasks[pair].list_id = listIds.online_id;
         }
       });
     });
   }
   return tasks;
-};
+}
 
 /**
  * Deletes all elements forever from database, which have been deleted
  * @author Dennis Schneider
  */
-wunderlist.sync.deleteElementsAfterSync = function(sync_table) {
-  if (sync_table.required_lists != undefined) {
-    if (sync_table.required_lists.length > 0) {
-      for (var i = 0, max = sync_table.required_lists.length; i < max; i++) {
-        if (wunderlist.database.isDeleted('lists', sync_table.required_lists[i])) {
-          wunderlist.database.deleteElements('lists', sync_table.required_lists[i]);
-        }
-      }
+function deleteElementsAfterSync(sync_table) {
+  async.forEach(['lists', 'tasks'], function(type, clback){
+    var table = sync_table['required_' + type];
+    if (table !== undefined && table.length > 0) {
+      async.forEach(table, function(item, callback){
+        wunderlist.database.isDeleted(type, item.online_id, function(err, deleted){
+          if(!deleted) {
+            wunderlist.database.deleteElements(type, item.online_id, callback);
+          } else {
+            callback(null);
+          }
+        });
+      }, clback);
+    } else {
+      clback(null);
     }
-  }
-
-  if (sync_table.required_tasks !== undefined) {
-    if (sync_table.required_tasks.length > 0) {
-      for (var i = 0, max = sync_table.required_tasks.length; i < max; i++) {
-        if (wunderlist.database.isDeleted('tasks', sync_table.required_tasks[i])) {
-          wunderlist.database.deleteElements('tasks', sync_table.required_tasks[i]);
-        }
-      }
-    }
-  }
-
-  wunderlist.database.deleteNotSyncedElements();
-  wunderlist.frontend.filters.updateBadges();
-};
+  }, function(err){
+    wunderlist.database.deleteNotSyncedElements(wunderlist.nop);
+    wunderlist.frontend.filters.updateBadges();
+  });
+}
 
 /**
  * Checks for unsynced data and throws an error if so
  * @author Dennis Schneider
  */
-wunderlist.sync.checkForUnsyncedElements = function(type) {
+function checkForUnsyncedElements(type) {
   var hasUnsyncedElements = wunderlist.database.hasElementsWithoutOnlineId(type);
   if (hasUnsyncedElements === true) {
     wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.unsynced_data);
   }
-};
+}
