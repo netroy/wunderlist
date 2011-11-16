@@ -13,17 +13,13 @@ wunderlist.timer = wunderlist.timer || {};
  *
  * @author Dennis Schneider
  */
-wunderlist.timer.init = function()
-{
+wunderlist.timer.init = function() {
 	this.isPaused = false;
 	this.auto_update_seconds = 60 * 15;
-	this.auto_update_interval = setInterval(function()
-	{
-		if(wunderlist.timer.isPaused == false)
-		{
+	this.auto_update_interval = setInterval(function() {
+		if(wunderlist.timer.isPaused == false) {
 			wunderlist.timer.auto_update_seconds--;
-			if(wunderlist.timer.auto_update_seconds === 0)
-			{
+			if(wunderlist.timer.auto_update_seconds === 0) {
 				if(wunderlist.account.isLoggedIn() && Titanium.Network.online == true)
 					$('#sync').click();
 				clearInterval(wunderlist.timer.auto_update_interval);
@@ -34,11 +30,9 @@ wunderlist.timer.init = function()
 	
 	// check every 10 seconds if day changed (overnight)
 	this.former_date = 0; //init
-	this.daychange_interval = setInterval(function()
-	{
+	this.daychange_interval = setInterval(function() {
 		var current_date = wunderlist.timer.current_date();
-		if(this.former_date != current_date && this.former_date != 0 && typeof(this.former_date) != "undefined") 
-		{
+		if(this.former_date != current_date && this.former_date != 0 && typeof(this.former_date) != "undefined") {
 			wunderlist.account.loadInterface();
 		}
 		this.former_date = current_date;
@@ -51,11 +45,9 @@ wunderlist.timer.init = function()
 
 /**
  * Returns the current date in the format YYYYMMDD
- *
  * @author Sebastian Kreutzberger
  */
-wunderlist.timer.current_date = function()
-{
+wunderlist.timer.current_date = function() {
 	var now = new Date();
 	var ymd = now.getFullYear()+""+now.getMonth()+""+now.getDay();
 	return ymd;
@@ -66,10 +58,10 @@ wunderlist.timer.current_date = function()
  *
  * @author Dennis Schneider
  */
-wunderlist.timer.set = function(seconds)
-{
-	if(seconds == undefined)
-		this.total_seconds = 15;
+wunderlist.timer.set = function(seconds) {
+	if(seconds === undefined) {
+	  this.total_seconds = 15;
+	}
 
 	this.total_seconds = parseInt(seconds);
 	return this;
@@ -77,21 +69,16 @@ wunderlist.timer.set = function(seconds)
 
 /**
  * Starts the timer countdown
- *
  * @author Dennis Schneider
  */
-wunderlist.timer.start = function()
-{
-	this.interval = setInterval(function()
-	{
-		if(wunderlist.timer.isPaused == false)
-		{
+wunderlist.timer.start = function() {
+	this.interval = setInterval(function() {
+		if(wunderlist.timer.isPaused === false) {
 			wunderlist.timer.total_seconds--;
-			if(wunderlist.timer.total_seconds === 0)
-			{
-				if(wunderlist.account.isLoggedIn() && Titanium.Network.online == true)
-					$('#sync').click();
-
+			if(wunderlist.timer.total_seconds === 0) {
+				if(wunderlist.account.isLoggedIn() && Titanium.Network.online === true) {
+				  $('#sync').click();
+				}
 				clearInterval(wunderlist.timer.interval);
 			}
 		}
@@ -101,40 +88,33 @@ wunderlist.timer.start = function()
 
 /**
  * Stops the timer
- *
  * @author Dennis Schneider
  */
-wunderlist.timer.stop = function()
-{
+wunderlist.timer.stop = function() {
 	clearInterval(this.interval);
 	return this;
 };
 
 /**
  * Pauses both timers
- *
  * @author Dennis Schneider
  */
-wunderlist.timer.pause = function()
-{
+wunderlist.timer.pause = function() {
 	this.isPaused = true;
 	return this;
 };
 
 /**
  * Resumes both timers
- *
  * @author Dennis Schneider
  */
-wunderlist.timer.resume = function()
-{
+wunderlist.timer.resume = function() {
 	this.isPaused = false;
 	return this;
 };
 
 /**
  * Return the timezone offset of the current user; is needed for login and register (Stats)
- *
  * @author Daniel Marschner
  */
 wunderlist.timer.getTimezoneOffset = function() {
