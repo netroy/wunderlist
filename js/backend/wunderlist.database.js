@@ -68,7 +68,7 @@ wunderlist.database.createStandardElements = function() {
 		wunderlist.database.truncate();
 		
 		// Add the property "inbox", only for registration reasons
-		list.properties.push('inbox');
+		wunderlist.helpers.list.properties.push('inbox');
 
 		wunderlist.helpers.list.set({
   	  name: wunderlist.language.data.inbox,
@@ -76,7 +76,7 @@ wunderlist.database.createStandardElements = function() {
   	}).insert();
 		
 		// Remove the property "inbox", only a reason of security
-		list.properties.pop();
+		wunderlist.helpers.list.properties.pop();
 		
 		settings.save_last_opened_list("'" + list_id + "'");
 		
@@ -192,7 +192,7 @@ wunderlist.database.insertList = function(list) {
 		
 		for (var property in list) {
 			if (list[property] != undefined && $.isFunction(list[property]) === false) {
-				if (wunderlist.helpers.utils.in_array(property, list.properties) === true) {
+				if (wunderlist.helpers.utils.in_array(property, wunderlist.helpers.list.properties) === true) {
 					fields += (first == false ? ', ' : '') + property;
 					values += (first == false ? ', ' : '') + "'" + list[property] + "'";
 					first = false;
@@ -253,7 +253,7 @@ wunderlist.database.updateList = function(noversion) {
 		
 		for (var property in list) {
 			if (list[property] != undefined && $.isFunction(list[property]) == false) {
-				if (wunderlist.helpers.utils.in_array(property, list.properties) == true) {
+				if (wunderlist.helpers.utils.in_array(property, wunderlist.helpers.list.properties) == true) {
 					set += (first == false ? ', ' : '') + property + ' = ' +  ((typeof list[property] == 'string') ? "'" + list[property] + "'" : list[property]); // TODO: Test this combination
 					first = false;
 				}
@@ -531,12 +531,9 @@ wunderlist.database.getTasks = function(task_id, list_id) {
  * @author Dennis Schneider
  */
 wunderlist.database.search = function(search) {
-    $("#content").html("");
-
+  $("#content").html("");
 	var resultSet = wunderlist.database.db.execute("SELECT * FROM tasks WHERE (name LIKE '%" + search + "%' OR note LIKE '%" + search + "%') AND tasks.deleted = 0 ORDER BY done ASC, important DESC, date DESC");
-
-	if (resultSet.rowCount() > 0)
-	{
+	if (resultSet.rowCount() > 0) {
 		$("#content").prepend("<div id='listfunctions'><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>");
 		$("#content").append("<h1>"+ wunderlist.language.data.search_results + ": " + search + "</h1><ul id='list' class='mainlist searchlist'></ul>");
 
