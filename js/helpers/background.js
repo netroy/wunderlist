@@ -3,7 +3,7 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
   "use strict";
 
   var Properties = Titanium.App.Properties;
-  var body, backgroundList, activeBackground;
+  var body, backgroundList, activeBackground, switcher;
 
   /**
    * Default settings for the background list
@@ -70,18 +70,17 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
     body = $("body");
     backgroundList = $('#backgroundList');
     activeBackground = $("#activebackground");
+    switcher = $('a.backgroundswitcher');
 
-    $('#right').prepend('');
     backgroundList.hide();
-    $('#backgroundswitcher').click(function() {
+    switcher.click(function() {
       backgroundList.fadeToggle(100);
     });
 
     $.each(bgList, function(bgClass) {
-      var a = $('<a class="' + bgClass + '"> </a>');
-      a.bind('click', switchBg);
-      backgroundList.append(a);
+      backgroundList.append('<a class="' + bgClass + '"> </a>');
     });
+    backgroundList.delegate('a', 'click', switchBg);
 
     var theme = Properties.getString("active_theme");
     switchBg(null, theme);

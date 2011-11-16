@@ -51,7 +51,7 @@ wunderlist.menu = (function(undefined){
   function initialize() {
     var menuTimer;
     var blurActive = 0;
-
+/*
     $("a.backgroundswitcher").click(function() {
       clearTimeout(menuTimer);
       $("#backgroundList").fadeIn("100");
@@ -61,6 +61,7 @@ wunderlist.menu = (function(undefined){
     $("#backgroundList").mouseenter(function() {
       clearTimeout(menuTimer);
     });
+*/
 
     $("#left ul a").each(function() {
       if ($(this).next("ul").length !== 0) {
