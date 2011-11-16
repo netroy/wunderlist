@@ -11,8 +11,8 @@
 5. backend should be completely independent of DOM & modules should go in W.backend
 6. CSS lint all stylesheet & convert them to LESS/Stylus eventually
 7. write unit tests 
-8. Move to something like JavascriptMVC or Backbone
-9. Reduce memory leaks (crosses 150MB on chrome after a while).. 
+8. Move to something like JavascriptMVC or Backbone or knockoutjs or angularjs
+9. Reduce memory leaks (crosses 150MB on chrome after a while).. Reuse DOM 
 
 <br/>
 ***
