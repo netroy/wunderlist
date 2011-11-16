@@ -14,7 +14,11 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   function printf(text){
     var i = 1, args = arguments;
     return text.replace(/\?/g, function(){
-      return args[i++] || "";
+      var val = args[i++];
+      if(typeof val === 'undefined'){
+        return "";
+      }
+      return val;
     });
   }
 
@@ -139,7 +143,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
 
-  // TODO: use async.forEach
+  // TODO: comments
   var deleteNotSyncedElementsSQL = "DELETE FROM ? WHERE deleted = 1 AND online_id = 0";
   function deleteNotSyncedElements(callback) {
     var queue = [];
@@ -148,6 +152,17 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     async.forEach(queue, execute, callback);
   }
 
+  function updateByMap(type, map, where, callback){
+    var set = [], prop, val;
+    for(prop in map){
+      val = map[prop];
+      if(prop.match(/^(name|note)$/)){
+        val = "'"+val+"'";
+      }
+      set.push(prop + "=" + val);
+    }
+    execute("UPDATE ? SET ? WHERE ?", type, set, where, callback);
+  }
 
   /**
    * Check if Task or List exists by offline id
@@ -432,34 +447,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
 
-  /**
-   * Insert list in the DB
-   * @params list - instance to insert
-   * @params callback - function to call with inserted id
-   */
-  function insertList(list, callback){
-    // name is a string, needs quotes around it
-    if("name" in list){
-      list.name = "'"+list.name+"'";
-    }
-
-    var fields = [], values = [];
-    for(var property in list) {
-      fields.push(property);
-      values.push(list[property]);
-    }
-
-    if (fields.length > 0 && values.length > 0 && fields.length === values.length) {
-      execute("INSERT INTO lists (?) VALUES (?)", fields.join(', '), values.join(', '), function(err, result){
-        callback(err, result && result.insertId);
-      });
-    }
-
-    // Reset the properties of the given list object
-    wunderlist.helpers.list.setDefault();
-  }
-
-
   function getLastListId(callback) {
     execute("SELECT id FROM lists ORDER BY id DESC LIMIT 1", function(err, result){
       if(err) {
@@ -533,8 +520,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
 ***** TODO: complete the following methods *****
 ************************************************/
 
-  function updateList(noVersion, list, callback){}
-
   /**
    * Filter functions
    * TODO: move out any DOM stuff to frontend
@@ -575,6 +560,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "init": init,
     "getLists": getLists,
     "getTasks": getTasks,
+    "updateByMap": updateByMap,
     "createStandardElements": createStandardElements,
     "truncate": truncate,
     "existsById": existsById,
@@ -591,8 +577,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "createTaskByOnlineId": createTaskByOnlineId,
     "updateBadgeCount": updateBadgeCount,
     "getLastDoneTasks": getLastDoneTasks,
-    "insertList": insertList,
-    "updateList": updateList,
     "getLastListId": getLastListId,
     "getLastListPosition": getLastListPosition,
     "getFilteredTasks": getFilteredTasks,

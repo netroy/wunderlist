@@ -25,8 +25,6 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
   // INSERT a new database list object
   function insertPhase2(callback){
     instance.version = 0;
-    instance.deleted = 0;
-    instance.shared = 0;
     instance.name = html.convertString(instance.name, 255);
 
     var list = {};
@@ -38,8 +36,7 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
         }
       }
     }
-
-    wunderlist.database.insertList(list, callback);
+    wunderlist.database.createListByOnlineId(0, list.name, 0, list.position, 0, 0, 0, callback);
   }
 
   function insert (callback) {
@@ -60,7 +57,10 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
 
   // UPDATE the database list object
   function update(noVersion, callback) {
-    wunderlist.database.updateList(noVersion, instance, callback);
+    wunderlist.database.updateByMap('lists', {
+      name: instance.name,
+      version: (noVersion ? "": "version + 1")
+    }, "id="+instance.id, callback); 
   }
 
   // Reset the list object to defaults

@@ -128,11 +128,6 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     var listElementTitleSplit = listElementTitle.html().split("<");
     newTitle = unescape(listElementName) + "<" + listElementTitleSplit[1];
     listElementTitle.html(newTitle).fadeIn();
-
-    wunderlist.helpers.list.set({
-      id: listElement.attr('id').replace('list', ''),
-      name: listElementName
-    }).update();
   
     listElement.children('.savep').hide();
     listElement.children('.deletep').hide();
@@ -142,6 +137,11 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     }
 
     listElement.click();
+
+    wunderlist.helpers.list.set({
+      id: listElement.attr('id').replace('list', ''),
+      name: listElementName
+    }).update(false, wunderlist.nop);
   }
 
   /**
