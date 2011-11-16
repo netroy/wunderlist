@@ -13,7 +13,7 @@ wunderlist.helpers.sidebar = (function($, Titanium, undefined){
    * @author Dennis Schneider, Marvin Labod
    */
   function initPosition() {
-    isPositionRight = !(Properties.getString('sidebar_position', 'right') === "right");
+    isPositionRight = (Properties.getString('sidebar_position', 'right') !== "right");
     openStatus = (Properties.getString('sidebar_opened_status', 'true') === "true");
 
     toggleButton.toggleClass("hidden", !openStatus);
@@ -48,8 +48,17 @@ wunderlist.helpers.sidebar = (function($, Titanium, undefined){
     $("#content, #sidebar").addClass("slideTransition");
   }
 
+  /**
+   * Return open status of the sidebar
+   */
+  function isOpen(){
+    return openStatus;
+  }
+
   return {
     "init": init,
-    "initPosition": initPosition
+    "isOpen": isOpen,
+    "initPosition": initPosition,
+    "toggleSidebar": toggleSidebar
   };
 })(jQuery, Titanium);
