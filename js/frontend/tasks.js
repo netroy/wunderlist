@@ -280,12 +280,13 @@ tasks.add = function() {
           listHTML += '<ul id="filterlist' + list_id + '" rel="' + ulElement.attr('rel') + '" class="mainlist sortable filterlist">' + taskHTML + '</ul>';
         
           // If adding to inbox in filter view, the inbox should be inserted before any other list
-          var theLists = wunderlist.database.getLists(list_id);
-          if (theLists[0].inbox == 1) {
-            $('div#content .add').after(listHTML);
-          } else {
-            $('div#content').append(listHTML);
-          }
+          wunderlist.database.getLists(list_id, function(err, lists){
+            if (lists[0].inbox == 1) {
+              $('div#content .add').after(listHTML);
+            } else {
+              $('div#content').append(listHTML);
+            }
+          });
         }
       } else { // ORDINARY LIST
         if (tasks.addNewTaskToTop) {
