@@ -2,45 +2,45 @@
  * Init the wunderlist framework and all necessary parts
  * @author Christian Reber, Dennis Schneider, Daniel Marschner
  */
-wunderlist.init = (function($, W, settings, Titanium){ 
+wunderlist.init = (function($, wunderlist, settings, Titanium){ 
   "use strict";
 
   return function() {
 
     // Set the app title
-    var title = (W.account.isLoggedIn() && W.account.email !== '' ? ' - ' + W.account.email : '');
-    W.helpers.utils.setTitle('Wunderlist' + title);
+    var title = (wunderlist.account.isLoggedIn() && wunderlist.account.email !== '' ? ' - ' + wunderlist.account.email : '');
+    wunderlist.helpers.utils.setTitle('Wunderlist ' + title);
   
     // Set the os version
-    W.os = Titanium.Platform.name.toLowerCase();
-    W.version = Titanium.App.version.toString();
+    wunderlist.os = Titanium.Platform.name.toLowerCase();
+    wunderlist.version = Titanium.App.version.toString();
   
-    W.language.init();
+    wunderlist.language.init();
   
     // Init the datastore
-    W.database.init();
+    wunderlist.database.init();
   
     settings.init();
     
-    W.sync.init();
+    wunderlist.sync.init();
     
     // Init some other necessary stuff
     // TODO: add the wunderlist prefix
-    W.account.init();
-    W.timer.init();
-    W.menu.initializeTrayIcon();
-    W.sharing.init();
-    W.notifications.init();
+    wunderlist.account.init();
+    wunderlist.timer.init();
+    wunderlist.menu.initializeTrayIcon();
+    wunderlist.sharing.init();
+    wunderlist.notifications.init();
   
     // Init notes
-    W.helpers.note.init();
-    W.frontend.notes.init();
+    wunderlist.helpers.note.init();
+    wunderlist.frontend.notes.init();
   
     // Init the dialogs
-    W.helpers.dialogs.init();
+    wunderlist.helpers.dialogs.init();
 
     // Init the layout
-    W.layout.init();
+    wunderlist.layout.init();
 
     // Init Menu
   	wunderlist.menu.initialize();
@@ -52,10 +52,10 @@ wunderlist.init = (function($, W, settings, Titanium){
   	wunderlist.frontend.filters.init();
   
     // Check for a new version
-    W.updater.checkVersion();  
+    wunderlist.updater.checkVersion();  
   
     // Add the wunderlist object to the current window
-    Titanium.UI.getCurrentWindow().wunderlist = W;
+    Titanium.UI.getCurrentWindow().wunderlist = wunderlist;
   
     // Enable shutdown fix
     Titanium.API.addEventListener(Titanium.EXIT, function() {
