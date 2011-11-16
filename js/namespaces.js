@@ -2,6 +2,6 @@
 var wunderlist = {
   backend: {},
   frontend: {},
-  helpers: {}
+  helpers: {},
   nop: function(){}
 };
