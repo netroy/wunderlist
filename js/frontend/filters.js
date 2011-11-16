@@ -28,56 +28,64 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
    * If a sort a task, the badge will hide/show for every task in the list.
    * @author Dennis Schneider, Christian Reber
    */
+  // Generate Badges
+  function updateBadgesInfo(todaycount, overduecount){ 
+   var todayBadges = $('span', today), overdueBadges = $('span', overdue);
+   var lists = $("#lists"), note = $("#note");
+
+   var today_has_no_badge   = todayBadges.length === 0;
+   var overdue_has_no_badge = overdueBadges.length === 0;
+
+   if(today_has_no_badge === true) {
+     todayBadges = today.append('<span>' + todaycount + '</span>').find("span");
+   } else {
+     todayBadges.text(todaycount);
+     //todayBadges.fadeOut('fast').fadeIn('fast');
+     lists.css("bottom","74px");
+     note.css("bottom","74px");
+   }
+
+   var overdue_text;
+   if(overduecount >= 1) {
+     overdue_text = overduecount + ' ' + (overduecount > 1)? wunderlist.language.data.overdue_text_pl : wunderlist.language.data.overdue_text_sl;
+     notifications.fadeIn('fast');
+     lists.css("bottom","74px");
+     note.css("bottom","74px");
+   } else {
+     overdue_text = '';
+     notifications.fadeOut('fast');
+     lists.css("bottom","36px");
+     note.css("bottom","36px");
+   }
+
+   if(overdue_has_no_badge) {
+     $('div', notifications).text(overdue_text);
+   } else {
+     $('div', notifications).text(overduecount);
+     //notifications.fadeOut('fast').fadeIn('fast');
+     lists.css("bottom","74px");
+   }
+
+   if(todaycount === 0) {
+     todayBadges.remove();
+   }
+
+   var countAll = overduecount + todaycount;
+   if(countAll === 0) {
+     Titanium.UI.setBadge('');
+   } else {
+     Titanium.UI.setBadge(countAll.toString());
+   }
+  }
+
+  // Fetch info from DB & then call updateBadgesInfo method with badge counts 
   function updateBadges() {
-    // Generate Badges
-    var todaycount   = wunderlist.database.updateBadgeCount('today');
-    var overduecount = wunderlist.database.updateBadgeCount('overdue');
-    var todayBadges = $('span', today), overdueBadges = $('span', overdue);
-    var lists = $("#lists"), note = $("#note");
-
-    var today_has_no_badge   = todayBadges.length === 0;
-    var overdue_has_no_badge = overdueBadges.length === 0;
-
-    if(today_has_no_badge === true) {
-      todayBadges = today.append('<span>' + todaycount + '</span>').find("span");
-    } else {
-      todayBadges.text(todaycount);
-      //todayBadges.fadeOut('fast').fadeIn('fast');
-      lists.css("bottom","74px");
-      note.css("bottom","74px");
-    }
-
-    var overdue_text;
-    if(overduecount >= 1) {
-      overdue_text = overduecount + ' ' + (overduecount > 1)? wunderlist.language.data.overdue_text_pl : wunderlist.language.data.overdue_text_sl;
-      notifications.fadeIn('fast');
-      lists.css("bottom","74px");
-      note.css("bottom","74px");
-    } else {
-      overdue_text = '';
-      notifications.fadeOut('fast');
-      lists.css("bottom","36px");
-      note.css("bottom","36px");
-    }
-
-    if(overdue_has_no_badge) {
-      $('div', notifications).text(overdue_text);
-    } else {
-      $('div', notifications).text(overduecount);
-      //notifications.fadeOut('fast').fadeIn('fast');
-      lists.css("bottom","74px");
-    }
-
-    if(todaycount === 0) {
-      todayBadges.remove();
-    }
-
-    var countAll = overduecount + todaycount;
-    if(countAll === 0) {
-      Titanium.UI.setBadge('');
-    } else {
-      Titanium.UI.setBadge(countAll.toString());
-    }
+    
+    wunderlist.database.updateBadgeCount('today', function(err, todaycount){
+      wunderlist.database.updateBadgeCount('overdue', function(err, overduecount) {
+        updateBadgesInfo(todaycount, overduecount);
+      });
+    });
   }
 
 
