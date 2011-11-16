@@ -3,4 +3,5 @@ var wunderlist = {
   backend: {},
   frontend: {},
   helpers: {}
+  nop: function(){}
 };
