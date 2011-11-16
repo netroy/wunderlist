@@ -189,14 +189,14 @@ wunderlist.sync.fireSync = function(_logOutAfterSync, _exitAfterSync, _syncListI
         };
 
         var queue = [
-          ['lists', 'lists', 'online_id, version', 'online_id != 0'],
-          ['tasks', 'tasks', 'online_id, version', 'online_id != 0'],
+          ['lists', 'lists', 'online_id, version', 'online_id = 0'],
+          ['tasks', 'tasks', 'online_id, version', 'online_id = 0'],
           ['new_lists', 'lists', '*', 'online_id != 0 AND deleted = 0']
         ];
 
         async.forEach(queue, function(item, callback){
           function handler(err, results){
-            data.sync_table[item[0]] = results;
+            //data.sync_table[item[0]] = results;
             callback(null);
           }
           wunderlist.database.getDataForSync.apply(undefined, item.slice(1).concat([undefined, handler]));
@@ -350,7 +350,9 @@ function syncSuccess(response_step1) {
   }
 
   if(workerQueue.length > 0) {    
-    async.series(workerQueue);
+    async.series(workerQueue, function(err){
+      wunderlist.frontend.lists.redraw();
+    });
   }
 
 
