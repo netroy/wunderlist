@@ -137,7 +137,6 @@ wunderlist.account.load = function() {
 
 /**
  * (Re)loads the interface and closes the registration dialog
- *
  * @author Christian Reber, Dennis Schneider
  */
 wunderlist.account.loadInterface = function() {
@@ -150,9 +149,8 @@ wunderlist.account.loadInterface = function() {
 	
 	var taskInput = $("input.input-add").val();
 
-  // Init lists 
-	wunderlist.database.getLists(null, wunderlist.frontend.lists.initLists);
-	wunderlist.frontend.lists.openList();
+  // Init lists
+	wunderlist.frontend.lists.init();
 
 	makeListsDropable();
 	makeFilterDropable();

@@ -1,5 +1,5 @@
 /* global wunderlist, jQuery */
-wunderlist.helpers.list = (function($, wunderlist, undefined){
+wunderlist.helpers.list = (function($, wunderlist, html, undefined){
   "use strict";
 
 
@@ -23,8 +23,37 @@ wunderlist.helpers.list = (function($, wunderlist, undefined){
   }
 
   // INSERT a new database list object
+  function insertPhase2(callback){
+    instance.version = 0;
+    instance.name = html.convertString(instance.name, 255);
+
+    var list = {};
+    for (var property in instance) {
+      var value = instance[property];
+      if ((typeof value).match(/^(number|string|boolean)$/)) {
+        if (wunderlist.helpers.utils.in_array(property, properties) === true) {
+          list[property] = value;
+        }
+      }
+    }
+
+    wunderlist.database.insertList(list, callback);
+  }
+
   function insert (callback) {
-    wunderlist.database.insertList(instance, callback);
+    if (typeof instance.name !== 'string' || instance.name.length === 0) {
+      callback(new Error("Invalid name for the list"));
+      return;
+    }
+
+    if (typeof instance.position === 'undefined'){
+      wunderlist.database.getLastListPosition(function(err, position){
+        instance.position = position;
+        insertPhase2(callback);
+      });
+    } else {
+      insertPhase2(callback);
+    }
   }
 
   // UPDATE the database list object
@@ -53,4 +82,4 @@ wunderlist.helpers.list = (function($, wunderlist, undefined){
 
   return self;
 
-})(jQuery, wunderlist);
+})(jQuery, wunderlist, html);

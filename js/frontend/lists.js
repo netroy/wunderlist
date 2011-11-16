@@ -176,6 +176,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     var list = wunderlist.helpers.list.set({
       name: listElementName
     });
+
     var listId = list.insert();
 
     listElementInput.remove();
@@ -308,7 +309,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
    */
   var listOpenHandler = false;
 
-  function renderLastDoneTasks(doneListsTasks){
+  function renderLastDoneTasks(err, doneListsTasks){
     for(var listId in doneListsTasks) {
       var day_string = wunderlist.language.data.day_ago;
       var heading    = '<h3>';
@@ -366,17 +367,17 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
       }
       
 
-      wunderlist.database.existsById('lists', list_id, function(exists){
+      wunderlist.database.existsById('lists', list_id, function(err, exists){
         if(!exists) {
           list_id = 1;
         }
-        wunderlist.database.getLists(list_id, function(lists){
+        wunderlist.database.getLists(list_id, function(err, lists){
           if(lists.length > 0){
             $('#content').append(html.generateListContentHTML(lists[0].id, lists[0].name));
           }
         });
 
-        wunderlist.database.getTasks(undefined, list_id, function(tasks){
+        wunderlist.database.getTasks(undefined, list_id, function(err, tasks){
           if(tasks.length > 0){
             $("#list").append(initTasks(tasks));
           }
@@ -451,64 +452,51 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
       });
   }
 
-
-
-$(function() {
-  makeListsSortable();
-
-  // Binding the list functionality
-  bindListAddMode();
-  bindListEditMode();
-  bindListDeleteMode();
-  bindListSaveMode();
-
   // Open a list on "click" (MOUSE CLICK)
-  $("a.list").live('click', function() {
-    if($('ul#list').attr('rel') != $(this).attr('id').replace('list', '') && $(this).attr('id').replace('list', '') != 'x')
+  function listClick() {
+    if($('ul#list').attr('rel') != $(this).attr('id').replace('list', '') && $(this).attr('id').replace('list', '') != 'x') {
       openList($(this).attr('id').replace('list', ''));
-    });
+    }
+  }
 
-    // Show option buttons on "mouseover"
-    $("a.list").live('mouseover', function() {
-      var countInput = $(this).children('input').length;
 
-    if(countInput === 0)
+  // Show option buttons on "mouseover"
+  function listMouseOver() {
+    var countInput = $(this).children('input').length;
+
+    if(countInput === 0) {
       $(this).children('.editp').show();
+    }
 
-    if($(this).attr('id').replace('list', '') != 'x' && $(this).attr('id').replace('list', '') != 1)
+    if($(this).attr('id').replace('list', '') != 'x' && $(this).attr('id').replace('list', '') != 1){
       $(this).children('.deletep').show();
-    });
+    }
+  }
 
-    // Hide option buttons on "mouseout"
-  $("a.list").live('mouseout', function() {
-      var countInput = $(this).children('input').length;
+
+  // Hide option buttons on "mouseout"
+  function listMouseOut() {
+    var countInput = $(this).children('input').length;
 
     $(this).children('.editp').hide();
 
-    if(countInput === 0)
+    if(countInput === 0){
       $(this).children('.deletep').hide();
-    });
+    }
+      
+  }
 
-  // Kills the "focusout" eventlistener
-  $('a.list .deletep').live('mouseover', function() {
-    listEventListener = true;
-  });
-
-  // Activates the "focusout" eventlistener
-  $('a.list .deletep').live('mouseout', function() {
-    listEventListener = false;
-  });
 
   // Save the list on "keyup" (ENTER)
-  $('a.list input').live('keyup', function(event) {
+  function listInputKeyUp(event) {
     wunderlist.timer.pause();
     var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'), 10);
-    
+
     if (event.keyCode === 13 && aimSetting === 0) {
       listEventListener = true;
       var listElement = $(this).parent('a');
       var list_id     = listElement.attr('id').replace('list', '');  
-      
+
       wunderlist.timer.resume();
 
       if (list_id != 'x'){
@@ -517,62 +505,98 @@ $(function() {
         saveNewList(listElement);
       }
     }
-  });
+  }
 
-/**
- * Save the list on "focusout" (Mouse Click)
- * @author Dennis Schneider, Christian Reber
- */
-  $('a.list input').live('focusout', function(event) {
-    if (event.keyCode != 13 && event.keyCode != 27 && listEventListener === false) {
+
+  /**
+   * Save the list on "focusout" (Mouse Click)
+   * @author Dennis Schneider, Christian Reber
+   */
+  function listInputFocusOut(event) {
+    if (event.keyCode !== 13 && event.keyCode !== 27 && listEventListener === false) {
         listEventListener = true;
 
         var listElement = $(this).parent('a');
         var listId      = listElement.attr('id').replace('list', '');
 
         wunderlist.timer.resume();
-                
-        if (listId != 'x')
+
+        if (listId !== 'x') {
           saveList(listElement);
-        else
+        } else {
           saveNewList(listElement);
-  
+        }
+
         listElement.children('.editp').hide();
         listElement.children('.deletep').hide();
-        
+
         setTimeout(function() { 
           listEventListener = false;
         }, 500);
     } else {
       listEventListener = false;
     }
-  });
+  }
+
 
   /**
-   * Show older tasks
-   *
+   * Show/Hide older tasks
    * @author Marvin Labod
    */
-  $('button#older_tasks_head').live('click', function() {
+  function showOlderTasks() {
     $('#older_tasks').slideDown(function() {
       $('button#hide_older_tasks').fadeIn();
     });
-    
+
     $(this).hide();
-  });
+  }
 
-
-  $('button#hide_older_tasks').live('click', function() {
+  function hideOlderTasks() {
     $('#older_tasks').slideUp(function() {
       $('button#older_tasks_head').fadeIn();
     });
-    
-    $(this).hide();
-  });
-});
 
+    $(this).hide();
+  }
+
+
+
+  function init(){
+    
+    makeListsSortable();
+
+    // Binding the list functionality
+    bindListAddMode();
+    bindListEditMode();
+    bindListDeleteMode();
+    bindListSaveMode();
+
+    
+    $("a.list").live('click', listClick).live('mouseover', listMouseOver).live('mouseout', listMouseOut);
+
+    $('a.list input').live('keyup', listInputKeyUp).live('focusout', listInputFocusOut);
+
+    // Kills the "focusout" eventlistener
+    $('a.list .deletep').live('mouseover', function() {
+      listEventListener = true;
+    });
+
+    // Activates the "focusout" eventlistener
+    $('a.list .deletep').live('mouseout', function() {
+      listEventListener = false;
+    });
+
+    $('button#older_tasks_head').live('click', showOlderTasks);
+    $('button#hide_older_tasks').live('click', hideOlderTasks);
+
+    wunderlist.database.getLists(null, function(err, lists) {
+      initLists(lists);
+      openList();
+    });
+  }
 
   return {
+    "init": init,
     "addList": addList,
     "deleteList": deleteList,
     "cancelSaveList": cancelSaveList,
@@ -582,4 +606,5 @@ $(function() {
     "initLists": initLists,
     "initTasks": initTasks
   };
+
 })(jQuery, wunderlist);
