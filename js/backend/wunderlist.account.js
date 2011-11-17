@@ -51,15 +51,14 @@ wunderlist.account.init = function() {
 		'DELETE_ACCOUNT_DENIED':              704
 	}
 
-	wunderlist.account.load();
+	load();
 };
 
 /**
  * Creates a user in the properties
- *
  * @author Dennis Schneider
  */
-wunderlist.account.createUser = function(email, password) {
+function createUser(email, password) {
 	Titanium.App.Properties.setString('logged_in', 'true');
 	Titanium.App.Properties.setString('email', email.toString());
 	Titanium.App.Properties.setString('password', password.toString());
@@ -68,17 +67,16 @@ wunderlist.account.createUser = function(email, password) {
 							
 	// Set the new app title, so the user can see which account is currently logged in
 	wunderlist.helpers.utils.setTitle('Wunderlist - ' + email);
-};
+}
 
 /**
  * Sets the user to logout
- *
  * @author Dennis Schneider
  */
-wunderlist.account.logUserOut = function() {
+function logUserOut() {
 	Titanium.App.Properties.setString('logged_in', 'false');
-	wunderlist.account.deleteUserCredentials();
-};
+	deleteUserCredentials();
+}
 
 /**
  * Checks if the user is logged in
@@ -99,31 +97,27 @@ wunderlist.account.isLoggedIn = function() {
  * @author Dennis Schneider
  */
 wunderlist.account.getUserCredentials = function() {
-	values = {
+	return {
 		'email': Titanium.App.Properties.getString('email', ''),
 		'password': Titanium.App.Properties.getString('password', '') // encrypted !
 	};
-
- 	return values;
 };
 
 
 /**
  * Removes the user credentials
- *
  * @author Dennis Schneider
  */
-wunderlist.account.deleteUserCredentials = function() {
+function deleteUserCredentials() {
 	Titanium.App.Properties.setString('email', '');
 	Titanium.App.Properties.setString('password', '');
 };
 
 /**
  * Initializes the account dialog
- *
  * @author Christian Reber
  */
-wunderlist.account.load = function() {
+function load() {
 	if (wunderlist.account.isLoggedIn()) {
 	  $("body").removeClass("login");
 		wunderlist.account.loadInterface();
@@ -145,6 +139,8 @@ wunderlist.account.loadInterface = function() {
 		$('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 		
 		$(register_dialog).dialog('close');
+		$("#loginheader, #loginfooter").remove();
+		$("body").removeClass("login");
 	}
 	
 	var taskInput = $("input.input-add").val();
@@ -419,37 +415,32 @@ wunderlist.account.login = function() {
 						case wunderlist.account.status_codes.LOGIN_SUCCESS:
 
 							// Clear old database
-							wunderlist.database.truncate();
+							wunderlist.database.truncate(function(err){
+  							// Save user
+  							createUser(data['email'], data['password']);
 
-							// Save user
-							wunderlist.account.createUser(data['email'], data['password']);
-							
-							// Synchronize data
-							$('#sync').click();
-							
+  							// Synchronize data
+  							$('#sync').click();
+							});
 							break;
-
 						case wunderlist.account.status_codes.LOGIN_FAILURE:
-
 							wunderlist.layout.stopLoginAnimation();
 							wunderlist.account.showPasswordError(wunderlist.language.data.error_login_failed);
-
 							break;
 
 						case wunderlist.account.status_codes.LOGIN_DENIED:
-
 							wunderlist.layout.stopLoginAnimation();
 							wunderlist.account.showPasswordError(wunderlist.language.data.error_login_failed);
-
 							break;
 
 						case wunderlist.account.status_codes.LOGIN_NOT_EXIST:
 
 							var buttonOptions = {};
-							buttonOptions[wunderlist.language.data.list_delete_no] = function() {$(this).dialog('close')};
+							buttonOptions[wunderlist.language.data.list_delete_no] = function() {
+							  $(this).dialog('close');
+							};
 							buttonOptions[wunderlist.language.data.register_create_user] = function() {
-								if (logging_in == false)
-								{
+								if (logging_in === false) {
 									logging_in = true;
 									wunderlist.account.register(false, true);
 									$(this).dialog('close');
@@ -573,20 +564,16 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 			data    : data,
 			timeout : settings.REQUEST_TIMEOUT,
 			success : function(response_data, text, xhrobject) {
-				if (xhrobject.status == 0)
-				{
+				if (xhrobject.status === 0) {
 					wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.no_internet);
-				}
-				else if(xhrobject.status == 200)
-				{
+				} else if(xhrobject.status == 200) {
 					var response = JSON.parse(response_data);
 
-					switch(response.code)
-					{
+					switch(response.code) {
 						case wunderlist.account.status_codes.REGISTER_SUCCESS:
 
 							// Save user
-							wunderlist.account.createUser(data['email'], data['password']);
+							createUser(data['email'], data['password']);
 
 							// Create standard elements
 							wunderlist.database.createStandardElements();
@@ -765,7 +752,7 @@ wunderlist.account.change_profile_data = function() {
 							  data['new_password'] = data['password'];
 							}
 
-							wunderlist.account.createUser(data['new_email'], data['new_password']);
+							createUser(data['new_email'], data['new_password']);
 							wunderlist.helpers.dialogs.closeDialog(edit_profile_dialog);
 							wunderlist.helpers.dialogs.showOKDialog(wunderlist.language.data.changed_account_data);
 
@@ -941,8 +928,8 @@ wunderlist.account.logout = function() {
 		wunderlist.helpers.utils.setTitle('Wunderlist');
 		
 		// Remove all user data
-		wunderlist.database.truncate();
-		wunderlist.account.logUserOut();
+		wunderlist.database.truncate(wundrlist.nop);
+		logUserOut();
 		settings.clear_last_opened_list();
 
 		// Clear Interface

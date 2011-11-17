@@ -65,7 +65,7 @@ wunderlist.database.createStandardElements = function() {
 	
 	if(resultSet.rowCount() === 0) {
 		// Truncate database and create inbox
-		wunderlist.database.truncate();
+		wunderlist.database.truncate(wundrlist.nop);
 		
 		// Add the property "inbox", only for registration reasons
 		wunderlist.helpers.list.properties.push('inbox');
