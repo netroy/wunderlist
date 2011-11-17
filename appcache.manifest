@@ -1,15 +1,22 @@
 CACHE MANIFEST
 
 CACHE:
-/css/normalize.css
-/css/wunderlist.css
+/css/bottombar.css
+/css/content.css
 /css/dialogs.css
+/css/normalize.css
+/css/sidebar.css
+/css/wunderlist.css
+
+/js/namespaces.js
 
 /js/libraries/jquery-1.6.min.js
+/js/libraries/jquery-1.7.min.js
 /js/libraries/jquery.ui.1.8.10.min.js
 /js/libraries/jquery.async.js
 /js/libraries/shortcuts.js
 /js/libraries/encoder.js
+/js/libraries/async-min.js
 
 /language/english.json
 
@@ -24,7 +31,8 @@ CACHE:
 /js/helpers/list.js 
 /js/helpers/task.js 
 /js/helpers/utils.js 
-/js/web/database.js 
+/js/helpers/note.js 
+/js/backend/database/websql.js 
 /js/backend/wunderlist.settings.js 
 /js/backend/wunderlist.account.js 
 /js/backend/wunderlist.sync.js 
@@ -43,14 +51,44 @@ CACHE:
 /js/frontend/layout.js 
 /js/frontend/hotkeys.js
 
-/backgrounds/wood.jpg 
+/backgrounds/blue.jpg
+/backgrounds/icons/icon_blue.png
+/backgrounds/bokeh.jpg
+/backgrounds/icons/icon_bokeh.png
+/backgrounds/chalkboard.jpg
+/backgrounds/icons/icon_chalkboard.png 
+/backgrounds/colorful.jpg
+/backgrounds/icons/icon_darkfade.png
+/backgrounds/darkfade.jpg
+/backgrounds/darkwood.jpg
+/backgrounds/icons/icon_darkwood.png
+/backgrounds/forrest.jpg
+/backgrounds/icons/icon_forrest.png
+/backgrounds/leaf.jpg
+/backgrounds/icons/icon_leaf.png
+/backgrounds/monster.jpg
+/backgrounds/icons/icon_monster.png
+/backgrounds/royal_purple.jpg
+/backgrounds/icons/icon_royal_purple.png
+/backgrounds/wheat.jpg
+/backgrounds/icons/icon_wheat.png
+/backgrounds/whitefade.jpg
+/backgrounds/icons/icon_whitefade.png
+/backgrounds/wood.jpg
+/backgrounds/icons/icon_wood.png
+
 /images/sidebar.png 
+/images/close.png
+/images/dialoghead.png
+/images/icons/notes_icon_hover.png
+/images/notebg.png
 /images/searchicon.png 
 /images/icons/delete_active.png 
 /images/overdue.png 
 /images/bottombar.png 
 /images/sync_green.png 
-/images/sync_arrow.png 
+/images/sync_arrow.png
+/images/sync_red.png
 /images/bottombar_menu.png 
 /images/menuopen.png 
 /icons/filterall.png 
@@ -60,8 +98,6 @@ CACHE:
 /images/showhelp.png 
 /images/bgswitch.png 
 /images/sidebartogglen.png
-/backgrounds/chalkboard.jpg 
-/images/icon_chalkboard.png 
 /images/taskcount.png 
 /images/icons/edit_active.png 
 /images/icons/editdone_active.png 
@@ -83,6 +119,8 @@ CACHE:
 
 NETWORK:
 /login
+/register
 /1.2.0
+/version.txt
 
 FALLBACK:
