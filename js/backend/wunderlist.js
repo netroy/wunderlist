@@ -33,7 +33,7 @@ wunderlist.init = (function($, wunderlist, settings, Titanium){
     wunderlist.notifications.init();
 
     // Init lists
-  	wunderlist.frontend.lists.init();
+    wunderlist.frontend.lists.init();
   
     // Init notes
     wunderlist.helpers.note.init();
@@ -46,16 +46,18 @@ wunderlist.init = (function($, wunderlist, settings, Titanium){
     wunderlist.layout.init();
 
     // Init Menu
-  	wunderlist.menu.initialize();
+    wunderlist.menu.initialize();
 
     // Init share
     wunderlist.frontend.share.init();
 
     // Init Filters
-  	wunderlist.frontend.filters.init();
+    wunderlist.frontend.filters.init();
   
     // Check for a new version
-    wunderlist.updater.checkVersion();  
+    if(Titanium.Network.online) {
+      wunderlist.updater.checkVersion();
+    }
   
     // Add the wunderlist object to the current window
     Titanium.UI.getCurrentWindow().wunderlist = wunderlist;
