@@ -7,12 +7,13 @@
    + pass jshint in es5 strict mode
 3. implement indexedDB & AJAX backend in database.js
 4. write properties helper that works over Titanium & localStorage(for web)
-4. cache long object lookups like wunderlist.helpers.utils. in local variables like UTILS (at the end)
-5. backend should be completely independent of DOM & modules should go in W.backend
+4. cache long object lookups like wunderlist.helpers.utils. in local variables like UTILS (to be done after all the refactoring)
+5. backend should be completely independent of DOM & modules should go in W.backend so that it can be pushed to a web-worker if needed
 6. CSS lint all stylesheet & convert them to LESS/Stylus eventually
-7. write unit tests 
+7. Write Unit Tests 
 8. Move to something like JavascriptMVC or Backbone or knockoutjs or angularjs
 9. Reduce memory leaks (crosses 150MB on chrome after a while).. Reuse DOM 
+10. Use documentfragments instead of directly attaching to DOM for better performace
 
 <br/>
 ***
