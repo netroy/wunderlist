@@ -12,7 +12,6 @@
   var Platform = Titanium.Platform = {};
   var UI = Titanium.UI = {};
   var API = Titanium.API = {};
-  var Filesystem = Titanium.Filesystem = {};
   var JSON = Titanium.JSON = {};
   var Codec = Titanium.Codec = {};
   var Network = Titanium.Network = {};
@@ -53,38 +52,6 @@
    */
   Platform.name = navigator.platform;
   App.version = "0.0.1";
-
-
-
-
-  /**
-   * FileSystem APIs (should mock via browser DBs or XHR)
-   */
-
-  Filesystem.getResourcesDirectory = function(){
-    // over HTTP there is no base resource directory
-    return "";
-  };
-  Filesystem.getApplicationDataDirectory = Filesystem.getApplicationDirectory = Filesystem.getResourcesDirectory;
-
-  Filesystem.getFile = function(dir, filename){
-    var data;
-    var file = {
-      read: function(){
-        return data;
-      }
-    };
-    $.ajax({
-      url: dir + "/" + filename,
-      success: function(response){
-        data = response;
-      },
-      dataType: 'text',
-      async:   false
-    });
-    return file;
-  };
-
 
 
 
