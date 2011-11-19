@@ -155,6 +155,13 @@ wunderlist.account.loadInterface = function() {
 	if (taskInput !== '') {
 		$("input.input-add").val(taskInput);
 	}
+
+  var email = Titanium.App.Properties.getString('email', '');
+  if($("#email").length) {
+    $("#email").find("span").html(email);
+  } else {
+    $("#sync").after('<a id="email" class="filter loggedinas roundedboth"><span>'+email+'</span></a>');
+  }
 };
 
 /**
