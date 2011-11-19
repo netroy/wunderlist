@@ -174,7 +174,7 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
 
         // Load template
         var template = Titanium.Filesystem.getApplicationDirectory() + '/Resources/print.html';
-        template     = Titanium.Filesystem.getFile(template).read().toString();
+        template     = Titanium.Filesystem.getFile(template).read();
 
         file.write(renderPrintTemplate(template, list_name, html_tasks));
 

@@ -60,8 +60,8 @@ wunderlist.account.init = function() {
  */
 function createUser(email, password) {
 	wunderlist.settings.setString('logged_in', 'true');
-	wunderlist.settings.setString('email', email.toString());
-	wunderlist.settings.setString('password', password.toString());
+	wunderlist.settings.setString('email', email);
+	wunderlist.settings.setString('password', password);
 	
 	wunderlist.account.email = email;
 							

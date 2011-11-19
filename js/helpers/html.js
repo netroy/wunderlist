@@ -620,28 +620,22 @@ html.createDatepicker = function() {
 		} else {
 			var firstDay = 0;
 		}
-
-		wunderlist.settings.setString('weekstartday', firstDay.toString());
+		wunderlist.settings.setString('weekstartday', firstDay);
 	}
 
-	if (wunderlist.language.code == 'de')
-	{
+	if (wunderlist.language.code === 'de') {
   		var dayNamesLang        = dayNamesDE;
   		var dayNamesMinLang     = dayNamesMinDE;
   		var dayNamesShortLang   = dayNamesShortDE;
   		var monthNamesLang      = monthNamesDE;
   		var monthNamesShortLang = monthNamesShortDE;
-	}
-	else if (wunderlist.language.code == 'fr')
-	{
+	} else if (wunderlist.language.code === 'fr') {
   		var dayNamesLang        = dayNamesFR;
   		var dayNamesMinLang     = dayNamesMinFR;
   		var dayNamesShortLang   = dayNamesShortFR;
   		var monthNamesLang      = monthNamesFR;
   		var monthNamesShortLang = monthNamesShortFR;
-	}
-	else
-	{
+	} else {
   		var dayNamesLang        = dayNamesEN;
   		var dayNamesMinLang     = dayNamesMinEN;
   		var dayNamesShortLang   = dayNamesShortEN;

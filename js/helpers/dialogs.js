@@ -577,7 +577,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
     
       $('input#confirm-settings').live('click', function() {
         var new_add_item_method = $('div.radios#add-item-method-radios input:checked').val();
-        wunderlist.settings.setString('add_item_method', new_add_item_method.toString());    
+        wunderlist.settings.setString('add_item_method', new_add_item_method);    
         closeDialog(addItemMethodDialog);
       });  
     }
