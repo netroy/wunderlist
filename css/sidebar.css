@@ -264,6 +264,10 @@ opacity:0.5;
   left: 260px;
 }
 
+.sidebarleft #listfunctions {
+  right: 20px;
+}
+
 .sidebarleft #sidebar {
   background:url(/images/sidebar_left.png);
   left: 0;
@@ -279,7 +283,7 @@ opacity:0.5;
   margin-right: 10px;
 }
 
-.sidebarleft .searchside {
+.sidebarleft #sidebar .searchside {
   left: -10px;
 }
 
