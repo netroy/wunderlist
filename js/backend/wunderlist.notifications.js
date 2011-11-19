@@ -4,13 +4,13 @@
  * @author Dennis Schneider
  */
 
-wunderlist.notifications = (function(window, wunderlist, Titanium, undefined){
+wunderlist.notifications = (function(window, $, wunderlist, Titanium, undefined){
   "use strict";
 
   var notification,
       icon = "/images/wunderlist.png",
       allowed, popup, 
-      delay = 5000,
+      delay = 4000,
       self;
 
   /**
@@ -89,9 +89,16 @@ wunderlist.notifications = (function(window, wunderlist, Titanium, undefined){
       }
       self.createNotification = createNotificationWebkit;
     }
+
     if (!notification) {
       self.createNotification = createNotification;
     }
+
+    $(window).unload(function(){
+      if(typeof popup.cancel === 'function'){
+        popup.cancel();
+      }
+    });
   }
 
 
@@ -101,7 +108,7 @@ wunderlist.notifications = (function(window, wunderlist, Titanium, undefined){
   
   return self;
 
-})(window, wunderlist, Titanium);
+})(window, jQuery, wunderlist, Titanium);
 
 
 
