@@ -1,8 +1,7 @@
 /* global wunderlist */
-wunderlist.helpers.background = (function($, Titanium, undefined){
+wunderlist.helpers.background = (function($, wunderlist, undefined){
   "use strict";
 
-  var Properties = Titanium.App.Properties;
   var body, backgroundList, activeBackground, switcher;
 
   /**
@@ -59,7 +58,7 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
     $("a.active", backgroundList).removeClass("active");
     $("a."+name,  backgroundList).addClass("active");
 
-    Properties.setString('active_theme', name);
+    wunderlist.settings.setString('active_theme', name);
   }
 
   /**
@@ -82,7 +81,7 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
     });
     backgroundList.delegate('a', 'click', switchBg);
 
-    var theme = Properties.getString("active_theme");
+    var theme = wunderlist.settings.getString("active_theme");
     switchBg(null, theme);
 
   /*
@@ -138,4 +137,4 @@ wunderlist.helpers.background = (function($, Titanium, undefined){
   return {
     "init": init
   };
-})(jQuery, Titanium);
+})(jQuery, wunderlist);

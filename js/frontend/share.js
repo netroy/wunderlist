@@ -241,8 +241,8 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
       var today = new Date();
 
       var dateformat;
-      if (Titanium.App.Properties.hasProperty('dateformat') === true) {
-        dateformat = Titanium.App.Properties.getString('dateformat');
+      if (wunderlist.settings.hasProperty('dateformat') === true) {
+        dateformat = wunderlist.settings.getString('dateformat');
       } else {
         dateformat = wunderlist.language.code;
       }

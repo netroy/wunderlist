@@ -81,7 +81,7 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
     // Load the language code
     code = window.navigator.language.toLowerCase();
     code = code[0] + code[1]; // e.g. de or en
-    code = Titanium.App.Properties.getString('language', code);
+    code = wunderlist.settings.getString('language', code);
 
     // Check if the saved language exists
     languageFound = false;
@@ -95,7 +95,7 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
   
     // If saved lanuguage not exists, load english as default
     if (languageFound === false) {
-      Titanium.App.Properties.setString('language', 'en');
+      wunderlist.settings.setString('language', 'en');
     }
 
     // Load the language file(s)

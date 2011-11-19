@@ -1,9 +1,7 @@
 /* global wunderlist */
-wunderlist.helpers.sidebar = (function($, Titanium, undefined){
+wunderlist.helpers.sidebar = (function($, wunderlist, undefined){
   "use strict";
 
-
-  var Properties = Titanium.App.Properties;
   var isPositionRight, openStatus;
   var body, toggleButton;
 
@@ -13,8 +11,8 @@ wunderlist.helpers.sidebar = (function($, Titanium, undefined){
    * @author Dennis Schneider, Marvin Labod
    */
   function initPosition() {
-    isPositionRight = (Properties.getString('sidebar_position', 'right') !== "right");
-    openStatus = (Properties.getString('sidebar_opened_status', 'true') === "true");
+    isPositionRight = (wunderlist.settings.getString('sidebar_position', 'right') !== "right");
+    openStatus = (wunderlist.settings.getString('sidebar_opened_status', 'true') === "true");
 
     toggleButton.toggleClass("hidden", !openStatus);
     body.toggleClass("sidebarleft", isPositionRight);
@@ -32,7 +30,7 @@ wunderlist.helpers.sidebar = (function($, Titanium, undefined){
     body.toggleClass("sidebarClosed", openStatus);
 
     openStatus = !openStatus;
-    Properties.setString('sidebar_opened_status', openStatus);
+    wunderlist.settings.setString('sidebar_opened_status', openStatus);
   }
 
   /**
@@ -61,4 +59,4 @@ wunderlist.helpers.sidebar = (function($, Titanium, undefined){
     "initPosition": initPosition,
     "toggleSidebar": toggleSidebar
   };
-})(jQuery, Titanium);
+})(jQuery, wunderlist);

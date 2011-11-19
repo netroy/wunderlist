@@ -343,27 +343,21 @@ html.generateEditProfileDialogHTML = function() {
  * @author Christian Reber
  */
 html.showDateByLanguage = function(object, day, month, year) {
-	if(Titanium.App.Properties.hasProperty('dateformat') == true)
-		var dateformat = Titanium.App.Properties.getString('dateformat');
-	else
-		var dateformat = wunderlist.language.code;
+  var dateformat;
+	if(wunderlist.settings.hasProperty('dateformat') === true){
+	  dateformat = wunderlist.settings.getString('dateformat')
+	} else {
+	  dateformat = wunderlist.language.code;
+	}
 
 	// Format date by system language - germany
-	if(dateformat == 'de')
-	{
+	if(dateformat === 'de') {
 		$(object).html(day + '.' + month + '.' + year);
-	}
-	else if(dateformat == 'en')
-	{
+	} else if(dateformat === 'en') {
   		$(object).html(day + '/' + month + '/' + year);
-	}
-	// Format date by system language - english countries
-	else if(dateformat == 'us')
-	{
+	} else if(dateformat == 'us') { // Format date by system language - english countries
 		$(object).html(month + '/' + day + '/' + year);
-	}
-	else
-	{
+	} else {
 		$(object).html(year + '/' + month + '/' + day);
 	}
 };
@@ -618,22 +612,16 @@ html.createDatepicker = function() {
 	var monthNamesShortDE = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 
 	// Check for starting day of the week
-	if (Titanium.App.Properties.hasProperty('weekstartday') == true)
-	{
-		var firstDay = Titanium.App.Properties.getString('weekstartday', '1');
-	}
-	else
-	{
-		if (wunderlist.language.code == 'de' || wunderlist.language.code == 'en')
-		{
+	if (wunderlist.settings.hasProperty('weekstartday') === true) {
+		var firstDay = wunderlist.settings.getString('weekstartday', '1');
+	} else {
+		if (wunderlist.language.code === 'de' || wunderlist.language.code === 'en') {
 			var firstDay = 1;
-		}
-		else
-		{
+		} else {
 			var firstDay = 0;
 		}
 
-		Titanium.App.Properties.setString('weekstartday', firstDay.toString());
+		wunderlist.settings.setString('weekstartday', firstDay.toString());
 	}
 
 	if (wunderlist.language.code == 'de')

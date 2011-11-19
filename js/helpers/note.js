@@ -100,7 +100,7 @@ wunderlist.helpers.note = (function(window, $, wunderlist, Titanium, Encoder, sh
       wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
 
     $('input#delete').live('click', function() {
-      if (Titanium.App.Properties.getString('delete_prompt', '1') === 1) {
+      if (wunderlist.settings.getString('delete_prompt', '1') === 1) {
         wunderlist.helpers.dialogs.openNoteDeleteDialog();
       } else {
         $('input#save').trigger('deleteNote');

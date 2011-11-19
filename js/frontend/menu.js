@@ -76,18 +76,18 @@ menu.initialize = function() {
     menu.refocus();
   });
 
-  var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition', 0);
+  var isNaturalDateRecognitionEnabled = wunderlist.settings.getInt('enable_natural_date_recognition', 0);
   var enableNaturalDateRecognitionMenuString = wunderlist.language.data.enable_natural_date_recognition;
   if (isNaturalDateRecognitionEnabled === 1) {
     enableNaturalDateRecognitionMenuString = wunderlist.language.data.disable_natural_date_recognition;
   }
   extraMenuItem.addItem(enableNaturalDateRecognitionMenuString, function () {
-    var isNaturalDateRecognitionEnabled = Titanium.App.Properties.getInt('enable_natural_date_recognition', 0);
+    var isNaturalDateRecognitionEnabled = wunderlist.settings.getInt('enable_natural_date_recognition', 0);
     if (isNaturalDateRecognitionEnabled === 1) {
-      Titanium.App.Properties.setInt('enable_natural_date_recognition', 0);
+      wunderlist.settings.setInt('enable_natural_date_recognition', 0);
       this.getSubmenu().getItemAt(5).setLabel(wunderlist.language.data.enable_natural_date_recognition);
     } else {
-      Titanium.App.Properties.setInt('enable_natural_date_recognition', 1);
+      wunderlist.settings.setInt('enable_natural_date_recognition', 1);
       this.getSubmenu().getItemAt(5).setLabel(wunderlist.language.data.disable_natural_date_recognition);
     }
   });
@@ -251,7 +251,7 @@ menu.showWindow = function(wunderlistWindow) {
  */
 menu.switch_language = function(code) {
   wunderlist.settings.saveWindowPosition();
-  Titanium.App.Properties.setString('language', code);
+  wunderlist.settings.setString('language', code);
   Titanium.App.restart();
 }
 

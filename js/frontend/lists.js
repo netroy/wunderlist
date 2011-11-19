@@ -493,10 +493,9 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
 
   // Save the list on "keyup" (ENTER)
   function listInputKeyUp(event) {
-    wunderlist.timer.pause();
-    var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'), 10);
-
+    var aimSetting = wunderlist.settings.getInt('add_item_method', 0);
     if (event.keyCode === 13 && aimSetting === 0) {
+      wunderlist.timer.pause();
       listEventListener = true;
       var listElement = $(this).parent('a');
       var list_id     = listElement.attr('id').replace('list', '');  

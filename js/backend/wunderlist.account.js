@@ -1,5 +1,5 @@
 wunderlist.account       = wunderlist.account || {};
-wunderlist.account.email = Titanium.App.Properties.getString('email', '');
+wunderlist.account.email = wunderlist.settings.getString('email', '');
 
 var register_dialog;
 var invite_dialog;
@@ -59,9 +59,9 @@ wunderlist.account.init = function() {
  * @author Dennis Schneider
  */
 function createUser(email, password) {
-	Titanium.App.Properties.setString('logged_in', 'true');
-	Titanium.App.Properties.setString('email', email.toString());
-	Titanium.App.Properties.setString('password', password.toString());
+	wunderlist.settings.setString('logged_in', 'true');
+	wunderlist.settings.setString('email', email.toString());
+	wunderlist.settings.setString('password', password.toString());
 	
 	wunderlist.account.email = email;
 							
@@ -74,7 +74,7 @@ function createUser(email, password) {
  * @author Dennis Schneider
  */
 function logUserOut() {
-	Titanium.App.Properties.setString('logged_in', 'false');
+	wunderlist.settings.setString('logged_in', 'false');
 	deleteUserCredentials();
 }
 
@@ -84,7 +84,7 @@ function logUserOut() {
  * @author Dennis Schneider
  */
 wunderlist.account.isLoggedIn = function() {
-	logged_in = Titanium.App.Properties.getString('logged_in', 'false');
+	logged_in = wunderlist.settings.getString('logged_in', 'false');
 	if (logged_in == 'true')
 		return true;
 	else
@@ -98,8 +98,8 @@ wunderlist.account.isLoggedIn = function() {
  */
 wunderlist.account.getUserCredentials = function() {
 	return {
-		'email': Titanium.App.Properties.getString('email', ''),
-		'password': Titanium.App.Properties.getString('password', '') // encrypted !
+		'email': wunderlist.settings.getString('email', ''),
+		'password': wunderlist.settings.getString('password', '') // encrypted !
 	};
 };
 
@@ -109,8 +109,8 @@ wunderlist.account.getUserCredentials = function() {
  * @author Dennis Schneider
  */
 function deleteUserCredentials() {
-	Titanium.App.Properties.setString('email', '');
-	Titanium.App.Properties.setString('password', '');
+	wunderlist.settings.setString('email', '');
+	wunderlist.settings.setString('password', '');
 };
 
 /**
@@ -156,7 +156,7 @@ wunderlist.account.loadInterface = function() {
 		$("input.input-add").val(taskInput);
 	}
 
-  var email = Titanium.App.Properties.getString('email', '');
+  var email = wunderlist.settings.getString('email', '');
   if($("#email").length) {
     $("#email").find("span").html(email);
   } else {

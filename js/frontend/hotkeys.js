@@ -287,16 +287,14 @@ $(function() {
 	
 	// Save note and close the dialog
 	shortcut.add(wunderlist.settings.shortcutkey + '+Enter', function (event) {
+		var aimSetting = wunderlist.settings.getInt('add_item_method', 0);
 		if ($('input.input-add:focus').length == 1) {
-			var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
 			if (aimSetting == 1) {		
 				wunderlist.timer.pause();
 				tasks.add();
 				wunderlist.timer.resume();
 			}
 		} else if ($('a.list input:focus').length == 1) {
-			var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
-			
 			if (aimSetting === 1) {
 				wunderlist.timer.pause();
 				

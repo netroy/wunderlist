@@ -13,7 +13,7 @@ tasks.addNewTaskToTop = false;
  * @author Adam Renklint
  */
 function smartScanForDate(string, doNaturalRecognition) {
-  if (Titanium.App.Properties.getInt('enable_natural_date_recognition', 0) === 1) {
+  if (wunderlist.settings.getInt('enable_natural_date_recognition', 0) === 1) {
     doNaturalRecognition = true;
   }
 
@@ -397,7 +397,7 @@ $(function() {
   $("div.add input").live('keyup', function(e) {
     var elementId, taskName, element;
     wunderlist.timer.pause();
-    var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'), 10);
+    var aimSetting = wunderlist.settings.getInt('add_item_method', 0);
     
     // If not empty and Return gets pressed, new task will be added
     if(e.keyCode === 13 && aimSetting === 0) {
@@ -463,9 +463,9 @@ $(function() {
   });
   
   // For testing purposes, to null the count, just uncomment this
-  //Titanium.App.Properties.setInt('number_of_shown_add_task_hints', 0);
+  //wunderlist.settings.setInt('number_of_shown_add_task_hints', 0);
   
-  var numberOfShownHints = Titanium.App.Properties.getInt('number_of_shown_add_task_hints', 0) + 1;
+  var numberOfShownHints = wunderlist.settings.getInt('number_of_shown_add_task_hints', 0) + 1;
   var isShowingAgain = false;
   if (numberOfShownHints < 5) {
     $('.add_task_hint:hidden').live('click', function () { alert(); });
@@ -495,7 +495,7 @@ $(function() {
         }
       }, 200);    
     });
-    Titanium.App.Properties.setInt('number_of_shown_add_task_hints', numberOfShownHints);
+    wunderlist.settings.setInt('number_of_shown_add_task_hints', numberOfShownHints);
   }
   
   $('.addwrapper input').live('focus', function () {

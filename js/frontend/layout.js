@@ -227,7 +227,7 @@ wunderlist.layout = (function(undefined) {
     };
 
     // If program has been opened 5 times, open the invite dialog
-    runtime = Titanium.App.Properties.getString('runtime');
+    runtime = wunderlist.settings.getString('runtime');
     if(runtime % 10 === 0 && wunderlist.settings.getString('invited', 'false') === 'false') {
       // DEBUG: disable invite popup, gets really annoying
       // wunderlist.account.showInviteDialog();
