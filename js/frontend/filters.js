@@ -77,7 +77,6 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
 
   // Fetch info from DB & then call updateBadgesInfo method with badge counts 
   function updateBadges() {
-    
     wunderlist.database.updateBadgeCount('today', function(err, todaycount){
       wunderlist.database.updateBadgeCount('overdue', function(err, overduecount) {
         updateBadgesInfo(todaycount, overduecount);
@@ -183,11 +182,27 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
   }
 
 
+  function createFilterElements(){
+    var markup = '<a id="all" class="roundedleft more">&#xa74f;</a>';
+    markup += '<a id="starred" class="more">&#x2605;</a>';
+    markup += '<a id="done" class="roundedright more">&#x2714;</a>';
+    markup += '<a id="today" class="roundedleft"></a>';
+    markup += '<a id="tomorrow"></a>';
+    markup += '<a id="thisweek"></a>';
+    markup += '<a id="someday"></a>';
+    markup += '<a id="withoutdate" class="roundedright"></a>';
+
+    $("#filters").html(markup).find("a").addClass("filter");
+    wunderlist.language.replaceFilters();
+  }
+
   /**
    * Initiates all filter functions on the bottom (buttons on the bottom)
    * @author Christian Reber
    */
   function init() {
+    // Create the filter elements
+    createFilterElements();
 
     // Pre-cache the common queried results from jquery
     bottomBarLeft = $("#left");
