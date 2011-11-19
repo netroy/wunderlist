@@ -11,16 +11,38 @@ wunderlist.settings = (function(window, wunderlist, Titanium, undefined){
       REQUEST_TIMEOUT = 100 * 1000,
       position_saved;
 
-  function hasProperty(property) {
-    return Titanium.App.Properties.hasProperty(property);
-  }
+  var isLocalStorageAvailable = 'localStorage' in window;    
+  var hasProperty, getString, setString, propertyMap;
 
-  function getString(property, defaultValue){
-    return Titanium.App.Properties.getString(property, defaultValue);
-  }
+  if(isLocalStorageAvailable){
+    propertyMap = window.localStorage || {};
 
-  function setString(property, value) {
-    Titanium.App.Properties.setString(property, value.toString());
+    hasProperty = function(property){
+      return propertyMap.hasOwnProperty(property);
+    };
+
+    getString = function(property, defaultValue){
+      return propertyMap[property] || defaultValue;
+    };
+
+    setString = function(property, value){
+      propertyMap[property] = value.toString();
+    };
+
+  } else {
+    var Properties = Titanium.App.Properties;
+
+    hasProperty = function(property) {
+      return Properties.hasProperty(property);
+    };
+
+    getString = function(property, defaultValue){
+      return Properties.getString(property, defaultValue);
+    };
+
+    setString = function(property, value) {
+      Properties.setString(property, value.toString());
+    };
   }
 
   function getInt(property, defaultValue){

@@ -8,41 +8,12 @@
 
   var Titanium = {};
   var App = Titanium.App = {};
-  var Properties = App.Properties = {};
   var UI = Titanium.UI = {};
   var API = Titanium.API = {};
   var JSON = Titanium.JSON = {};
   var Codec = Titanium.Codec = {};
   var Network = Titanium.Network = {};
   var Desktop = Titanium.Desktop = {};
-  
-
-
-
-  /**
-   * Localization stuff
-   */
-  var propertyMap = window.localStorage || {};//
-  Properties.getInt= function(property, defaultValue){
-    return parseInt(propertyMap[property], 10) || defaultValue;
-  };
-
-  Properties.setInt= function(property, value){
-    propertyMap[property] = value;
-  };
-
-  Properties.getString = function(property, defaultValue){
-    return propertyMap[property] || defaultValue;
-  };
-
-  Properties.setString = function(property, value){
-    propertyMap[property] = value.toString();
-  };
-
-  Properties.hasProperty = function(property){
-    return propertyMap.hasOwnProperty(property);
-  };
-
 
 
 
