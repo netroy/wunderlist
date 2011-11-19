@@ -1,123 +1,141 @@
 /**
  * wunderlist.wunderlist.timer.js
- *
  * Class for handling date and time functionality
- * 
  * @author Christian Reber, Dennis Schneider, Daniel Marschner, Sebastian Kreutzberger
  */
 
-wunderlist.timer = wunderlist.timer || {};
+wunderlist.timer = (function(window, $, wunderlist, Titanium, undefined){
 
-/**
- * Starts the auto update
- *
- * @author Dennis Schneider
- */
-wunderlist.timer.init = function() {
-	this.isPaused = false;
-	this.auto_update_seconds = 60 * 15;
-	this.auto_update_interval = setInterval(function() {
-		if(wunderlist.timer.isPaused == false) {
-			wunderlist.timer.auto_update_seconds--;
-			if(wunderlist.timer.auto_update_seconds === 0) {
-				if(wunderlist.account.isLoggedIn() && Titanium.Network.online == true)
-					$('#sync').click();
-				clearInterval(wunderlist.timer.auto_update_interval);
-				wunderlist.timer.init();
-			}
-		}
-	}, 1000);
-	
-	// check every 10 seconds if day changed (overnight)
-	this.former_date = 0; //init
-	this.daychange_interval = setInterval(function() {
-		var current_date = wunderlist.timer.current_date();
-		if(this.former_date != current_date && this.former_date != 0 && typeof(this.former_date) != "undefined") {
-			wunderlist.account.loadInterface();
-		}
-		this.former_date = current_date;
-		
-	}, 10000);
-	
-	
-	return this;
-};
+  "use strict";
 
-/**
- * Returns the current date in the format YYYYMMDD
- * @author Sebastian Kreutzberger
- */
-wunderlist.timer.current_date = function() {
-	var now = new Date();
-	var ymd = now.getFullYear()+""+now.getMonth()+""+now.getDay();
-	return ymd;
-};
+  var isPaused, auto_update_seconds, auto_update_interval, self, 
+      interval, former_date, daychange_interval, total_seconds;
 
-/**
- * Sets the timer with given seconds
- *
- * @author Dennis Schneider
- */
-wunderlist.timer.set = function(seconds) {
-	if(seconds === undefined) {
-	  this.total_seconds = 15;
-	}
 
-	this.total_seconds = parseInt(seconds);
-	return this;
-};
+  /**
+   * Returns the current date in the format YYYYMMDD
+   * @author Sebastian Kreutzberger
+   */
+  function getCurrentDate() {
+    var now = new Date();
+    var ymd = now.getFullYear()+""+now.getMonth()+""+now.getDay();
+    return ymd;
+  }
 
-/**
- * Starts the timer countdown
- * @author Dennis Schneider
- */
-wunderlist.timer.start = function() {
-	this.interval = setInterval(function() {
-		if(wunderlist.timer.isPaused === false) {
-			wunderlist.timer.total_seconds--;
-			if(wunderlist.timer.total_seconds === 0) {
-				if(wunderlist.account.isLoggedIn() && Titanium.Network.online === true) {
-				  $('#sync').click();
-				}
-				clearInterval(wunderlist.timer.interval);
-			}
-		}
-	}, 1000);
-	return this;
-};
 
-/**
- * Stops the timer
- * @author Dennis Schneider
- */
-wunderlist.timer.stop = function() {
-	clearInterval(this.interval);
-	return this;
-};
+  /**
+   * Sets the timer with given seconds
+   * @author Dennis Schneider
+   */
+  function set(seconds) {
+    if(typeof seconds === 'undefined') {
+      total_seconds = 15;
+    }
+    total_seconds = parseInt(seconds, 10);
+    return self;
+  }
 
-/**
- * Pauses both timers
- * @author Dennis Schneider
- */
-wunderlist.timer.pause = function() {
-	this.isPaused = true;
-	return this;
-};
 
-/**
- * Resumes both timers
- * @author Dennis Schneider
- */
-wunderlist.timer.resume = function() {
-	this.isPaused = false;
-	return this;
-};
+  /**
+   * Starts the timer countdown
+   * @author Dennis Schneider
+   */
+  function start() {
+    interval = window.setInterval(function() {
+      if(isPaused === false) {
+        total_seconds--;
+        if(total_seconds === 0) {
+          if(wunderlist.account.isLoggedIn() && Titanium.Network.online === true) {
+            $('#sync').click();
+          }
+          window.clearInterval(wunderlist.timer.interval);
+        }
+      }
+    }, 1000);
+    return self;
+  }
 
-/**
- * Return the timezone offset of the current user; is needed for login and register (Stats)
- * @author Daniel Marschner
- */
-wunderlist.timer.getTimezoneOffset = function() {
-	var date = new Date();  
-	return (date.getTimezoneOffset() / 60) * (-1);
-};
+
+  /**
+   * Stops the timer
+   * @author Dennis Schneider
+   */
+  function stop() {
+    window.clearInterval(interval);
+    return self;
+  }
+
+
+  /**
+   * Pauses both timers
+   * @author Dennis Schneider
+   */
+  function pause() {
+    isPaused = true;
+    return self;
+  }
+
+
+  /**
+   * Resumes both timers
+   * @author Dennis Schneider
+   */
+  function resume() {
+    isPaused = false;
+    return self;
+  }
+
+
+  /**
+   * Return the timezone offset of the current user; is needed for login and register (Stats)
+   * @author Daniel Marschner
+   */
+  function getTimezoneOffset() {
+    return (new Date().getTimezoneOffset() / 60) * (-1);
+  }
+
+
+  /**
+   * Starts the auto update
+   * @author Dennis Schneider
+   */
+  function init() {
+    isPaused = false;
+    auto_update_seconds = 60 * 15;
+    auto_update_interval = window.setInterval(function() {
+      if(isPaused === false) {
+        auto_update_seconds--;
+        if(auto_update_seconds === 0) {
+          if(wunderlist.account.isLoggedIn() && Titanium.Network.online === true){
+            $('#sync').click();
+          }
+          window.clearInterval(auto_update_interval);
+          init();
+        }
+      }
+    }, 1000);
+
+    // check every 10 seconds if day changed (overnight)
+    former_date = 0; //init
+    daychange_interval = window.setInterval(function() {
+      var current_date = getCurrentDate();
+      if(former_date !== current_date && former_date !== 0 && typeof former_date !== 'undefined') {
+        wunderlist.account.loadInterface();
+      }
+      former_date = current_date;
+    }, 10000);
+  }
+
+  self = {
+    "init": init,
+    "set": set,
+    "start": start,
+    "stop": stop,
+    "pause": pause,
+    "resume": resume,
+    "getTimezoneOffset": getTimezoneOffset
+  };
+  
+  return self;
+
+})(window, jQuery, wunderlist, Titanium);
