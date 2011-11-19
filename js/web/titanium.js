@@ -14,7 +14,6 @@
   var API = Titanium.API = {};
   var Filesystem = Titanium.Filesystem = {};
   var JSON = Titanium.JSON = {};
-  var Notification = Titanium.Notification = {};
   var Codec = Titanium.Codec = {};
   var Network = Titanium.Network = {};
   var Desktop = Titanium.Desktop = {};
@@ -128,31 +127,6 @@
 
   UI.setBadge = function() {
     wunderlist.menu.setBadge();
-  };
-
-
-
-
-
-  /**
-   * Notifications
-   */
-  function NotificationWindow(){
-    
-  }
-  NotificationWindow.prototype = {
-    setTitle: function(title){
-      this.title = title;
-    },
-    setMessage: function(message){
-      this.message = message;
-    },
-    show: function(){
-      
-    }
-  };
-  Notification.createNotification = function(){
-    return new NotificationWindow();
   };
 
 
