@@ -137,37 +137,28 @@ wunderlist.sharing.init = function() {
 	wunderlist.sharing.sendInvitation = false;
 
 	// Send the invitation
-	$('#send_share_invitation').live('click', function()
-	{
+	$('#send_share_invitation').live('click', function() {
 		// Check if the email is empty
-		if ($('#share-list-email').val() == '')
-		{
+		if ($('#share-list-email').val() == '') {
 			wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.invalid_email);
 			return false;
 		}	
 	
-		if (wunderlist.sharing.sendInvitation == false)
-		{
+		if (wunderlist.sharing.sendInvitation == false) {
 			wunderlist.sharing.sendInvitation = true;
 
 			var list_id = $('input#share-list-id').attr('rel');							
 							
 			// If sync is active at the moment, wait until it is finished and then
 			// execute the sharing method
-			if (wunderlist.sync.isSyncing == true)
-			{
+			if (wunderlist.sync.isSyncing()) {
 				wunderlist.sharing.syncShareInterval = setInterval(function() {
-
-					if (wunderlist.sync.isSyncing == false)
-					{
+					if (wunderlist.sync.isSyncing() === false) {
 						wunderlist.sharing.shareLists(list_id);
 						clearInterval(wunderlist.sharing.syncShareInterval);
 					}
-
-				}, 100);
-			}
-			else
-			{
+				}, 200);
+			} else {
 				wunderlist.sharing.shareLists(list_id);
 			}
 

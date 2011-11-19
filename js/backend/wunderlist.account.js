@@ -924,7 +924,7 @@ wunderlist.account.delete_account_data = function() {
  * @author Dennis Schneider
  */
 wunderlist.account.logout = function() {
-	if (wunderlist.sync.isSyncing == false) {
+	if (wunderlist.sync.isSyncing() === false) {
 		wunderlist.helpers.utils.setTitle('Wunderlist');
 		
 		// Remove all user data
