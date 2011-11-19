@@ -26,7 +26,7 @@ wunderlist.notifications = (function(wunderlist, Titanium, undefined){
    * @author Dennis Schneider
    */
   function init() {
-    wunderlist.notification = Titanium.Notification.createNotification(Titanium.UI.createWindow());
+    notification = Titanium.Notification.createNotification(Titanium.UI.createWindow());
   }
 
 
