@@ -2,18 +2,17 @@
 wunderlist.frontend.search = (function($, wunderlist, html, undefined){
   "use strict";
 
-  var cancelEditTask = false;
-  var focusSearch    = 0;
-
+  var focusSearch = 0;
+  var searchBox;
 
   function clear() {
-    $('#search').val('');
+    searchBox.val('');
   }
 
 
   function search(e) {
     var value = $(e.target).val();
-    if(e.keyCode == 13) {
+    if(e.keyCode === 13) {
       if(value !== '') {
         wunderlist.database.search(value);
         html.make_timestamp_to_string();
@@ -34,14 +33,15 @@ wunderlist.frontend.search = (function($, wunderlist, html, undefined){
   }
 
   function init() {
+    searchBox = $("#search");
     // Empty Input Field
     $(".searchside .clearsearch").click(function() {
       wunderlist.frontend.lists.openList(1);
-      $("input#search").val('').blur();
+      searchBox.val('').blur();
     });
 
     // Bind search
-    $("input#search").keyup(search);
+    searchBox.keyup(search);
   }
 
 
