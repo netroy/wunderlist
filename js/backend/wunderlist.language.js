@@ -55,13 +55,28 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
     { code : 'is',    file : 'icelandic',      translation : 'Íslenska' },
     { code : 'fi',    file : 'finnish',        translation : 'Suomi' }
   ];
+  
+  // replace translations
+  function replaceTranslatedStrings(translation){
+    var langstring;
+    for (langstring in translation) {
+      data[langstring] = translation[langstring] || data[langstring];
+    }
+  }
+
+  // expose translations publicly
+  function makeDataPublic(){
+    self.code = code;
+    self.data = data;
+    self.english = english;
+  }
 
   /**
    * Load language
    * @author Dennis Schneider
    */
   function load() {
-    var path, file, langstring, languageFound, translation;
+    var path, file, languageFound, translation;
 
     // Load the language code
     code = window.navigator.language.toLowerCase();
@@ -80,30 +95,48 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
   
     // If saved lanuguage not exists, load english as default
     if (languageFound === false) {
-      code = 'en';
       Titanium.App.Properties.setString('language', 'en');
     }
 
-    // Load the language file
-    path = Titanium.Filesystem.getResourcesDirectory() + "/language";
-    file = Titanium.Filesystem.getFile(path, 'english.json');
-    data = Titanium.JSON.parse(file.read());
-    english = $.extend({}, data);
-  
-    if (code !== 'en') {
+    // Load the language file(s)
+    if(Titanium && Titanium.Filesystem) {
       path = Titanium.Filesystem.getResourcesDirectory() + "/language";
-      file = Titanium.Filesystem.getFile(path, loaded.file + '.json');
-      translation = Titanium.JSON.parse(file.read());
+      file = Titanium.Filesystem.getFile(path, 'english.json');
+      data = Titanium.JSON.parse(file.read());
+      english = $.extend({}, data);
+  
+      if (code !== 'en') {
+        path = Titanium.Filesystem.getResourcesDirectory() + "/language";
+        file = Titanium.Filesystem.getFile(path, loaded.file + '.json');
+        translation = Titanium.JSON.parse(file.read());
+      }
 
-      // replace translations
-      for (langstring in translation) {
-        data[langstring] = translation[langstring] || data[langstring];
+    } else {
+      // No Titanium here, use Ajax instead
+      $.ajax({
+        url: "/language/english.json",
+        success: function(response){
+          data = response;
+          english = $.extend({}, data);
+        },
+        dataType: 'json',
+        async:   false
+      });
+
+      if (code !== 'en') {
+        $.ajax({
+          url: "/language/" + loaded.file + ".json",
+          success: function(response){
+            translation = response;
+          },
+          dataType: 'json',
+          async:   false
+        });
       }
     }
 
-    self.code = code;
-    self.data = data;
-    self.english = english;
+    replaceTranslatedStrings(translation);
+    makeDataPublic();
   }
 
   function replaceFilters(){
