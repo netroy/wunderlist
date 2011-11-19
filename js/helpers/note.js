@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.helpers.note = (function(window, $, wunderlist, settings, Titanium, Encoder, shortcut, undefined){
+wunderlist.helpers.note = (function(window, $, wunderlist, Titanium, Encoder, shortcut, undefined){
   "use strict";
 
   /*
@@ -96,7 +96,7 @@ wunderlist.helpers.note = (function(window, $, wunderlist, settings, Titanium, E
     $('#save-and-close').val(wunderlist.language.data.save_generic);
     $('#delete').val(wunderlist.language.data.delete_generic);
 
-    $('span.hint').text(wunderlist.helpers.utils.ucfirst(settings.shortcutkey) +' + '+ 
+    $('span.hint').text(wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ 
       wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
 
     $('input#delete').live('click', function() {
@@ -173,7 +173,7 @@ wunderlist.helpers.note = (function(window, $, wunderlist, settings, Titanium, E
     });
 
     // Save note and close the dialog
-    shortcut.add(settings.shortcutkey + '+Enter', saveAndClose, {'disable_in_input' : false});
+    shortcut.add(wunderlist.settings.shortcutkey + '+Enter', saveAndClose, {'disable_in_input' : false});
 
     // Open every link in the browser
     $('a[href^=http], a[href^=https], a[href^=ftp], a[href^=mailto]').live('click', function() {
@@ -210,4 +210,4 @@ wunderlist.helpers.note = (function(window, $, wunderlist, settings, Titanium, E
     "format": format,
     "forceSave": forceSave
   };
-})(window, jQuery, wunderlist, settings, Titanium, Encoder, shortcut);
+})(window, jQuery, wunderlist, Titanium, Encoder, shortcut);

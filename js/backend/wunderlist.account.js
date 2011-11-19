@@ -148,7 +148,7 @@ wunderlist.account.loadInterface = function() {
 	makeListsDropable();
 	makeFilterDropable();
 	
-	if (settings.os === 'darwin') {
+	if (wunderlist.settings.os === 'darwin') {
 		$('.input-add').focus().blur();
 	}
 	
@@ -198,10 +198,10 @@ wunderlist.account.showRegisterDialog = function() {
     
     var footer = $("<div id='loginfooter'></div>");
     var downloads = $('<div class="wkdownload"></div>');
-		if (settings.os !== 'darwin') {
+		if (wunderlist.settings.os !== 'darwin') {
       downloads.append('<a class="mac" href="http://itunes.apple.com/app/wunderlist/id410628904?mt=12&ls=1">Download for Mac OSX</a>');
 		}
-		if (settings.os !== 'windows'){
+		if (wunderlist.settings.os !== 'windows'){
       downloads.append('<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-win.msi">Download for Windows</a>');
 		}
     downloads.append('<a class="ipad" href="http://itunes.apple.com/us/app/wunderlist-hd/id420670429">Download for iPad</a>');
@@ -411,7 +411,7 @@ wunderlist.account.login = function() {
 			url     : this.loginUrl,
 			type    : 'POST',
 			data    : data,
-			timeout : settings.REQUEST_TIMEOUT,
+			timeout : wunderlist.settings.REQUEST_TIMEOUT,
 			success : function(response_data, text, xhrobject) {
 				if (xhrobject.status == 0) {
 					wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.no_internet);
@@ -499,7 +499,7 @@ wunderlist.account.forgotpw = function() {
 			url     : this.forgotPasswordUrl,
 			type    : 'POST',
 			data    : data,
-			timeout : settings.REQUEST_TIMEOUT,
+			timeout : wunderlist.settings.REQUEST_TIMEOUT,
 			success : function(response_data, text, xhrobject) {
 				if (xhrobject.status == 0) {
 					showErrorDialog(wunderlist.language.data.no_internet);
@@ -569,7 +569,7 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 			url     : this.registerUrl,
 			type    : 'POST',
 			data    : data,
-			timeout : settings.REQUEST_TIMEOUT,
+			timeout : wunderlist.settings.REQUEST_TIMEOUT,
 			success : function(response_data, text, xhrobject) {
 				if (xhrobject.status === 0) {
 					wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.no_internet);
@@ -740,7 +740,7 @@ wunderlist.account.change_profile_data = function() {
 			url     : this.editAccountUrl,
 			type    : 'POST',
 			data    : data,
-			timeout : settings.REQUEST_TIMEOUT,			
+			timeout : wunderlist.settings.REQUEST_TIMEOUT,			
 			success : function(response_data, text, xhrobject) {
 				if(xhrobject.status === 0) {
 				  wunderlist.helpers.dialogs.showErrorDialog(wunderlist.language.data.no_internet);
@@ -882,7 +882,7 @@ wunderlist.account.delete_account_data = function() {
 			url     : this.deleteAccountUrl,
 			type    : 'POST',
 			data    : data,
-			timeout : settings.REQUEST_TIMEOUT,			
+			timeout : wunderlist.settings.REQUEST_TIMEOUT,			
 			success : function(response_data, text, xhrobject) {
 				if (xhrobject.status == 0) {
 					showErrorDialog(wunderlist.language.no_internet);
@@ -937,7 +937,8 @@ wunderlist.account.logout = function() {
 		// Remove all user data
 		wunderlist.database.truncate(wundrlist.nop);
 		logUserOut();
-		settings.clear_last_opened_list();
+
+		wunderlist.settings.setString('last_opened_list', '1');
 
 		// Clear Interface
 		$('#content').html('');
@@ -1024,42 +1025,39 @@ wunderlist.account.invite = function() {
 		'invite_text'  : $.trim($('textarea#invite-text').val())
 	};
 	
-	if (data['invite_email'] == '' || data['invite_email'] == undefined)
-		valid = false;
-	if (data['invite_text'] == '' || data['invite_text'] == undefined)
-		valid = false;
+	if (data['invite_email'] === '' || data['invite_email'] === undefined || data['invite_text'] === '' || data['invite_text'] === undefined){
+	  valid = false;
+	}
 
-	if (valid == true)
-	{
+	if (valid === true) {
 		$.ajax({
 			url     : this.inviteUrl,
 			type    : 'POST',
 			data    : data,
-			timeout : settings.REQUEST_TIMEOUT,			
+			timeout : wunderlist.settings.REQUEST_TIMEOUT,			
 			success : function(response_data, text, xhrobject) {
-				if (xhrobject.status == 0)
-				{
+				if (xhrobject.status === 0) {
 					wunderlist.account.showInviteOKDialog(wunderlist.language.data.no_internet);
-				}
-				else if(xhrobject.status == 200)
-				{
+				} else if(xhrobject.status === 200) {
 					var response = JSON.parse(response_data);
 
-					switch(response.code)
-					{
+					switch(response.code) {
 						case wunderlist.account.status_codes.INVITE_SUCCESS:
 
-							settings.save_invited('true');
+							wunderlist.settings.setString('invited', 'true');
 							
-							if ($("[role='dialog']").length == 1)
-							{
+							if ($("[role='dialog']").length === 1) {
 								var buttonOptions = {};
 								buttonOptions['OK'] = function() {
 									$(this).dialog('close');
 									input.val(wunderlist.language.data.invite_email);
 									wunderlist.helpers.dialogs.closeDialog(invite_dialog);
 								};
-								buttonOptions[wunderlist.language.data.invite_more] = function() { $(this).dialog('close'); input.select();	};
+
+								buttonOptions[wunderlist.language.data.invite_more] = function() {
+								  $(this).dialog('close');
+								  input.select();
+								};
 	
 								inviteCloseDialog = $('<div></div>').dialog({
 									autoOpen      : false,
@@ -1077,21 +1075,15 @@ wunderlist.account.invite = function() {
 							break;
 
 						case wunderlist.account.status_codes.INVITE_INVALID_EMAIL:
-
 							wunderlist.account.showInviteOKDialog(wunderlist.language.data.invitation_invalid_email);
-
 							break;
 
 						case wunderlist.account.status_codes.INVITE_FAILURE:
-
 							wunderlist.account.showInviteOKDialog(wunderlist.language.data.invitation_error);
-
 							break;
 
 						default:
-
 							wunderlist.account.showInviteOKDialog(wunderlist.language.data.error_occurred);
-
 							break;
 					}
 				}

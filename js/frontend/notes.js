@@ -49,7 +49,7 @@ wunderlist.frontend.notes = (function($, wunderlist, html, undefined){
         if (notesWindow.editMode) {
           wunderlist.helpers.note.forceSave();
         }
-        //settings.save_note_window_position(notesWindow);
+        //wunderlist.settings.saveNoteWindowPosition(notesWindow);
         notes.windows[notesWindow.noteId] = null;
       });
     

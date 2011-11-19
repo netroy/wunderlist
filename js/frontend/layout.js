@@ -99,8 +99,7 @@ wunderlist.layout = (function(undefined) {
       $("#tooltip").css("top",(offset.top+25));
     }
 
-    if(settings.getSidebarPosition() == "left") {
-      
+    if(wunderlist.settings.getString('sidebar_position', 'right') === "left") {
       if(e.target.className == "list-cloud") {
         $("#tooltip").css("left",(offset.left-40-tipWidth/2) + "px");
       }
@@ -142,7 +141,7 @@ wunderlist.layout = (function(undefined) {
     $("body").append("<p id='sync_tooltip'>" + wunderlist.language.data.sync + "</p>");
     $("#sync_tooltip").css("bottom",41 + "px").css("left",7 + "px");
   
-    if(settings.getSidebarPosition() == "left") {
+    if(wunderlist.settings.getString('sidebar_position', 'right') === "left") {
       $("#sync_tooltip").css("bottom",41 + "px").css("left",275 + "px");
     }
   
@@ -229,7 +228,7 @@ wunderlist.layout = (function(undefined) {
 
     // If program has been opened 5 times, open the invite dialog
     runtime = Titanium.App.Properties.getString('runtime');
-    if(runtime % 10 === 0 && settings.invited === 'false') {
+    if(runtime % 10 === 0 && wunderlist.settings.getString('invited', 'false') === 'false') {
       // DEBUG: disable invite popup, gets really annoying
       // wunderlist.account.showInviteDialog();
     }

@@ -9,7 +9,6 @@
   var Titanium = {};
   var App = Titanium.App = {};
   var Properties = App.Properties = {};
-  var Platform = Titanium.Platform = {};
   var UI = Titanium.UI = {};
   var API = Titanium.API = {};
   var JSON = Titanium.JSON = {};
@@ -50,7 +49,6 @@
   /**
    * Platform Info
    */
-  Platform.name = navigator.platform;
   App.version = "0.0.1";
 
 

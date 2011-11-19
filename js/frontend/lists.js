@@ -250,7 +250,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
   function bindListDeleteMode() {
     // Delete tasks button
     $('#lists div.deletep').live('click', function() {
-      if (settings.getDeleteprompt() === 1) {
+      if (wunderlist.settings.getInt('delete_prompt', 1) === 1) {
         wunderlist.helpers.dialogs.createDeleteListDialog($(this).parent().attr('id').replace('list', ''), $(this).parent());
         wunderlist.helpers.dialogs.openDialog(delete_dialog);
       } else {
@@ -361,7 +361,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
       content.html('').hide();
 
       if (typeof list_id === 'undefined') {
-        list_id = settings.load_last_opened_list(); // Default 1
+        list_id = wunderlist.settings.getString('last_opened_list', '1'); // Default 1
       }
 
       if (typeof list_id === 'string'){
@@ -392,7 +392,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
         makeSortable();
 
         html.make_timestamp_to_string();
-        settings.save_last_opened_list(list_id);
+        wunderlist.settings.setString('last_opened_list', list_id);
         html.createDatepicker();
         wunderlist.timer.resume();
         wunderlist.frontend.search.clear();

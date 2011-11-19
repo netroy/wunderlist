@@ -2,52 +2,59 @@ var hotkeys = hotkeys || {};
 
 hotkeys.eventListener = false;
 
+/**
+ * Stops the "keydown" event by using the shortcut CTRL+L to add a new list
+ * @author Daniel Marschner
+ */
+var listShortcutListener = 0;
+var cancelEditTask = false;
+
 $(function() {
 	
 	// Shortcut Bind Command(or Ctrl)+1 - go to filter list all
-	shortcut.add(settings.shortcutkey + '+1', function () {
+	shortcut.add(wunderlist.settings.shortcutkey + '+1', function () {
 		if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#all').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+2 - go to filter list starred
-	shortcut.add(settings.shortcutkey + '+2', function() {
+	shortcut.add(wunderlist.settings.shortcutkey + '+2', function() {
 		if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#starred').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+3 - go to filter list done
-	shortcut.add(settings.shortcutkey + '+3', function() {
+	shortcut.add(wunderlist.settings.shortcutkey + '+3', function() {
 		if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#done').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+4 - go to filter list today
-	shortcut.add(settings.shortcutkey + '+4', function() {
+	shortcut.add(wunderlist.settings.shortcutkey + '+4', function() {
 		if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#today').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+5 - go to filter list tomorrow
-	shortcut.add(settings.shortcutkey + '+5', function() {
+	shortcut.add(wunderlist.settings.shortcutkey + '+5', function() {
 		if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#tomorrow').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+6 - go to filter list next 7 days
-	shortcut.add(settings.shortcutkey + '+6', function() {
+	shortcut.add(wunderlist.settings.shortcutkey + '+6', function() {
 		 if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#thisweek').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+7 - go to filter list later
-	shortcut.add(settings.shortcutkey + '+7', function() {
+	shortcut.add(wunderlist.settings.shortcutkey + '+7', function() {
 		if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#someday').click();
 	});
 
 	// Shortcut Bind Command(or Ctrl)+8 - go to filter list without date
-	shortcut.add(settings.shortcutkey + '+8', function() {
+	shortcut.add(wunderlist.settings.shortcutkey + '+8', function() {
 		if ($('[role="dialog"]').length == 0 && $('textarea:focus').length == 0 && $('input:focus').length == 0)
 			$('a#withoutdate').click();
 	});
@@ -55,15 +62,12 @@ $(function() {
 	/**
 	 * Little workaround bugfix for Mac OS X (sorry, but there is no way around)
 	 * Shortcut Bind Command (or Ctrl) + Q
-	 *
 	 * @author Christian Reber
 	 */
-	if (settings.os === 'darwin')
-	{
-		shortcut.add(settings.shortcutkey + '+q', function () {
-			if (listShortcutListener == 0)
-			{
-				settings.save_window_position();
+	if (wunderlist.settings.os === 'darwin') {
+		shortcut.add(wunderlist.settings.shortcutkey + '+q', function () {
+			if (listShortcutListener === 0) {
+				wunderlist.settings.saveWindowPosition();
 				Titanium.App.exit();
 			}
 		});
@@ -71,16 +75,16 @@ $(function() {
 	
 	/**
 	 * Printing with Ctrl / Command + P
-	 *
 	 * @author Christian Reber,  Daniel Marschner, Dennis Schneider
 	 */
-	shortcut.add(settings.shortcutkey + '+p', function (evt) {
-		if(printShortcutListener == 0)
-			share.print();
-
+	shortcut.add(wunderlist.settings.shortcutkey + '+p', function (evt) {
+		if(printShortcutListener === 0) {
+		  wunderlist.frontend.share.print();
+		}
 		printShortcutListener++;
-
-		setTimeout(function() { printShortcutListener = 0 }, 50);
+		setTimeout(function() {
+		  printShortcutListener = 0
+		}, 50);
 	});
 	
 	/**
@@ -88,13 +92,10 @@ $(function() {
 	 *
 	 * @author Daniel Marschner
 	 */
-	shortcut.add(settings.shortcutkey + '+s', function (evt) {
-		tasks.cancel();
-
-        if ($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true)
-		{
-			if (syncShortcutListener == 0 && wunderlist.sync.isSyncing == false)
-			{
+	shortcut.add(wunderlist.settings.shortcutkey + '+s', function (evt) {
+    tasks.cancel();
+    if ($(register_dialog).dialog('isOpen') === false || wunderlist.account.isLoggedIn() === true) {
+			if (syncShortcutListener == 0 && wunderlist.sync.isSyncing() == false) {
 				wunderlist.timer.stop();
 				wunderlist.sync.fireSync();
 			}
@@ -106,7 +107,7 @@ $(function() {
 	});
 	
 	// For removing select all
-	shortcut.add(settings.shortcutkey + '+a', function (e) { 
+	shortcut.add(wunderlist.settings.shortcutkey + '+a', function (e) { 
 		if ($('textarea:focus').length == 1) {
 			$('textarea').select();
 		} else if ($('input:focus').length == 1) {
@@ -115,7 +116,7 @@ $(function() {
 	}, {'disable_in_input' : false});
 	
 	// Shortcut Bind Command (or Ctrl) + L - New list
-	shortcut.add(settings.shortcutkey + "+l",function() {
+	shortcut.add(wunderlist.settings.shortcutkey + "+l",function() {
 		if ($('[role="dialog"]').length == 0) {
 			tasks.cancel();
 			$('h3 .add').hide();
@@ -168,7 +169,7 @@ $(function() {
 	});	
 
 	// Shortcut Bind Command(or Ctrl)+F - Search
-	shortcut.add(settings.shortcutkey + '+f', function (evt) {
+	shortcut.add(wunderlist.settings.shortcutkey + '+f', function (evt) {
 		tasks.cancel();
 
         focusSearch++;
@@ -205,12 +206,15 @@ $(function() {
 				cancelEditTask = true;
 			}
 			
-			setTimeout(function() { cancelEditTask = false; documentEscapeActive = false; }, 1000);
+			setTimeout(function() {
+			  cancelEditTask = false;
+			  documentEscapeActive = false;
+			}, 1000);
 		}
 	});
 	
 	// Shortcut Bind Command (or Ctrl) + N - Add new task
-	shortcut.add(settings.shortcutkey + '+n', function (evt) {
+	shortcut.add(wunderlist.settings.shortcutkey + '+n', function (evt) {
 		tasks.cancel();
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true)
@@ -218,7 +222,7 @@ $(function() {
 	});
 
 	// Shortcut Bind Command (or Ctrl) + T - Add new task
-	shortcut.add(settings.shortcutkey + '+t', function (evt) {
+	shortcut.add(wunderlist.settings.shortcutkey + '+t', function (evt) {
 		tasks.cancel();
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true)
@@ -228,7 +232,7 @@ $(function() {
 	var sidebarToggle = false;
 
 	// Shortcut Bind Command(or Ctrl)+b - Hide the sidebar
-	shortcut.add(settings.shortcutkey + '+b', function (evt) {
+	shortcut.add(wunderlist.settings.shortcutkey + '+b', function (evt) {
 		if(sidebarToggle == false)
 		{
 			sidebarToggle = true;
@@ -239,9 +243,9 @@ $(function() {
 	});								
 	
 	var deleteListShortcut = '';
-	if (settings.os === 'darwin') 
+	if (wunderlist.settings.os === 'darwin') 
 	{
-		deleteListShortcut = settings.shortcutkey + '+backspace' 
+		deleteListShortcut = wunderlist.settings.shortcutkey + '+backspace' 
 	}
 	else 
 	{
@@ -257,7 +261,7 @@ $(function() {
 				var listElement = $('div#lists a.ui-state-disabled');
 				
 				if (listElement.length === 1 && listElement.attr('id').replace('list', '') !== 1) {			
-					wunderlist.dialogs.createDeleteListDialog();
+					wunderlist.helpers.dialogs.createDeleteListDialog();
 				}	
 			
 				setTimeout(function() {
@@ -268,7 +272,7 @@ $(function() {
 	}, {"propagate" : true});
 	
 	// Hotkey cmd / strg + i - Open the inbox
-	shortcut.add(settings.shortcutkey + '+i', function (event) {
+	shortcut.add(wunderlist.settings.shortcutkey + '+i', function (event) {
 		if (hotkeys.eventListener === false) {
 			hotkeys.eventListener = true;
 			// Only open the list when it's not the inbox
@@ -282,7 +286,7 @@ $(function() {
 	});
 	
 	// Save note and close the dialog
-	shortcut.add(settings.shortcutkey + '+Enter', function (event) {
+	shortcut.add(wunderlist.settings.shortcutkey + '+Enter', function (event) {
 		if ($('input.input-add:focus').length == 1) {
 			var aimSetting = parseInt(Titanium.App.Properties.getString('add_item_method', '0'));
 			if (aimSetting == 1) {		

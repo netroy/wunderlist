@@ -3,7 +3,7 @@
  * Class for logging in into sync server, sync sending and retrieval
  * @author Dennis Schneider
  */
-wunderlist.sync = (function(window, $, wunderlist, settings, async, Titanium, undefined){
+wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
   "use strict";
 
   var syncUrlBase = '/1.2.0',//'https://sync.wunderlist.net/1.2.0';
@@ -484,7 +484,7 @@ wunderlist.sync = (function(window, $, wunderlist, settings, async, Titanium, un
               url: syncUrlBase,
               type: 'POST',
               data: data,
-              timeout: settings.REQUEST_TIMEOUT,
+              timeout: wunderlist.settings.REQUEST_TIMEOUT,
               beforeSend: wunderlist.layout.startSyncAnimation,
               success: syncStep1Success,
               error: syncStep1Error
@@ -533,4 +533,4 @@ wunderlist.sync = (function(window, $, wunderlist, settings, async, Titanium, un
     "isSyncing": function(){return isSyncing;}
   };
 
-})(window, jQuery, wunderlist, settings, async, Titanium);
+})(window, jQuery, wunderlist, async, Titanium);

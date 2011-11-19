@@ -77,9 +77,8 @@ wunderlist.database.createStandardElements = function() {
 		
 		// Remove the property "inbox", only a reason of security
 		wunderlist.helpers.list.properties.pop();
-		
-		settings.save_last_opened_list("'" + list_id + "'");
-		
+		wunderlist.settings.setString('last_opened_list', list_id);
+
 		wunderlist.database.createTuts(list_id);
 	}
 };
@@ -95,7 +94,7 @@ wunderlist.database.createTuts = function(list_id) {
 			addon = '';
 			important = done = done_date = undefined;
 			
-			if ((ix == 2 || ix == 3 || ix == 5 || ix == 6) && wunderlist.os === 'darwin'){
+			if ((ix == 2 || ix == 3 || ix == 5 || ix == 6) && wunderlist.settings.os === 'darwin'){
 			  addon = '_mac';
 			}
 			
@@ -130,7 +129,7 @@ wunderlist.database.recreateTuts = function() {
 	
 	wunderlist.database.createTuts(list_id);
 	
-	settings.save_last_opened_list("'" + list_id + "'");
+	wunderlist.settings.setString('last_opened_list', list_id);
 	
 	wunderlist.account.loadInterface();
 };

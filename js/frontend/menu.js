@@ -149,7 +149,7 @@ menu.initialize = function() {
  * @author Dennis Schneider
  */
 menu.initializeTrayIcon = function() {
-  var os = Titanium.Platform.name.toLowerCase();
+  var os = wunderlist.settings.os;
 
   // Only for windows and linux
   if(os != 'notray') {
@@ -239,7 +239,6 @@ menu.preventCloseEvent = function() {
 
 /**
  * Show the Wunderlist window if it's hidden
- *
  * @author Dennis Schneider
  */
 menu.showWindow = function(wunderlistWindow) {
@@ -248,18 +247,16 @@ menu.showWindow = function(wunderlistWindow) {
 
 /**
  * Switch language setting
- *
  * @author Dennis Schneider
  */
 menu.switch_language = function(code) {
-  settings.save_window_position();
+  wunderlist.settings.saveWindowPosition();
   Titanium.App.Properties.setString('language', code);
   Titanium.App.restart();
 }
 
 /**
  * Remove the menu
- *
  * @author Dennis Schneider
  */
 menu.remove = function() {
@@ -270,7 +267,6 @@ menu.remove = function() {
 
 /**
  * Refocusses the (hidden) Wunderlist window
- *
  * @author Dennis Schneider
  */
 menu.refocus = function() {

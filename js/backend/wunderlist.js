@@ -2,7 +2,7 @@
  * Init the wunderlist framework and all necessary parts
  * @author Christian Reber, Dennis Schneider, Daniel Marschner
  */
-wunderlist.init = (function($, wunderlist, settings, Titanium){ 
+wunderlist.init = (function($, wunderlist, Titanium){ 
   "use strict";
 
   return function() {
@@ -11,16 +11,16 @@ wunderlist.init = (function($, wunderlist, settings, Titanium){
     var title = (wunderlist.account.isLoggedIn() && wunderlist.account.email !== '' ? ' - ' + wunderlist.account.email : '');
     wunderlist.helpers.utils.setTitle('Wunderlist ' + title);
   
+    // Init settings
+    wunderlist.settings.init();
+  
     // Set the os version
-    wunderlist.os = Titanium.Platform.name.toLowerCase();
     wunderlist.version = Titanium.App.version.toString();
   
     wunderlist.language.init();
   
     // Init the datastore
     wunderlist.database.init();
-  
-    settings.init();
     
     wunderlist.sync.init();
     
@@ -75,7 +75,7 @@ wunderlist.init = (function($, wunderlist, settings, Titanium){
     $("body").show();
   };
 
-})(jQuery, wunderlist, settings, Titanium);
+})(jQuery, wunderlist, Titanium);
 
 
 /*************************************************************************************/

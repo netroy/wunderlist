@@ -1,4 +1,4 @@
-wunderlist.frontend.share = (function(window, $, wunderlist, settings, html, Encoder, Titanium, undefined){
+wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Titanium, undefined){
   "use strict";
 
 
@@ -179,7 +179,7 @@ wunderlist.frontend.share = (function(window, $, wunderlist, settings, html, Enc
         file.write(renderPrintTemplate(template, list_name, html_tasks));
 
         var file_url;
-        if (settings.os === 'darwin') {
+        if (wunderlist.settings.os === 'darwin') {
           file_url = 'file://';
         } else {
           file_url = 'file:///';
@@ -287,4 +287,4 @@ wunderlist.frontend.share = (function(window, $, wunderlist, settings, html, Enc
     "share_with_cloudapp": share_with_cloudapp
   };
 
-})(window, jQuery, wunderlist, settings, html, Encoder, Titanium);
+})(window, jQuery, wunderlist, html, Encoder, Titanium);

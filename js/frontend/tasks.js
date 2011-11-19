@@ -673,7 +673,7 @@ $(function() {
 
   // Delete function for the clicked task
   $("li span.delete").live('click', function() {
-    if (settings.getDeleteprompt() === 1) {
+    if (wunderlist.settings.getInt('delete_prompt', 1) === 1) {
       wunderlist.helpers.dialogs.openTaskDeleteDialog($(this));
     } else {
       tasks.deletes($(this));

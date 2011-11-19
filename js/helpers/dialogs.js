@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, settings, Titanium, undefined){
+wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, Titanium, undefined){
   "use strict";
 
 
@@ -435,10 +435,10 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, setti
       $('input#cancel-dateformat').die();
       $('input#confirm-dateformat').die();
   
-      var dateformat = settings.getDateformat();
+      var dateformat = wunderlist.settings.getString('dateformat', wunderlist.language.code);
       $('div.radios#date-format-radios input#date_' + dateformat).attr('checked', 'checked');
   
-      var weekstart_day = settings.getWeekstartday();
+      var weekstart_day = wunderlist.settings.getString('weekstartday', '1');
       $('div.radios#week-start-day-radios input#startday_' + weekstart_day).attr('checked', 'checked');
   
       $('input#cancel-dateformat').live('click', function() {
@@ -536,19 +536,19 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, setti
       openDialog(sidebarDialog);
       $('input#cancel-settings').die();
       $('input#confirm-settings').die();
-      var sidebar = settings.getSidebar();
+      var sidebar = wunderlist.settings.getString('sidebar_position', 'right');
       $('div.radios#sidebar-pos-radios input#sidebar_pos_' + sidebar).attr('checked', 'checked');
       $('input#cancel-settings').live('click', function() {
           $(sidebarDialog).dialog('close');
       });
       $('input#confirm-settings').live('click', function() {
-          settings.sidebar = $('div.radios#sidebar-pos-radios input:checked').val();
-          settings.update();
+          var position = $('div.radios#sidebar-pos-radios input:checked').val();
+          wunderlist.settings.setString('sidebar_position', position);
           $(sidebarDialog).dialog('close');
           $("#sidebar").fadeOut(500);
           $("#bottombar").fadeOut(500);
           $("#content").fadeOut(500, function() {
-              window.location.reload();
+            window.location.reload();
           });
       });
   }
@@ -590,8 +590,8 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, setti
    */
   function showHelpDialog() {
     if ($("[role='dialog']").length === 0) {
-      var shortcutPrefix     = settings.shortcutkey + ' + ';
-      var deleteListShortcut = (settings.os === 'darwin') ? shortcutPrefix + wunderlist.language.data.hotkey_help_backspace : wunderlist.language.data.hotkey_help_del;
+      var shortcutPrefix     = wunderlist.settings.shortcutkey + ' + ';
+      var deleteListShortcut = (wunderlist.settings.os === 'darwin') ? shortcutPrefix + wunderlist.language.data.hotkey_help_backspace : wunderlist.language.data.hotkey_help_del;
       var helpHTML  = '<p><b>' + shortcutPrefix + 'L:</b> ' + wunderlist.language.data.hotkey_help_list + '</p>';
         helpHTML += '<p><b>' +  deleteListShortcut  + ':</b> ' + wunderlist.language.data.hotkey_help_delete + '</p>';
         helpHTML += '<p><b>' + shortcutPrefix + 'I:</b> ' + wunderlist.language.data.hotkey_help_inbox + '</p>';
@@ -662,4 +662,4 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, setti
     "openBackgroundsDialog": openBackgroundsDialog
   };
 
-})(window, jQuery, wunderlist, tasks, html, settings, Titanium);
+})(window, jQuery, wunderlist, tasks, html, Titanium);

@@ -216,7 +216,7 @@ wunderlist.sharing.deleteSharedEmail = function(list_id, deletedElement) {
 		url: wunderlist.sharing.deleteSharedEmailUrl,
 		type: 'POST',
 		data: data,
-		timeout: settings.REQUEST_TIMEOUT,
+		timeout: wunderlist.settings.REQUEST_TIMEOUT,
 		success: function(response_data, text, xhrobject) {
 			if (response_data !== '' && text !== '' && xhrobject !== undefined) {
 				if (xhrobject.status === 200) {			
@@ -320,7 +320,7 @@ wunderlist.sharing.sendSharedList = function(list_id) {
 		url: wunderlist.sharing.shareUrl,
 		type: 'POST',
 		data: data,
-		timeout: settings.REQUEST_TIMEOUT,
+		timeout: wunderlist.settings.REQUEST_TIMEOUT,
 		success: function(response_data, text, xhrobject) {			
 			if (response_data != '' && text != '' && xhrobject != undefined) {
 				if (xhrobject.status === 200) {		
@@ -388,7 +388,7 @@ wunderlist.sharing.getSharedEmails = function(list_id) {
 		url: wunderlist.sharing.sharedEmailsUrl,
 		type: 'POST',
 		data: data,
-		timeout: settings.REQUEST_TIMEOUT,
+		timeout: wunderlist.settings.REQUEST_TIMEOUT,
 		success: function(response_data, text, xhrobject) {
 			if (response_data !== '' && text !== '' && xhrobject !== undefined) {
 				if (xhrobject.status === 200) {
@@ -461,7 +461,7 @@ wunderlist.sharing.getOwnerOfList = function(online_list_id) {
 		url: wunderlist.sharing.getOwnerUrl,
 		type: 'POST',
 		data: data,
-		timeout: settings.REQUEST_TIMEOUT,
+		timeout: wunderlist.settings.REQUEST_TIMEOUT,
 		success: function(response_data, text, xhrobject) {
 			if (response_data != '' && text != '' && xhrobject != undefined) {
 				if (xhrobject.status == 200) {

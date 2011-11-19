@@ -9,7 +9,7 @@ html.generateNotesDialogHTML = function() {
 			'<textarea></textarea><div class="savednote"><div class="inner"></div></div>' +
 			'</div>' +
     		'<div class="notes_buttons">' +
-    			'<span class="hint">'+ wunderlist.helpers.utils.ucfirst(settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
+    			'<span class="hint">'+ wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
     			'<input id="save-and-close" class="input-button button-login" type="submit" value="'+ wunderlist.language.data.save_and_close_changes +'" />' +
     			'<input id="save-note" class="input-button" type="submit" value="'+ wunderlist.language.data.edit_changes +'" />' +
     		'</div>';
@@ -107,7 +107,7 @@ html.generateLoginRegisterDialogHTML = function() {
  */
 html.generateListContentHTML = function(list_id, list_name) {
 	
-	if (settings.os === 'darwin') {
+	if (wunderlist.settings.os === 'darwin') {
 		wunderlist.language.data.add_task_hint = wunderlist.language.data.add_task_hint.replace('Alt', '⌥');
 	}
 
@@ -260,7 +260,7 @@ html.generateDeletePromptHTML = function() {
 html.generateAddItemMethodHTML = function() {
     var html_code = '<div id="add-item-method-radios" class="radios">' +
        		'<p><b>' + wunderlist.language.data.add_item_method_content + '</b></p>' +
-			'<p><input id="add_item_method_0" type="radio" name="addItemMethod" value="0" /> <span>' + wunderlist.language.data.return_key + '</span> &nbsp; &nbsp; &nbsp; <input id="add_item_method_1" type="radio" name="addItemMethod" value="1" /> <span>' + wunderlist.helpers.utils.ucfirst(settings.shortcutkey) + ' + ' + wunderlist.language.data.return_key + '</span></p>' +
+			'<p><input id="add_item_method_0" type="radio" name="addItemMethod" value="0" /> <span>' + wunderlist.language.data.return_key + '</span> &nbsp; &nbsp; &nbsp; <input id="add_item_method_1" type="radio" name="addItemMethod" value="1" /> <span>' + wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) + ' + ' + wunderlist.language.data.return_key + '</span></p>' +
  			'</div>' +
     		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
     		
@@ -807,7 +807,7 @@ html.buildFilteredList = function(title, tasks, show_add, filter, callback) {
 	  count = tasks.length;
 	}
 	
-	if (settings.os === 'darwin') {
+	if (wunderlist.settings.os === 'darwin') {
 		wunderlist.language.data.add_task_hint = wunderlist.language.data.add_task_hint.replace('Alt', '⌥');
 	}
 	
