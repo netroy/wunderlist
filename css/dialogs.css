@@ -191,7 +191,7 @@ border:none}
 
 .ui-widget-content p {
   padding: 10px 0px;
-  line-height: 0;
+  /*line-height: 0;*/
 }
 	
 .ui-widget-content .small {
