@@ -27,9 +27,14 @@ wunderlist.init = (function($, wunderlist, settings, Titanium){
     // Init some other necessary stuff
     // TODO: add the wunderlist prefix
     wunderlist.account.init();
+
+    // Init the timer
     wunderlist.timer.init();
+
     wunderlist.menu.initializeTrayIcon();
     wunderlist.sharing.init();
+
+    // Init Notofications
     wunderlist.notifications.init();
 
     // Init lists

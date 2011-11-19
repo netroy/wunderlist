@@ -550,4 +550,5 @@ wunderlist.sync = (function(window, $, wunderlist, settings, async, Titanium, un
     "fireSync": fireSync,
     "isSyncing": function(){return isSyncing;}
   };
+
 })(window, jQuery, wunderlist, settings, async, Titanium);
