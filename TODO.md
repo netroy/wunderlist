@@ -15,7 +15,7 @@
 8. Move to something like JavascriptMVC or Backbone or knockoutjs or angularjs
 9. Reduce memory leaks (crosses 150MB on chrome after a while).. Reuse DOM 
 10. Use documentFragments instead of directly attaching to DOM for better performance
-11. DOM based notifications for browsers other than Chrome
+11. DOM based notifications for browsers other than Chrome & notification API on chrome
 
 <br/>
 ***
@@ -25,5 +25,5 @@
 
  * helpers - html
  * frontend - tasks, sortdrop, menu, hotkeys
- * backend - timer, sharing, setting, database, account
+ * backend - timer, sharing, database, account
  * libraries - shortcuts.js
