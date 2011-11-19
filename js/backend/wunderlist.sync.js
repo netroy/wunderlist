@@ -315,7 +315,7 @@ wunderlist.sync = (function(window, $, wunderlist, settings, async, Titanium, un
         message += ".";
 
         if (syncedListCount > 0 && syncedTaskCount > 0) {
-          wunderlist.notifications.createNotification('Successfully synced your data', message);
+          wunderlist.notifications.createNotification(wunderlist.language.data.sync_success, message);
         }
       }
     }

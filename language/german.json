@@ -229,6 +229,7 @@
 	"new_task":                 "Neue Aufgabe",	
 	"shared_delete_all_success":"Alle Benutzer wurden erfolgreich aus der Liste entfernt",
 	"unsynced_data":			"Es gibt Aufgaben und Listen, die nicht übertragen wurden. Bitte versuche erneut zu syncen.",
+	"sync_success":       "Erfolgreich synchronisiert Ihre Daten",
 	"add_item_method":          "Aufgaben/Listen hinzufügen mit...",
 	"add_item_method_content":	"Wähle dein Tastenkürzel für das Hinzufügen von Aufgaben und Listen.",
 	"privacy_policy":			"Datenschutzerklärung",
