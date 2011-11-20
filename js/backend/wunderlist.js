@@ -49,18 +49,6 @@ wunderlist.init = (function($, wunderlist, Titanium){
 
     // Init the layout
     wunderlist.layout.init();
-
-    // Init Menu
-    wunderlist.menu.initialize();
-
-    // Init share
-    wunderlist.frontend.share.init();
-
-    // Init Filters
-    wunderlist.frontend.filters.init();
-
-    // Init Sort Drop
-    wunderlist.frontend.sortdrop.init();
   
     // Check for a new version
     if(Titanium.Network.online) {

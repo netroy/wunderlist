@@ -1,6 +1,9 @@
 /* global wunderlist */
 wunderlist.layout = (function(undefined) {
 
+  var syncTooltip, body;
+
+
   /**
    * Stops the "keydown" event by using the shortcut CTRL+P to print the actual viewing list
    * @author Daniel Marschner
@@ -56,10 +59,7 @@ wunderlist.layout = (function(undefined) {
       $(".loginbuttons").hide();
       $(".forgotpwbuttons").fadeIn();
       $("#account-loader").hide();
-    
-    
       $('#forgotpw-email').val($('input#login-email').val()).focus();
-    
     });
   
     $("#cancelforgotpw").live("click",function(){
@@ -88,7 +88,7 @@ wunderlist.layout = (function(undefined) {
     var offset = $(this).offset();
     var width = $(this).width();
 
-    $("body").append("<p id='tooltip'>"+ content +"</p>");
+    body.append("<p id='tooltip'>"+ content +"</p>");
 
     var tipWidth = $("#tooltip").width();
 
@@ -99,7 +99,7 @@ wunderlist.layout = (function(undefined) {
       $("#tooltip").css("top",(offset.top+25));
     }
 
-    if(wunderlist.settings.getString('sidebar_position', 'right') === "left") {
+    if(!wunderlist.helpers.sidebar.isSideBarRight()) {
       if(e.target.className == "list-cloud") {
         $("#tooltip").css("left",(offset.left-40-tipWidth/2) + "px");
       }
@@ -138,20 +138,21 @@ wunderlist.layout = (function(undefined) {
 
   function startSyncAnimation() {
     $('#tooltip').remove();
-    $("body").append("<p id='sync_tooltip'>" + wunderlist.language.data.sync + "</p>");
-    $("#sync_tooltip").css("bottom",41 + "px").css("left",7 + "px");
-  
-    if(wunderlist.settings.getString('sidebar_position', 'right') === "left") {
-      $("#sync_tooltip").css("bottom",41 + "px").css("left",275 + "px");
+    body.append("<p id='sync_tooltip'>" + wunderlist.language.data.sync + "</p>");
+
+    if(!wunderlist.helpers.sidebar.isSideBarRight()) {
+      syncTooltip.css("bottom",41 + "px").css("left",275 + "px");
+    } else {
+      syncTooltip.css("bottom",41 + "px").css("left",7 + "px");
     }
   
-    $("#sync_tooltip").fadeIn("fast");
+    syncTooltip.fadeIn("fast");
     rotate(0);
   }
 
   function stopSyncAnimation() {
-    $("#sync_tooltip").delay("1000").fadeOut("fast", function() {
-      $(this).remove();
+    syncTooltip.delay("1000").fadeOut("fast", function() {
+      syncTooltip.remove();
       clearTimeout(rotationTimer);
     });
   }
@@ -200,6 +201,8 @@ wunderlist.layout = (function(undefined) {
   }
 
   function init() {
+    body = $("body");
+    syncTooltip = $("#sync_tooltip");
 
     toolTips();  
     registerProcess();
@@ -220,6 +223,18 @@ wunderlist.layout = (function(undefined) {
      * @author Daniel Marschner
      */
     wunderlist.helpers.background.init();
+
+    // Init share
+    wunderlist.frontend.share.init();
+
+    // Init Filters
+    wunderlist.frontend.filters.init();
+
+    // Init Sort Drop
+    wunderlist.frontend.sortdrop.init();
+
+    // Init Menu
+    wunderlist.menu.initialize();
 
     // Fixes a problem with webkit and jquery sortable icon
     document.onselectstart = function () {
