@@ -24,6 +24,6 @@
 **to clean up**:
 
  * helpers - html
- * frontend - tasks, sortdrop, menu, hotkeys
+ * frontend - tasks, menu, hotkeys
  * backend - timer, sharing, database, account
  * libraries - shortcuts.js
