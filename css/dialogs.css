@@ -551,22 +551,32 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
   height: 110px;
 }
 
-.wkdownload a {width:114px; height:88px; display:inline-block; text-indent: -23718px; background:url(/images/download.png);}
+.wkdownload a {
+  width: 114px;
+  height: 88px;
+  display: inline-block;
+  text-indent: -23718px;
+  background: url(/images/download.png);
+  background-position-y: -88px;
+}
 
 .wkdownload .iphone {background-position: 0px -88px}
 .wkdownload .iphone:hover {background-position: 0px 0px}
 
-.wkdownload .ipad {background-position: 456px -88px}
-.wkdownload .ipad:hover {background-position: 456px 0px}
+.wkdownload .ipad {background-position: 570px -88px}
+.wkdownload .ipad:hover {background-position: 570px 0px}
 
-.wkdownload .android {background-position: 342px -88px}
-.wkdownload .android:hover {background-position: 342px 0px}
+.wkdownload .android {background-position: 456px -88px}
+.wkdownload .android:hover {background-position: 456px 0px}
 
-.wkdownload .windows {background-position: 228px -88px}
-.wkdownload .windows:hover {background-position: 228px 0px}
+.wkdownload .windows {background-position: 342px -88px}
+.wkdownload .windows:hover {background-position: 342px 0px}
 
-.wkdownload .mac {background-position: 114px -88px}
-.wkdownload .mac:hover {background-position: 114px 0px}
+.wkdownload .mac {background-position: 228px -88px}
+.wkdownload .mac:hover {background-position: 228px 0px}
+
+.wkdownload .linux {background-position: 114px -88px}
+.wkdownload .linux:hover {background-position: 114px 0px}
 
 .wkdownload .notyet {opacity:0.5}
 .wkdownload .notyet:hover {background-position: 342px -88px; cursor:default}
@@ -627,7 +637,7 @@ border:1px solid #9c9ea4; font-size:11px; color:#777}
 }
 
 .followus:hover .wklogo {
-  margin-top: -60px;
+  margin-top: -55px;
   opacity: 0;
 }
 
