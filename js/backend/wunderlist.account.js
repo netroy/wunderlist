@@ -201,13 +201,15 @@ wunderlist.account.showRegisterDialog = function() {
 		if (wunderlist.settings.os !== 'darwin') {
       downloads.append('<a class="mac" href="http://itunes.apple.com/app/wunderlist/id410628904?mt=12&ls=1">Download for Mac OSX</a>');
 		}
-		if (wunderlist.settings.os !== 'windows'){
+		if (wunderlist.settings.os !== 'windows') {
       downloads.append('<a class="windows" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.2-win.msi">Download for Windows</a>');
+		}
+		if (wunderlist.settings.os !== 'linux') {
+		  downloads.append('<a class="linux" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.4-linux-64.tgz">Download for Linux</a>');
 		}
     downloads.append('<a class="ipad" href="http://itunes.apple.com/us/app/wunderlist-hd/id420670429">Download for iPad</a>');
     downloads.append('<a class="iphone" href="http://itunes.apple.com/us/app/wunderlist-to-do-listen/id406644151">Download for iPhone</a>');
     downloads.append('<a class="android" href="https://market.android.com/details?id=com.wunderkinder.wunderlistandroid">Download for Android</a>');
-    downloads.append('<a class="notyet" href="http://www.6wunderkinder.com/downloads/wunderlist-1.2.4-linux-64.tgz">Download for Linux</a>');
     
     footer.append(downloads);
     footer.append('<div class="wkseparator"></div>');
