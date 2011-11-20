@@ -151,6 +151,15 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
   }
 
   /**
+   * Switch to another language
+   */
+  function switchLanguage(code) {
+    wunderlist.settings.setString('language', code);
+    history.go(0);
+    // TODO: complete this stub, try doing it without reloading
+  }
+
+  /**
    * Replace basics
    * @author Christian Reber
    */
@@ -184,7 +193,9 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
   self = {
     "init": init,
     "availableLang": availableLang,
-    "replaceFilters": replaceFilters
+    "replaceFilters": replaceFilters,
+    "switchLanguage": switchLanguage,
+    "code": code
   };
   
   return self;
