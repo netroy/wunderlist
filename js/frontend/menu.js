@@ -68,7 +68,7 @@ menu.initialize = function() {
     menu.refocus();
   });
   extraMenuItem.addItem(wunderlist.language.data.sidebar_position, function() {
-    wunderlist.helpers.dialogs.openSidebarDialog();
+    wunderlist.helpers.dialogs.openSidebarPositionDialog();
     menu.refocus();
   });
   extraMenuItem.addItem(wunderlist.language.data.delete_prompt_menu, function() {
