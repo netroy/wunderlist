@@ -57,10 +57,15 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
 
   // UPDATE the database list object
   function update(noVersion, callback) {
-    wunderlist.database.updateByMap('lists', {
-      name: instance.name,
+    var data = {
       version: (noVersion ? "": "version + 1")
-    }, "id="+instance.id, callback); 
+    };
+    for(var prop in instance){
+      if(typeof instance[prop] !== 'undefined'){
+        data[prop] = instance[prop];
+      }
+    }
+    wunderlist.database.updateByMap('lists', data, "id="+instance.id, callback); 
   }
 
   // Reset the list object to defaults
