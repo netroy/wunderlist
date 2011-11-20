@@ -862,7 +862,7 @@ wunderlist.database.getFilteredTasks = function(filter, date_type, printing) {
 	$("#content").html('').hide();
 	$("#content").append(html.buildFilteredList(title, wunderlist.database.fetchData(result), show_add, filter));
 	
-	makeSortable();
+	wunderlist.frontend.sortdrop.makeSortable();
 	
 	if (filter == 'all' || filter == 'starred' || date_type == '='){
 	  html.createDatepicker();

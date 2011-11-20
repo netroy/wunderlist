@@ -34,7 +34,7 @@ wunderlist.init = (function($, wunderlist, Titanium){
     wunderlist.menu.initializeTrayIcon();
     wunderlist.sharing.init();
 
-    // Init Notofications
+    // Init Notifications
     wunderlist.notifications.init();
 
     // Init lists
@@ -58,6 +58,9 @@ wunderlist.init = (function($, wunderlist, Titanium){
 
     // Init Filters
     wunderlist.frontend.filters.init();
+
+    // Init Sort Drop
+    wunderlist.frontend.sortdrop.init();
   
     // Check for a new version
     if(Titanium.Network.online) {

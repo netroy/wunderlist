@@ -322,7 +322,7 @@ tasks.add = function() {
       // Reset DatePicker
       $('.datepicker').val('');
       
-      makeSortable();
+      wunderlist.frontend.sortdrop.makeSortable();
       wunderlist.frontend.filters.updateBadges();
       html.make_timestamp_to_string();
       

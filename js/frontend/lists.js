@@ -196,7 +196,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     });
 
     //$('h3 .add').fadeIn();
-    makeListsDropable();
+    wunderlist.frontend.sortdrop.makeListsDropable();
   
     if (wunderlist.account.isLoggedIn() === false) {
       $('div.sharelist').remove();
@@ -389,7 +389,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
 
         wunderlist.database.getLastDoneTasks(list_id, renderLastDoneTasks);
 
-        makeSortable();
+        wunderlist.frontend.sortdrop.makeSortable();
 
         html.make_timestamp_to_string();
         wunderlist.settings.setString('last_opened_list', list_id);

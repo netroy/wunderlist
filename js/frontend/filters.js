@@ -149,8 +149,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
 
       html.buildFilteredList(title, results, show_add, filter, function(err, markup){
         $("#content").html('').hide().append(markup);
-        // TODO: move sort stuff to wunderlist namespace
-        window.makeSortable();
+        wunderlist.frontend.sortdrop.makeSortable();
         if (filter == 'all' || filter == 'starred' || date_type == '='){
           html.createDatepicker();
         }

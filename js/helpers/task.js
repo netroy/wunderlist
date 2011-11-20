@@ -1,5 +1,5 @@
 /* global wunderlist, jQuery */
-wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, makeSortable, undefined){
+wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
   "use strict";
 
 
@@ -234,13 +234,13 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, mak
         } else {
           var ulElement = $('ul#filterlist' + oldListId.toString());
 
-          if (taskDroped === true) {
+          if (wunderlist.frontend.sortdrop.taskDroped === true) {
             if ($('ul#filterlist' + instance.list_id).length === 0) {
               listHTML  = '<h3 class="clickable cursor" rel="' + instance.list_id + '">' + $('a#list' + instance.list_id + ' b').text() + '</h3>';
               listHTML += '<ul id="filterlist' + instance.list_id + '" rel="' + ulElement.attr('rel') + '" class="mainlist sortable filterlist"></ul>';
 
               $('div#content').append(listHTML);
-              makeSortable();
+              wunderlist.frontend.sortdrop.makeSortable();
             } else {
               /*
               if (liElement.find('span.fav').length === 1) {
@@ -260,7 +260,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, mak
             }, 10);
             */
             liElement.appendTo('ul#filterlist' + newListId).delay(10).slideDown();
-            taskDroped = false;
+            wunderlist.frontend.sortdrop.taskDroped = false;
           }
 
           // TODO: do this with callbacks instead of timers
@@ -329,4 +329,4 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, taskDroped, mak
   
   return self;
 
-})(window, jQuery, wunderlist, html, taskDroped, makeSortable);
+})(window, jQuery, wunderlist, html);
