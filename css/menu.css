@@ -6,6 +6,7 @@ ul.menu {
   color: #fff;
   left: 20px;
   bottom: 46px;
+  font-size: 0.9em;
 }
 
 ul.menu, ul.menu ul {
@@ -16,6 +17,7 @@ ul.menu, ul.menu ul {
   background: #4b4b4b !important;
   margin: 0;
   padding: 0;
+  box-shadow: -2px 4px 8px rgba(0,0,0,0.5);
 }
 
 ul.menu li > ul {
@@ -37,12 +39,13 @@ ul.menu:after {
 
 ul.menu li {
   position: relative;
-  padding: 6px 10px;
+  padding: 8px 15px;
   min-width: 110px;
   cursor: pointer;
   position: relative;
   border-bottom: 1px solid rgba(45,45,45,0.1);
-  border-top: 1px solid rgba(100,100,100,0.15);
+  border-top: 1px solid rgba(120,120,120,0.15);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 
 ul.menu li a {
@@ -66,21 +69,59 @@ ul.menu li:last-child {
   border-bottom-width: 0;
 }
 
+
+ul.menu li.currenttree, ul.menu li:hover {
+  box-shadow: inset 0px 1px 1px #84c7f4;
+  background-color: #32a3f0;
+  text-shadow: 0 1px 2px #000;
+/*
+  background-image:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3)) !important;
+  background-image: -moz-linear-gradient(top,  #32a3f0,  #1389d3) !important;
+*/
+}
+
+li.account:hover::after, 
+li.downloads:hover::after, 
+li.settings:hover::after, 
+li.language:hover::after, 
+li.aboutus:hover::after {
+  content: '\25b6';
+  position: absolute;
+  right: 8px;
+  color: #FFE;
+  opacity: 0.6;
+  text-shadow: 0 0 1px #000;
+}
+
 ul.menu li:hover > ul {
   display: block;
 }
 
-ul.menu  li > ul.account {
-  bottom: -40px;
+ul.menu ul.account {
+  bottom: -60px;
 }
 
-ul.menu  li > ul.settings {
-  width: 200px;
-  bottom: -50px;
+ul.menu ul.downloads {
+  bottom: -33px;
 }
 
-ul.menu  li > ul.aboutus {
-  width: 160px;
+ul.menu ul.settings {
+  width: 195px;
+  bottom: -64px;
+}
+
+ul.menu ul.settings ul.language {
+  bottom: -280px;
+  width: 180px;
+}
+
+ul.menu ul.settings ul.language li{
+  padding: 2px 10px;
+  font-size: 0.9em;
+}
+
+ul.menu  ul.aboutus {
+  width: 159px;
 }
 
 /*
@@ -103,15 +144,6 @@ padding:5px 10px
 ul.menu li.hasChild {
   position:relative;
   background:#4b4b4b url(/images/icons/hasChild.png) 128px no-repeat !important;
-}
-
-ul.menu li.currenttree, ul.menu li:hover {
-  box-shadow: inset 0px 1px 1px #84c7f4;
-  background-color:#32a3f0;
-/*
-  background-image:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3)) !important;
-  background-image: -moz-linear-gradient(top,  #32a3f0,  #1389d3) !important;
-*/
 }
 
 /* Not Yet implemented Menus */

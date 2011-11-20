@@ -68,6 +68,7 @@
   "reset_note_window":     "Reset Note Window",
   "options":               "Options",
   "fav":                   "No prioritization",
+  "knowledge_base":        "Knowledge Base",
 
 
   "default_task_1":        "Doubleclick to edit me",
@@ -123,6 +124,8 @@
   "account":            "Account",
   "extra":            "Extras",
   "credits":            "About Us",
+  "about_wunderlist":   "About Wunderlist",
+  "about_wunderkinder": "About 6Wunderkinder",
   "wunderkinder":          "6Wunderkinder",
   "wunderkinder_fb":        "Follow us on Facebook",
   "wunderkinder_tw":        "Follow us on Twitter",
