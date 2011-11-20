@@ -64,6 +64,9 @@
   padding:0px 8px;
   text-shadow: #333 0px 1px 2px;
   background:url(/images/bottombar_menu.png) repeat-x;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#4f4f4f));
+  background-image: -webkit-linear-gradient(top, #444, #4f4f4f);
+  background-image: -moz-linear-gradient(top, #444, #4f4f4f);
   font-size:10px;
   padding-top:3px;
   float:left;
@@ -108,7 +111,7 @@
 
 #left a.more {
   font-size: 12px;
-  line-height: 14px;
+  line-height: 1em;
 }
 
 #left a.loggedinas span::before {
@@ -125,14 +128,13 @@
 #left a.filter:hover, #left a.active, #left a.droppable {
   color: #fff;
   text-shadow: 0px 1px 1px #176ea5;
-
   background-color: #2b8acf;
   background-image: url(/images/bottombar_active.png);
   background-position: top left;
   background-repeat: repeat-x;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1773b4), to(#43a4ef));
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#43a4ef), to(#1773b4));
   background-image: -webkit-linear-gradient(top, #43a4ef, #1773b4);
-  background-image: -moz-linear-gradient(top, #2F2727, #1773b4);
+  background-image: -moz-linear-gradient(top, #43a4ef, #1773b4);
 }
 
 .togglesidebar {
@@ -233,29 +235,39 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
 /* Add List */
 
 #right a.addlist {
--webkit-box-shadow:0px 1px 0px #676767;
--moz-box-shadow:0px 1px 0px #676767;
-box-shadow:0px 1px 0px #676767;
-padding:0px 10px;
-font-size:10px;
-padding-top:3px;
-width:auto !important;
-color:#ccc !important;
-display:block;
-text-indent: 0px !important;
-cursor:pointer;
-font-size:11px;
-border:1px solid #343434;
-margin-top:-2px;
-border-radius:10px;
--webkit-border-radius:10px;
--moz-border-radius:10px;
-height:16px !important;
-color:#fff !important;
-background:url(/images/bottombar_active.png) top left repeat-x;
-text-shadow:0px 1px 1px #135680 !important; /*176ea5*/
-font-weight:bold;
-opacity:1.0 !important}
+  -webkit-box-shadow:0px 1px 0px #676767;
+  -moz-box-shadow:0px 1px 0px #676767;
+  box-shadow:0px 1px 0px #676767;
+  padding:0px 10px;
+  font-size:10px;
+  padding-top:3px;
+  width:auto !important;
+  color:#ccc !important;
+  display:block;
+  text-indent: 0px !important;
+  cursor:pointer;
+  font-size:11px;
+  margin-top:-2px;
+  border: 1px solid #343434;
+  border-radius:10px;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  height:16px !important;
+  color: #f0f0f0 !important;
+  text-shadow: 0px 1px 1px #135680; /*176ea5*/
+  font-weight: bold;
+  opacity:1.0 !important;
+  background:url(/images/bottombar_active.png) top left repeat-x;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#43a4ef), to(#1773b4));
+  background-image: -webkit-linear-gradient(top, #43a4ef, #1773b4);
+  background-image: -moz-linear-gradient(top, #43a4ef, #1773b4);
+}
+
+#right a.addlist:hover {
+  color: #fff;
+  text-shadow: 0px 1px 1px #269;
+  border-color: #555;
+}
 
 /* Show Help */
 
