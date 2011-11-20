@@ -95,7 +95,7 @@ wunderlist.notifications = (function(window, $, wunderlist, Titanium, undefined)
     }
 
     $(window).unload(function(){
-      if(typeof popup.cancel === 'function'){
+      if(popup && typeof popup.cancel === 'function'){
         popup.cancel();
       }
     });
