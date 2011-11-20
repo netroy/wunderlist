@@ -474,7 +474,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
    * Open the switch date format dialog
    * @author Dennis Schneider
    */
-  function openSidebarDialog() {
+  function openSidebarPositionDialog() {
     if ($("[role='dialog']").length === 0) {
       sidebarDialog = generateDialog(wunderlist.language.data.sidebar_position, html.generateSidebarHTML());
       openDialog(sidebarDialog);
@@ -484,7 +484,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
       $('input#cancel-settings').die();
       $('input#confirm-settings').die();
   
-      var sidebar_position = (wunderlist.settings.getString('sidebar_position', 'right') == 'right') ? 0 : 1;
+      var sidebar_position = wunderlist.helpers.sidebar.isSideBarRight() ? 0 : 1;
       $('div.radios#sidebar-position-radios input#sidebar_position_' + sidebar_position).attr('checked', 'checked');
   
       $('input#cancel-settings').live('click', function() {
@@ -493,8 +493,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
   
       $('input#confirm-settings').live('click', function() {
         var new_sidebar_position = ($('div.radios#sidebar-position-radios input:checked').val() === "0") ? 'right' : 'left';
-        wunderlist.settings.setString('sidebar_position', new_sidebar_position);
-        wunderlist.helpers.sidebar.initPosition();
+        wunderlist.helpers.sidebar.setSideBarPosition(new_sidebar_position);
         closeDialog(sidebarDialog);
       });
     }
@@ -528,29 +527,6 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
         closeDialog(deletePromptDialog);
       });  
     }
-  }
-
-
-  function openSidebarPositionDialog() {
-      var sidebarDialog = generateDialog(wunderlist.language.data.sidebar_pos_menu, html.generateSidebarPosHTML());
-      openDialog(sidebarDialog);
-      $('input#cancel-settings').die();
-      $('input#confirm-settings').die();
-      var sidebar = wunderlist.settings.getString('sidebar_position', 'right');
-      $('div.radios#sidebar-pos-radios input#sidebar_pos_' + sidebar).attr('checked', 'checked');
-      $('input#cancel-settings').live('click', function() {
-          $(sidebarDialog).dialog('close');
-      });
-      $('input#confirm-settings').live('click', function() {
-          var position = $('div.radios#sidebar-pos-radios input:checked').val();
-          wunderlist.settings.setString('sidebar_position', position);
-          $(sidebarDialog).dialog('close');
-          $("#sidebar").fadeOut(500);
-          $("#bottombar").fadeOut(500);
-          $("#content").fadeOut(500, function() {
-            window.location.reload();
-          });
-      });
   }
 
 
@@ -653,7 +629,6 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
     "openViewEditNoteDialog": openViewEditNoteDialog,
     "createDeleteListDialog": createDeleteListDialog,
     "openSwitchDateFormatDialog": openSwitchDateFormatDialog,
-    "openSidebarDialog": openSidebarDialog,
     "openDeletePromptDialog": openDeletePromptDialog,
     "openSidebarPositionDialog": openSidebarPositionDialog,
     "openSelectAddItemMethodDialog": openSelectAddItemMethodDialog,
