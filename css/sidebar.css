@@ -294,7 +294,7 @@ opacity:0.5;
 
 .sidebarleft #right {
   float: left;
-  padding-left: 37px;
+  padding: 10px 0 8px 16px;
 }
 
 .sidebarleft .togglesidebar {
@@ -315,13 +315,6 @@ opacity:0.5;
 
 .sidebarleft #notification {
   left: 0px;
-}
-
-.sidebarleft #sync {
-  left: 276px;
-}
-.sidebarleft #syncing {
-  left: 281px;
 }
 
 .sidebarleft .showhelp {
