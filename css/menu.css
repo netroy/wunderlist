@@ -1,0 +1,139 @@
+/* WUNDERLIST MENU --------------------------------------------------------------------------------------- */
+
+#menublur {position:absolute;left:0px;right:0px;top:0px;bottom:0px; background:transparent;display:none;}
+
+ul.menu {
+  color: #fff;
+  left: 20px;
+  bottom: 46px;
+}
+
+ul.menu, ul.menu ul {
+  position: absolute;
+  display: none;
+  border: 1px solid #323232;
+  border-radius: 3px;
+  background: #4b4b4b !important;
+  margin: 0;
+  padding: 0;
+}
+
+ul.menu li > ul {
+  bottom: -4px;
+  left: 100%;
+}
+
+ul.menu:after {
+  border-color: #4b4b4b transparent transparent transparent;
+  border-style:solid;
+  position:absolute;
+  z-index:101;
+  left:60px;
+  bottom: 24;
+	border-width:6px;
+	width:0;
+	height:0;
+}
+
+ul.menu li {
+  position: relative;
+  padding: 6px 10px;
+  min-width: 110px;
+  cursor: pointer;
+  position: relative;
+  border-bottom: 1px solid rgba(45,45,45,0.1);
+  border-top: 1px solid rgba(100,100,100,0.15);
+}
+
+ul.menu li a {
+  color: #fff;
+}
+
+ul.menu li.separator {
+  border-top: 1px solid rgba(20,20,20,0.2);
+  border-bottom: 0 none;
+  padding: 0;
+}
+
+ul.menu li:first-child {
+  box-shadow:inset 0px 1px 1px #6d6d6d;
+  border-radius: 3px 3px 0 0;
+  border-top-width: 0;
+}
+
+ul.menu li:last-child {
+  border-radius: 0 0 3px 3px;
+  border-bottom-width: 0;
+}
+
+ul.menu li:hover > ul {
+  display: block;
+}
+
+ul.menu  li > ul.account {
+  bottom: -40px;
+}
+
+ul.menu  li > ul.settings {
+  width: 200px;
+  bottom: -50px;
+}
+
+ul.menu  li > ul.aboutus {
+  width: 160px;
+}
+
+/*
+
+#left ul li a {
+font-size:11px;
+width:120px;
+color:#fff !important;
+display:block;
+padding:5px 10px
+}
+*/
+
+/* Submenus */
+/*
+#left ul ul {position:absolute;left:150px;bottom:0px}
+*/
+
+/* Active Menu and Indicator for Children */
+ul.menu li.hasChild {
+  position:relative;
+  background:#4b4b4b url(/images/icons/hasChild.png) 128px no-repeat !important;
+}
+
+ul.menu li.currenttree, ul.menu li:hover {
+  box-shadow: inset 0px 1px 1px #84c7f4;
+  background-color:#32a3f0;
+/*
+  background-image:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3)) !important;
+  background-image: -moz-linear-gradient(top,  #32a3f0,  #1389d3) !important;
+*/
+}
+
+/* Not Yet implemented Menus */
+#left ul li.notyet, #left ul li.notyet:hover { background:#4b4b4b !important; cursor:default; border:none !important;}
+#left ul li.notyet a, #left ul li.notyet:hover a { color:rgba(255,255,255,0.3) !important; border:none !important;}
+
+/* Icon Menus */
+ul.menu li.icon {
+  padding-left: 30px;
+  background-repeat: no-repeat;
+  background-position: 8px 6px;
+}
+
+ul.menu li.settings {
+  background-image: url(/images/icons/settings.png);
+}
+ul.menu li.downloads {
+  background-image: url(/images/icons/downloads.png);
+}
+ul.menu li.aboutus {
+  background-image: url(/images/icons/about.png);
+}
+ul.menu li.logout {
+  background-image: url(/images/icons/logout.png);
+}
