@@ -166,7 +166,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     var node = $(e.target);
     var id = node.attr("id");
     if (node.hasClass('loggedinas') || typeof id === 'undefined') {
-      node.addClass('active');
+      node.toggleClass('active');
     } else {
       setActiveState(node);
 
