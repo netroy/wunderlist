@@ -237,7 +237,7 @@ opacity:0.5;
   border-top: 1px solid #fff;
   bottom: 36px;
   position: absolute;
-  right: 0px;
+  left: 10px;
   height: 32px;
   padding-top: 10px;
   width: 259px;
@@ -325,10 +325,10 @@ opacity:0.5;
 
 /* Animate the sidebar sliding ---------------- */
 .slideTransition {
-  -webkit-transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
-     -moz-transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
-       -o-transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
-          transition: 0.3s width ease-in-out, 0.3s right ease-in-out, 0.3s left ease-in-out;
+  -webkit-transition: 0.2s width ease-in-out, 0.2s right ease-in-out, 0.2s left ease-in-out;
+     -moz-transition: 0.2s width ease-in-out, 0.2s right ease-in-out, 0.2s left ease-in-out;
+       -o-transition: 0.2s width ease-in-out, 0.2s right ease-in-out, 0.2s left ease-in-out;
+          transition: 0.2s width ease-in-out, 0.2s right ease-in-out, 0.2s left ease-in-out;
 }
 
 body.sidebarClosed #sidebar {
