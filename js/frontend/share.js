@@ -157,10 +157,10 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
     if ($('ul.mainlist span.description').length > 0) {
       var list_name = $('#content h1:first').text();
       var html_tasks = generateHTMLForPrint();
-      if(typeof window.print === 'function'){
+      var printWindow = $("#printFrame")[0];
+      if(typeof printWindow.contentWindow.print === 'function'){
         $.get("/print.html", function(template){
           var html = renderPrintTemplate(template, list_name, html_tasks);
-          var printWindow = $("#printFrame")[0];
           $("body").append(printWindow);
           printWindow.focus();
           printWindow.contentDocument.write(html);
