@@ -46,7 +46,8 @@ wunderlist.settings = (function(window, wunderlist, Titanium, undefined){
   }
 
   function getInt(property, defaultValue){
-    return parseInt(getString(property, defaultValue), 10) || defaultValue;
+    var val = parseInt(getString(property, defaultValue), 10);
+    return  isNaN(val) ? defaultValue : val;
   }
 
   function setInt(property, value){
