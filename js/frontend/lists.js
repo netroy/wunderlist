@@ -219,8 +219,8 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     }
 
     if (listId !== undefined && listId !== 1) {
-      if (listId != 'x') {      
-        if (notes.window !== undefined) {
+      if (listId !== 'x') {      
+        /*if (notes.window !== undefined) {
           _return = false;
           dbTasks = wunderlist.database.getTasks(undefined, listId);
           if (dbTasks.length > 0) {
@@ -230,7 +230,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
               }
             }
           }
-        }
+        }*/
 
         wunderlist.helpers.list.set({
           id: listId,
