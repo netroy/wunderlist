@@ -203,7 +203,11 @@ border-radius:15px;
 background:#fff; 
 padding:3px 6px}
 
-#ui-datepicker-div { z-index: 100 !important}
+#ui-datepicker-div {
+  z-index: 100 !important;
+  position: absolute;
+  top: -100px;
+}
 
 /* BADGES ------------------------------------------------------------------------------ */
 
