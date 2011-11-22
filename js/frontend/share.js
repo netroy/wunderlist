@@ -161,7 +161,6 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
       if(typeof printWindow.contentWindow.print === 'function'){
         $.get("/print.html", function(template){
           var html = renderPrintTemplate(template, list_name, html_tasks);
-          $("body").append(printWindow);
           printWindow.focus();
           printWindow.contentDocument.write(html);
         });
@@ -192,30 +191,6 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
     }
   }
 
-
-  /**
-   * Get the tasks for the according shared list
-   * @author Dennis Schneider
-   */
-  function getTasksForSharing(is_filter_list, list_id) { 
-    var tasks;
-    // Is it a filterlist or a normal list?
-    if (is_filter_list === false) {
-      // Get all tasks from database within the current list
-      tasks = wunderlist.database.getTasks(undefined, list_id);
-    } else {
-      var type = $('ul#list').attr('type');
-      if (type === 'withdate') {
-        tasks = wunderlist.database.getFilteredTasksForPrinting('date', type);
-      } else if (type === 'nodate') {
-        tasks = wunderlist.database.getFilteredTasksForPrinting('date', type);
-      } else {
-        tasks = wunderlist.database.getFilteredTasksForPrinting(type);
-      }
-    }
-
-    return tasks;
-  }
 
 
   /**
