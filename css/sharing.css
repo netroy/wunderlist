@@ -69,9 +69,20 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 /* -- TOOLTIP --------------------------------------------------------------------------- */
 
-#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:rgba(0,0,0,0.5); -webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;padding:5px 8px 5px 8px;color:#fff;z-index:100;font-size:11px;display:none}
+#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {
+  position: absolute;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid rgba(0,0,0,0.9);
+  border-radius: 8px;
+  padding: 5px 8px 5px 8px;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
+  z-index: 100;
+  font-size: 11px;
+  display: none;
+}
 
-#cloudtip { top:24px; right:-10px; width:300px}
+#cloudtip { top:24px; right:-10px; width:320px}
 
 #cloudtip span.link { color: #fff; float:left; display:block; margin-top:1px}
 #cloudtip span.link:hover { text-decoration: underline; cursor: pointer}
