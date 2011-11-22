@@ -37,8 +37,8 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     } else {
       todayBadges.text(todaycount);
       //todayBadges.fadeOut('fast').fadeIn('fast');
-      lists.css("bottom","74px");
-      note.css("bottom","74px");
+      lists.css("bottom","80px");
+      note.css("bottom","80px");
     }
 
     var overdue_text;
@@ -46,8 +46,8 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
       overdue_text = (overduecount > 1)? wunderlist.language.data.overdue_text_pl : wunderlist.language.data.overdue_text_sl;
       overdue_text = overduecount + ' ' + overdue_text;
       notifications.fadeIn('fast');
-      lists.css("bottom","74px");
-      note.css("bottom","74px");
+      lists.css("bottom","80px");
+      note.css("bottom","80px");
     } else {
       overdue_text = '';
       notifications.fadeOut('fast');
@@ -60,7 +60,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     } else {
       $('div', notifications).text(overduecount);
       //notifications.fadeOut('fast').fadeIn('fast');
-      lists.css("bottom","74px");
+      lists.css("bottom","80px");
     }
 
     if(todaycount === 0) {

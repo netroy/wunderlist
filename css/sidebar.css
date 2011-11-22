@@ -7,18 +7,20 @@
   height: 100%;
   top: 0px;
   position: fixed;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+
+#sidebar h3, #lists, #notification {
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
 #lists {
-  /*
   overflow-y: auto;
   overflow-x: hidden;
-  position: fixed;
-  right: 0px;
+  top: 61px;
   bottom: 36px;
-  top: 59px;
-  */
   width: 258px;
   margin-left: 11px;
 }
@@ -30,6 +32,7 @@
   border-bottom: 1px solid #D1D2D4;
   margin-left: 10px;
   padding: 21px 0;
+  top: 0;
 }
 
 #sidebar h3 a{
@@ -76,19 +79,17 @@ input#search {
 }
 
 #sidebar .searchside .clearsearch {
-  display:none;
-  position:absolute;
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-  opacity:0.7; 
-  -moz-opacity: 0.7;
-  background:url(/images/icons/delete_active.png);
-  position:absolute;
-  right:100px;
-  top:4px;
-  cursor:pointer;
-  right:6px;
-  height:14px;
-  width:14px;
+  display: none;
+  position: absolute;
+  opacity: 0.7;
+  background: url(/images/icons/delete_active.png);
+  position: absolute;
+  right: 100px;
+  top: 4px;
+  cursor: pointer;
+  right: 6px;
+  height: 14px;
+  width: 14px;
 }
 
 #sidebar .searchside:hover .clearsearch {

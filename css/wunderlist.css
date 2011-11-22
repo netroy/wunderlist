@@ -75,14 +75,20 @@ a {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: rgba(100,100,100,0.3);
-  border: 1px solid rgba(20,20,20,0.3);
+  background: rgba(70,70,70,0.6);
+  border: 2px solid rgba(20,20,20,0.2);
   box-shadow: none;
   -webkit-transition: all 1s linear;
 }
 
-:hover::-webkit-scrollbar-thumb {
+#lists::-webkit-scrollbar-thumb {
+  background: rgba(70, 70, 70, 0.2);
+  border-color: rgba(240,240,240,0.2);
+}
+
+:hover::-webkit-scrollbar-thumb, #lists:hover::-webkit-scrollbar-thumb  {
   border-color: rgba(0,0,0,0.5);
+  border-width: 1px;
   background-color: rgba(100,100,100,0.5);
 }
 
@@ -98,4 +104,3 @@ a {
 ::-webkit-scrollbar-button {
   display: none;
 }
-
