@@ -1,7 +1,7 @@
 /* global wunderlist */
 wunderlist.layout = (function(undefined) {
 
-  var syncTooltip, body;
+  var syncTooltip, body, tooltip, syncButton;
 
 
   /**
@@ -89,8 +89,7 @@ wunderlist.layout = (function(undefined) {
     var offset = node.offset();
     var width = node.width();
 
-    body.append("<p id='tooltip'>"+ content +"</p>");
-    var tooltip = $("#tooltip");
+    tooltip.html(content);
     var tipWidth = tooltip.width();
 
     if(node.attr("id") === "sync"){
@@ -120,7 +119,7 @@ wunderlist.layout = (function(undefined) {
     var nodes = $("a.more, span.more, #listfunctions a");
     nodes.live("mouseenter", tooltipHandler);
     nodes.live("mouseleave", function(e) {
-      $("#tooltip").remove();
+      tooltip.hide();
     });
   }
 
@@ -140,13 +139,13 @@ wunderlist.layout = (function(undefined) {
 
 
   function startSyncAnimation() {
-    $('#tooltip').remove();
-    body.append("<p id='sync_tooltip'>" + wunderlist.language.data.sync + "</p>");
+    tooltip.hide();
+    syncTooltip.html(wunderlist.language.data.sync);
 
     if(!wunderlist.helpers.sidebar.isSideBarRight()) {
-      syncTooltip.css("bottom",41 + "px").css("left",275 + "px");
+      syncTooltip.css("bottom", "41px").css("left",275 + "px");
     } else {
-      syncTooltip.css("bottom",41 + "px").css("left",7 + "px");
+      syncTooltip.css("bottom", "41px").css("left",7 + "px");
     }
   
     syncTooltip.fadeIn("fast");
@@ -188,24 +187,27 @@ wunderlist.layout = (function(undefined) {
    */
   function switchSyncSymbol(status) {
     if(status === 0) {
-      if($('span#sync').hasClass("sync_red") === false){
-        $('span#sync').addClass('sync_red');
+      if(syncButton.hasClass("sync_red") === false){
+        syncButton.addClass('sync_red');
       }
 
       setTimeout(function() {
-        $('p#sync_tooltip').text(wunderlist.language.data.no_sync);
+        syncTooltip.text(wunderlist.language.data.no_sync);
         stopSyncAnimation();
       }, 1000);
 
     } else {
-      $('span#sync').removeClass('sync_red');
-      $('p#sync_tooltip').text(wunderlist.language.data.sync);
+      syncButton.removeClass('sync_red');
+      syncTooltip.text(wunderlist.language.data.sync);
     }
   }
 
   function init() {
     body = $("body");
-    syncTooltip = $("#sync_tooltip");
+    tooltip = $("<p id='tooltip'></p>");
+    syncTooltip = $("<p id='sync_tooltip'></p>");
+    body.append(tooltip).append(syncTooltip);
+    syncButton = $("#sync");
 
     toolTips();  
     registerProcess();
