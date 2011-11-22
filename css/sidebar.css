@@ -260,12 +260,12 @@ opacity:0.5;
 /* SIDEBAR LEFT ---------------------------------------------------------------------------- */
 
 .sidebarleft #content {
-  right: 0px;
+  right: 10px;
   left: 260px;
 }
 
 .sidebarleft #listfunctions {
-  right: 20px;
+  right: 30px;
 }
 
 .sidebarleft #sidebar {
@@ -313,12 +313,12 @@ opacity:0.5;
 
 /*.sidebarleft #backgroundList {left:16px}*/
 
-.sidebarleft #notification {
+.sidebarleft #sidebar #notification {
   left: 0px;
 }
 
 .sidebarleft .showhelp {
-  margin: 0px 8px 0px 0px!important;
+  margin: 0px 8px 0px 0px !important;
 }
 
 
@@ -336,6 +336,9 @@ body.sidebarClosed #sidebar {
 }
 
 body.sidebarClosed #content {
-  left: 0;
-  right: 0;
+  right: 10px;
+}
+
+body.sidebarleft.sidebarClosed #content {
+  left: 10px;
 }
