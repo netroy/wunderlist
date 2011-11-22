@@ -7,6 +7,7 @@ ul.menu {
   left: 20px;
   bottom: 46px;
   font-size: 0.9em;
+  z-index: 20;
 }
 
 ul.menu, ul.menu ul {
@@ -39,6 +40,7 @@ ul.menu:after {
 
 ul.menu li {
   position: relative;
+  display: block;
   padding: 8px 15px;
   min-width: 110px;
   cursor: pointer;
@@ -56,6 +58,7 @@ ul.menu li.separator {
   border-top: 1px solid rgba(20,20,20,0.2);
   border-bottom: 0 none;
   padding: 0;
+  cursor: default;
 }
 
 ul.menu li:first-child {
@@ -78,6 +81,11 @@ ul.menu li.currenttree, ul.menu li:hover {
   background-image:-webkit-gradient(linear, left top, left bottom, from(#32a3f0), to(#1389d3)) !important;
   background-image: -moz-linear-gradient(top,  #32a3f0,  #1389d3) !important;
 */
+}
+
+ul.menu li.separator:hover {
+  background-color: transparent;
+  box-shadow: none;
 }
 
 li.account:hover::after, 
@@ -111,7 +119,7 @@ ul.menu ul.settings {
 }
 
 ul.menu ul.settings ul.language {
-  bottom: -280px;
+  bottom: -295px;
   width: 180px;
 }
 
