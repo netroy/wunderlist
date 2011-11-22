@@ -84,39 +84,42 @@ wunderlist.layout = (function(undefined) {
    * @author Marvin Labod
    */
   function tooltipHandler(e) {
-    var content = $(this).attr("rel");
-    var offset = $(this).offset();
-    var width = $(this).width();
+    var node = $(e.target);
+    var content = node.attr("rel");
+    var offset = node.offset();
+    var width = node.width();
 
     body.append("<p id='tooltip'>"+ content +"</p>");
+    var tooltip = $("#tooltip");
+    var tipWidth = tooltip.width();
 
-    var tipWidth = $("#tooltip").width();
-
-    if($(this).attr("id") == "sync"){tipWidth = "36";}
-    $("#tooltip").css("top",(offset.top-35) + "px").css("left",(offset.left-tipWidth/2) + "px").show();
-    
-    if($(this).parent().attr("id") == "listfunctions") {
-      $("#tooltip").css("top",(offset.top+25));
+    if(node.attr("id") === "sync"){
+      tipWidth = "36";
     }
-
-    if(!wunderlist.helpers.sidebar.isSideBarRight()) {
-      if(e.target.className == "list-cloud") {
-        $("#tooltip").css("left",(offset.left-40-tipWidth/2) + "px");
+    tooltip.css("top",(offset.top - 35) + "px").css("left",(offset.left - tipWidth/2) + "px").show();
+    
+    if(node.parent("#listfunctions").length > 0) {
+      tooltip.css("top",(offset.top+25));
+      if ($("#cloudtip:visible").length === 1) {
+        tooltip.hide();
       }
     }
 
-    if ($("#cloudtip:visible").length == 1 && $(this).parent().attr("id") == "listfunctions") {
-      $("#tooltip").hide();
+    if(!wunderlist.helpers.sidebar.isSideBarRight()) {
+      if(node[0].className == "list-cloud") {
+        tooltip.css("left",(offset.left - 40 - tipWidth/2) + "px");
+      }
     }
 
-    if($(this).parent().attr("id") == "left") {
-      $("#tooltip").css("left",(offset.left+17-tipWidth/2) + "px");
+    if(node.parent("#left").length > 0) {
+      tooltip.css("left",(offset.left + 17 - tipWidth/2) + "px");
     }
   }
 
   function toolTips() {
-    $("a.more, span.more, #listfunctions a").live("mouseenter", tooltipHandler);
-    $("a.more, span.more, #listfunctions a").live("mouseleave", function(e) {
+    var nodes = $("a.more, span.more, #listfunctions a");
+    nodes.live("mouseenter", tooltipHandler);
+    nodes.live("mouseleave", function(e) {
       $("#tooltip").remove();
     });
   }
