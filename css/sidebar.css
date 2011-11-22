@@ -264,10 +264,6 @@ opacity:0.5;
   left: 260px;
 }
 
-.sidebarleft #listfunctions {
-  right: 30px;
-}
-
 .sidebarleft #sidebar {
   background:url(/images/sidebar_left.png);
   left: 0;

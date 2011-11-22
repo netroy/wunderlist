@@ -1,24 +1,8 @@
-/* RESET -------------------------------------------------------*/
-
-* {
-  margin: 0px;
-  padding: 0px;
-  outline: none !important;
-  text-decoration: none;
-}
-
-li {
-  list-style: none;
-}
-
-/* GENERAL ----------------------------------------------------- */
-
 html {
   background: #333;
   height: 100%;
   overflow: hidden;
 }
-
 
 body {
   display: none;
@@ -50,7 +34,9 @@ body.login #content , body.login #bottombar , body.login #listfunctions, body.lo
   color: #c30;
 }
 
-.cursor{cursor:pointer}
+.cursor{
+  cursor: pointer;
+}
 
 #loading {
   display: none;
@@ -81,92 +67,6 @@ a {
 
 
 
-/* -- Share Functions Of Lists ---------------------------------------------------------------- */
-
-#listfunctions {
-  position: absolute;
-  right: 290px;
-  height: 17px;
-  top: 10px;
-  z-index: 2;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(0,0,0,0.2);
-  background-color: rgba(0,0,0, 0.2);
-  -webkit-transition: all 0.2s ease-in-out;
-}
-
-#listfunctions:hover {
-  border-color: rgba(0,0,0,0.4);
-  background-color: rgba(0,0,0,0.6);
-  box-shadow: 1px 1px 4px rgba(10,10,10,0.5);
-}
-
-
-body.sidebarClosed #listfunctions {
-  right: 30px;
-}
-
-#listfunctions a {
-  width: 17px;
-  height: 17px;
-  background: #000;
-  display: block;
-  float: left;
-  opacity: 0.5;
-  cursor: pointer;
-  margin: 0 5px;
-  -webkit-transition: all 0.3s ease-out;
-}
-
-#listfunctions a:hover {
-  opacity: 1.0;
-}
-
-#listfunctions .list-print {background:url(/images/icons/print.png) no-repeat}
-#listfunctions .list-email {background:url(/images/icons/sendmail.png) no-repeat}
-#listfunctions .list-cloud {background:url(/images/icons/cloudapp.png) no-repeat}
-#listfunctions .list-share {background:url(/images/icons/sharelist_white.png) no-repeat}
-
-#printFrame {
-  width: 1px;
-  height: 1px;
-  border: 0 none;
-  position: absolute;
-  top: -999px;
-  left: -999px;
-}
-
-
-/* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
-
-.checkboxcon {width:15px;height:15px;background:url(/images/checkbox.png) no-repeat;
-cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; margin-top:-1px}
-
-.input-checked {position:relative;left:30px}
-.checked {background-position:0px -15px !important}
-
-/* -- TOOLTIP --------------------------------------------------------------------------- */
-
-#sync_tooltip, #tooltip, #taskTooltip, #cloudtip {position:absolute;background:rgba(0,0,0,0.5); -webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;padding:5px 8px 5px 8px;color:#fff;z-index:100;font-size:11px;display:none}
-
-#cloudtip { top:24px; right:-10px; width:300px}
-
-#cloudtip span.link { color: #fff; float:left; display:block; margin-top:1px}
-#cloudtip span.link:hover { text-decoration: underline; cursor: pointer}
-
-#cloudtip span.copy { background:rgba(255,255,255,0.2); border-radius:14px; -webkit-border-radius:14px;  -moz-border-radius:14px; padding:1px 5px 0px 5px;float:right; cursor:pointer; display:block; font-size:9px;margin-top:1px; margin-right:-2px;}
-#cloudtip span.copy:hover { background:rgba(255,255,255,0.4)}
-
-#cloudtip span.triangle {border:4px solid transparent; border-bottom:4px solid rgba(0,0,0,0.5); height:0px; width:0px; position:absolute; right:14px; top:-8px;}
-
-#taskTooltip {background:#333;opacity:0.9;width:220px;padding:7px 8px;line-height:16px;font-size:12px;-webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px}
-#taskTooltip span {position:absolute;left:105px;height:0px; width:0px;border-style: solid}
-#taskTooltip span.top {border-color: transparent transparent #333 transparent;border-width: 0px 10px 10px 10px;top:-10px}
-#taskTooltip span.bottom {border-color: #333 transparent transparent transparent;border-width: 10px 10px 0px 10px;bottom:-10px}
-
-
-
 /* SCROLLBARS */
 ::-webkit-scrollbar {
   width: 10px;
@@ -176,8 +76,7 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: rgba(100,100,100,0.3);
-  border: 1px solid rgba(0,0,0,0.3);
-  cursor: pointer;
+  border: 1px solid rgba(20,20,20,0.3);
   box-shadow: none;
   -webkit-transition: all 1s linear;
 }
@@ -189,6 +88,7 @@ cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; 
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(150,150,150, 0.8);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) ;
 }
 
 ::-webkit-scrollbar-thumb:active {
