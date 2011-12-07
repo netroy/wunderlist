@@ -428,22 +428,42 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
 
 
   /**
-   * Fetch position of the last list
-   * @param callback - function to call with the position of the last list
+   * @param sql - SQL template to query the DB
+   * @param field - field value to be fetched
+   * @param params - array of values or single value to be used to render the SQL template
    */
-  var getLastListPositionSQL = "SELECT position FROM lists WHERE deleted = 0 ORDER BY position DESC LIMIT 1";
-  function getLastListPosition(callback) {
-    execute(getLastListPositionSQL, function(err, result){
+  function fetchSingleFieldOfSingleRecord(sql, field, params, callback) {
+    params = [sql].concat(params);
+    params.push(function(err, result){
       if(err) {
         callback(err);
         return;
       }
       if(result.rows.length > 0){
-        callback(null, result.rows.item(0).position);
+        callback(null, result.rows.item(0)[field]);
       } else {
-        callback(new Error("No lists found"));
+        callback(new Error("No records found"));
       }
     });
+    execute.apply(null, params);
+  }
+
+  /**
+   * Fetch position of the last list
+   * @param callback - function to call with the position of the last list
+   */
+  var getLastListPositionSQL = "SELECT position FROM lists WHERE deleted = 0 ORDER BY position DESC LIMIT 1";
+  function getLastListPosition(callback) {
+    fetchSingleFieldOfSingleRecord(getLastListPositionSQL, 'position', undefined, callback);
+  }
+
+  /**
+   * Fetch position of the last inserted task in a list
+   * @param callback - function to call with the position of the last task in a list
+   */
+  var getLastTaskPositionSQL = "SELECT position FROM tasks WHERE list_id = ? AND tasks.done = 0 AND tasks.deleted = 0 ORDER BY position DESC LIMIT 1";
+  function getLastTaskPosition(listId, callback){
+    fetchSingleFieldOfSingleRecord(getLastTaskPositionSQL, 'position', listId, callback);
   }
 
 
@@ -462,8 +482,14 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     });
   }
 
-
-  function getFilteredTasks(filter, type, callback){
+  /*
+   * Filters tasks by a given type
+   * TODO: This has to be updated in the same step were we update the filter structure (sorted tasks by list)
+   * @param filter
+   * @param type
+   * @param callback - function to call with the list of filtered tasks
+   */
+  function getFilteredTasks(filter, type, callback) {
     var date = html.getWorldWideDate(), // Current date
         sql = "SELECT * FROM tasks ", 
         where = "",
@@ -516,6 +542,20 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
 
+  function insertTask(noHtml, callback){
+    
+  }
+
+
+  function updateTask(noVersion, callback){
+    
+  }
+
+
+  function getListIdsByTaskId(task_id, callback){
+    
+  }
+
 /***********************************************
 ***** TODO: complete the following methods *****
 ************************************************/
@@ -525,10 +565,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    * TODO: move out any DOM stuff to frontend
    */
 
-  function getFilteredTasksForPrinting(type, date_type){}
-
-  function insertTask(noHtml, callback){}
-  function updateTask(noVersion, callback){}
 
   function createStandardElements(){}
   
@@ -541,9 +577,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   function recreateTuts(){}
 
   function fetchData(resultSet){}
-  function getLastTaskPosition(list_id){}
   function updateTaskCount(list_id){}
-  function getListIdsByTaskId(task_id){}
 
 
   /**
@@ -579,7 +613,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "getLastDoneTasks": getLastDoneTasks,
     "getLastListId": getLastListId,
     "getLastListPosition": getLastListPosition,
-    "getFilteredTasks": getFilteredTasks,
-    "getFilteredTasksForPrinting": getFilteredTasksForPrinting
+    "getLastTaskPosition": getLastTaskPosition,
+    "getFilteredTasks": getFilteredTasks
   };
 })(wunderlist, html, async, window);

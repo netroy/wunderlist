@@ -23,10 +23,37 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     return self;
   }
 
-
   // INSERT a new database task object
+  function insertPhase2(callback) {
+    instance.version = 0;
+    instance.name = html.convertString(instance.name, 255);
+
+    var list = {};
+    for (var property in instance) {
+      var value = instance[property];
+      if ((typeof value).match(/^(number|string|boolean)$/)) {
+        if (wunderlist.helpers.utils.in_array(property, properties) === true) {
+          list[property] = value;
+        }
+      }
+    }
+    wunderlist.database.createTaskByOnlineId(0, list.name, 0, 0, list.list_id, list.position, 0, 0, 0, 0, '', callback);
+  }
+  
   function insert (callback) {
-    wunderlist.database.insertTask(callback);
+    if (typeof instance.name !== 'string' || instance.name.length === 0) {
+      callback(new Error("Invalid name for the task"));
+      return;
+    }
+
+    if (typeof instance.position === 'undefined'){
+      wunderlist.database.getLastTaskPosition(instance.list_id, function(err, position){
+        instance.position = position;
+        insertPhase2(callback);
+      });
+    } else {
+      insertPhase2(callback);
+    }
   }
 
 

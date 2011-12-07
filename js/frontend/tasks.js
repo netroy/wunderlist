@@ -246,7 +246,9 @@ tasks.add = function() {
         important: important
       });
       
-      var task_id  = wunderlist.helpers.task.insert();  
+      var task_id  = wunderlist.helpers.task.insert(function(err, taskId){
+        var taskHTML = html.generateTaskHTML(taskId, task_name, list_id, 0, important, timestamp);
+      });  
       var taskHTML = html.generateTaskHTML(task_id, task_name, list_id, 0, important, timestamp);
       
       if ($("ul.filterlist").length > 0 || $('#left a.active').length === 1) {
