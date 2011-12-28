@@ -16,6 +16,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
   var wunderlist = main.wunderlist;
   */
   var noteTitle, html, readOnly = false, editMode = false, text, noteElement, newNote, noteId, focused;
+  var notesDialog, detail, currentNote, currentNoteId, currentNoteIcon, currentNoteTitle;
 
   function onReady() {
     // Setting Note Title
@@ -73,7 +74,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
   }
 
 
-  function saveAndClose() {
+  function saveAndClose(e) {
     newNote   = wunderlist.helpers.html.xss_clean($('textarea#noteTextarea').val());
 
     if(newNote.length === 0){
@@ -91,18 +92,20 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     }).update(false, close);
   }
 
-  function saveOrEdit() {
+  function saveOrEdit(e) {
 
       // Skip read-only notes
       if (readOnly !== false) {
         return;
       }
 
+      var node = $("#save-note");
+
       // VIEW MODE      
       if (editMode === false) {
         editMode = true;
 
-        $(this).addClass("button-login").val(wunderlist.language.data.save_changes).show();
+        node.addClass("button-login").val(wunderlist.language.data.save_changes).show();
         //$('input#save-and-close').show();
         $('span.hint').show();
 
@@ -112,7 +115,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
       } else if (editMode === true) {
         editMode = false;
 
-        $(this).removeClass("button-login").val(wunderlist.language.data.edit_changes);
+        node.removeClass("button-login").val(wunderlist.language.data.edit_changes);
         //$('input#save-and-close').hide();
         $('span.hint').hide();
 
@@ -207,8 +210,6 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     });
   }
 
-  
-  var notesDialog, detail, currentNote, currentNoteId, currentNoteIcon, currentNoteTitle, readOnly;
 
   /**
    * Open Notes Window
@@ -259,22 +260,6 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
       notes.windows[notes.currentNoteId].focus();
     }
     */
-  }
-
-
-  /**
-   * Replace the Formatted Note string with the given string
-   * @author Marvin Labod, Daniel Marschner
-   */
-  function format(text, replaceLinks) { 
-    if (replaceLinks === undefined){
-      replaceLinks = true;
-    }
-
-    if (replaceLinks === true) {
-      text = wunderlist.helpers.html.replace_links(text);
-    }
-    return wunderlist.helpers.html.replace_breaks(text);
   }
 
 
