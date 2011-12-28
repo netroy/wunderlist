@@ -15,8 +15,8 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
   var mainWindow = main.getDOMWindow();
   var wunderlist = main.wunderlist;
   */
-  var noteTitle, html, readOnly = false, editMode = false, text, noteElement, newNote, noteId, focused;
-  var notesDialog, detail, currentNote, currentNoteId, currentNoteIcon, currentNoteTitle;
+  var noteTitle, html, readOnly = false, editMode = false, newNote, focused;
+  var notesDialog, detail, currentNoteText, currentNoteId, currentNoteIcon, currentNoteTitle;
 
   function onReady() {
     // Setting Note Title
@@ -41,7 +41,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
       $('input#save-and-close').show();
       $('span.hint').show();
 
-      $('textarea#noteTextarea').val(text).show().focus();
+      $('textarea#noteTextarea').val(currentNoteText).show().focus();
       $('div.savednote').hide();
     }
   }
@@ -78,17 +78,17 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     newNote   = wunderlist.helpers.html.xss_clean($('textarea#noteTextarea').val());
 
     if(newNote.length === 0){
-      noteElement.removeClass("activenote");
+      currentNoteIcon.removeClass("activenote");
     } else {
-      noteElement.addClass("activenote");
+      currentNoteIcon.addClass("activenote");
     }
 
-    noteElement.html(newNote);
-    text = $('textarea#noteTextarea').val();
+    currentNoteIcon.html(newNote);
+    currentNoteText = $('textarea#noteTextarea').val();
 
     wunderlist.helpers.task.set({
-      id: noteId,
-      note: text
+      id: currentNoteId,
+      note: currentNoteText
     }).update(false, close);
   }
 
@@ -110,7 +110,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         //$('input#save-and-close').show();
         $('span.hint').show();
 
-        notesTextArea.val(window.unescape(Encoder.htmlDecode(text))).show().focus();
+        notesTextArea.val(window.unescape(Encoder.htmlDecode(currentNoteText))).show().focus();
         $('div.savednote').hide();
       // EDIT MODE    
       } else if (editMode === true) {
@@ -120,25 +120,25 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         //$('input#save-and-close').hide();
         $('span.hint').hide();
 
-        text = notesTextArea.val();
-        newNote = wunderlist.helpers.html.xss_clean(text);
+        currentNoteText = notesTextArea.val();
+        newNote = wunderlist.helpers.html.xss_clean(currentNoteText);
         notesTextArea.hide();
 
-        noteElement.html(newNote);
+        currentNoteIcon.html(newNote);
 
         $('div.inner').html(format(newNote));
         $('div.savednote').show();
 
         wunderlist.helpers.task.set({
-          id: noteId,
-          note: text
+          id: currentNoteId,
+          note: currentNoteText
         }).update(false, close);
       }
 
       if($(notesTextArea).val().length === 0){
-        noteElement.removeClass("activenote");
+        currentNoteIcon.removeClass("activenote");
       } else {
-        noteElement.addClass("activenote");
+        currentNoteIcon.addClass("activenote");
       } 
   }
 
@@ -214,7 +214,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
    * @author Daniel Marschner
    */
   function openNotesWindow() {
-    notesDialog = wunderlist.helpers.dialogs.openViewEditNoteDialog(currentNoteTitle, currentNote);
+    notesDialog = wunderlist.helpers.dialogs.openViewEditNoteDialog(currentNoteTitle, currentNoteText);
     notesDialog.dialog('open');
     /*
     if (notes.windows[notes.currentNoteId] === null) {
@@ -288,13 +288,9 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     $('li span.note').live('click', function(e) {
       currentNoteIcon  = $(e.target);
       currentNoteTitle = currentNoteIcon.parent().children(".description").text();
-      currentNote      = currentNoteIcon.html();
+      currentNoteText  = currentNoteIcon.html();
       currentNoteId    = currentNoteIcon.parent().attr('id');
       readOnly         = currentNoteIcon.parent('li').hasClass('done');
-
-      noteElement = currentNoteIcon;
-      noteId = currentNoteId;
-      text = currentNote;
 
       openNotesWindow();
     });  
