@@ -356,7 +356,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
       };
       buttons[wunderlist.language.data.delete_note_yes] = function() {
         $('textarea#noteTextarea').val('');
-        $('input#save').trigger('deleteNote');
+        $('input#save-note').trigger('deleteNote');
         closeDialog(deleteNoteDialog);
       };
 
