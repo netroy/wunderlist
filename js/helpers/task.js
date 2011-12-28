@@ -59,7 +59,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
 
   // UPDATE the database task object
   function update(noVersion, callback) {
-    wunderlist.database.updateTask(noVersion, callback);
+    //wunderlist.database.updateTask(noVersion, callback);
   }
 
 
@@ -308,6 +308,14 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     return self;
   }
 
+
+  function deleteTask() {
+    if(!!instance.id){
+      wunderlist.database.deleteTaskById(instance.id, updateDeleted);
+    }
+  }
+
+ 
   // UPDATE the task deleted status in HTML
   function updateDeleted() {
     // Deleted was set
@@ -346,13 +354,13 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     "properties": properties,
     "insert": insert,
     "update": update,
+    "delete": deleteTask,
     "set": set,
     "updateImportant": updateImportant,
     "setDefault": setDefaults,
     "updateDone": updateDone,
     "updatePositions": updatePositions,
-    "updateList": updateList,
-    "updateDeleted": updateDeleted
+    "updateList": updateList
   };
   
   return self;

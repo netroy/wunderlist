@@ -387,7 +387,7 @@ tasks.deletes = function(deleteElement) {
     id: liElement.attr('id'),
     list_id: liElement.attr('rel'),
     deleted: 1
-  }).updateDeleted().update();
+  }).delete();
 };
 
 // On DOM ready

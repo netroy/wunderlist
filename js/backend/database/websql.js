@@ -369,6 +369,17 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
 
 
   /**
+   * Delete tasks by offline ID
+   * @param id - offline id of task to delete
+   */ 
+  var markTaskDeletedByIdSQL = "UPDATE tasks SET deleted = 1 where id = ?";
+  function deleteTaskById(id, callback) {
+    execute(markTaskDeletedByIdSQL, id, function(err, result){
+      callback(err, !err);
+    });
+  }
+
+  /**
    * Fetch info on badges due for today or overdued 
    * @param filter - today or overdue
    * @param callback - function to call task count
@@ -541,12 +552,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     });
   }
 
-
-  function insertTask(noHtml, callback){
-    
-  }
-
-
   function updateTask(noVersion, callback){
     
   }
@@ -603,12 +608,16 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "getDataForSync": getDataForSync,
     "deleteNotSyncedElements": deleteNotSyncedElements,
     "deleteElements": deleteElements,
+
     "createListByOnlineId": createListByOnlineId,
     "getListOnlineIdById": getListOnlineIdById,
     "getListIdByOnlineId": getListIdByOnlineId,
     "updateListByOnlineId": updateListByOnlineId,
-    "updateTaskByOnlineId": updateTaskByOnlineId,
+
     "createTaskByOnlineId": createTaskByOnlineId,
+    "updateTaskByOnlineId": updateTaskByOnlineId,
+    "deleteTaskById": deleteTaskById,
+
     "updateBadgeCount": updateBadgeCount,
     "getLastDoneTasks": getLastDoneTasks,
     "getLastListId": getLastListId,
