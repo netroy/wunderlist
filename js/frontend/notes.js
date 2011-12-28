@@ -1,11 +1,214 @@
 /* global wunderlist */
+
 /**
  * notes.js
  * Contains all the note functionality
  * @author Marvin Labod, Dennis Schneider, Daniel Marschner
  */
-wunderlist.frontend.notes = (function($, wunderlist, html, undefined){
+
+wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Encoder, shortcut, undefined){
   "use strict";
+
+  /*
+  var main = Titanium.UI.getMainWindow();
+  var note = Titanium.UI.getCurrentWindow();
+  var mainWindow = main.getDOMWindow();
+  var wunderlist = main.wunderlist;
+  */
+  var noteTitle, html, readOnly = false, editMode = false, text, noteElement, newNote, noteId, focused;
+
+  function setValues(_noteElement, _noteId, _readOnly, _text) {
+    noteElement = _noteElement;
+    noteId = _noteId;
+    readOnly = _readOnly;
+    text = _text;
+  }
+
+  function onReady() {
+    // Setting Note Title
+    $("div.dialog-notes span.ui-dialog-title").text('Task: ' + noteTitle);
+
+    if (html !== '' || readOnly === true) {
+      $('span.hint').hide();
+      $('div.inner').html(html);
+      $('div.savednote').show();
+
+      if (readOnly === true) {
+        $('input#save-note').hide();
+      } else {
+        $('input#save-note').removeClass("button-login").val(wunderlist.language.data.edit_changes).show();
+      }
+
+      $('input#save-and-close').hide();
+    } else {
+      editMode = true;
+
+      $('input#save-note').addClass("button-login").val(wunderlist.language.data.save_changes);
+      $('input#save-and-close').show();
+      $('span.hint').show();
+
+      $('textarea#noteTextarea').val(text).show().focus();
+      $('div.savednote').hide();
+    }
+  }
+
+
+  /**
+   * Close the dialog
+   */
+  function close(){
+    // TODO: Fill the stub
+  }
+
+  /**
+   * Replace the Formatted Note string with the given string
+   * @author Marvin Labod, Daniel Marschner
+   */
+  function format(text, replaceLinks) { 
+    if (replaceLinks === undefined){
+      replaceLinks = true;
+    }
+    if (replaceLinks === true){
+      text = wunderlist.helpers.html.replace_links(text);
+    }
+    return wunderlist.helpers.html.replace_breaks(text);
+  }
+
+
+  function forceSave() {
+    $('input#save-note').trigger('click');
+  }
+
+
+  function saveAndClose() {
+    newNote   = wunderlist.helpers.html.xss_clean($('textarea#noteTextarea').val());
+
+    if(newNote.length === 0){
+      noteElement.removeClass("activenote");
+    } else {
+      noteElement.addClass("activenote");
+    }
+
+    noteElement.html(newNote);
+    text = $('textarea#noteTextarea').val();
+
+    wunderlist.helpers.task.set({
+      id: noteId,
+      note: text
+    }).update(false, close);
+  }
+
+
+  function initHelper() {
+    onReady();
+    focused = true;
+
+    $('#save-and-close').val(wunderlist.language.data.save_generic);
+    $('#delete').val(wunderlist.language.data.delete_generic);
+
+    $('span.hint').text(wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ 
+      wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
+
+    $('input#delete').live('click', function() {
+      if (wunderlist.settings.getString('delete_prompt', '1') === 1) {
+        wunderlist.helpers.dialogs.openNoteDeleteDialog();
+      } else {
+        $('input#save-note').trigger('deleteNote');
+      }
+    });
+
+    $('input#save-note').live('deleteNote', function () {
+      $('textarea#noteTextarea').val('');
+      editMode = true;
+      $('input#save-note').click();
+    });
+
+    // Save / Edit Button
+    $('input#save-note').live('click', function() {
+
+      // VIEW MODE      
+      if (editMode === false) {
+        editMode = true;
+
+        $(this).addClass("button-login").val(wunderlist.language.data.save_changes).show();
+        //$('input#save-and-close').show();
+        $('span.hint').show();
+
+        $('textarea#noteTextarea').val(window.unescape(Encoder.htmlDecode(text))).show().focus();
+        $('div.savednote').hide();
+      // EDIT MODE    
+      } else if (editMode === true) {
+        editMode = false;
+
+        $(this).removeClass("button-login").val(wunderlist.language.data.edit_changes);
+        //$('input#save-and-close').hide();
+        $('span.hint').hide();
+
+        newNote = wunderlist.helpers.html.xss_clean($('textarea#noteTextarea').val());
+
+        noteElement.html(newNote);
+
+        $('div.inner').html(format(newNote));
+        $('div.savednote').show();      
+        $('textarea#noteTextarea').hide();
+
+        text = $('textarea#noteTextarea').val();
+
+        wunderlist.helpers.task.set({
+          id: noteId,
+          note: text
+        }).update(false, close);
+      }
+
+      if($('textarea#noteTextarea').val().length === 0){
+        noteElement.removeClass("activenote");
+      } else {
+        noteElement.addClass("activenote");
+      } 
+    });
+
+    // Save & Close Button
+    $('input#save-and-close').live('click', saveAndClose);
+
+    // Open EditMode with Double Click
+    $('div.savednote').live('dblclick', function() {
+      if (readOnly === false) {
+        $('input#save-note').click();
+      }
+    });
+
+    // Save note and close the dialog
+    shortcut.add(wunderlist.settings.shortcutkey + '+Enter', saveAndClose, {'disable_in_input' : false});
+
+    // Open every link in the browser
+    $('a[href^=http], a[href^=https], a[href^=ftp], a[href^=mailto]').live('click', function() {
+      Titanium.Desktop.openURL(this.href);
+      return false;
+    });
+
+    // Open every file in the finder app
+    $('span.openApp').live('click', function() {
+      Titanium.Platform.openApplication($.trim($(this).text()));
+    });
+
+    // Shortcut Bind Esc - close window
+    shortcut.add('Esc', function (evt) {
+      if (editMode) {
+        saveAndClose();
+      } else {
+        close();
+      }
+    });
+
+
+    $.bind(window, Titanium.FOCUSED, function() {
+      if(focused === false) {
+        onReady();
+        focused = true;
+      }
+    });
+  }
+
   
   var notesDialog, detail, currentNote, currentNoteId, currentNoteIcon, currentNoteTitle, readOnly;
 
@@ -16,7 +219,6 @@ wunderlist.frontend.notes = (function($, wunderlist, html, undefined){
   function openNotesWindow() {
     notesDialog = wunderlist.helpers.dialogs.openViewEditNoteDialog(currentNoteTitle, currentNote);
     notesDialog.dialog('open');
-
     /*
     if (notes.windows[notes.currentNoteId] === null) {
       var notesWindow = Titanium.UI.getCurrentWindow().createWindow({
@@ -47,7 +249,7 @@ wunderlist.frontend.notes = (function($, wunderlist, html, undefined){
 
       notesWindow.addEventListener(Titanium.CLOSE, function(e) {
         if (notesWindow.editMode) {
-          wunderlist.helpers.note.forceSave();
+          forceSave();
         }
         //wunderlist.settings.saveNoteWindowPosition(notesWindow);
         notes.windows[notesWindow.noteId] = null;
@@ -98,6 +300,9 @@ wunderlist.frontend.notes = (function($, wunderlist, html, undefined){
 
 
   function init() {
+
+    initHelper();
+
     // Click on note icon
     $('li span.note').live('click', function(e) {
       currentNoteIcon  = $(e.target);
@@ -105,13 +310,17 @@ wunderlist.frontend.notes = (function($, wunderlist, html, undefined){
       currentNote      = currentNoteIcon.html();
       currentNoteId    = currentNoteIcon.parent().attr('id');
       readOnly         = currentNoteIcon.parent('li').hasClass('done');
+
+      setValues(currentNoteIcon, currentNoteId, readOnly, currentNote);
       openNotesWindow();
     });  
   }
 
-  return {
+  var self = {
     "init": init,
     "closeNoteWindow": closeNoteWindow
   };
 
-})(jQuery, wunderlist, html);
+  return self;
+
+})(window, jQuery, wunderlist, html, Titanium, Encoder, shortcut);
