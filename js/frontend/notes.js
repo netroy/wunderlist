@@ -99,35 +99,35 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         return;
       }
 
-      var node = $("#save-note");
+      var saveButton = $("#save-note");
+      var notesTextArea = $('textarea#noteTextarea');
 
       // VIEW MODE      
       if (editMode === false) {
         editMode = true;
 
-        node.addClass("button-login").val(wunderlist.language.data.save_changes).show();
+        saveButton.addClass("button-login").val(wunderlist.language.data.save_changes).show();
         //$('input#save-and-close').show();
         $('span.hint').show();
 
-        $('textarea#noteTextarea').val(window.unescape(Encoder.htmlDecode(text))).show().focus();
+        notesTextArea.val(window.unescape(Encoder.htmlDecode(text))).show().focus();
         $('div.savednote').hide();
       // EDIT MODE    
       } else if (editMode === true) {
         editMode = false;
 
-        node.removeClass("button-login").val(wunderlist.language.data.edit_changes);
+        saveButton.removeClass("button-login").val(wunderlist.language.data.edit_changes);
         //$('input#save-and-close').hide();
         $('span.hint').hide();
 
-        newNote = wunderlist.helpers.html.xss_clean($('textarea#noteTextarea').val());
+        text = notesTextArea.val();
+        newNote = wunderlist.helpers.html.xss_clean(text);
+        notesTextArea.hide();
 
         noteElement.html(newNote);
 
         $('div.inner').html(format(newNote));
-        $('div.savednote').show();      
-        $('textarea#noteTextarea').hide();
-
-        text = $('textarea#noteTextarea').val();
+        $('div.savednote').show();
 
         wunderlist.helpers.task.set({
           id: noteId,
@@ -135,7 +135,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         }).update(false, close);
       }
 
-      if($('textarea#noteTextarea').val().length === 0){
+      if($(notesTextArea).val().length === 0){
         noteElement.removeClass("activenote");
       } else {
         noteElement.addClass("activenote");
@@ -167,10 +167,8 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
 
     $('input#delete').live('click', deletePrompt);
 
-    $('input#save-note').live('deleteNote', deleteNote);
-
     // Save / Edit Button
-    $('input#save-note').live('click', saveOrEdit);
+    $('input#save-note').live('deleteNote', deleteNote).live('click', saveOrEdit);
 
     // Save & Close Button
     $('input#save-and-close').live('click', saveAndClose);
