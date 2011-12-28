@@ -1,5 +1,5 @@
 **TODO**
-
+-1. REMOVE SHARED VARIABLES, THEY ARE CONFUSING & ERROR-PRONE
 0. Finish the WebSQL backend.
 1. merge helpers with front-end
 2. all files should be 
