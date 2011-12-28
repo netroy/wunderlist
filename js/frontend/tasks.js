@@ -355,7 +355,7 @@ tasks.edit = function() {
   wunderlist.helpers.task.set({
     id: task_id,
     name: html.convertString(task_name)
-  }).update(null, wunderlist.frontend.filters.updateBadges);
+  }).update(false, wunderlist.frontend.filters.updateBadges);
 
   // TODO: What would this line do ??
   //$('html').find('.description').html();
@@ -386,7 +386,7 @@ tasks.deletes = function(deleteElement) {
     id: liElement.attr('id'),
     list_id: liElement.attr('rel'),
     deleted: 1
-  }).update(null, wunderlist.helpers.task.updateDeleted);
+  }).update(false, wunderlist.helpers.task.updateDeleted);
 };
 
 // On DOM ready
@@ -621,7 +621,7 @@ $(function() {
         list_id: $(this).parent().attr("rel").replace('list', ''),
         done: done,
         done_date: done_date
-      }).updateDone().update();
+      }).update(false, wunderlist.helpers.task.updateDone);
     }
 
     setTimeout(function() { 
