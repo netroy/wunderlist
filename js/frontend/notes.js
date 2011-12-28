@@ -6,7 +6,7 @@
  * @author Marvin Labod, Dennis Schneider, Daniel Marschner
  */
 
-wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Encoder, shortcut, undefined){
+wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, shortcut, undefined){
   "use strict";
 
   /*
@@ -16,13 +16,6 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Enc
   var wunderlist = main.wunderlist;
   */
   var noteTitle, html, readOnly = false, editMode = false, text, noteElement, newNote, noteId, focused;
-
-  function setValues(_noteElement, _noteId, _readOnly, _text) {
-    noteElement = _noteElement;
-    noteId = _noteId;
-    readOnly = _readOnly;
-    text = _text;
-  }
 
   function onReady() {
     // Setting Note Title
@@ -98,33 +91,12 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Enc
     }).update(false, close);
   }
 
+  function saveOrEdit() {
 
-  function initHelper() {
-    onReady();
-    focused = true;
-
-    $('#save-and-close').val(wunderlist.language.data.save_generic);
-    $('#delete').val(wunderlist.language.data.delete_generic);
-
-    $('span.hint').text(wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ 
-      wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
-
-    $('input#delete').live('click', function() {
-      if (wunderlist.settings.getString('delete_prompt', '1') === 1) {
-        wunderlist.helpers.dialogs.openNoteDeleteDialog();
-      } else {
-        $('input#save-note').trigger('deleteNote');
+      // Skip read-only notes
+      if (readOnly !== false) {
+        return;
       }
-    });
-
-    $('input#save-note').live('deleteNote', function () {
-      $('textarea#noteTextarea').val('');
-      editMode = true;
-      $('input#save-note').click();
-    });
-
-    // Save / Edit Button
-    $('input#save-note').live('click', function() {
 
       // VIEW MODE      
       if (editMode === false) {
@@ -165,17 +137,43 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Enc
       } else {
         noteElement.addClass("activenote");
       } 
-    });
+  }
+
+  function deletePrompt() {
+    if (wunderlist.settings.getString('delete_prompt', '1') === 1) {
+      wunderlist.helpers.dialogs.openNoteDeleteDialog();
+    } else {
+      $('input#save-note').trigger('deleteNote');
+    }
+  }
+
+  function deleteNote() {
+    $('textarea#noteTextarea').val('');
+    editMode = true;
+    $('input#save-note').click();
+  }
+
+  function initHelper() {
+    onReady();
+    focused = true;
+
+    $('#save-and-close').val(wunderlist.language.data.save_generic);
+    $('#delete').val(wunderlist.language.data.delete_generic);
+
+    $('span.hint').text(wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
+
+    $('input#delete').live('click', deletePrompt);
+
+    $('input#save-note').live('deleteNote', deleteNote);
+
+    // Save / Edit Button
+    $('input#save-note').live('click', saveOrEdit);
 
     // Save & Close Button
     $('input#save-and-close').live('click', saveAndClose);
 
     // Open EditMode with Double Click
-    $('div.savednote').live('dblclick', function() {
-      if (readOnly === false) {
-        $('input#save-note').click();
-      }
-    });
+    $('div.savednote').live('dblclick', saveOrEdit);
 
     // Save note and close the dialog
     shortcut.add(wunderlist.settings.shortcutkey + '+Enter', saveAndClose, {'disable_in_input' : false});
@@ -274,9 +272,9 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Enc
     }
 
     if (replaceLinks === true) {
-      text = html.replace_links(text);
+      text = wunderlist.helpers.html.replace_links(text);
     }
-    return html.replace_breaks(text);
+    return wunderlist.helpers.html.replace_breaks(text);
   }
 
 
@@ -311,7 +309,10 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Enc
       currentNoteId    = currentNoteIcon.parent().attr('id');
       readOnly         = currentNoteIcon.parent('li').hasClass('done');
 
-      setValues(currentNoteIcon, currentNoteId, readOnly, currentNote);
+      noteElement = currentNoteIcon;
+      noteId = currentNoteId;
+      text = currentNote;
+
       openNotesWindow();
     });  
   }
@@ -323,4 +324,4 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, html, Titanium, Enc
 
   return self;
 
-})(window, jQuery, wunderlist, html, Titanium, Encoder, shortcut);
+})(window, jQuery, wunderlist, Titanium, Encoder, shortcut);
