@@ -159,7 +159,9 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
       if(prop.match(/^(name|note)$/)){
         val = "'"+val+"'";
       }
-      set.push(prop + "=" + val);
+      if(!!val) {
+        set.push(prop + "=" + val);
+      }
     }
     execute("UPDATE ? SET ? WHERE ?", type, set, where, callback);
   }
@@ -367,17 +369,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     });
   }
 
-
-  /**
-   * Delete tasks by offline ID
-   * @param id - offline id of task to delete
-   */ 
-  var markTaskDeletedByIdSQL = "UPDATE tasks SET deleted = 1 where id = ?";
-  function deleteTaskById(id, callback) {
-    execute(markTaskDeletedByIdSQL, id, function(err, result){
-      callback(err, !err);
-    });
-  }
 
   /**
    * Fetch info on badges due for today or overdued 
@@ -616,7 +607,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
 
     "createTaskByOnlineId": createTaskByOnlineId,
     "updateTaskByOnlineId": updateTaskByOnlineId,
-    "deleteTaskById": deleteTaskById,
 
     "updateBadgeCount": updateBadgeCount,
     "getLastDoneTasks": getLastDoneTasks,

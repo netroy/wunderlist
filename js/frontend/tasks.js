@@ -355,8 +355,7 @@ tasks.edit = function() {
   wunderlist.helpers.task.set({
     id: task_id,
     name: html.convertString(task_name)
-  }).update();
-  wunderlist.frontend.filters.updateBadges();
+  }).update(null, wunderlist.frontend.filters.updateBadges);
 
   // TODO: What would this line do ??
   //$('html').find('.description').html();
@@ -387,7 +386,7 @@ tasks.deletes = function(deleteElement) {
     id: liElement.attr('id'),
     list_id: liElement.attr('rel'),
     deleted: 1
-  }).delete();
+  }).update(null, wunderlist.helpers.task.updateDeleted);
 };
 
 // On DOM ready
