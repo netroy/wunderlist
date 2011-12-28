@@ -5,3 +5,5 @@ timanifest
 manifest
 *.json
 version.txt
+.nodester.appconfig
+node_modules
