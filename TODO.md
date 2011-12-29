@@ -16,6 +16,7 @@
 10. Use documentFragments instead of directly attaching to DOM for better performance
 11. DOM based notifications for browsers other than Chrome & notification API on chrome
 12. write properties helper that works over Titanium & localStorage(for web)
+13. Most dialogs should go into there own modules, like notes dialogs should be in notes.js, making the code more independant. dialogs.js should be much smaller
 
 <br/>
 ***
