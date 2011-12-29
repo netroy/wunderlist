@@ -348,7 +348,7 @@ word-wrap: break-word}
 
 .dialog-notes .savednote {overflow:auto}
 
-.dialog-notes .savednote .inner {background: url(/images/notebg.png); padding:5px 20px 0px 20px; color:#333; min-height:98%}
+.dialog-notes .savednote .inner {background: url(/images/notebg.png); padding:5px 20px 0px 20px; color:#333; min-height:96%}
 
 .dialog-notes .savednote .inner a { color: #2b96f1; text-decoration: underline}
 
