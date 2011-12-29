@@ -24,11 +24,11 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
   /**
    * Creates those tiny little red badges on the filters and on the Dock Icon (only on Mac OS X)
    * to remind the user of "overdue" and "today" tasks
-   * TODO: Has to be updated, because of a freaky badge count behaviour. 
+   * TODO: Has to be updated, because of a freaky badge count behaviour.
    * If a sort a task, the badge will hide/show for every task in the list.
    * @author Dennis Schneider, Christian Reber
    */
-  function updateBadgesInfo(todaycount, overduecount){ 
+  function updateBadgesInfo(todaycount, overduecount){
     var todayBadges = $('span', today), overdueBadges = $('span', overdue);
     var lists = $("#lists"), note = $("#note");
 
@@ -75,7 +75,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     }
   }
 
-  // Fetch info from DB & then call updateBadgesInfo method with badge counts 
+  // Fetch info from DB & then call updateBadgesInfo method with badge counts
   function updateBadges() {
     wunderlist.database.updateBadgeCount('today', function(err, todaycount){
       wunderlist.database.updateBadgeCount('overdue', function(err, overduecount) {
@@ -212,7 +212,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     // Attach events
     $('.list').click(clearActiveStates);
 
-    // Filter buttons on the bottom bar 
+    // Filter buttons on the bottom bar
     // Activates filter on click
     bottomBarLeft.delegate("a.filter", "click", switchFilter);
 

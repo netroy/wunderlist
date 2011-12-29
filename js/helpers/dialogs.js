@@ -337,7 +337,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
    */
   function openViewEditNoteDialog(title, content){
     content = window.unescape(html.replace_breaks(html.replace_links(content)));
-    viewEditNoteDialog = wunderlist.helpers.dialogs.generateDialog("", html.generateNotesDialogHTML(), 'dialog-notes');
+    viewEditNoteDialog = generateDialog("", html.generateNotesDialogHTML(), 'dialog-notes');
     viewEditNoteDialog.dialog({
       title: title
     }).find(".inner").html(content);
@@ -351,7 +351,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
   function openNoteDeleteDialog() {
     if ($("[role='dialog']").length === 0) {
       var buttons = {};
-      buttons[wunderlist.language.data.delete_note_no] = function() { 
+      buttons[wunderlist.language.data.delete_note_no] = function() {
         $(this).dialog('close');
       };
       buttons[wunderlist.language.data.delete_note_yes] = function() {
@@ -385,14 +385,14 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
    * Open a prompt asking for the deletion of a list
    * @author Dennis Schneider
    */
-  function createDeleteListDialog(listId, listElement) {  
+  function createDeleteListDialog(listId, listElement) {
     if ($("[role='dialog']").length === 0) {
       var buttonOptions = {};
       buttonOptions[wunderlist.language.data.list_delete_no]  = function() {
         $(this).dialog('close');
         $('a.list input').focus();
       };
-      buttonOptions[wunderlist.language.data.list_delete_yes] = function() { 
+      buttonOptions[wunderlist.language.data.list_delete_yes] = function() {
         if (listId != 1) {
           wunderlist.frontend.lists.deleteList(listId, listElement);
         }

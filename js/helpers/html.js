@@ -5,16 +5,16 @@ var html = html || {};
  * @author Marvin Labod
  */
 html.generateNotesDialogHTML = function() {
-    var html_code = 
-    		'<div class="notes_buffer">' +
-				'<textarea id="noteTextarea"></textarea><div class="savednote"><div class="inner"></div></div>' +
-			'</div>' +
-    		'<div class="notes_buttons">' +
-    			'<span class="hint">'+ wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
-    			'<input id="save-and-close" class="input-button button-login" type="submit" value="'+ wunderlist.language.data.save_and_close_changes +'" />' +
-    			'<input id="save-note" class="input-button" type="submit" value="'+ wunderlist.language.data.edit_changes +'" />' +
-    		'</div>';
-
+    var html_code =
+      '<div class="notes_buffer">'+
+        '<textarea id="noteTextarea"></textarea>' +
+        '<div class="savednote"><div class="inner"></div></div>' +
+      '</div>' +
+      '<div class="notes_buttons">' +
+        '<span class="hint">'+ wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
+        '<input id="save-and-close" class="input-button button-login" type="submit" value="'+ wunderlist.language.data.save_and_close_changes +'" />' +
+        '<input id="save-note" class="input-button" type="submit" value="'+ wunderlist.language.data.edit_changes +'" />' +
+      '</div>';
 	return html_code;
 };
 

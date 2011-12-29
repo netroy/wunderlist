@@ -248,7 +248,7 @@ tasks.add = function() {
       
       var task_id  = wunderlist.helpers.task.insert(function(err, taskId){
         var taskHTML = html.generateTaskHTML(taskId, task_name, list_id, 0, important, timestamp);
-      });  
+      });
       var taskHTML = html.generateTaskHTML(task_id, task_name, list_id, 0, important, timestamp);
       
       if ($("ul.filterlist").length > 0 || $('#left a.active').length === 1) {
@@ -276,7 +276,7 @@ tasks.add = function() {
             } else {
               $(ulElement).append(taskHTML).find("li:last").hide().fadeIn(225);
             }
-          } 
+          }
         } else {
           listHTML  = '<h3 class="clickable cursor" rel="' + list_id + '">' + $('a#list' + list_id + ' b').text() + '</h3>';
           listHTML += '<ul id="filterlist' + list_id + '" rel="' + ulElement.attr('rel') + '" class="mainlist sortable filterlist">' + taskHTML + '</ul>';
@@ -428,7 +428,7 @@ $(function() {
         $(".addwrapper input").focus();
         //$("div.add input").val(taskName);
         delete wunderlist.lastSavedTaskName;
-        stepUp = false;  
+        stepUp = false;
       }, 50);
     } else if (e.keyCode === 40) {
       if(stepDown === false) {
@@ -447,10 +447,10 @@ $(function() {
       }
 
       setTimeout(function() {
-        $(".addwrapper input").focus(); 
+        $(".addwrapper input").focus();
         //$("div.add input").val(taskName);
         delete wunderlist.lastSavedTaskName;
-        stepDown = false; 
+        stepDown = false;
       }, 50);
     }
   });
@@ -489,12 +489,12 @@ $(function() {
         $('.add_task_hint').fadeOut('fast');
       }
     });
-    $('.addwrapper input').live('blur', function () {      
+    $('.addwrapper input').live('blur', function () {
       setTimeout(function () {
         if (!isShowingAgain) {
           $('.add_task_hint').fadeOut('fast');
         }
-      }, 200);    
+      }, 200);
     });
     wunderlist.settings.setInt('number_of_shown_add_task_hints', numberOfShownHints);
   }
@@ -610,7 +610,7 @@ $(function() {
       var done, done_date;
       if($(this).hasClass("checked")) {
         done = 1;
-        done_date = html.getWorldWideDate();  
+        done_date = html.getWorldWideDate();
       } else { // If is already checked, append to upper list
         done = 0;
         done_date = 0;
@@ -624,7 +624,7 @@ $(function() {
       }).update(false, wunderlist.helpers.task.updateDone);
     }
 
-    setTimeout(function() { 
+    setTimeout(function() {
       tasks.checkClicked = false;
     }, 100);
   });
