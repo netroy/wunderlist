@@ -28,13 +28,14 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    * other arguments are used for rendering templates & last argument if a function, is used for callback
    */
   function execute(sql){
-    var args = Array.prototype.slice.call(arguments, 0);
-    //var caller = arguments.callee.caller.name;
-    var callback = function(){
-      log([args].concat(arguments));
-    };
+    var args = Array.prototype.slice.call(arguments, 0), callback;
     if(typeof args[args.length-1] === 'function'){
       callback = args.pop();
+    } else {
+      // caller = arguments.callee.caller.name;
+      callback = function(){
+        log([args].concat(arguments));
+      };
     }
 
     sql = printf.apply(null, args);
@@ -153,17 +154,17 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
   function updateByMap(type, map, where, callback){
-    var set = [], prop, val;
+    var data = [], prop, val;
     for(prop in map){
       val = map[prop];
       if(prop.match(/^(name|note)$/)){
         val = "'"+val+"'";
       }
-      if(!!val) {
-        set.push(prop + "=" + val);
+      if(typeof val !== 'undefined' && val !== null) {
+        data.push(prop + "=" + val);
       }
     }
-    execute("UPDATE ? SET ? WHERE ?", type, set, where, callback);
+    execute("UPDATE ? SET ? WHERE ?", type, data, where, callback);
   }
 
   /**
