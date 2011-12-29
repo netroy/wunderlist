@@ -7,14 +7,9 @@
  */
 
 wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, shortcut, undefined){
+
   "use strict";
 
-  /*
-  var main = Titanium.UI.getMainWindow();
-  var note = Titanium.UI.getCurrentWindow();
-  var mainWindow = main.getDOMWindow();
-  var wunderlist = main.wunderlist;
-  */
   var noteTitle, html, readOnly = false, editMode = false, newNote, focused;
   var notesDialog, detail, currentNoteText, currentNoteId, currentNoteIcon, currentNoteTitle;
 
@@ -22,27 +17,33 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     // Setting Note Title
     $("div.dialog-notes span.ui-dialog-title").text('Task: ' + noteTitle);
 
+    var saveButton = $("#save-note");
+    var saveCloseButton = $('input#save-and-close');
+    var notesTextArea = $('textarea#noteTextarea');
+    var hintIcon = $('span.hint');
+    var savedNote = $('div.savednote');
+
     if (html !== '' || readOnly === true) {
-      $('span.hint').hide();
+      hintIcon.hide();
       $('div.inner').html(html);
-      $('div.savednote').show();
+      savedNote.show();
 
       if (readOnly === true) {
-        $('input#save-note').hide();
+        saveButton.hide();
       } else {
-        $('input#save-note').removeClass("button-login").val(wunderlist.language.data.edit_changes).show();
+        saveButton.removeClass("button-login").val(wunderlist.language.data.edit_changes).show();
       }
 
-      $('input#save-and-close').hide();
+      saveCloseButton.hide();
     } else {
       editMode = true;
 
-      $('input#save-note').addClass("button-login").val(wunderlist.language.data.save_changes);
-      $('input#save-and-close').show();
-      $('span.hint').show();
+      saveButton.addClass("button-login").val(wunderlist.language.data.save_changes);
+      saveCloseButton.show();
+      hintIcon.show();
 
-      $('textarea#noteTextarea').val(currentNoteText).show().focus();
-      $('div.savednote').hide();
+      notesTextArea.val(currentNoteText).show().focus();
+      savedNote.hide();
     }
   }
 
@@ -58,7 +59,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
    * Replace the Formatted Note string with the given string
    * @author Marvin Labod, Daniel Marschner
    */
-  function format(text, replaceLinks) { 
+  function format(text, replaceLinks) {
     if (replaceLinks === undefined){
       replaceLinks = true;
     }
@@ -75,16 +76,12 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
 
 
   function saveAndClose(e) {
-    newNote   = wunderlist.helpers.html.xss_clean($('textarea#noteTextarea').val());
+    var notesTextArea = $('textarea#noteTextarea');
+    currentNoteText = notesTextArea.val();
+    newNote = wunderlist.helpers.html.xss_clean(currentNoteText);
 
-    if(newNote.length === 0){
-      currentNoteIcon.removeClass("activenote");
-    } else {
-      currentNoteIcon.addClass("activenote");
-    }
-
+    currentNoteIcon.toggleClass("activenode", newNote.length !== 0);
     currentNoteIcon.html(newNote);
-    currentNoteText = $('textarea#noteTextarea').val();
 
     wunderlist.helpers.task.set({
       id: currentNoteId,
@@ -101,8 +98,9 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
 
       var saveButton = $("#save-note");
       var notesTextArea = $('textarea#noteTextarea');
+      var savedNote = $('div.savednote');
 
-      // VIEW MODE      
+      // VIEW MODE
       if (editMode === false) {
         editMode = true;
 
@@ -111,8 +109,8 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         $('span.hint').show();
 
         notesTextArea.val(window.unescape(Encoder.htmlDecode(currentNoteText))).show().focus();
-        $('div.savednote').hide();
-      // EDIT MODE    
+        savedNote.hide();
+      // EDIT MODE
       } else if (editMode === true) {
         editMode = false;
 
@@ -127,7 +125,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         currentNoteIcon.html(newNote);
 
         $('div.inner').html(format(newNote));
-        $('div.savednote').show();
+        savedNote.show();
 
         wunderlist.helpers.task.set({
           id: currentNoteId,
@@ -139,7 +137,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         currentNoteIcon.removeClass("activenote");
       } else {
         currentNoteIcon.addClass("activenote");
-      } 
+      }
   }
 
   function deletePrompt() {
@@ -213,9 +211,32 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
    * Open Notes Window
    * @author Daniel Marschner
    */
+  var notesDialogTemplate =
+      '<div class="notes_buffer">'+
+        '<textarea id="noteTextarea"></textarea>' +
+        '<div class="savednote"><div class="inner"></div></div>' +
+      '</div>' +
+      '<div class="notes_buttons">' +
+        '<span class="hint">{{settings.shortcutkey}} + {{language.data.return_key}}: {{language.data.save_and_close_changes}}</span>' +
+        '<input id="save-and-close" class="input-button button-login" type="submit" value="{{language.data.save_and_close_changes}}" />' +
+        '<input id="save-note" class="input-button" type="submit" value="{{language.data.edit_changes}}" />' +
+      '</div>';
+  
   function openNotesWindow() {
-    notesDialog = wunderlist.helpers.dialogs.openViewEditNoteDialog(currentNoteTitle, currentNoteText);
-    notesDialog.dialog('open');
+    var content = window.unescape(wunderlist.helpers.html.replace_breaks(wunderlist.helpers.html.replace_links(currentNoteText)));
+    var markup = wunderlist.helpers.templates.render(notesDialogTemplate, wunderlist);
+    notesDialog = $('<div/>').html(markup);
+    notesDialog.find(".inner").html(content);
+    notesDialog = notesDialog.dialog({
+      autoOpen : true,
+      draggable : false,
+      resizable : false,
+      modal : true,
+      dialogClass : 'dialog-notes',
+      title : currentNoteTitle,
+      closeOnEscape : true
+    });
+
     /*
     if (notes.windows[notes.currentNoteId] === null) {
       var notesWindow = Titanium.UI.getCurrentWindow().createWindow({
@@ -269,7 +290,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     /*
     if (taskId === undefined && notes.window !== undefined) {
       notes.window.close();
-    } else if (taskId !== undefined && notes.window !== undefined) { 
+    } else if (taskId !== undefined && notes.window !== undefined) {
       if (notes.window.noteId === taskId) {
         notes.window.close();
         return true;
@@ -293,7 +314,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
       readOnly         = currentNoteIcon.parent('li').hasClass('done');
 
       openNotesWindow();
-    });  
+    });
   }
 
   var self = {
