@@ -213,17 +213,6 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     // Save note and close the dialog
     shortcut.add(wunderlist.settings.shortcutkey + '+Enter', saveOrEdit, {'disable_in_input' : false});
 
-    // Open every link in the browser
-    $('a[href^=http], a[href^=https], a[href^=ftp], a[href^=mailto]').live('click', function() {
-      Titanium.Desktop.openURL(this.href);
-      return false;
-    });
-
-    // Open every file in the finder app
-    $('span.openApp').live('click', function() {
-      Titanium.Platform.openApplication($.trim($(this).text()));
-    });
-
     // Shortcut Bind Esc - close window
     shortcut.add('Esc', function (evt) {
       if (editMode) {
@@ -232,7 +221,6 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
         close();
       }
     });
-
 
     $.bind(window, Titanium.FOCUSED, function() {
       if(focused === false) {
