@@ -116,6 +116,18 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
     return wunderlist.helpers.html.replace_breaks(text);
   }
 
+  function cleanUp() {
+    var saveButton = $("#save-note");
+    var saveCloseButton = $('input#save-and-close');
+    var notesTextArea = $('textarea#noteTextarea');
+    var savedNote = $('div.savednote');
+
+    saveButton.removeClass("button-login").val(wunderlist.language.data.edit_changes);
+    saveCloseButton.hide();
+    $('span.hint').hide();
+    notesTextArea.val("").hide();
+    savedNote.show();
+  }
 
   function saveOrEdit(e) {
 
@@ -143,32 +155,22 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
     } else if (editMode === true) {
       editMode = false;
 
-      saveButton.removeClass("button-login").val(wunderlist.language.data.edit_changes);
-      saveCloseButton.hide();
-      $('span.hint').hide();
-
       currentNoteText = notesTextArea.val();
       newNote = wunderlist.helpers.html.xss_clean(currentNoteText);
-      notesTextArea.hide();
 
-      currentNoteIcon.toggleClass("activenode", newNote.length !== 0);
+      currentNoteIcon.toggleClass("activenote", newNote.length !== 0);
       currentNoteIcon.html(newNote);
 
       $('div.inner').html(format(newNote));
-      savedNote.show();
 
-      var onSave = (e.currentTarget === saveButton[0])? wunderlist.nop: close;
+      cleanUp();
+
+      var onSave = (e && e.currentTarget === saveButton[0])? wunderlist.nop: close;
 
       wunderlist.helpers.task.set({
         id: currentNoteId,
         note: currentNoteText
       }).update(false, onSave);
-    }
-
-    if($(notesTextArea).val().length === 0){
-      currentNoteIcon.removeClass("activenote");
-    } else {
-      currentNoteIcon.addClass("activenote");
     }
   }
 
@@ -213,15 +215,6 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
     // Save note and close the dialog
     shortcut.add(wunderlist.settings.shortcutkey + '+Enter', saveOrEdit, {'disable_in_input' : false});
 
-    // Shortcut Bind Esc - close window
-    shortcut.add('Esc', function (evt) {
-      if (editMode) {
-        saveOrEdit();
-      } else {
-        close();
-      }
-    });
-
     $(window).bind("focus", onReady);
   }
 
@@ -230,13 +223,24 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
    * @author Daniel Marschner
    */
   
+  // force save when dialog closes on ESC key
+  function beforeClose(e) {
+    if(editMode && e && e.which === 27) {
+      saveOrEdit();
+    } else {
+      cleanUp();
+    }
+    return true;
+  }
+
   function openNotesWindow() {
     var content = window.unescape(wunderlist.helpers.html.replace_breaks(wunderlist.helpers.html.replace_links(currentNoteText)));
     notesDialog.dialog({
       title: currentNoteTitle,
       dialogClass : 'dialog-notes',
       modal : true,
-      autoOpen: true
+      autoOpen: true,
+      beforeClose: beforeClose
     }).find(".inner").html(content);
   }
 
