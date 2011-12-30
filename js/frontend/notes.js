@@ -11,7 +11,54 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
   "use strict";
 
   var noteTitle, html, readOnly = false, editMode = false, newNote, focused;
-  var notesDialog, detail, currentNoteText, currentNoteId, currentNoteIcon, currentNoteTitle;
+  var detail, currentNoteText, currentNoteId, currentNoteIcon, currentNoteTitle;
+
+
+  var notesDialog, noteDeleteDialog, notesDialogTemplate =
+      '<div class="notes_buffer">'+
+        '<textarea id="noteTextarea"></textarea>' +
+        '<div class="savednote"><div class="inner"></div></div>' +
+      '</div>' +
+      '<div class="notes_buttons">' +
+        '<span class="hint">{{settings.shortcutkey}} + {{language.data.return_key}}: {{language.data.save_and_close_changes}}</span>' +
+        '<input id="save-and-close" class="input-button button-login" type="submit" value="{{language.data.save_and_close_changes}}" />' +
+        '<input id="save-note" class="input-button" type="submit" value="{{language.data.edit_changes}}" />' +
+      '</div>';
+
+  function initNoteDialogs() {
+
+    var markup = wunderlist.helpers.templates.render(notesDialogTemplate);
+    notesDialog = $('<div/>').html(markup).dialog({
+      autoOpen : false,
+      draggable : false,
+      resizable : false,
+      closeOnEscape : true
+    });
+
+  
+    var buttons = {};
+    buttons[wunderlist.language.data.delete_note_no] = function() {
+      $(this).dialog('close');
+    };
+
+    buttons[wunderlist.language.data.delete_note_yes] = function() {
+      $('textarea#noteTextarea').val('');
+      $('input#save-note').trigger('deleteNote');
+      $(this).dialog('close');
+    };
+
+    noteDeleteDialog = $('<div></div>').dialog({
+      autoOpen : false,
+      draggable : false,
+      resizable : false,
+      closeOnEscape : true,
+      title : wunderlist.language.data.delete_note_question,
+      buttons : buttons,
+      open : function(event, ui) {
+        $('.ui-dialog-buttonset button:first').focus().addClass("input-bold");
+      }
+    });
+  }
 
   function onReady() {
     // Setting Note Title
@@ -39,7 +86,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
       editMode = true;
 
       saveButton.addClass("button-login").val(wunderlist.language.data.save_changes);
-      saveCloseButton.show();
+      saveCloseButton.val(wunderlist.language.data.save_and_close_changes).show();
       hintIcon.show();
 
       notesTextArea.val(currentNoteText).show().focus();
@@ -52,7 +99,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
    * Close the dialog
    */
   function close(){
-    // TODO: Fill the stub
+    notesDialog.dialog("close");
   }
 
   /**
@@ -70,79 +117,68 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
   }
 
 
-  function forceSave() {
-    $('input#save-note').trigger('click');
-  }
-
-
-  function saveAndClose(e) {
-    var notesTextArea = $('textarea#noteTextarea');
-    currentNoteText = notesTextArea.val();
-    newNote = wunderlist.helpers.html.xss_clean(currentNoteText);
-
-    currentNoteIcon.toggleClass("activenode", newNote.length !== 0);
-    currentNoteIcon.html(newNote);
-
-    wunderlist.helpers.task.set({
-      id: currentNoteId,
-      note: currentNoteText
-    }).update(false, close);
-  }
-
   function saveOrEdit(e) {
 
-      // Skip read-only notes
-      if (readOnly !== false) {
-        return;
-      }
+    // Skip read-only notes
+    if (readOnly !== false) {
+      return;
+    }
 
-      var saveButton = $("#save-note");
-      var notesTextArea = $('textarea#noteTextarea');
-      var savedNote = $('div.savednote');
+    var saveButton = $("#save-note");
+    var saveCloseButton = $('input#save-and-close');
+    var notesTextArea = $('textarea#noteTextarea');
+    var savedNote = $('div.savednote');
 
-      // VIEW MODE
-      if (editMode === false) {
-        editMode = true;
+    // VIEW MODE
+    if (editMode === false) {
+      editMode = true;
 
-        saveButton.addClass("button-login").val(wunderlist.language.data.save_changes).show();
-        //$('input#save-and-close').show();
-        $('span.hint').show();
+      saveButton.addClass("button-login").val(wunderlist.language.data.save_changes).show();
+      saveCloseButton.val(wunderlist.language.data.save_and_close_changes).show();
+      $('span.hint').show();
 
-        notesTextArea.val(window.unescape(Encoder.htmlDecode(currentNoteText))).show().focus();
-        savedNote.hide();
-      // EDIT MODE
-      } else if (editMode === true) {
-        editMode = false;
+      notesTextArea.val(window.unescape(Encoder.htmlDecode(currentNoteText))).show().focus();
+      savedNote.hide();
+    // EDIT MODE
+    } else if (editMode === true) {
+      editMode = false;
 
-        saveButton.removeClass("button-login").val(wunderlist.language.data.edit_changes);
-        //$('input#save-and-close').hide();
-        $('span.hint').hide();
+      saveButton.removeClass("button-login").val(wunderlist.language.data.edit_changes);
+      saveCloseButton.hide();
+      $('span.hint').hide();
 
-        currentNoteText = notesTextArea.val();
-        newNote = wunderlist.helpers.html.xss_clean(currentNoteText);
-        notesTextArea.hide();
+      currentNoteText = notesTextArea.val();
+      newNote = wunderlist.helpers.html.xss_clean(currentNoteText);
+      notesTextArea.hide();
 
-        currentNoteIcon.html(newNote);
+      currentNoteIcon.toggleClass("activenode", newNote.length !== 0);
+      currentNoteIcon.html(newNote);
 
-        $('div.inner').html(format(newNote));
-        savedNote.show();
+      $('div.inner').html(format(newNote));
+      savedNote.show();
 
-        wunderlist.helpers.task.set({
-          id: currentNoteId,
-          note: currentNoteText
-        }).update(false, close);
-      }
+      var onSave = (e.currentTarget === saveButton[0])? wunderlist.nop: close;
 
-      if($(notesTextArea).val().length === 0){
-        currentNoteIcon.removeClass("activenote");
-      } else {
-        currentNoteIcon.addClass("activenote");
-      }
+      wunderlist.helpers.task.set({
+        id: currentNoteId,
+        note: currentNoteText
+      }).update(false, onSave);
+    }
+
+    if($(notesTextArea).val().length === 0){
+      currentNoteIcon.removeClass("activenote");
+    } else {
+      currentNoteIcon.addClass("activenote");
+    }
   }
 
   function deletePrompt() {
     if (wunderlist.settings.getString('delete_prompt', '1') === 1) {
-      wunderlist.helpers.dialogs.openNoteDeleteDialog();
+      noteDeleteDialog.dialog({
+        dialogClass : 'dialog-delete-task',
+        modal : true,
+        autoOpen: true
+      });
     } else {
       $('input#save-note').trigger('deleteNote');
     }
@@ -158,7 +194,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     onReady();
     focused = true;
 
-    $('#save-and-close').val(wunderlist.language.data.save_generic);
+    $('#save-and-close').val(wunderlist.language.data.save_and_close_changes);
     $('#delete').val(wunderlist.language.data.delete_generic);
 
     $('span.hint').text(wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes);
@@ -169,13 +205,13 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     $('input#save-note').live('deleteNote', deleteNote).live('click', saveOrEdit);
 
     // Save & Close Button
-    $('input#save-and-close').live('click', saveAndClose);
+    $('input#save-and-close').live('click', saveOrEdit);
 
     // Open EditMode with Double Click
     $('div.savednote').live('dblclick', saveOrEdit);
 
     // Save note and close the dialog
-    shortcut.add(wunderlist.settings.shortcutkey + '+Enter', saveAndClose, {'disable_in_input' : false});
+    shortcut.add(wunderlist.settings.shortcutkey + '+Enter', saveOrEdit, {'disable_in_input' : false});
 
     // Open every link in the browser
     $('a[href^=http], a[href^=https], a[href^=ftp], a[href^=mailto]').live('click', function() {
@@ -191,7 +227,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     // Shortcut Bind Esc - close window
     shortcut.add('Esc', function (evt) {
       if (editMode) {
-        saveAndClose();
+        saveOrEdit();
       } else {
         close();
       }
@@ -206,79 +242,19 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
     });
   }
 
-
   /**
    * Open Notes Window
    * @author Daniel Marschner
    */
-  var notesDialogTemplate =
-      '<div class="notes_buffer">'+
-        '<textarea id="noteTextarea"></textarea>' +
-        '<div class="savednote"><div class="inner"></div></div>' +
-      '</div>' +
-      '<div class="notes_buttons">' +
-        '<span class="hint">{{settings.shortcutkey}} + {{language.data.return_key}}: {{language.data.save_and_close_changes}}</span>' +
-        '<input id="save-and-close" class="input-button button-login" type="submit" value="{{language.data.save_and_close_changes}}" />' +
-        '<input id="save-note" class="input-button" type="submit" value="{{language.data.edit_changes}}" />' +
-      '</div>';
   
   function openNotesWindow() {
     var content = window.unescape(wunderlist.helpers.html.replace_breaks(wunderlist.helpers.html.replace_links(currentNoteText)));
-    var markup = wunderlist.helpers.templates.render(notesDialogTemplate, wunderlist);
-    notesDialog = $('<div/>').html(markup);
-    notesDialog.find(".inner").html(content);
-    notesDialog = notesDialog.dialog({
-      autoOpen : true,
-      draggable : false,
-      resizable : false,
-      modal : true,
+    notesDialog.dialog({
+      title: currentNoteTitle,
       dialogClass : 'dialog-notes',
-      title : currentNoteTitle,
-      closeOnEscape : true
-    });
-
-    /*
-    if (notes.windows[notes.currentNoteId] === null) {
-      var notesWindow = Titanium.UI.getCurrentWindow().createWindow({
-        url       : "app://note.html",
-        width     : parseInt(wunderlist.settings.getString('note_user_width', '500')),
-        minWidth  : 500,
-        height    : parseInt(wunderlist.settings.getString('note_user_height', '400')),
-        minHeight : 400,
-        maximized : wunderlist.settings.getString('maximized', 'false'),
-        fullscreenBehaviour: 256
-      });
-
-      note_user_x = wunderlist.settings.getString('note_user_x', 'none');
-      note_user_y = wunderlist.settings.getString('note_user_y', 'none');
-
-      //if(note_user_x != 'none') notes.window.x = parseInt(note_user_x);
-      //if(note_user_y != 'none') notes.window.y = parseInt(note_user_y);
-
-      notesWindow.open();
-      notesWindow.noteTitle = format(notes.currentNoteTitle, false);
-      notesWindow.text      = notes.currentNote;
-      notesWindow.html      = unescape(format(notes.currentNote));
-      notesWindow.noteId    = notes.currentNoteId;
-      notesWindow.readOnly  = notes.readOnly;
-      notesWindow.editMode  = false;
-      notesWindow.focused   = false;
-      notesWindow.focus();
-
-      notesWindow.addEventListener(Titanium.CLOSE, function(e) {
-        if (notesWindow.editMode) {
-          forceSave();
-        }
-        //wunderlist.settings.saveNoteWindowPosition(notesWindow);
-        notes.windows[notesWindow.noteId] = null;
-      });
-    
-      notes.windows[notesWindow.noteId] = notesWindow;
-    
-    } else {
-      notes.windows[notes.currentNoteId].focus();
-    }
-    */
+      modal : true,
+      autoOpen: true
+    }).find(".inner").html(content);
   }
 
 
@@ -302,6 +278,8 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
 
 
   function init() {
+
+    initNoteDialogs();
 
     initHelper();
 
