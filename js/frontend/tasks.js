@@ -389,6 +389,39 @@ tasks.deletes = function(deleteElement) {
   }).update(false, wunderlist.helpers.task.updateDeleted);
 };
 
+
+  /**
+   * Open a prompt asking for the deletion of a task
+   * @author Dennis Schneider, Daniel Marschner
+   */
+  var deleteTaskDialog;
+  function openTaskDeleteDialog(deleteElement) {
+    var buttons = {};
+    buttons[wunderlist.language.data.delete_task_no]  = function() {
+      $(this).dialog('close');
+    };
+    buttons[wunderlist.language.data.delete_task_yes] = function() {
+      tasks.deletes(deleteElement);
+      closeDialog(deleteTaskDialog);
+    };
+
+    deleteTaskDialog = $('<div></div>').dialog({
+      autoOpen    : true,
+      draggable   : false,
+      modal       : true,
+      closeOnEscape: true,
+      dialogClass : 'dialog-delete-task',
+      title       : wunderlist.language.data.delete_task_question,
+      buttons     : buttons,
+      open        : function(event, ui) {
+        // Focus on the no button
+        var noButton = $('.ui-dialog-buttonset button:first');
+        noButton.focus();
+        noButton.addClass("input-bold");
+      }
+    });
+  }
+
 // On DOM ready
 $(function() {
   
@@ -675,7 +708,7 @@ $(function() {
   // Delete function for the clicked task
   $("li span.delete").live('click', function() {
     if (wunderlist.settings.getInt('delete_prompt', 1) === 1) {
-      wunderlist.helpers.dialogs.openTaskDeleteDialog($(this));
+      openTaskDeleteDialog($(this));
     } else {
       tasks.deletes($(this));
     }

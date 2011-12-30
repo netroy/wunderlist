@@ -7,10 +7,9 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
   var modalDialog = false;
 
   // Dialogs
-  var confirmationDialog, okDialog, shareOwnEmailDialog, deleteDialog, 
-      whileSyncDialog, cloudAppDialog, shareSuccessDialog, deleteTaskDialog,
-      sidebarDialog, switchDateFormatDialog, deletePromptDialog, deleteNoteDialog,
-      viewEditNoteDialog;
+  var confirmationDialog, okDialog, shareOwnEmailDialog, deleteDialog,
+      whileSyncDialog, cloudAppDialog, shareSuccessDialog,
+      sidebarDialog, switchDateFormatDialog, deletePromptDialog;
   // TODO: instead of destroying the dialogs everytime, re-use them
 
 
@@ -134,7 +133,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
 
     openDialog(shareOwnEmailDialog);
   
-    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
   }
 
 
@@ -145,7 +144,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
   function showOKDialog(title, inBody) {
     if (inBody === undefined) {
       inBody = false;
-    } 
+    }
   
     var content = '';
   
@@ -180,7 +179,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
       'margin-left': -(newDialogWidth / 2)
     });
   
-    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
   }
 
 
@@ -205,7 +204,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
 
     openDialog(shareSuccessDialog);
   
-    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+    $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
   }
 
 
@@ -262,11 +261,11 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
         closeOnEscape : true,
         title         : wunderlist.language.data.cloudapp_sharing,
         buttons       : buttons
-      });  
+      });
   
-      openDialog(cloudAppDialog);    
+      openDialog(cloudAppDialog);
   
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
     }
   }
 
@@ -293,91 +292,6 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
     openDialog(whileSyncDialog);
   
     $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
-  }
-
-
-  /**
-   * Open a prompt asking for the deletion of a task
-   * @author Dennis Schneider, Daniel Marschner
-   */
-  function openTaskDeleteDialog(deleteElement) {
-    if ($("[role='dialog']").length === 0) {
-      var buttons = {};
-      buttons[wunderlist.language.data.delete_task_no]  = function() {
-        $(this).dialog('close');
-      };
-      buttons[wunderlist.language.data.delete_task_yes] = function() {
-        tasks.deletes(deleteElement);
-        closeDialog(deleteTaskDialog);
-      };
-
-      deleteTaskDialog = $('<div></div>').dialog({
-        autoOpen    : false,
-        draggable   : false,
-        modal       : true,
-        closeOnEscape: true,
-        dialogClass : 'dialog-delete-task',
-        title       : wunderlist.language.data.delete_task_question,
-        buttons     : buttons,
-        open        : function(event, ui) {
-          $('.ui-dialog-buttonset button:first').focus();
-          $('.ui-dialog-buttonset button:first').addClass("input-bold");
-        }
-      });
-
-      openDialog(deleteTaskDialog);
-  
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
-    }
-  }
-
-
-  /**
-   * View or Edit notes for the current record
-   */
-  function openViewEditNoteDialog(title, content){
-    content = window.unescape(html.replace_breaks(html.replace_links(content)));
-    viewEditNoteDialog = generateDialog("", html.generateNotesDialogHTML(), 'dialog-notes');
-    viewEditNoteDialog.dialog({
-      title: title
-    }).find(".inner").html(content);
-    return viewEditNoteDialog;
-  }
-
-  /**
-   * Open a prompt asking for the deletion of a note
-   * @author Adam Renklint
-   */
-  function openNoteDeleteDialog() {
-    if ($("[role='dialog']").length === 0) {
-      var buttons = {};
-      buttons[wunderlist.language.data.delete_note_no] = function() {
-        $(this).dialog('close');
-      };
-      buttons[wunderlist.language.data.delete_note_yes] = function() {
-        $('textarea#noteTextarea').val('');
-        $('input#save-note').trigger('deleteNote');
-        closeDialog(deleteNoteDialog);
-      };
-
-      deleteNoteDialog = $('<div></div>').dialog({
-        autoOpen    : false,
-        draggable   : false,
-        modal       : true,
-        closeOnEscape: true,
-        dialogClass : 'dialog-delete-task',
-        title       : wunderlist.language.data.delete_note_question,
-        buttons     : buttons,
-        open        : function(event, ui) {
-          $('.ui-dialog-buttonset button:first').focus();
-          $('.ui-dialog-buttonset button:first').addClass("input-bold");
-        }
-      });
-
-      openDialog(deleteNoteDialog);
-  
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
-    }
   }
 
 
@@ -430,7 +344,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
       switchDateFormatDialog = generateDialog(wunderlist.language.data.switchdateformat, html.generateSwitchDateFormatHTML());
       openDialog(switchDateFormatDialog, 'switchdateformat-credits');
     
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 
       $('input#cancel-dateformat').die();
       $('input#confirm-dateformat').die();
@@ -479,7 +393,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
       sidebarDialog = generateDialog(wunderlist.language.data.sidebar_position, html.generateSidebarHTML());
       openDialog(sidebarDialog);
 
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
   
       $('input#cancel-settings').die();
       $('input#confirm-settings').die();
@@ -504,29 +418,37 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
    * Open the delete prompt settings dialog
    * @author Dennis Schneider
    */
+  var deletePromptMarkupTemplate =
+      '<div id="task-delete-radios" class="radios">' +
+        '<p><b>{{language.data.delete_task_prompt}}</b></p>' +
+        '<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /> '+
+        '<span>{{language.data.yes}}</span> &nbsp; &nbsp; &nbsp; '+
+        '<input id="task_delete_0" type="radio" name="taskDelete" value="0" /> '+
+        '<span>{{language.data.no}}</span></p>' +
+      '</div>' +
+      '<p class="clearfix">'+
+        '<input id="cancel-settings" class="input-button" type="submit" value="{{language.data.cancel}}" /> '+
+        '<input id="confirm-settings" class="input-button" type="submit" value="{{language.data.save_changes}}" />'+
+      '</p></div>';
   function openDeletePromptDialog() {
-    if ($("[role='dialog']").length === 0) {
-      deletePromptDialog = generateDialog(wunderlist.language.data.delete_prompt_menu, html.generateDeletePromptHTML());
+    //if ($("[role='dialog']").length === 0) {
+      var markup = wunderlist.helpers.templates.render(deletePromptMarkupTemplate);
+      deletePromptDialog = generateDialog(wunderlist.language.data.delete_prompt_menu, markup);
       openDialog(deletePromptDialog);
-    
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
-    
-      $('input#cancel-settings').die();
-      $('input#confirm-settings').die();  
     
       var delete_prompt = wunderlist.settings.getString('delete_prompt', '1');
       $('div.radios#task-delete-radios input#task_delete_' + delete_prompt).attr('checked', 'checked');
     
-      $('input#cancel-settings').live('click', function() {
+      $('input#cancel-settings').die().live('click', function() {
         closeDialog(deletePromptDialog);
       });
     
-      $('input#confirm-settings').live('click', function() {
+      $('input#confirm-settings').die().live('click', function() {
         var new_delete_prompt = $('div.radios#task-delete-radios input:checked').val();
-        wunderlist.settings.setString('delete_prompt', new_delete_prompt);    
+        wunderlist.settings.setString('delete_prompt', new_delete_prompt);
         closeDialog(deletePromptDialog);
-      });  
-    }
+      });
+    //}
   }
 
 
@@ -539,10 +461,10 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
       var addItemMethodDialog = generateDialog(wunderlist.language.data.add_item_method, html.generateAddItemMethodHTML());
       openDialog(addItemMethodDialog);
     
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
     
       $('input#cancel-settings').die();
-      $('input#confirm-settings').die();  
+      $('input#confirm-settings').die();
     
       var add_item_method = wunderlist.settings.getString('add_item_method', '0');
       $('div.radios#add-item-method-radios input#add_item_method_' + add_item_method).attr('checked', 'checked');
@@ -553,9 +475,9 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
     
       $('input#confirm-settings').live('click', function() {
         var new_add_item_method = $('div.radios#add-item-method-radios input:checked').val();
-        wunderlist.settings.setString('add_item_method', new_add_item_method);    
+        wunderlist.settings.setString('add_item_method', new_add_item_method);
         closeDialog(addItemMethodDialog);
-      });  
+      });
     }
   }
 
@@ -588,7 +510,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
   
       openDialog(helpDialog);
   
-      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');  
+      $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
     }
   }
 
@@ -624,9 +546,6 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
     "showDeletedDialog": showDeletedDialog,
     "showCloudAppDialog": showCloudAppDialog,
     "showWhileSyncDialog": showWhileSyncDialog,
-    "openTaskDeleteDialog": openTaskDeleteDialog,
-    "openNoteDeleteDialog": openNoteDeleteDialog,
-    "openViewEditNoteDialog": openViewEditNoteDialog,
     "createDeleteListDialog": createDeleteListDialog,
     "openSwitchDateFormatDialog": openSwitchDateFormatDialog,
     "openDeletePromptDialog": openDeletePromptDialog,
