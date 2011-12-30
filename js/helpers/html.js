@@ -1,24 +1,6 @@
 var html = html || {};
 
 /**
- * Generates the HTML structure for the settings dialog
- * @author Marvin Labod
- */
-html.generateNotesDialogHTML = function() {
-    var html_code =
-      '<div class="notes_buffer">'+
-        '<textarea id="noteTextarea"></textarea>' +
-        '<div class="savednote"><div class="inner"></div></div>' +
-      '</div>' +
-      '<div class="notes_buttons">' +
-        '<span class="hint">'+ wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) +' + '+ wunderlist.language.data.return_key +': ' + wunderlist.language.data.save_and_close_changes +'</span>' +
-        '<input id="save-and-close" class="input-button button-login" type="submit" value="'+ wunderlist.language.data.save_and_close_changes +'" />' +
-        '<input id="save-note" class="input-button" type="submit" value="'+ wunderlist.language.data.edit_changes +'" />' +
-      '</div>';
-	return html_code;
-};
-
-/**
  * Returns the HTML structure of the login/register Dialog
  * @author Marvin Labod
  */
@@ -46,30 +28,30 @@ html.generateLoginRegisterDialogHTML = function() {
 		'<div class="formright">'+
 		'<input class="input-login" type="text" id="login-email" name="email" placeholder="' + wunderlist.language.english.email + '" />' +
 		'<div class="errorwrap"><p class="error-email"></p></div>' +
-		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + wunderlist.language.english.password + '" />' +                        
+		'<input class="input-login" type="password" id="login-password" name="password" placeholder="' + wunderlist.language.english.password + '" />' +
 		'<div class="errorwrap"><p class="error-password"></p></div>' +
 		'</div>' +
 		'<div id="account-buttons" class="ui-dialog-buttonset">' +
 		
 		// LOGIN BUTTONS
 		
-        '<div class="loginbuttons">' +
+    '<div class="loginbuttons">' +
         '<p class="pwd"><a id="showforgotpw" href="#">' + wunderlist.language.english.forgot_password + '</a></p>' +
         '<input class="input-button register button-login" type="submit" id="loginsubmit" value="' + wunderlist.language.english.login + '" />' +
         '<input class="input-button register" type="submit" id="showregistersubmit" value="' + wunderlist.language.english.register +'" />' +
         '<input class="input-button" type="submit" id="cancelreg" value="' + wunderlist.language.english.no_thanks + '" />' +
         '<img src="images/ajax-loader.gif" id="account-loader"/>' +
-	    '</div>' +
+    '</div>' +
         
-	    // FORGOT PASSWORD BUTTONS
-	    
-        '<div class="forgotpwbuttons">' +
+      // FORGOT PASSWORD BUTTONS
+      
+    '<div class="forgotpwbuttons">' +
         '<div class="whiteoverlay"></div>' +
         '<input type="text" class="input-login input-forgotpw" id="forgotpw-email" placeholder="' + wunderlist.language.english.input_forgot_password + '"/>' +
         '<input class="input-button register button-login"  id="forgot-pwd" type="submit" value="' + wunderlist.language.english.reset + '" />' +
         '<input class="input-button register" type="submit" id="cancelforgotpw" value="' + wunderlist.language.english.cancel + '" />' +
         '<div class="errorwrap"><p class="error-forgotpw"></p></div>' +
-	    '</div>' +
+    '</div>' +
 		
 		'</div>' +
 		'</div>' +
@@ -93,7 +75,7 @@ html.generateLoginRegisterDialogHTML = function() {
 					
 		'<input class="input-button register button-login" type="submit" id="registersubmit" value="' + wunderlist.language.english.register + '"/>' +
 		'<input class="input-button register" type="submit" id="showloginsubmit" value="Cancel" /> ' +
-	    '<img src="images/ajax-loader.gif" id="account-loader"/>' +
+      '<img src="images/ajax-loader.gif" id="account-loader"/>' +
 		'</div>' +
 		'</div>';
 
@@ -232,24 +214,7 @@ html.generateSidebarHTML = function() {
     var html_code = '<div id="sidebar-position-radios" class="radios">' +
 			'<p><b>' + wunderlist.language.data.sidebar_position_text + '</b></p>' +
 			'<p><label><input id="sidebar_position_1" type="radio" name="sidebarPosition" value="1" /> <span>' + wunderlist.language.data.left + '</span></label> &nbsp; &nbsp; &nbsp; <label><input id="sidebar_position_0" type="radio" name="sidebarPosition" value="0" /> <span>' + wunderlist.language.data.right + '</span></label></p>' +
- 			'</div>' +
-    		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
-    		
-	return html_code;
-};
-
-/**
- * Generates the HTML structure for the delete prompt dialog
- *
- * @author Dennis Schneider
- */
-html.generateDeletePromptHTML = function() {
-    var html_code = '<div id="task-delete-radios" class="radios">' +
-       		'<p><b>' + wunderlist.language.data.delete_task_prompt + '</b></p>' +
-			'<p><input id="task_delete_1" type="radio" name="taskDelete" value="1" /> <span>' + wunderlist.language.data.yes + '</span> &nbsp; &nbsp; &nbsp; <input id="task_delete_0" type="radio" name="taskDelete" value="0" /> <span>' + wunderlist.language.data.no + '</span></p>' +
- 			'</div>' +
-    		'<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
-    		
+      '</div><p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
 	return html_code;
 };
 
