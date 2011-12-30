@@ -8,7 +8,7 @@ wunderlist.timer = (function(window, $, wunderlist, Titanium, undefined){
 
   "use strict";
 
-  var isPaused, auto_update_seconds, auto_update_interval, self, 
+  var isPaused, auto_update_seconds, auto_update_interval, self,
       interval, former_date, daychange_interval, total_seconds;
 
 

@@ -26,5 +26,5 @@
 
  * helpers - html
  * frontend - tasks, menu, hotkeys
- * backend - timer, sharing, database, account
+ * backend - sharing, database, account
  * libraries - shortcuts.js
