@@ -6,7 +6,7 @@
  * @author Marvin Labod, Dennis Schneider, Daniel Marschner
  */
 
-wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, shortcut, undefined){
+wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, undefined){
 
   "use strict";
 
@@ -222,12 +222,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
       }
     });
 
-    $.bind(window, Titanium.FOCUSED, function() {
-      if(focused === false) {
-        onReady();
-        focused = true;
-      }
-    });
+    $(window).bind("focus", onReady);
   }
 
   /**
@@ -290,4 +285,4 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Titanium, Encoder, 
 
   return self;
 
-})(window, jQuery, wunderlist, Titanium, Encoder, shortcut);
+})(window, jQuery, wunderlist, Encoder, shortcut);
