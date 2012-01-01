@@ -130,7 +130,7 @@ html.generateTaskHTML = function(id, name, list_id, done, important, date, note)
   name = name || wunderlist.language.data.new_task;       
 
 	taskHTML += '</div>';
-	taskHTML += '<span class="icon ' + (important == 1 ? 'fav' : 'favina') + '"></span>';
+	taskHTML += '<span class="icon fav ' + (important == 1 ? '' : 'favina') + '"></span>';
 	taskHTML += '<span class="description">' + name + '</span>';
 
 	if (!!(+date)) {

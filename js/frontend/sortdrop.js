@@ -56,7 +56,9 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
               wunderlist.helpers.task.set({
                 id: taskID,
                 important: 1
-              }).updateImportant().update();
+              }).update();
+              // TODO: updateImportant doesn't exist anymore ... fix this
+              //}).updateImportant().update();
             }
           }
         }

@@ -222,41 +222,6 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     return self;
   }
 
-  // UPDATE the task priority in HTML
-  function updateImportant() {
-    if (instance.important !== undefined && instance.id !== undefined && instance.id > 0) {
-      var taskElement = $('li#' + instance.id);
-      var ulElement   = taskElement.parent('ul');
-      var item;
-
-      if (instance.important === 0) {
-        // Get the last important task
-        item = ulElement.find('span.fav:last').parent();
-
-        taskElement.children('span.fav').addClass('favina').removeClass('fav');
-
-        if(taskElement.attr('id') !== item.attr('id') && ulElement.children('li').length > 1) {
-          taskElement.slideUp('fast', function() {
-            taskElement.insertAfter(item).slideDown(400, updatePositions);
-          });
-        }
-      } else if (instance.important === 1) {
-        // Get the first task
-        item = ulElement.find('li:first');
-
-        taskElement.children('span.favina').removeClass('favina').addClass('fav');
-
-        if (ulElement.children('li').length > 1 && taskElement.attr('id') !== item.attr('id')) {
-          taskElement.slideUp('fast', function() {
-            taskElement.prependTo(ulElement).slideDown(400, updatePositions);
-          });
-        }
-      }
-    }
-
-    return self;
-  }
-
 
   // UPDATE the task list_id
   function updateList() {
@@ -359,7 +324,6 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     "insert": insert,
     "update": update,
     "set": set,
-    "updateImportant": updateImportant,
     "setDefault": setDefaults,
     "updateDone": updateDone,
     "updatePositions": updatePositions,

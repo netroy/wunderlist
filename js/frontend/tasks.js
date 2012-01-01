@@ -603,16 +603,17 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
 
 
   function toggleImportanceFlag(e){
-    var node = $(e.currentTarget);
-    var liElement = node.parent('li');
-    var id = liElement.attr("id");
-
     // TODO: figure this out
     if($('a#done.active').length !== 0) {
       return;
     }
 
-    var setImportant;
+    var node = $(e.currentTarget);
+    var liElement = node.parent('li');
+    var ulElement = liElement.parent('ul');
+    var id = liElement.attr("id");
+
+    var setImportant, target;
     if(node.hasClass("favina")) {
       // Can't flag done tasks as important
       if(liElement.hasClass('done')) {
@@ -620,15 +621,31 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
       }
       // mark as important
       setImportant = 1;
+      target = ulElement.find('li:first');
     } else {
       // mark as unimportant
       setImportant = 0;
+      target = ulElement.find('span.fav:last').parent();
+    }
+    node.toggleClass("favina", !setImportant);
+
+    // Move the task to new position only if there is more than one task on the list
+    // or when a task is not already at the correct position
+    if (ulElement.children('li').length > 1 && id !== target.attr('id')) {
+      liElement.slideUp('fast', function() {
+        if(setImportant === 0) {
+          liElement = liElement.insertAfter(target);
+        } else {
+          liElement = liElement.prependTo(ulElement);
+        }
+        liElement.slideDown(400);
+      });
     }
 
     wunderlist.helpers.task.set({
       id: id,
       important: setImportant
-    }).update(wunderlist.helpers.task.updatePositions).updateImportant();
+    }).update(false, wunderlist.nop);
     //wunderlist.helpers.task.updatePositions();
   }
 
