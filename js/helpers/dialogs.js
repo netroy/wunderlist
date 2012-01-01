@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undefined){
+wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
   "use strict";
 
 
@@ -556,4 +556,4 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, tasks, html, undef
     "openBackgroundsDialog": openBackgroundsDialog
   };
 
-})(window, jQuery, wunderlist, tasks, html);
+})(window, jQuery, wunderlist, html);

@@ -634,7 +634,7 @@ html.createDatepicker = function() {
 				html.addRemoveDateButton($edit_li);
 			}, 5);
 
-            tasks.datePickerOpen = true;
+            wunderlist.frontend.tasks.datePickerOpen = true;
 		},
 		onChangeMonthYear: function(year, month, inst) {
 			var $edit_li = $(this).parent();

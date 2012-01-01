@@ -93,7 +93,7 @@ $(function() {
 	 * @author Daniel Marschner
 	 */
 	shortcut.add(wunderlist.settings.shortcutkey + '+s', function (evt) {
-    tasks.cancel();
+    wunderlist.frontend.tasks.cancel();
     if ($(register_dialog).dialog('isOpen') === false || wunderlist.account.isLoggedIn() === true) {
 			if (syncShortcutListener == 0 && wunderlist.sync.isSyncing() == false) {
 				wunderlist.timer.stop();
@@ -118,7 +118,7 @@ $(function() {
 	// Shortcut Bind Command (or Ctrl) + L - New list
 	shortcut.add(wunderlist.settings.shortcutkey + "+l",function() {
 		if ($('[role="dialog"]').length == 0) {
-			tasks.cancel();
+			wunderlist.frontend.tasks.cancel();
 			$('h3 .add').hide();
 			if(listShortcutListener === 0){
 			  wunderlist.frontend.lists.addList();
@@ -170,7 +170,7 @@ $(function() {
 
 	// Shortcut Bind Command(or Ctrl)+F - Search
 	shortcut.add(wunderlist.settings.shortcutkey + '+f', function (evt) {
-		tasks.cancel();
+		wunderlist.frontend.tasks.cancel();
 
         focusSearch++;
 
@@ -199,10 +199,10 @@ $(function() {
 				wunderlist.frontend.lists.cancelSaveList(false);
 			} else if($('a.list input').length > 0) {	
 				wunderlist.frontend.lists.cancelSaveList(true);
-			} else if (tasks.datePickerOpen == true) {
+			} else if (wunderlist.frontend.tasks.datePickerOpen == true) {
 				$('.datepicker').datepicker('hide');
 			} else {
-				tasks.cancel();
+				wunderlist.frontend.tasks.cancel();
 				cancelEditTask = true;
 			}
 			
@@ -215,7 +215,7 @@ $(function() {
 	
 	// Shortcut Bind Command (or Ctrl) + N - Add new task
 	shortcut.add(wunderlist.settings.shortcutkey + '+n', function (evt) {
-		tasks.cancel();
+		wunderlist.frontend.tasks.cancel();
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true)
 			$('.add input.input-add').focus();
@@ -223,7 +223,7 @@ $(function() {
 
 	// Shortcut Bind Command (or Ctrl) + T - Add new task
 	shortcut.add(wunderlist.settings.shortcutkey + '+t', function (evt) {
-		tasks.cancel();
+		wunderlist.frontend.tasks.cancel();
 
         if($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true)
 			$('.add input.input-add').focus();
@@ -291,7 +291,7 @@ $(function() {
 		if ($('input.input-add:focus').length == 1) {
 			if (aimSetting == 1) {		
 				wunderlist.timer.pause();
-				tasks.add();
+				wunderlist.frontend.tasks.add();
 				wunderlist.timer.resume();
 			}
 		} else if ($('a.list input:focus').length == 1) {

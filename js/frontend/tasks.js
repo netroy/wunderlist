@@ -1,7 +1,14 @@
+wunderlist.frontend.tasks = (function($, wunderlist, undefined){
+
 var tasks = tasks || {};
 
+var self = {};
 var checkClicked = false, focusOutEnabled = true, totalFocusOut = false, addNewTaskToTop = false;
-tasks.datePickerOpen  = false;
+
+//TODO: shared state.. REMOVE 
+self.datePickerOpen  = false;
+
+
 /**
  * Scans for a date in a task and returns a result object
  * @author Dennis Schneider
@@ -171,7 +178,7 @@ function smartScanForDate(string, doNaturalRecognition) {
 }
 
 // ADD a new task to the db and frontend
-tasks.add = function() {
+self.add = function() {
   if ($("input.input-add").val() !== '') {
     // Add Task to List
     list_id       = $("ul.mainlist").attr("rel");
@@ -338,7 +345,7 @@ tasks.add = function() {
  *
  * @author Dennis Schneider, Christian Reber, Daniel Marschner, Marvin Labod
  */
-tasks.edit = function() {
+self.edit = function() {
   focusOutEnabled = false;
 
   var task_name = $('#task-edit').val();
@@ -362,7 +369,7 @@ tasks.edit = function() {
  *
  * @author Dennis Schneider, Christian Reber, Daniel Marschner, Marvin Labod
  */
-tasks.cancel = function() {
+self.cancel = function() {
   focusOutEnabled = false;
 
   var listElement = $('#task-edit').parent();
@@ -375,7 +382,7 @@ tasks.cancel = function() {
  *
  * @author Dennis Schneider, Daniel Marschner
  */
-tasks.deletes = function(deleteElement) {
+self.deletes = function(deleteElement) {
   var liElement = deleteElement.parent();
   wunderlist.helpers.task.set({
     id: liElement.attr('id'),
@@ -709,3 +716,7 @@ $(function() {
     }
   });
 });
+
+
+  return self;
+})(jQuery, wunderlist);
