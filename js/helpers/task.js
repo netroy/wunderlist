@@ -62,12 +62,15 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     var data = {
       version: (noVersion ? "": "version + 1")
     };
+
     for(var prop in instance){
       if(typeof instance[prop] !== 'undefined'){
         data[prop] = instance[prop];
       }
     }
     wunderlist.database.updateByMap('tasks', data, "id="+instance.id, callback);
+  
+    return self;
   }
 
 
@@ -85,8 +88,8 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
   // UPDATE the task done status in HTML
   function updateDone() {
     if (instance.id !== undefined && instance.id > 0 && instance.done !== undefined) {
-      var liElement = $('li#' + instance.id), 
-          lastLiElement, firstDoneLiElement, doneLiElementCount,  
+      var liElement = $('li#' + instance.id),
+          lastLiElement, firstDoneLiElement, doneLiElementCount,
           ulElement = 'ul.mainlist';
 
       if (instance.done === 1) {
@@ -106,7 +109,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
         // On the search list, just append the checked task to the end of the searchlist
         else if ($('ul.searchlist').length > 0) {
           // Get the last searched task
-          lastLiElement = liElement.parent('ul.searchlist').find('li:last');        
+          lastLiElement = liElement.parent('ul.searchlist').find('li:last');
 
           if (liElement.attr('id') != lastLiElement.attr('id')) {
             liElement.slideUp('fast', function() {
@@ -117,7 +120,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
         // On the filter and search list, just append the checked task to the end of the parent filterlist
         else {
           // Get the last task
-          lastLiElement = liElement.parent('ul.filterlist').find('li:last');        
+          lastLiElement = liElement.parent('ul.filterlist').find('li:last');
 
           if (liElement.attr('id') != lastLiElement.attr('id')) {
             liElement.slideUp('fast', function() {
@@ -157,9 +160,9 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
 
         if (doneLiElementCount !== undefined) {
           if (doneLiElementCount > 1) {
-            if (liElement.attr('id') == lastLiElement.attr('id') || 
-               (liElement.attr('id') != lastLiElement.attr('id') && 
-               liElement.attr('id') != firstDoneLiElement.attr('id'))) {
+            if (liElement.attr('id') == lastLiElement.attr('id') ||
+               (liElement.attr('id') !== lastLiElement.attr('id') &&
+                liElement.attr('id') !== firstDoneLiElement.attr('id'))) {
               liElement.slideUp('fast', function() {
                 if (liElement.find('span.fav').length === 1){
                   liElement.prependTo(ulElement).slideDown();
@@ -207,7 +210,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     $.eachAsync(tasks, {
         delay : 0,
         bulk  : 0,
-        loop  : function() {        
+        loop  : function() {
             instance.id       = tasks.eq(i).attr("id");
             instance.position = i + 1;
             instance.list_id  = tasks.eq(i).attr('rel');
@@ -263,7 +266,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
       var newListId = instance.list_id.toString();
       var listHTML;
 
-      if (oldListId !== instance.list_id) {      
+      if (oldListId !== instance.list_id) {
         if ($('ul.filterlist').length === 0) {
           liElement.remove();
         } else {
@@ -285,7 +288,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
               } else {
                 window.setTimeout(function() {
                   liElement.appendTo('ul#filterlist' + newListId).slideDown();
-                }, 10);        
+                }, 10);
               }
               */
             }
@@ -300,7 +303,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
 
           // TODO: do this with callbacks instead of timers
           window.setTimeout(function() {
-            var liCount = ulElement.children('li').length;        
+            var liCount = ulElement.children('li').length;
             if (liCount === 0) {
               // Remove list headline title and the ul element
               ulElement.prev().remove();
@@ -320,7 +323,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
   // UPDATE the task deleted status in HTML
   function updateDeleted() {
     // Deleted was set
-    if (instance.deleted !== undefined && instance.deleted === 1 && instance.id !== undefined && 
+    if (instance.deleted !== undefined && instance.deleted === 1 && instance.id !== undefined &&
         instance.id > 0 && instance.list_id !== undefined && instance.list_id > 0) {
       var removeList = false;
       var liElement  = $('li#' + instance.id);
