@@ -177,7 +177,7 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
     if ($("input.input-add").val() !== '') {
       // Add Task to List
       list_id       = $("ul.mainlist").attr("rel");
-      task_name     = html.convertString($("input.input-add").val());
+      task_name     = wunderlist.helpers.utils.convertString($("input.input-add").val());
       
       // Tasks default not be important
       var important = 0;
@@ -352,7 +352,7 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
     
     wunderlist.helpers.task.set({
       id: task_id,
-      name: html.convertString(task_name)
+      name: wunderlist.helpers.utils.convertString(task_name)
     }).update(false, wunderlist.frontend.filters.updateBadges);
 
     // TODO: What would this line do ??

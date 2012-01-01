@@ -26,7 +26,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
   // INSERT a new database task object
   function insertPhase2(callback) {
     instance.version = 0;
-    instance.name = html.convertString(instance.name, 255);
+    instance.name = wunderlist.helpers.utils.convertString(instance.name, 255);
 
     var list = {};
     for (var property in instance) {

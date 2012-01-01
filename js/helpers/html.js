@@ -172,7 +172,8 @@ html.generateNewListElementHTML = function(listId, listElementName, listElementI
     	html_code += "<div class='deletep'></div>";
     	html_code += "<div class='savep'></div>";
     	html_code += "<div class='editp'></div>";
-    	html_code += "<input class='" + listElementInputClass + "' maxlength='255' type='text' value='" + html.convertString(listElementName) + "' />";
+    	html_code += "<input class='" + listElementInputClass + "' maxlength='255' type='text' value='";
+      html_code += wunderlist.helpers.utils.convertString(listElementName) + "' />";
     	html_code += "</a>";
 
 	return html_code;
@@ -187,7 +188,7 @@ html.generateCreditsDialogHTML = function() {
 	var html_code = '<p><b>Wunderlist</b> is an easy-to-use task management tool, that runs on Windows, Mac, Linux, Android and on Apple iOS. Register for free to sync your todos online. No matter where you are, your Wunderlist follows you.<br /><br />' +
 		'<b>What´s next?</b><br><br>' +
 		'We are currently working on something pretty big. We call it <b>Wunderkit</b>, an online business platform that will change the way you look at corporate software products.<br /><br />' +
-		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.<br><br>' + 
+		'We hope you enjoy our first tool to make your daily life more effective and enjoyable.<br><br>' +
 		'<strong>Wunderlist</strong> - ' + Titanium.App.version + '</p>';
 
 		return html_code;
@@ -844,22 +845,6 @@ html.buildFilteredList = function(title, tasks, show_add, filter, callback) {
 	}
 };
 
-/**
- * Removes HTML tags and escapes single quotes
- *
- * @author Daniel Marschner
- */
-html.convertString = function(string, length) {
-	string = string.split('<').join(escape('<'));
-	string = string.split('>').join(escape('>'));
-	string = string.split("'").join(escape("'"));
-	
-	if (length != undefined && length > 0)
-		string = string.substr(0, length);
-	
-	return string;
-};
-
 
 /**
  * Is needed for the function xss_clean
@@ -885,7 +870,7 @@ html.html_entity_decode = function(str) {
  * More info at: www.soerenlarsen.dk/development-projects/xss-clean
  */
 html.xss_clean = function(str) {
-	str = html.convertString(str);
+	str = wunderlist.helpers.utils.convertString(str);
 	str = str.replace(/\\0/gi, '')
 	str = str.replace(/\\\\0/gi, '')
 	str = str.replace(/#(&\#*\w+)[\x00-\x20]+;#u/g,"$1;")
@@ -936,23 +921,6 @@ html.xss_clean = function(str) {
 	str = str.replace(/-->/g,"--&gt;");
 	
 	return str;
-};
-
-
-/**
- * Removes HTML tags and escapes single quotes
- *
- * @author Daniel Marschner
- */
-html.convertString = function(string, length) { 
-	string = string.split('<').join(escape('<'));
-	string = string.split('>').join(escape('>'));
-	string = string.split("'").join(escape("'"));
-	
-	if (length !== undefined && length > 0){
-	  string = string.substr(0, length);
-	}
-	return string;
 };
 
 

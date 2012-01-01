@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefined){
+wunderlist.helpers.utils = (function(window, document, wunderlist, undefined){
   "use strict";
 
   /**
@@ -10,7 +10,7 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefin
     for (var index = 0, length = array.length; index < length; index++) {
       if (needle.toString() === array[index]) {
         return true;
-      } 
+      }
     }
     return false;
   }
@@ -30,7 +30,7 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefin
 
   /**
    * Set the app title
-   * @author Daniel Marschner 
+   * @author Daniel Marschner
    */
   function setTitle(title) {
     document.title = title;
@@ -103,6 +103,22 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefin
     return date;
   }
 
+  /**
+   * Removes HTML tags and escapes single quotes
+   * @author Daniel Marschner
+   */
+  function convertString(string, length) {
+    var escape = window.escape;
+    string = string.split('<').join(escape('<'));
+    string = string.split('>').join(escape('>'));
+    string = string.split("'").join(escape("'"));
+    
+    if (length !== undefined && length > 0){
+      string = string.substr(0, length);
+    }
+    return string;
+  }
+
   return {
     "in_array": in_array,
     "is_array": is_array,
@@ -112,7 +128,8 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, html, undefin
     "is_integer": is_integer,
     "is_email": is_email,
     "ucfirst": ucfirst,
-    "setToFuture": setToFuture
+    "setToFuture": setToFuture,
+    "convertString": convertString
   };
 
-})(window, document, wunderlist, html);
+})(window, document, wunderlist);

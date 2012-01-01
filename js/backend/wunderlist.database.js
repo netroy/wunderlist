@@ -180,7 +180,7 @@ wunderlist.database.insertList = function(list) {
 		}
 		
 		list.version = 0;
-		list.name    = html.convertString(list.name, 255);
+		list.name    = wunderlist.helpers.utils.convertString(list.name, 255);
 		
 		var first  = true;
 		var fields = '';
@@ -242,7 +242,7 @@ wunderlist.database.updateList = function(noversion) {
 			list.inbox = 0;
 		
 		if (list.name != undefined && list.name != '')
-			list.name = html.convertString(list.name, 255);
+			list.name = wunderlist.helpers.utils.convertString(list.name, 255);
 		
 		var first = true;
 		var set   = '';
@@ -298,7 +298,7 @@ wunderlist.database.insertTask = function() {
 		}
 
 		task.version = 0;
-		task.name    = html.convertString(task.name, 255);
+		task.name    = wunderlist.helpers.utils.convertString(task.name, 255);
 
     // If the task name is empty somehow, abort the adding of the task
     if (task.name === '') {
@@ -307,7 +307,7 @@ wunderlist.database.insertTask = function() {
 
 		// Convert the task note for the database if note is set
 		if (task.note !== undefined && task.note !== '') {
-			task.note = html.convertString(task.note, 5000);
+			task.note = wunderlist.helpers.utils.convertString(task.note, 5000);
 		}
 
 		var first  = true;
@@ -369,11 +369,11 @@ wunderlist.database.updateTask = function(noVersion) {
 
 		// Convert the task name for the database if name is set
 		if (task.name != undefined && task.name != '')
-			task.name = html.convertString(task.name, 255);
+			task.name = wunderlist.helpers.utils.convertString(task.name, 255);
 
 		// Convert the task note for the database if note is set
 		if (task.note != undefined && task.note != '')
-			task.note = html.convertString(task.note, 5000);
+			task.note = wunderlist.helpers.utils.convertString(task.note, 5000);
 		
 		var first = true;
 		var set   = '';

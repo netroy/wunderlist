@@ -113,7 +113,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
   function saveList(listElement) {
     var listElementInput = listElement.children('input');
     var listElementTitle = listElement.children('b');
-    var listElementName  = html.strip_tags(html.convertString(listElementInput.val()));
+    var listElementName  = html.strip_tags(wunderlist.helpers.utils.convertString(listElementInput.val()));
 
     if (listElementName === ''){
       listElementName = wunderlist.language.data.new_list;
@@ -165,7 +165,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
    */
   function saveNewList(listElement) {
     var listElementInput = listElement.children('input');
-    var listElementName  = html.convertString(listElementInput.val());
+    var listElementName  = wunderlist.helpers.utils.convertString(listElementInput.val());
 
     if (listElementName === ''){
       listElementName = wunderlist.language.data.new_list;
