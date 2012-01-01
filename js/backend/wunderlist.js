@@ -2,7 +2,7 @@
  * Init the wunderlist framework and all necessary parts
  * @author Christian Reber, Dennis Schneider, Daniel Marschner
  */
-wunderlist.init = (function($, wunderlist, html, Titanium){ 
+wunderlist.init = (function($, wunderlist, html, Titanium){
   "use strict";
 
   return function() {
@@ -41,6 +41,9 @@ wunderlist.init = (function($, wunderlist, html, Titanium){
 
     // Init lists
     wunderlist.frontend.lists.init();
+
+    // Init Tasks
+    wunderlist.frontend.tasks.init();
   
     // Init notes
     wunderlist.frontend.notes.init();

@@ -2,14 +2,6 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
 
   var checkClicked = false, focusOutEnabled = true, totalFocusOut = false, addNewTaskToTop = false;
 
-  var self = {
-    datePickerOpen: false, //TODO: shared state.. REMOVE
-    add: add,
-    edit: edit,
-    cancel: cancel,
-    deletes: deletes
-  };
-
 
   /**
    * Scans for a date in a task and returns a result object
@@ -640,122 +632,130 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
     //wunderlist.helpers.task.updatePositions();
   }
 
-// On DOM ready
-$(function() {
-  
-  var stepUp   = false;
-  var stepDown = false;
-  
-  $("div.add input").live('keyup', addTasksHandler);
-  
-  shortcut.add('alt+enter', function (e) {
-    if ( $('div.add input:focus').size() > 0 ) {
-      addNewTaskToTop = true;
-      add();
-      addNewTaskToTop = false;
-    }
-  });
-  
-  // For testing purposes, to null the count, just uncomment this
-  //wunderlist.settings.setInt('number_of_shown_add_task_hints', 0);
-  
-  var numberOfShownHints = wunderlist.settings.getInt('number_of_shown_add_task_hints', 0) + 1;
-  var isShowingAgain = false;
-  if (numberOfShownHints < 5) {
-    $('.add_task_hint:hidden').live('click', function () { alert(); });
-    $('.addwrapper input').live('focus', function () {
-      if ($('.addwrapper input').val().length < 15) {
-        setTimeout(function () {
-          isShowingAgain = true;
-          $('.add_task_hint').fadeIn('fast', function () {
-            setTimeout(function () {
-              isShowingAgain = false;
-            }, 250);
-          });
-        }, 50);
+
+  function init() {
+    
+    var stepUp   = false;
+    var stepDown = false;
+    
+    $("div.add input").live('keyup', addTasksHandler);
+    
+    shortcut.add('alt+enter', function (e) {
+      if ( $('div.add input:focus').size() > 0 ) {
+        addNewTaskToTop = true;
+        add();
+        addNewTaskToTop = false;
       }
     });
-    $('.addwrapper input').live('keyup', function () {
-      if ($('.addwrapper input').val().length < 15) {
-        $('.add_task_hint').fadeIn('fast');
-      } else {
-        $('.add_task_hint').fadeOut('fast');
-      }
-    });
-    $('.addwrapper input').live('blur', function () {
-      setTimeout(function () {
-        if (!isShowingAgain) {
+    
+    // For testing purposes, to null the count, just uncomment this
+    //wunderlist.settings.setInt('number_of_shown_add_task_hints', 0);
+    
+    var numberOfShownHints = wunderlist.settings.getInt('number_of_shown_add_task_hints', 0) + 1;
+    var isShowingAgain = false;
+    if (numberOfShownHints < 5) {
+      $('.add_task_hint:hidden').live('click', function () { alert(); });
+      $('.addwrapper input').live('focus', function () {
+        if ($('.addwrapper input').val().length < 15) {
+          setTimeout(function () {
+            isShowingAgain = true;
+            $('.add_task_hint').fadeIn('fast', function () {
+              setTimeout(function () {
+                isShowingAgain = false;
+              }, 250);
+            });
+          }, 50);
+        }
+      });
+      $('.addwrapper input').live('keyup', function () {
+        if ($('.addwrapper input').val().length < 15) {
+          $('.add_task_hint').fadeIn('fast');
+        } else {
           $('.add_task_hint').fadeOut('fast');
         }
-      }, 200);
+      });
+      $('.addwrapper input').live('blur', function () {
+        setTimeout(function () {
+          if (!isShowingAgain) {
+            $('.add_task_hint').fadeOut('fast');
+          }
+        }, 200);
+      });
+      wunderlist.settings.setInt('number_of_shown_add_task_hints', numberOfShownHints);
+    }
+    
+    $('.addwrapper input').live('focus', function () {
+      $('.addwrapper input').attr("placeholder", "");
+    }).live('blur', function () {
+      $('.addwrapper input').attr('placeholder', wunderlist.language.data.add_task);
     });
-    wunderlist.settings.setInt('number_of_shown_add_task_hints', numberOfShownHints);
+
+
+    $("div.add input").live('keydown', 'Esc', cancelTask);
+    
+    // DoubleClick on Task - Edit mode
+    $('.mainlist li .description').live('dblclick', triggerEditMode);
+      
+    // Initiate The Datepicker when clicking an existing Date
+    $('.mainlist li .showdate').live('click', selectDate);
+
+    // Save The Task on a click elsewhere
+    $('html').live('click', saveOnBlur);
+
+    // Save edited Task
+    $('#task-edit').live('keyup', saveEditedTask);
+
+    $(".add input").live('focusout', function () {
+      if($(this).val() === '') {
+        wunderlist.timer.resume();
+      }
+    });
+    
+    // Do the check or uncheck a task magic
+    $('.checkboxcon').live('click', toggleDoneStatus);
+
+    // Toggle importance flag
+    $("span.fav, span.favina", $("ul.mainlist")).live("click", toggleImportanceFlag);
+      
+      // Delete Button Mouse Over
+    $("ul.mainlist li, ul.donelist li").live('mouseover', function () {
+      var node = $(this);
+      var description  = node.find('span.description');
+      var deletebutton = node.find('span.delete');
+
+      if(description.length === 1) {
+        deletebutton.show();
+      } else {
+        deletebutton.hide();
+      }
+    }).live('mouseout', function () {
+      $(this).find('.delete').hide();
+    });
+
+    // Delete function for the clicked task
+    $('div.add').live('click', function() {
+      $('input.input-add').focus();
+    });
+
+    // Delete function for the clicked task
+    $("li span.delete").live('click', function() {
+      var node = $(this);
+      if (wunderlist.settings.getInt('delete_prompt', 1) === 1) {
+        openTaskDeleteDialog(node);
+      } else {
+        deletes(node);
+      }
+    });
   }
-  
-  $('.addwrapper input').live('focus', function () {
-    $('.addwrapper input').attr("placeholder", "");
-  }).live('blur', function () {
-    $('.addwrapper input').attr('placeholder', wunderlist.language.data.add_task);
-  });
 
-
-  $("div.add input").live('keydown', 'Esc', cancelTask);
-  
-  // DoubleClick on Task - Edit mode
-  $('.mainlist li .description').live('dblclick', triggerEditMode);
-    
-  // Initiate The Datepicker when clicking an existing Date
-  $('.mainlist li .showdate').live('click', selectDate);
-
-  // Save The Task on a click elsewhere
-  $('html').live('click', saveOnBlur);
-
-  // Save edited Task
-  $('#task-edit').live('keyup', saveEditedTask);
-
-  $(".add input").live('focusout', function () {
-    if($(this).val() === '') {
-      wunderlist.timer.resume();
-    }
-  });
-  
-  // Do the check or uncheck a task magic
-  $('.checkboxcon').live('click', toggleDoneStatus);
-
-  // Toggle importance flag
-  $("span.fav, span.favina", $("ul.mainlist")).live("click", toggleImportanceFlag);
-    
-    // Delete Button Mouse Over
-  $("ul.mainlist li, ul.donelist li").live('mouseover', function () {
-    var node = $(this);
-    var description  = node.find('span.description');
-    var deletebutton = node.find('span.delete');
-
-    if(description.length === 1) {
-      deletebutton.show();
-    } else {
-      deletebutton.hide();
-    }
-  }).live('mouseout', function () {
-    $(this).find('.delete').hide();
-  });
-
-  // Delete function for the clicked task
-  $('div.add').live('click', function() {
-    $('input.input-add').focus();
-  });
-
-  // Delete function for the clicked task
-  $("li span.delete").live('click', function() {
-    var node = $(this);
-    if (wunderlist.settings.getInt('delete_prompt', 1) === 1) {
-      openTaskDeleteDialog(node);
-    } else {
-      deletes(node);
-    }
-  });
-});
-
+  var self = {
+    "datePickerOpen": false, //TODO: shared state.. REMOVE
+    "init": init,
+    "add": add,
+    "edit": edit,
+    "cancel": cancel,
+    "deletes": deletes
+  };
 
   return self;
 })(jQuery, wunderlist);
