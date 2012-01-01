@@ -1,5 +1,5 @@
 /* global wunderlist, jQuery */
-wunderlist.helpers.list = (function($, wunderlist, html, undefined){
+wunderlist.helpers.list = (function(wunderlist, undefined){
   "use strict";
 
 
@@ -25,7 +25,7 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
   // INSERT a new database list object
   function insertPhase2(callback){
     instance.version = 0;
-    instance.name = html.convertString(instance.name, 255);
+    instance.name = wunderlist.helpers.utils.convertString(instance.name, 255);
 
     var list = {};
     for (var property in instance) {
@@ -65,7 +65,7 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
         data[prop] = instance[prop];
       }
     }
-    wunderlist.database.updateByMap('lists', data, "id="+instance.id, callback); 
+    wunderlist.database.updateByMap('lists', data, "id="+instance.id, callback);
   }
 
   // Reset the list object to defaults
@@ -89,4 +89,4 @@ wunderlist.helpers.list = (function($, wunderlist, html, undefined){
 
   return self;
 
-})(jQuery, wunderlist, html);
+})(wunderlist);
