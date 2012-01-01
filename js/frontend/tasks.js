@@ -1,12 +1,7 @@
 var tasks = tasks || {};
 
-tasks.checkClicked    = false;
-tasks.focusOutEnabled = true;
-tasks.totalFocusOut   = false;
+var checkClicked = false, focusOutEnabled = true, totalFocusOut = false, addNewTaskToTop = false;
 tasks.datePickerOpen  = false;
-tasks.dateBeforEdit   = '';
-tasks.addNewTaskToTop = false;
-
 /**
  * Scans for a date in a task and returns a result object
  * @author Dennis Schneider
@@ -255,7 +250,7 @@ tasks.add = function() {
         var ulElement = $('ul#filterlist' + list_id);
         
         if (ulElement !== undefined && ulElement.is('ul')) {
-          if (tasks.addNewTaskToTop) {
+          if (addNewTaskToTop) {
             //ulElement.prepend(taskHTML).find('li:first').hide().fadeIn(225);
             if (important) {
               $(ulElement).prepend(taskHTML).find("li:first").hide().fadeIn(225);
@@ -291,7 +286,7 @@ tasks.add = function() {
           });
         }
       } else { // ORDINARY LIST
-        if (tasks.addNewTaskToTop) {
+        if (addNewTaskToTop) {
           if (important) {
             $("ul.mainlist").prepend(taskHTML).find("li:first").hide().fadeIn(225);
           } else {
@@ -319,7 +314,7 @@ tasks.add = function() {
       $("input.input-add").val('');
       $(".add .showdate").remove();
 
-      tasks.totalFocusOut = false;
+      totalFocusOut = false;
 
       // Reset DatePicker
       $('.datepicker').val('');
@@ -328,9 +323,9 @@ tasks.add = function() {
       wunderlist.frontend.filters.updateBadges();
       html.make_timestamp_to_string();
       
-      if (tasks.addNewTaskToTop) {
+      if (addNewTaskToTop) {
         wunderlist.helpers.task.updatePositions();
-        tasks.addNewTaskToTop = false;
+        addNewTaskToTop = false;
       }
     }
     else
@@ -344,7 +339,7 @@ tasks.add = function() {
  * @author Dennis Schneider, Christian Reber, Daniel Marschner, Marvin Labod
  */
 tasks.edit = function() {
-  tasks.focusOutEnabled = false;
+  focusOutEnabled = false;
 
   var task_name = $('#task-edit').val();
   var task_id = $('#task-edit').parent().attr('id');
@@ -359,7 +354,7 @@ tasks.edit = function() {
 
   // TODO: What would this line do ??
   //$('html').find('.description').html();
-  tasks.focusOutEnabled = true;
+  focusOutEnabled = true;
 };
 
 /**
@@ -368,7 +363,7 @@ tasks.edit = function() {
  * @author Dennis Schneider, Christian Reber, Daniel Marschner, Marvin Labod
  */
 tasks.cancel = function() {
-  tasks.focusOutEnabled = false;
+  focusOutEnabled = false;
 
   var listElement = $('#task-edit').parent();
   listElement.children('input#task-edit').remove();
@@ -438,7 +433,7 @@ $(function() {
       tasks.add();
       wunderlist.timer.resume();
     } else if(e.keyCode === 27) { // If ESC gets pressed, close Add Task
-      tasks.totalFocusOut = false;
+      totalFocusOut = false;
       isEdit = false;
       wunderlist.timer.resume();
     } else if (e.keyCode === 38) {
@@ -490,9 +485,9 @@ $(function() {
   
   shortcut.add('alt+enter', function (e) {
     if ( $('div.add input:focus').size() > 0 ) {
-      tasks.addNewTaskToTop = true;
+      addNewTaskToTop = true;
       tasks.add();
-      tasks.addNewTaskToTop = false;
+      addNewTaskToTop = false;
     }
   });
   
@@ -577,7 +572,7 @@ $(function() {
         $('input#task-edit').val(titleText);
         $("input#task-edit").select();
 
-        tasks.totalFocusOut = false;
+        totalFocusOut = false;
       }
     }
   });
@@ -621,7 +616,7 @@ $(function() {
       tasks.edit();
       wunderlist.timer.resume();
     } else if(e.keyCode == 27) { // Esc Key
-      tasks.totalFocusOut = false;
+      totalFocusOut = false;
       tasks.cancel();
       wunderlist.timer.resume();
     }
@@ -635,8 +630,8 @@ $(function() {
   
   // Do the check or uncheck a task magic
   $('.checkboxcon').live('click', function(event) {
-    if(tasks.checkClicked === false) {
-      tasks.checkClicked = true;
+    if(checkClicked === false) {
+      checkClicked = true;
       $(this).toggleClass("checked");
 
       // If it is not checked, check and append to done list
@@ -658,7 +653,7 @@ $(function() {
     }
 
     setTimeout(function() {
-      tasks.checkClicked = false;
+      checkClicked = false;
     }, 100);
   });
     
