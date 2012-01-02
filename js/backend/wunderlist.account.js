@@ -146,7 +146,6 @@ wunderlist.account.loadInterface = function() {
 	var taskInput = $("input.input-add").val();
 
 	wunderlist.frontend.sortdrop.makeListsDropable();
-	wunderlist.frontend.sortdrop.makeFilterDropable();
 	
 	if (wunderlist.settings.os === 'darwin') {
 		$('.input-add').focus().blur();
