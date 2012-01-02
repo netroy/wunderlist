@@ -406,8 +406,8 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
 
       });
 
-      setTimeout(function() { 
-        listOpenHandler = false; 
+      setTimeout(function() {
+        listOpenHandler = false;
       }, 100);
 
       // If there is another list in edit mode, save it after opening the other list

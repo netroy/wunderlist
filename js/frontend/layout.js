@@ -47,7 +47,7 @@ wunderlist.layout = (function(undefined) {
       $('.dialog-login input#register-email').val(wunderlist.language.english.email);
       $('.dialog-login input#register-password').val(wunderlist.language.english.password);
       $(".showregisterdialog").hide();
-      $(".showlogindialog").fadeIn("slow");  
+      $(".showlogindialog").fadeIn("slow");
       $("#account-loader").hide();
     });
   
@@ -67,10 +67,10 @@ wunderlist.layout = (function(undefined) {
       $("#forgotpw-email").val("");
       $(".dialog-login .ui-dialog-title").text(wunderlist.language.data.register_title);
       $(".forgotpwbuttons").hide();
-      $(".loginbuttons").fadeIn();  
+      $(".loginbuttons").fadeIn();
     });
   
-    // Submit Forgot PW on Return  
+    // Submit Forgot PW on Return
     $("#forgotpw-email").live('keyup', function(evt){
       if(evt.keyCode == 13){
         $('#forgot-pwd').click();
@@ -209,7 +209,7 @@ wunderlist.layout = (function(undefined) {
     body.append(tooltip).append(syncTooltip);
     syncButton = $("#sync");
 
-    toolTips();  
+    toolTips();
     registerProcess();
 
     /**

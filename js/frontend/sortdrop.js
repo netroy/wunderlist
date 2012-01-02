@@ -100,7 +100,7 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
                 droppedTask.children('.description').after('<span class="showdate timestamp" rel="' + tomorrow + '">&nbsp;</span>');
               } else {
                 droppedTaskDate.addClass('timestamp').attr('rel', tomorrow);
-              }          
+              }
 
               wunderlist.helpers.task.set({
                 id: taskID,
@@ -117,7 +117,7 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
           acceptFilter = true;
 
           if (activeFilter !== 'withoutdate' || !isNaN(parseInt(activeFilter, 10))) {
-            if (droppedTaskDate.hasClass('timestamp') === true) {                      
+            if (droppedTaskDate.hasClass('timestamp') === true) {
               droppedTaskDate.remove();
               droppedTask.children('.description').after("<input type='hidden' class='datepicker'/>");
               html.createDatepicker();
@@ -130,8 +130,8 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
           }
         }
 
-        if ($('ul.filterlist').length > 0 && acceptFilter === true) {        
-          if ((droppedFilter !== 'starred' && activeFilter !== 'thisweek' && activeFilter !== 'all' && activeFilter !== droppedFilter) || 
+        if ($('ul.filterlist').length > 0 && acceptFilter === true) {
+          if ((droppedFilter !== 'starred' && activeFilter !== 'thisweek' && activeFilter !== 'all' && activeFilter !== droppedFilter) ||
               (activeFilter === 'thisweek' && droppedFilter === 'withoutdate')) {
             if (droppedTaskParent.children('li').length === 2) {
               droppedTaskParent.prev().remove();
@@ -181,7 +181,7 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
         } else if (e.pageY > (height - 100)) {
           content.scrollTop(currentOffset + 50);
         }
-      }  
+      }
     });
   }
 
