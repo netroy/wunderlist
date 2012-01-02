@@ -1,4 +1,4 @@
-wunderlist.frontend.tasks = (function($, wunderlist, undefined){
+wunderlist.frontend.tasks = (function($, wunderlist, async, undefined){
 
   var checkClicked = false, focusOutEnabled = true, totalFocusOut = false, addNewTaskToTop = false;
 
@@ -326,7 +326,7 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
         html.make_timestamp_to_string();
         
         if (addNewTaskToTop) {
-          wunderlist.helpers.task.updatePositions();
+          syncPositionsToDB();
           addNewTaskToTop = false;
         }
       }
@@ -602,6 +602,25 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
   }
 
 
+  function syncPositionsToDB() {
+    var tasks = $("ul.mainlist li"), i = 1, len = tasks.length;
+    wunderlist.helpers.task.setDefaults();
+    async.forEachSeries(tasks, function(liElement, next){
+      liElement = $(liElement);
+      wunderlist.helpers.task.set({
+        id: liElement.attr("id"),
+        // Update list_id in case of drag-drop across lists
+        list_id: liElement.attr("rel"),
+        position: i++
+      }).update(false, function(err, result) {
+        console.log(i, liElement.attr("id"));
+        if(i <= len) {
+          next();
+        }
+      });
+    });
+  }
+
   function toggleImportanceFlag(e){
     // TODO: figure this out
     if($('a#done.active').length !== 0) {
@@ -645,8 +664,7 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
     wunderlist.helpers.task.set({
       id: id,
       important: setImportant
-    }).update(false, wunderlist.nop);
-    //wunderlist.helpers.task.updatePositions();
+    }).update(false, syncPositionsToDB);
   }
 
 
@@ -771,8 +789,9 @@ wunderlist.frontend.tasks = (function($, wunderlist, undefined){
     "add": add,
     "edit": edit,
     "cancel": cancel,
-    "deletes": deletes
+    "deletes": deletes,
+    "syncPositionsToDB": syncPositionsToDB
   };
 
   return self;
-})(jQuery, wunderlist);
+})(jQuery, wunderlist, async);

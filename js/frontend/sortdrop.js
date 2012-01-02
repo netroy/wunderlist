@@ -163,7 +163,7 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
        cursor      : 'pointer',
        placeholder : 'placeholder',
        update      : function(e, ui) {
-         wunderlist.helpers.task.updatePositions();
+         wunderlist.frontend.tasks.syncPositionsToDB();
        }
     });
   }
