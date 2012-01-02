@@ -200,29 +200,6 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
   }
 
 
-  // UPDATE the positions of all tasks
-  function updatePositions() {
-    // Get all tasks from current list
-    var tasks = $("#content .mainlist li"), i = 0;
-
-    // Call async function to update the position
-    // TODO: "i" should be bound in a closure here, else there in no garranty of this working as expected
-    $.eachAsync(tasks, {
-        delay : 0,
-        bulk  : 0,
-        loop  : function() {
-            instance.id       = tasks.eq(i).attr("id");
-            instance.position = i + 1;
-            instance.list_id  = tasks.eq(i).attr('rel');
-            update();
-            i++;
-        }
-    });
-
-    return self;
-  }
-
-
   // UPDATE the task list_id
   function updateList() {
     if (instance.id !== undefined && instance.id > 0 && instance.list_id !== undefined && instance.list_id > 0) {
@@ -326,7 +303,6 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     "set": set,
     "setDefaults": setDefaults,
     "updateDone": updateDone,
-    "updatePositions": updatePositions,
     "updateList": updateList,
     "updateDeleted": updateDeleted
   };
