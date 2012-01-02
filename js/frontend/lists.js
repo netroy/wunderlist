@@ -384,12 +384,12 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
         wunderlist.database.getTasks(undefined, list_id, function(err, tasks){
           if(tasks.length > 0){
             $("#list").append(initTasks(tasks));
+            wunderlist.frontend.sortdrop.makeSortable();
           }
         });
 
         wunderlist.database.getLastDoneTasks(list_id, renderLastDoneTasks);
 
-        wunderlist.frontend.sortdrop.makeSortable();
 
         html.make_timestamp_to_string();
         wunderlist.settings.setString('last_opened_list', list_id);
