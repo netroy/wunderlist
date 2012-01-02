@@ -250,6 +250,7 @@ wunderlist.frontend.tasks = (function($, wunderlist, async, undefined){
         
         if ($("ul.filterlist").length > 0 || $('#left a.active').length === 1) {
           var ulElement = $('ul#filterlist' + list_id);
+          var pendingImportantTasks = ulElement.find('li.more:not(.done) .fav');
           
           if (ulElement !== undefined && ulElement.is('ul')) {
             if (addNewTaskToTop) {
@@ -257,16 +258,16 @@ wunderlist.frontend.tasks = (function($, wunderlist, async, undefined){
               if (important) {
                 $(ulElement).prepend(taskHTML).find("li:first").hide().fadeIn(225);
               } else {
-                if ($(ulElement).find('li.more:not(.done) .fav').size() > 0) {
-                  $(ulElement).find('li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+                if (pendingImportantTasks.size() > 0) {
+                  pendingImportantTasks.last().parent().after(taskHTML).next().hide().fadeIn(225);
                 } else {
                   $(ulElement).prepend(taskHTML).find("li:first").hide().fadeIn(225);
                 }
               }
             } else {
               if (important) {
-                if ($(ulElement).find('li.more:not(.done) .fav').size() > 0) {
-                  $(ulElement).find('li.more:not(.done) .fav').last().parent().after(taskHTML).next().hide().fadeIn(225);
+                if (pendingImportantTasks.size() > 0) {
+                  pendingImportantTasks.last().parent().after(taskHTML).next().hide().fadeIn(225);
                 } else {
                   $(ulElement).prepend(taskHTML).find("li:last").hide().fadeIn(225);
                 }
