@@ -324,7 +324,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     "insert": insert,
     "update": update,
     "set": set,
-    "setDefault": setDefaults,
+    "setDefaults": setDefaults,
     "updateDone": updateDone,
     "updatePositions": updatePositions,
     "updateList": updateList,

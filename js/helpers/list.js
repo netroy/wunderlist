@@ -84,7 +84,7 @@ wunderlist.helpers.list = (function(wunderlist, undefined){
     "insert": insert,
     "update": update,
     "set": set,
-    "setDefault": setDefaults
+    "setDefaults": setDefaults
   };
 
   return self;
