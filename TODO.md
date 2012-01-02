@@ -17,6 +17,7 @@
 11. DOM based notifications for browsers other than Chrome & notification API on chrome
 12. write properties helper that works over Titanium & localStorage(for web)
 13. Most dialogs should go into there own modules, like notes dialogs should be in notes.js, making the code more independant. dialogs.js should be much smaller
+14. html.js, dialog.js & sortdrop.js are too vague & chaotic... tasks.js should manage its own drag-drop & so should lists.js .. both should manage there own markup generation as well as dialogs.... dialogs.js should only contain other dialogs like login, settings & stuff.
 
 <br/>
 ***
