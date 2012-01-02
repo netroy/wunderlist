@@ -434,27 +434,28 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     });
   }
 
+
   /**
    * Save the list position
    * @author Dennis Schneider
    */
   function saveListPosition() {
-      // Get all tasks from current list
-      var lists = $("div#sidebar div#lists a");
-      i = 0;
-
-      // Call async function to update the position
-      $.eachAsync(lists, {
-        delay : 0,
-        bulk  : 0,
-        loop  : function() {
-          wunderlist.helpers.list.set({
-            id: lists.eq(i).attr("id").replace('list', ''),
-            position: ++i
-          }).update();
+    // Get all tasks from current list
+    var lists = $("div#lists a.list"), i = 1, len = lists.length;
+    wunderlist.helpers.list.setDefaults();
+    async.forEachSeries(lists, function(list, next){
+      list = $(list);
+      wunderlist.helpers.list.set({
+        id: list.attr("id").replace('list', ''),
+        position: i++
+      }).update(false, function(err, result) {
+        if(i <= len) {
+          next();
         }
       });
+    });
   }
+
 
   // Open a list on "click" (MOUSE CLICK)
   function listClick() {
