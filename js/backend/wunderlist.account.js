@@ -111,7 +111,7 @@ wunderlist.account.getUserCredentials = function() {
 function deleteUserCredentials() {
 	wunderlist.settings.setString('email', '');
 	wunderlist.settings.setString('password', '');
-};
+}
 
 /**
  * Initializes the account dialog
@@ -119,15 +119,15 @@ function deleteUserCredentials() {
  */
 function load() {
 	if (wunderlist.account.isLoggedIn()) {
-	  $("body").removeClass("login");
+    $("body").removeClass("login");
 		wunderlist.account.loadInterface();
 		wunderlist.timer.set(4).start();
 		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 	} else {
-	  $("body").addClass("login");
+    $("body").addClass("login");
 		wunderlist.account.showRegisterDialog();
 	}
-};
+}
 
 /**
  * (Re)loads the interface and closes the registration dialog

@@ -8,11 +8,11 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
   "use strict";
 
   /**
-   * Contains the loaded langauge from the settings 
+   * Contains the loaded langauge from the settings
    */
   var loaded = {},
       code = "en",
-      data, 
+      data,
       english,
       self;
 
@@ -163,7 +163,7 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
    * Replace basics
    * @author Christian Reber
    */
-  function replaceBasics() { 
+  function replaceBasics() {
     // Filters
     replaceFilters();
 

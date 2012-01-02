@@ -614,7 +614,6 @@ wunderlist.frontend.tasks = (function($, wunderlist, async, undefined){
         list_id: liElement.attr("rel"),
         position: i++
       }).update(false, function(err, result) {
-        console.log(i, liElement.attr("id"));
         if(i <= len) {
           next();
         }

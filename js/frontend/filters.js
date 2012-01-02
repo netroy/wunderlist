@@ -162,6 +162,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     });
   }
 
+
   function switchFilter(e){
     var node = $(e.target);
     var id = node.attr("id");

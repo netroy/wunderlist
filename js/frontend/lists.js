@@ -219,7 +219,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     }
 
     if (listId !== undefined && listId !== 1) {
-      if (listId !== 'x') {      
+      if (listId !== 'x') {
         /*if (notes.window !== undefined) {
           _return = false;
           dbTasks = wunderlist.database.getTasks(undefined, listId);
@@ -235,7 +235,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
         wunderlist.helpers.list.set({
           id: listId,
           deleted: 1
-        }).update();   
+        }).update();
       }
   
       listElement.remove();
@@ -366,7 +366,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
 
       if (typeof list_id === 'string'){
         try {
-          list_id = parseInt(list_id, 10); 
+          list_id = parseInt(list_id, 10);
         } catch(e) {}
       }
       
@@ -499,7 +499,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
       wunderlist.timer.pause();
       listEventListener = true;
       var listElement = $(this).parent('a');
-      var list_id     = listElement.attr('id').replace('list', '');  
+      var list_id     = listElement.attr('id').replace('list', '');
 
       wunderlist.timer.resume();
 
@@ -534,7 +534,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
         listElement.children('.editp').hide();
         listElement.children('.deletep').hide();
 
-        setTimeout(function() { 
+        setTimeout(function() {
           listEventListener = false;
         }, 500);
     } else {
