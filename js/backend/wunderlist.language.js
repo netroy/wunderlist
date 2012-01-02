@@ -139,6 +139,7 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
     makeDataPublic();
   }
 
+  // TODO: move this to filters.js
   function replaceFilters(){
     $("#all").attr('rel', data.all);
     $("#starred").attr('rel', data.starred);
