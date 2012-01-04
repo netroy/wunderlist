@@ -26,6 +26,5 @@
 **to clean up**:
 
  * helpers - html
- * frontend - hotkeys
  * backend - sharing, database, account
- * libraries - shortcuts.js
+ * libraries - shortcuts
