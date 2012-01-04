@@ -11,7 +11,7 @@ menu.reset_window_size = function() {
   currentWindow.width  = 600;
   currentWindow.x      = Math.round((screen.width / 2) - 300);
   currentWindow.y      = Math.round((screen.height / 2) - 200);
-}
+};
 
 /**
  * Reset position of Wunderlist (Mac)
@@ -21,8 +21,8 @@ menu.reset_window_size = function() {
 menu.reset_note_window = function() {
   var currentWindows = Titanium.UI.getOpenWindows();
   
-  for (x in currentWindows) {
-    if (currentWindows[x].noteId != undefined) {
+  for (var x in currentWindows) {
+    if (currentWindows[x].noteId !== undefined) {
       currentWindows[x].height = 400;
       currentWindows[x].width  = 500;
       currentWindows[x].x      = Math.round((screen.width / 2) - 250);
@@ -30,7 +30,7 @@ menu.reset_note_window = function() {
       currentWindows[x].focus();
     }
   }
-}
+};
 
 /**
  * Initialize the whole menu
@@ -51,11 +51,11 @@ menu.initialize = function() {
   
   // Language Menu
   var languageMenuItem = extraMenuItem.addItem(wunderlist.language.data.language);
-  
+  function selectLanguage(e) {
+    menu.switch_language(e.getTarget().code);
+  }
   for (var ix in wunderlist.language.availableLang) {
-    languageItem = languageMenuItem.addItem(wunderlist.language.availableLang[ix].translation, function(e) {
-      menu.switch_language(e.getTarget().code);
-    });
+    languageItem = languageMenuItem.addItem(wunderlist.language.availableLang[ix].translation, selectLanguage);
     languageItem.code = wunderlist.language.availableLang[ix].code;
   }
 
@@ -105,9 +105,9 @@ menu.initialize = function() {
   //aboutUsMenuItem.addItem(wunderlist.language.data.privacy_policy,  function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
   aboutUsMenuItem.addItem(wunderlist.language.data.credits,         wunderlist.helpers.dialogs.openCreditsDialog);  // About Us Dialog
   aboutUsMenuItem.addItem(wunderlist.language.data.backgrounds,     wunderlist.helpers.dialogs.openBackgroundsDialog);  // Background Credits
-  aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder,    function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com')});
-  aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_tw, function() {Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder')});
-  aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_fb, function() {Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder')});
+  aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder,    function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com');});
+  aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_tw, function() {Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder');});
+  aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_fb, function() {Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder');});
   //aboutUsMenuItem.addSeparatorItem();
   //aboutUsMenuItem.addItem(wunderlist.language.data.changelog, function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist/changelog')});
 
@@ -133,15 +133,15 @@ menu.initialize = function() {
     });
   }
 
-  downloadsMenuItem.addItem('iPhone',  function () { Titanium.Desktop.openURL('http://itunes.apple.com/us/app/wunderlist-to-do-listen/id406644151') });
-  downloadsMenuItem.addItem('iPad',    function () { Titanium.Desktop.openURL('http://itunes.apple.com/us/app/wunderlist-hd/id420670429') });
-  downloadsMenuItem.addItem('Android', function () { Titanium.Desktop.openURL('http://market.android.com/details?id=com.wunderkinder.wunderlistandroid') });
-  downloadsMenuItem.addItem('Mac OSX', function () { Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist') });
-  downloadsMenuItem.addItem('Windows', function () { Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist') });
+  downloadsMenuItem.addItem('iPhone',  function () { Titanium.Desktop.openURL('http://itunes.apple.com/us/app/wunderlist-to-do-listen/id406644151');});
+  downloadsMenuItem.addItem('iPad',    function () { Titanium.Desktop.openURL('http://itunes.apple.com/us/app/wunderlist-hd/id420670429');});
+  downloadsMenuItem.addItem('Android', function () { Titanium.Desktop.openURL('http://market.android.com/details?id=com.wunderkinder.wunderlistandroid');});
+  downloadsMenuItem.addItem('Mac OSX', function () { Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist');});
+  downloadsMenuItem.addItem('Windows', function () { Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist');});
 
   menu.remove();
   Titanium.UI.setMenu(new_menu);
-}
+};
 
 /**
  * Creates a tray icon with menu
@@ -149,16 +149,16 @@ menu.initialize = function() {
  * @author Dennis Schneider
  */
 menu.initializeTrayIcon = function() {
-  var os = wunderlist.settings.os;
+  var os = wunderlist.settings.os, wunderlistWindow;
 
   // Only for windows and linux
   if(os != 'notray') {
-        // Create the tray icon and menu and prevent the application from exit on 'x'
-        if (os == 'darwin') {
-          var wunderlistWindow = menu.preventCloseEvent();
-        } else {
-          var wunderlistWindow = Titanium.UI.getCurrentWindow();
-        }
+    // Create the tray icon and menu and prevent the application from exit on 'x'
+    if (os == 'darwin') {
+      wunderlistWindow = menu.preventCloseEvent();
+    } else {
+      wunderlistWindow = Titanium.UI.getCurrentWindow();
+    }
 
     /*if (os != 'darwin')
       var trayIconPath = Titanium.API.Application.getResourcesPath() + '/images/traywin.png';
@@ -185,24 +185,22 @@ menu.initializeTrayIcon = function() {
 
     if (os == 'darwin') {
       Titanium.on("reopen", function (e) {
-        if (!e.hasVisibleWindows) 
-        {
+        if (!e.hasVisibleWindows) {
           wunderlistWindow.show();
           e.preventDefault();
         }
       });
     }
   } else {
-    var wunderlistWindow = Titanium.UI.getCurrentWindow();  
-  
+    wunderlistWindow = Titanium.UI.getCurrentWindow();
     wunderlistWindow.addEventListener(Titanium.CLOSE, function(event) {
       if (wunderlist.account.isLoggedIn() === true) {
         wunderlist.sync.fireSync(false, true);
         event.stopPropagation();
       }
-    });  
+    });
   }
-}
+};
 
 /**
  * Own exit method for the app
@@ -214,10 +212,10 @@ menu.exitWunderlist = function() {
   if (wunderlist.account.isLoggedIn() && Titanium.Network.online === true) {
     wunderlist.sync.fireSync(false, true);
   } else {
-    Titanium.App.exit()
+    Titanium.App.exit();
   }
   //Titanium.UI.Tray.remove();
-}
+};
  
 
 /**
@@ -235,7 +233,7 @@ menu.preventCloseEvent = function() {
   });
 
   return wunderlistWindow;
-}
+};
 
 /**
  * Show the Wunderlist window if it's hidden
@@ -243,7 +241,7 @@ menu.preventCloseEvent = function() {
  */
 menu.showWindow = function(wunderlistWindow) {
   wunderlistWindow.show();
-}
+};
 
 /**
  * Switch language setting
@@ -253,7 +251,7 @@ menu.switch_language = function(code) {
   wunderlist.settings.saveWindowPosition();
   wunderlist.settings.setString('language', code);
   Titanium.App.restart();
-}
+};
 
 /**
  * Remove the menu
@@ -263,7 +261,7 @@ menu.remove = function() {
   if(Titanium.UI.Menu !== undefined) {
     Titanium.UI.menu.clear();
   }
-}
+};
 
 /**
  * Refocusses the (hidden) Wunderlist window
@@ -273,4 +271,4 @@ menu.refocus = function() {
   var wunderlistWindow = Titanium.UI.getCurrentWindow();
   wunderlistWindow.show();
   wunderlistWindow.focus();
-}
+};
