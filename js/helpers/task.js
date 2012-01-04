@@ -63,12 +63,17 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
       version: (noVersion ? "": "version + 1")
     };
 
+    callback = callback || wunderlist.nop;
+
     for(var prop in instance){
       if(typeof instance[prop] !== 'undefined'){
         data[prop] = instance[prop];
       }
     }
-    wunderlist.database.updateByMap('tasks', data, "id="+instance.id, callback);
+
+    wunderlist.database.updateByMap('tasks', data, "id="+instance.id, function(){
+      callback(instance);
+    });
   
     return self;
   }
