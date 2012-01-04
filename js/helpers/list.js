@@ -55,18 +55,28 @@ wunderlist.helpers.list = (function(wunderlist, undefined){
     }
   }
 
+
   // UPDATE the database list object
   function update(noVersion, callback) {
     var data = {
       version: (noVersion ? "": "version + 1")
     };
+
+    callback = callback || wunderlist.nop;
+
     for(var prop in instance){
       if(typeof instance[prop] !== 'undefined'){
         data[prop] = instance[prop];
       }
     }
-    wunderlist.database.updateByMap('lists', data, "id="+instance.id, callback);
+
+    wunderlist.database.updateByMap('tasks', data, "id="+instance.id, function(){
+      callback(instance);
+    });
+  
+    return self;
   }
+
 
   // Reset the list object to defaults
   function setDefaults() {
