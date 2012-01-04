@@ -429,7 +429,10 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
         }
         ulElement.remove();
       }
-      liElement.remove();
+
+      liElement.slideUp('fast', function(){
+        liElement.remove();
+      });
 
       wunderlist.frontend.notes.closeNoteWindow(instance.id);
   }
