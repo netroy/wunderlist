@@ -19,7 +19,7 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
           wunderlist.helpers.task.set({
             id: $(this).attr('id'),
             list_id: list_id
-          }).updateList().update();
+          }).update(wunderlist.frontend.tasks.updateList);
         });
       }
     });
