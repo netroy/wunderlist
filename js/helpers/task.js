@@ -261,40 +261,6 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     return self;
   }
 
- 
-  // UPDATE the task deleted status in HTML
-  function updateDeleted() {
-    // Deleted was set
-    if (instance.deleted !== undefined && instance.deleted === 1 && instance.id !== undefined &&
-        instance.id > 0 && instance.list_id !== undefined && instance.list_id > 0) {
-      var removeList = false;
-      var liElement  = $('li#' + instance.id);
-      var ulElement  = liElement.parent('ul');
-
-      if (ulElement.hasClass('filterlist') && ulElement.children('li').length === 1) {
-        if (ulElement.children('li').length === 0) {
-          removeList = true;
-        }
-      } else {
-        if (liElement.find('.checked').length === 1) {
-          removeList = true;
-        }
-      }
-
-      if (removeList === true) {
-        var hElement = ulElement.prev();
-        if (hElement.is('h3')){
-          hElement.remove();
-        }
-        ulElement.remove();
-      }
-      liElement.remove();
-
-      wunderlist.frontend.notes.closeNoteWindow(instance.id);
-    }
-
-    return self;
-  }
 
   self = {
     "properties": properties,
@@ -303,8 +269,7 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     "set": set,
     "setDefaults": setDefaults,
     "updateDone": updateDone,
-    "updateList": updateList,
-    "updateDeleted": updateDeleted
+    "updateList": updateList
   };
   
   return self;

@@ -378,16 +378,46 @@ wunderlist.frontend.tasks = (function($, wunderlist, async, undefined){
 
   /**
    * Delete a task from the list
-   *
    * @author Dennis Schneider, Daniel Marschner
    */
+ // UPDATE the task deleted status in HTML
+  function updateDeleted(instance) {
+      var removeList = false;
+      var liElement  = $('li#' + instance.id);
+      var ulElement  = liElement.parent('ul');
+
+      // TODO: fix this for done tasks
+      if (ulElement.hasClass('filterlist') && ulElement.children('li').length === 1) {
+        if (ulElement.children('li').length === 0) {
+          removeList = true;
+        }
+      } else {
+        if (liElement.find('.checked').length === 1) {
+          removeList = true;
+        }
+      }
+
+      if (removeList === true) {
+        var hElement = ulElement.prev();
+        if (hElement.is('h3')){
+          hElement.remove();
+        }
+        ulElement.remove();
+      }
+      liElement.remove();
+
+      wunderlist.frontend.notes.closeNoteWindow(instance.id);
+  }
+
   function deletes(deleteElement) {
     var liElement = deleteElement.parent();
+    var id = liElement.attr('id');
+
     wunderlist.helpers.task.set({
       id: liElement.attr('id'),
       list_id: liElement.attr('rel'),
       deleted: 1
-    }).update(false, wunderlist.helpers.task.updateDeleted);
+    }).update(false, updateDeleted);
   }
 
 
