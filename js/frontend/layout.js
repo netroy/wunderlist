@@ -241,6 +241,9 @@ wunderlist.layout = (function(undefined) {
     // Init Menu
     wunderlist.menu.initialize();
 
+    // Init Hot-keys
+    wunderlist.frontend.hotkeys.init();
+
     // Fixes a problem with webkit and jquery sortable icon
     document.onselectstart = function () {
       return false;
