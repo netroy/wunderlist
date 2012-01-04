@@ -1,5 +1,5 @@
 /* global wunderlist, jQuery */
-wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
+wunderlist.helpers.task = (function(wunderlist){
   "use strict";
 
 
@@ -86,185 +86,9 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
       instance[properties[i]] = undefined;
     }
   }
+
   // Initial the task object for first time
   setDefaults();
-
-
-  // UPDATE the task done status in HTML
-  function updateDone() {
-    if (instance.id !== undefined && instance.id > 0 && instance.done !== undefined) {
-      var liElement = $('li#' + instance.id),
-          lastLiElement, firstDoneLiElement, doneLiElementCount,
-          ulElement = 'ul.mainlist';
-
-      if (instance.done === 1) {
-        liElement.addClass('done');
-
-        // If it is not the search / filter site, create a done list at the bottom
-        if ($('ul.searchlist').length === 0 && $('ul.filterlist').length === 0) {
-          if ($("ul#donelist_list_today").length === 0) {
-            $("ul.mainlist").after("<h3 class='head_today'>" + wunderlist.language.data.done_today + "</h3>");
-            $("div#content h3.head_today").after("<ul id='donelist_list_today' class='donelist'></ul>");
-          }
-
-          liElement.slideUp('fast', function() {
-            liElement.prependTo('ul#donelist_list_today').slideDown();
-          });
-        }
-        // On the search list, just append the checked task to the end of the searchlist
-        else if ($('ul.searchlist').length > 0) {
-          // Get the last searched task
-          lastLiElement = liElement.parent('ul.searchlist').find('li:last');
-
-          if (liElement.attr('id') != lastLiElement.attr('id')) {
-            liElement.slideUp('fast', function() {
-              liElement.appendTo('ul.searchlist').slideDown();
-            });
-          }
-        }
-        // On the filter and search list, just append the checked task to the end of the parent filterlist
-        else {
-          // Get the last task
-          lastLiElement = liElement.parent('ul.filterlist').find('li:last');
-
-          if (liElement.attr('id') != lastLiElement.attr('id')) {
-            liElement.slideUp('fast', function() {
-              liElement.appendTo('ul#filterlist' + liElement.attr('rel')).slideDown();
-            });
-          }
-        }
-      }
-
-      if (instance.done === 0) {
-        if ($('a#done').hasClass('active')) {
-          if (liElement.parent('ul.filterlist').find('li').length === 1) {
-            liElement.parent().prev().remove();
-            liElement.parent().remove();
-          }
-
-          liElement.remove();
-          return;
-        }
-
-        if (liElement.parent('ul.donelist').find('li').length === 1) {
-          liElement.parent().prev().remove();
-          liElement.parent().remove();
-        }
-
-
-        if ($('ul.filterlist').length > 0 || $('ul.searchlist').length > 0) {
-          var parentElement = liElement.parent($('ul.filterlist').length > 0 ? 'ul.filterlist' : 'ul.searchlist');
-
-          // Get the last task
-          lastLiElement      = parentElement.find('li:last');
-          firstDoneLiElement = parentElement.find('li.done:first');
-          doneLiElementCount = parentElement.find('li.done').length;
-
-          ulElement = $('ul.filterlist').length > 0 ? 'ul#filterlist' + liElement.attr('rel') : 'ul.searchlist';
-        }
-
-        if (doneLiElementCount !== undefined) {
-          if (doneLiElementCount > 1) {
-            if (liElement.attr('id') == lastLiElement.attr('id') ||
-               (liElement.attr('id') !== lastLiElement.attr('id') &&
-                liElement.attr('id') !== firstDoneLiElement.attr('id'))) {
-              liElement.slideUp('fast', function() {
-                if (liElement.find('span.fav').length === 1){
-                  liElement.prependTo(ulElement).slideDown();
-                } else {
-                  liElement.insertBefore(firstDoneLiElement).slideDown();
-                }
-              });
-            }
-          }
-        } else {
-          liElement.slideUp('fast', function() {
-            if(liElement.find('span.fav').length === 1){
-              liElement.prependTo(ulElement).slideDown();
-            } else {
-              liElement.appendTo(ulElement).slideDown();
-            }
-          });
-        }
-
-        liElement.removeClass('done');
-        html.make_timestamp_to_string();
-
-        liElement.children('input.datepicker').remove();
-        liElement.children('img.ui-datepicker-trigger').remove();
-
-        if (liElement.children('span.showdate').length === 0) {
-          var datepickerHTML = '<input type="hidden" class="datepicker" value="0"/>';
-          $(datepickerHTML).insertAfter(liElement.children('span.description'));
-        }
-
-        html.createDatepicker();
-      }
-    }
-    return self;
-  }
-
-
-  // UPDATE the task list_id
-  function updateList() {
-    if (instance.id !== undefined && instance.id > 0 && instance.list_id !== undefined && instance.list_id > 0) {
-      var liElement = $('li#' + instance.id);
-      var oldListId = liElement.attr('rel');
-      var newListId = instance.list_id.toString();
-      var listHTML;
-
-      if (oldListId !== instance.list_id) {
-        if ($('ul.filterlist').length === 0) {
-          liElement.remove();
-        } else {
-          var ulElement = $('ul#filterlist' + oldListId.toString());
-
-          if (wunderlist.frontend.sortdrop.taskDroped === true) {
-            if ($('ul#filterlist' + instance.list_id).length === 0) {
-              listHTML  = '<h3 class="clickable cursor" rel="' + instance.list_id + '">' + $('a#list' + instance.list_id + ' b').text() + '</h3>';
-              listHTML += '<ul id="filterlist' + instance.list_id + '" rel="' + ulElement.attr('rel') + '" class="mainlist sortable filterlist"></ul>';
-
-              $('div#content').append(listHTML);
-              wunderlist.frontend.sortdrop.makeSortable();
-            } else {
-              /*
-              if (liElement.find('span.fav').length === 1) {
-                window.setTimeout(function() {
-                  liElement.appendTo('ul#filterlist' + newListId).slideDown();
-                }, 10);
-              } else {
-                window.setTimeout(function() {
-                  liElement.appendTo('ul#filterlist' + newListId).slideDown();
-                }, 10);
-              }
-              */
-            }
-            /*
-            window.setTimeout(function() {
-              liElement.appendTo('ul#filterlist' + newListId).slideDown();
-            }, 10);
-            */
-            liElement.appendTo('ul#filterlist' + newListId).delay(10).slideDown();
-            wunderlist.frontend.sortdrop.taskDroped = false;
-          }
-
-          // TODO: do this with callbacks instead of timers
-          window.setTimeout(function() {
-            var liCount = ulElement.children('li').length;
-            if (liCount === 0) {
-              // Remove list headline title and the ul element
-              ulElement.prev().remove();
-              ulElement.remove();
-            }
-          }, 10);
-        }
-
-        liElement.attr('rel', instance.list_id);
-      }
-    }
-
-    return self;
-  }
 
 
   self = {
@@ -272,11 +96,9 @@ wunderlist.helpers.task = (function(window, $, wunderlist, html, undefined){
     "insert": insert,
     "update": update,
     "set": set,
-    "setDefaults": setDefaults,
-    "updateDone": updateDone,
-    "updateList": updateList
+    "setDefaults": setDefaults
   };
   
   return self;
 
-})(window, jQuery, wunderlist, html);
+})(wunderlist);
