@@ -131,7 +131,7 @@ $(function() {
       if(elementId === undefined)
         $('div#lists a').last().click();
       else
-        $('div#lists > a.ui-state-disabled').prev().click();
+        $elementprev().click();
     }
 
     setTimeout(function() {  stepUp = false;  }, 100);
@@ -149,7 +149,7 @@ $(function() {
       if(elementId === undefined)
         $('div#lists a').first().click();
       else
-        $('div#lists > a.ui-state-disabled').next().click();
+        $element.next().click();
     }
 
     setTimeout(function() {  stepDown = false; }, 100);
@@ -170,12 +170,15 @@ $(function() {
   
   // Shortcut Bind Esc - Go to my tasks
   shortcut.add('Esc', function (evt) {
-    if (($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true) && documentEscapeActive == false) {
+    if (($(register_dialog).dialog('isOpen') === false || wunderlist.account.isLoggedIn() === true) && documentEscapeActive === false) {
       documentEscapeActive = true;
       
-      if ($('div.add .input-add:focus').length == 0 && $('#task-edit:focus').length == 0 
-          && !cancelEditTask && $('#lists a.list input').length == 0 && $('#note textarea:focus').length == 0 
-          && $('#note textarea').css('display') == 'none') {
+      if ($('div.add .input-add:focus').length === 0 &&
+          $('#task-edit:focus').length === 0 &&
+          !cancelEditTask &&
+          $('#lists a.list input').length === 0 &&
+          $('#note textarea:focus').length === 0 &&
+          $('#note textarea').css('display') === 'none') {
         $("#left a").removeClass("active");
         $("input#search").val('').blur();
         wunderlist.frontend.lists.openList(1);
@@ -183,9 +186,9 @@ $(function() {
         $('div#note a#cancel-note').click();
       } else if ($('div#lists a#x:last').length > 0) {
         wunderlist.frontend.lists.cancelSaveList(false);
-      } else if($('a.list input').length > 0) {  
+      } else if($('a.list input').length > 0) {
         wunderlist.frontend.lists.cancelSaveList(true);
-      } else if (wunderlist.frontend.tasks.datePickerOpen == true) {
+      } else if (wunderlist.frontend.tasks.datePickerOpen === true) {
         $('.datepicker').datepicker('hide');
       } else {
         wunderlist.frontend.tasks.cancel();
@@ -198,43 +201,34 @@ $(function() {
       }, 1000);
     }
   });
-  
-  // Shortcut Bind Command (or Ctrl) + N - Add new task
-  shortcut.add(shorcutKey + '+n', function (evt) {
+
+  // Shortcut Bind Command (or Ctrl) + N or T - Add new task
+  function focusTaskInput() {
     wunderlist.frontend.tasks.cancel();
-
-        if($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true)
+    if($(register_dialog).dialog('isOpen') === false || wunderlist.account.isLoggedIn() === true){
       $('.add input.input-add').focus();
-  });
-
-  // Shortcut Bind Command (or Ctrl) + T - Add new task
-  shortcut.add(shorcutKey + '+t', function (evt) {
-    wunderlist.frontend.tasks.cancel();
-
-        if($(register_dialog).dialog('isOpen') == false || wunderlist.account.isLoggedIn() == true)
-      $('.add input.input-add').focus();
-  });
+    }
+  }
+  shortcut.add(shorcutKey + '+n', focusTaskInput);
+  shortcut.add(shorcutKey + '+t', focusTaskInput);
   
   var sidebarToggle = false;
 
   // Shortcut Bind Command(or Ctrl)+b - Hide the sidebar
   shortcut.add(shorcutKey + '+b', function (evt) {
-    if(sidebarToggle == false)
-    {
+    if(sidebarToggle === false) {
       sidebarToggle = true;
       $('div#right span.togglesidebar').click();
     }
-
-    setTimeout(function() { sidebarToggle = false; }, 100);
-  });                
-  
+    setTimeout(function() {
+      sidebarToggle = false;
+    }, 100);
+  });
+   
   var deleteListShortcut = '';
-  if (wunderlist.settings.os === 'darwin') 
-  {
-    deleteListShortcut = shorcutKey + '+backspace' 
-  }
-  else 
-  {
+  if (wunderlist.settings.os === 'darwin') {
+    deleteListShortcut = shorcutKey + '+backspace';
+  } else {
     deleteListShortcut = 'delete';
   }
   
@@ -246,13 +240,13 @@ $(function() {
         
         var listElement = $('div#lists a.ui-state-disabled');
         
-        if (listElement.length === 1 && listElement.attr('id').replace('list', '') !== 1) {      
+        if (listElement.length === 1 && listElement.attr('id').replace('list', '') !== 1) {
           wunderlist.helpers.dialogs.createDeleteListDialog();
-        }  
+        }
       
         setTimeout(function() {
           hotkeys.eventListener = false;
-        }, 100);        
+        }, 100);
       }
     }
   }, {"propagate" : true});
@@ -262,12 +256,13 @@ $(function() {
     if (hotkeys.eventListener === false) {
       hotkeys.eventListener = true;
       // Only open the list when it's not the inbox
-      if ($('div#lists a.ui-state-disabled') != undefined || $('div#lists a.ui-state-disabled').attr('id').replace('list', '') != 1) {
+      var list = $('div#lists a.ui-state-disabled');
+      if (list.attr('id').replace('list', '') != 1) {
         wunderlist.frontend.lists.openList(1);
       }
-      setTimeout(function() { 
-        hotkeys.eventListener = false; 
-      }, 100);        
+      setTimeout(function() {
+        hotkeys.eventListener = false;
+      }, 100);
     }
   });
   
@@ -275,7 +270,7 @@ $(function() {
   shortcut.add(shorcutKey + '+Enter', function (event) {
     var aimSetting = wunderlist.settings.getInt('add_item_method', 0);
     if ($('input.input-add:focus').length == 1) {
-      if (aimSetting == 1) {    
+      if (aimSetting == 1) {
         wunderlist.timer.pause();
         wunderlist.frontend.tasks.add();
         wunderlist.timer.resume();
@@ -286,7 +281,7 @@ $(function() {
         
         listEventListener = true;
         var listElement = $('a.list input').parent('a');
-        var list_id     = listElement.attr('id').replace('list', '');  
+        var list_id     = listElement.attr('id').replace('list', '');
   
         if (list_id !== 'x'){
           wunderlist.frontend.lists.saveList(listElement);
