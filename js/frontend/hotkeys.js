@@ -1,12 +1,13 @@
-wunderlist.frontend.hotkeys = (function(){
+wunderlist.frontend.hotkeys = (function($, window, wunderlist, shortcut, Titanium, undefined){
+
+  "use strict";
 
   /**
    * Stops the "keydown" event by using the shortcut CTRL+L to add a new list
    * @author Daniel Marschner
    */
-  var listShortcutListener = 0;
-  var cancelEditTask = false;
-  var eventListener = false;
+  var setTimeout = window.setTimeout;
+  var listShortcutListener = 0, cancelEditTask = false, eventListener = false;
 
   function checkAndClickFilter(cssRule) {
     return function () {
@@ -19,7 +20,8 @@ wunderlist.frontend.hotkeys = (function(){
     };
   }
 
-  function bindShortcutsForFilters() {
+
+  function bindShortcutsForFilters(shorcutKey) {
 
     // Shortcut Bind Command(or Ctrl)+1 - go to filter list all
     shortcut.add(shorcutKey + '+1', checkAndClickFilter('a#all'));
@@ -46,19 +48,15 @@ wunderlist.frontend.hotkeys = (function(){
     shortcut.add(shorcutKey + '+8', checkAndClickFilter('a#withoutdate'));
   }
 
-  function init() {
 
-    var shortcutKey = wunderlist.settings.shortcutkey;
-
-    bindShortcutsForFilters(shortcutKey);
-
+  function bindSystemHotkeys(shortcutKey) {
     /**
      * Little workaround bugfix for Mac OS X (sorry, but there is no way around)
      * Shortcut Bind Command (or Ctrl) + Q
      * @author Christian Reber
      */
     if (wunderlist.settings.os === 'darwin') {
-      shortcut.add(shorcutKey + '+q', function () {
+      shortcut.add(shortcutKey + '+q', function () {
         if (listShortcutListener === 0) {
           wunderlist.settings.saveWindowPosition();
           Titanium.App.exit();
@@ -70,7 +68,8 @@ wunderlist.frontend.hotkeys = (function(){
      * Printing with Ctrl / Command + P
      * @author Christian Reber,  Daniel Marschner, Dennis Schneider
      */
-    shortcut.add(shorcutKey + '+p', function (evt) {
+    var printShortcutListener = 0;
+    shortcut.add(shortcutKey + '+p', function (evt) {
       if(printShortcutListener === 0) {
         wunderlist.frontend.share.print();
       }
@@ -79,15 +78,66 @@ wunderlist.frontend.hotkeys = (function(){
         printShortcutListener = 0;
       }, 50);
     });
+  }
+
+
+  function bindNavigationHotkeys(shortcutKey) {
+
+    var stepUp = false, stepDown = false, element, elementId;
+
+    // Shortcut Bind Command(or Ctrl)+Up - Step through lists
+    shortcut.add('up', function (evt) {
+      if (stepUp === false && $('textarea:focus').length === 0 && $('input:focus').length === 0) {
+        stepUp = true;
+        element = $('div#lists > a.ui-state-disabled');
+        elementId = element.prev().attr('id');
+        
+        if(elementId === undefined) {
+          $('div#lists a').last().click();
+        } else {
+          element.prev().click();
+        }
+      }
+
+      setTimeout(function() {
+        stepUp = false;
+      }, 100);
+    },{
+      'disable_in_input':'true'
+    });
     
+    // Shortcut Bind Command(or Ctrl)+Down - Step through lists
+    shortcut.add('down', function (evt) {
+      if(stepDown === false && $('textarea:focus').length === 0 && $('input:focus').length === 0){
+        stepDown = true;
+        element = $('div#lists > a.ui-state-disabled');
+        elementId = element.next().attr('id');
+        
+        if(elementId === undefined) {
+          $('div#lists a').first().click();
+        } else {
+          element.next().click();
+        }
+      }
+
+      setTimeout(function() {  stepDown = false; }, 100);
+    },{
+      'disable_in_input':'true'
+    });
+  }
+
+
+  var syncShortcutListener = 0;
+  function bindSyncHotkeys(shortcutKey) {
     /**
      * Sync with Ctrl + S
-     *
      * @author Daniel Marschner
      */
-    shortcut.add(shorcutKey + '+s', function (evt) {
+    shortcut.add(shortcutKey + '+s', function (evt) {
       wunderlist.frontend.tasks.cancel();
-      if ($(register_dialog).dialog('isOpen') === false || wunderlist.account.isLoggedIn() === true) {
+      // TODO: why is this needed ??
+      // $(register_dialog).dialog('isOpen') === false
+      if (wunderlist.account.isLoggedIn() === true) {
         if (syncShortcutListener === 0 && wunderlist.sync.isSyncing() === false) {
           wunderlist.timer.stop();
           wunderlist.sync.fireSync();
@@ -100,18 +150,30 @@ wunderlist.frontend.hotkeys = (function(){
         }, 50);
       }
     });
-    
-    // For removing select all
-    shortcut.add(shorcutKey + '+a', function (e) {
-      if ($('textarea:focus').length == 1) {
-        $('textarea').select();
-      } else if ($('input:focus').length == 1) {
-        $('input').select();
+  }
+
+
+  var focusSearch = 0;
+  function bindSearch(shortcutKey) {
+    // Shortcut Bind Command(or Ctrl)+F - Search
+    shortcut.add(shortcutKey + '+f', function (evt) {
+      wunderlist.frontend.tasks.cancel();
+      focusSearch++;
+      if(focusSearch == 1) {
+        $('input#search').focus();
       }
-    }, {'disable_in_input' : false});
-    
+      setTimeout(function() {
+        focusSearch = 0;
+      }, 1000);
+    });
+  }
+
+
+  var listEventListener = false, deleteListShortcut, documentEscapeActive = false;
+  function bindListsAndTasks(shortcutKey) {
+
     // Shortcut Bind Command (or Ctrl) + L - New list
-    shortcut.add(shorcutKey + "+l",function() {
+    shortcut.add(shortcutKey + "+l",function() {
       if ($('[role="dialog"]').length === 0) {
         wunderlist.frontend.tasks.cancel();
         $('h3 .add').hide();
@@ -121,60 +183,56 @@ wunderlist.frontend.hotkeys = (function(){
         listShortcutListener++;
       }
     }, {'disable_in_input' : true});
+
     
-    var stepUp   = false;
-    var stepDown = false;
-    
-    // Shortcut Bind Command(or Ctrl)+Up - Step through lists
-    shortcut.add('up', function (evt) {
-      if (stepUp === false && $('textarea:focus').length === 0 && $('input:focus').length === 0) {
-        stepUp        = true;
-        $element      = $('div#lists > a.ui-state-disabled');
-        var elementId = $element.prev().attr('id');
-        
-        if(elementId === undefined)
-          $('div#lists a').last().click();
-        else
-          $elementprev().click();
+    // Hotkey cmd / strg + i - Open the inbox
+    shortcut.add(shortcutKey + '+i', function (event) {
+      if (eventListener === false) {
+        eventListener = true;
+        // Only open the list when it's not the inbox
+        var list = $('div#lists a.ui-state-disabled');
+        if (list.attr('id').replace('list', '') != 1) {
+          wunderlist.frontend.lists.openList(1);
+        }
+        setTimeout(function() {
+          eventListener = false;
+        }, 100);
       }
-
-      setTimeout(function() {  stepUp = false;  }, 100);
-    },{
-      'disable_in_input':'true'
     });
-    
-    // Shortcut Bind Command(or Ctrl)+Down - Step through lists
-    shortcut.add('down', function (evt) {
-      if(stepDown === false && $('textarea:focus').length === 0 && $('input:focus').length === 0){
-        stepDown      = true;
-        $element      = $('div#lists > a.ui-state-disabled');
-        var elementId = $element.next().attr('id');
-        
-        if(elementId === undefined)
-          $('div#lists a').first().click();
-        else
-          $element.next().click();
+
+
+    // Cmd+Backspace / Del - Delete selected list
+    if(deleteListShortcut === undefined){
+      if (wunderlist.settings.os === 'darwin') {
+        deleteListShortcut = shortcutKey + '+backspace';
+      } else {
+        deleteListShortcut = 'delete';
       }
+    }
 
-      setTimeout(function() {  stepDown = false; }, 100);
-    },{
-      'disable_in_input':'true'
-    });
+    shortcut.add(deleteListShortcut, function (event) {
+      if ($('textarea:focus').length === 0 && $('input:focus').length === 0) {
+        if (eventListener === false) {
+          eventListener = true;
+          
+          var listElement = $('div#lists a.ui-state-disabled');
+          
+          if (listElement.length === 1 && listElement.attr('id').replace('list', '') !== 1) {
+            wunderlist.helpers.dialogs.createDeleteListDialog();
+          }
+        
+          setTimeout(function() {
+            eventListener = false;
+          }, 100);
+        }
+      }
+    }, {"propagate" : true});
 
-    // Shortcut Bind Command(or Ctrl)+F - Search
-    shortcut.add(shorcutKey + '+f', function (evt) {
-      wunderlist.frontend.tasks.cancel();
-      focusSearch++;
-      if(focusSearch == 1)
-        $('input#search').focus();
-      setTimeout(function() { focusSearch = 0; }, 1000);
-    });
-
-    var documentEscapeActive = false;
     
     // Shortcut Bind Esc - Go to my tasks
     shortcut.add('Esc', function (evt) {
-      if (($(register_dialog).dialog('isOpen') === false || wunderlist.account.isLoggedIn() === true) && documentEscapeActive === false) {
+      // $(register_dialog).dialog('isOpen') === false ||
+      if ((wunderlist.account.isLoggedIn() === true) && documentEscapeActive === false) {
         documentEscapeActive = true;
         
         if ($('div.add .input-add:focus').length === 0 &&
@@ -182,7 +240,8 @@ wunderlist.frontend.hotkeys = (function(){
             !cancelEditTask &&
             $('#lists a.list input').length === 0 &&
             $('#note textarea:focus').length === 0 &&
-            $('#note textarea').css('display') === 'none') {
+            $('#note textarea').css('display') === 'none')
+        {
           $("#left a").removeClass("active");
           $("input#search").val('').blur();
           wunderlist.frontend.lists.openList(1);
@@ -206,72 +265,19 @@ wunderlist.frontend.hotkeys = (function(){
       }
     });
 
-    // Shortcut Bind Command (or Ctrl) + N or T - Add new task
-    function focusTaskInput() {
-      wunderlist.frontend.tasks.cancel();
-      if($(register_dialog).dialog('isOpen') === false || wunderlist.account.isLoggedIn() === true){
-        $('.add input.input-add').focus();
-      }
-    }
-    shortcut.add(shorcutKey + '+n', focusTaskInput);
-    shortcut.add(shorcutKey + '+t', focusTaskInput);
-    
-    var sidebarToggle = false;
 
-    // Shortcut Bind Command(or Ctrl)+b - Hide the sidebar
-    shortcut.add(shorcutKey + '+b', function (evt) {
-      if(sidebarToggle === false) {
-        sidebarToggle = true;
-        $('div#right span.togglesidebar').click();
+    // For removing select all
+    // TODO: What ???something wrong with this?
+    shortcut.add(shortcutKey + '+a', function (e) {
+      if ($('textarea:focus').length == 1) {
+        $('textarea').select();
+      } else if ($('input:focus').length == 1) {
+        $('input').select();
       }
-      setTimeout(function() {
-        sidebarToggle = false;
-      }, 100);
-    });
-     
-    var deleteListShortcut = '';
-    if (wunderlist.settings.os === 'darwin') {
-      deleteListShortcut = shorcutKey + '+backspace';
-    } else {
-      deleteListShortcut = 'delete';
-    }
-    
-    // Cmd+Backspace / Del - Delete selected list
-    shortcut.add(deleteListShortcut, function (event) {
-      if ($('textarea:focus').length === 0 && $('input:focus').length === 0) {
-        if (eventListener === false) {
-          eventListener = true;
-          
-          var listElement = $('div#lists a.ui-state-disabled');
-          
-          if (listElement.length === 1 && listElement.attr('id').replace('list', '') !== 1) {
-            wunderlist.helpers.dialogs.createDeleteListDialog();
-          }
-        
-          setTimeout(function() {
-            eventListener = false;
-          }, 100);
-        }
-      }
-    }, {"propagate" : true});
-    
-    // Hotkey cmd / strg + i - Open the inbox
-    shortcut.add(shorcutKey + '+i', function (event) {
-      if (eventListener === false) {
-        eventListener = true;
-        // Only open the list when it's not the inbox
-        var list = $('div#lists a.ui-state-disabled');
-        if (list.attr('id').replace('list', '') != 1) {
-          wunderlist.frontend.lists.openList(1);
-        }
-        setTimeout(function() {
-          eventListener = false;
-        }, 100);
-      }
-    });
-    
+    }, {'disable_in_input' : false});
+
     // Save note and close the dialog
-    shortcut.add(shorcutKey + '+Enter', function (event) {
+    shortcut.add(shortcutKey + '+Enter', function (event) {
       var aimSetting = wunderlist.settings.getInt('add_item_method', 0);
       if ($('input.input-add:focus').length == 1) {
         if (aimSetting == 1) {
@@ -297,9 +303,57 @@ wunderlist.frontend.hotkeys = (function(){
         }
       }
     }, {'disable_in_input' : false});
+
+
+    // Shortcut Bind Command (or Ctrl) + N or T - Add new task
+    function focusTaskInput() {
+      wunderlist.frontend.tasks.cancel();
+      // $(register_dialog).dialog('isOpen') === false ||
+      if(wunderlist.account.isLoggedIn() === true){
+        $('.add input.input-add').focus();
+      }
+    }
+    shortcut.add(shortcutKey + '+n', focusTaskInput);
+    shortcut.add(shortcutKey + '+t', focusTaskInput);
+  }
+
+
+  var sidebarToggle = false;
+  function bindSidebarHotKeys(shortcutKey) {
+    // Shortcut Bind Command(or Ctrl)+b - Hide the sidebar
+    shortcut.add(shortcutKey + '+b', function (evt) {
+      if(sidebarToggle === false) {
+        sidebarToggle = true;
+        $('div#right span.togglesidebar').click();
+      }
+      setTimeout(function() {
+        sidebarToggle = false;
+      }, 100);
+    });
+  }
+
+
+  function init() {
+
+    var shortcutKey = wunderlist.settings.shortcutkey;
+
+    bindShortcutsForFilters(shortcutKey);
+
+    bindSystemHotkeys(shortcutKey);
+
+    bindNavigationHotkeys(shortcutKey);
+
+    bindSyncHotkeys(shortcutKey);
+
+    bindSearch(shortcutKey);
+
+    bindListsAndTasks(shortcutKey);
+  
+    bindSidebarHotKeys(shortcutKey);
   }
 
   return {
     "init": init
   };
-})();
+
+})(jQuery, window, wunderlist, shortcut, Titanium);
