@@ -193,6 +193,8 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     var droppedTask            = $('li#' + taskID);
     var droppedTaskParent      = ($('ul.filterlist').length > 0 ? $('ul#filterlist' + droppedTask.attr('rel')) : $('ul#' + droppedTask.attr('rel')));
     var activeFilter           = droppedTaskParent.attr('rel');
+    // TODO: file a bug for jqueryUI .. "this" is diambigous & a possible strict-mode violation..
+    // ui or event object should contain the value of the drop target
     var droppedFilter          = $(this).attr('id');
     var today                  = html.getWorldWideDate();
     var tomorrow               = (today + 86400);
