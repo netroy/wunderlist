@@ -3,8 +3,7 @@
 var connect = require('connect'),
         app = module.exports = connect.createServer(),
          fs = require('fs'),
-       http = require('http'),
-       port = 8888;
+       http = require('http');
 
 var versionData = fs.readFileSync(__dirname + "/data/version.txt");
 
@@ -20,7 +19,7 @@ var postOptions = {
   }
 };
 
-app.use(connect.static(process.cwd()));
+app.use(connect.static(__dirname + "/../"));
 app.use(connect.router(function(router){
   router.post(/^\/(register|login|password|invite|(edit|delete)-account|1\.2\.0)\/?$/, function(req, resp){
     var body = '';
@@ -55,6 +54,5 @@ app.use(connect.router(function(router){
 }));
 
 if (!module.parent) {
-  app.listen(parseInt(process.env.app_port, 10) || port);
-  console.log("Static HTTP server at => http://localhost:" + port + "/\nPress CTRL + C to stop");
+  app.listen(process.env.app_port || 12587);
 }

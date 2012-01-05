@@ -424,11 +424,11 @@ wunderlist.account.login = function() {
 
 							// Clear old database
 							wunderlist.database.truncate(function(err){
-  							// Save user
-  							createUser(data['email'], data['password']);
+  							  // Save user
+  							  createUser(data['email'], data['password']);
 
-  							// Synchronize data
-  							$('#sync').click();
+  							  // Synchronize data
+  							  $('#sync').click();
 							});
 							break;
 						case wunderlist.account.status_codes.LOGIN_FAILURE:
