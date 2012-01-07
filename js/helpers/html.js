@@ -612,7 +612,7 @@ html.createDatepicker = function() {
 
 	$(".datepicker").datepicker({
 		constrainInput: true,
-		buttonImage: 'icons/time.png',
+		buttonImage: '/images/icons/time.png',
 		buttonImageOnly: true,
 		buttonText: '',
 		showOn: 'both',
