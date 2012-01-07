@@ -183,14 +183,6 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
   background-position: 0px -19px;
 }
 
-#activebackground { 
-  width:14px;
-  height:19px;
-  background-position: top right !important;
-  display:block;
-  background-repeat: no-repeat !important;
-}
-
 #backgroundList {
   border:1px solid #323232;
   z-index:5;
@@ -224,6 +216,19 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
 #backgroundList a {
   margin-bottom: 5px;
   width: 18px;
+  height: 19px;
+}
+
+#activebackground { 
+  width: 14px;
+  height: 19px;
+  display: block;
+}
+
+#activebackground, #backgroundList a {
+  background-image: url(/backgrounds/icons.png);
+  background-repeat: repeat;
+  background-position: right top;
 }
 
 #backgroundList a.active {
@@ -232,8 +237,44 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
   box-shadow: 0 0 6px #fff;
 }
 
-/* Add List */
+#right .bgone {
+  background-position-y: 0;
+}
+#right .bgtwo {
+  background-position-y: -80px;
+}
+#right .bgthree {
+  background-position-y: -160px;
+}
+#right .bgfour {
+  background-position-y: -20px;
+}
+#right .bgfive {
+  background-position-y: -100px;
+}
+#right .bgsix {
+  background-position-y: -180px;
+}
+#right .bgseven {
+  background-position-y: -40px;
+}
+#right .bgeight {
+  background-position-y: -120px;
+}
+#right .bgnine {
+  background-position-y: -200px;
+}
+#right .bgten {
+  background-position-y: -60px;
+}
+#right .bgeleven {
+  background-position-y: -140px;
+}
+#right .bgtwelve {
+  background-position-y: -220px;
+}
 
+/* Add List */
 #right a.addlist {
   -webkit-box-shadow:0px 1px 0px #676767;
   -moz-box-shadow:0px 1px 0px #676767;
@@ -269,6 +310,10 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
   border-color: #555;
 }
 
+#right a:hover {
+  cursor: pointer;
+}
+
 /* Show Help */
 
 .showhelp {
@@ -281,23 +326,6 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
 .showhelp:hover {
   background-position: -19px 0px;
 }
-
-#right a:hover {
-  cursor: pointer;
-}
-
-#right .bgone { background:url(/backgrounds/icons/icon_wood.png)}
-#right .bgtwo { background:url(/backgrounds/icons/icon_wheat.png)}
-#right .bgthree { background:url(/backgrounds/icons/icon_bokeh.png)}
-#right .bgfour { background:url(/backgrounds/icons/icon_blue.png)}
-#right .bgfive { background:url(/backgrounds/icons/icon_royal_purple.png)}
-#right .bgsix { background:url(/backgrounds/icons/icon_darkfade.png)}
-#right .bgseven { background:url(/backgrounds/icons/icon_whitefade.png)}
-#right .bgeight { background:url(/backgrounds/icons/icon_monster.png)}
-#right .bgnine { background:url(/backgrounds/icons/icon_darkwood.png)}
-#right .bgten { background:url(/backgrounds/icons/icon_chalkboard.png)}
-#right .bgeleven { background:url(/backgrounds/icons/icon_forrest.png)}
-#right .bgtwelve { background:url(/backgrounds/icons/icon_leaf.png)}
 
 span#credits {
   float: right;

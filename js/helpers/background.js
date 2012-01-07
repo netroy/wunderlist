@@ -38,7 +38,11 @@ wunderlist.helpers.background = (function($, wunderlist, undefined){
 
   function switchBg(e, name) {
     if(typeof name !== 'string' || typeof bgList[name] === 'undefined') {
-      name = $(e.target).attr("class");
+      if(e && e.target){
+        name = $(e.target).attr("class");
+      } else {
+        name = "bgone";
+      }
     }
 
     // set active menu switch
@@ -81,7 +85,7 @@ wunderlist.helpers.background = (function($, wunderlist, undefined){
     });
     backgroundList.delegate('a', 'click', switchBg);
 
-    var theme = wunderlist.settings.getString("active_theme");
+    var theme = wunderlist.settings.getString("active_theme", "bgone");
     switchBg(null, theme);
 
   /*
@@ -100,7 +104,7 @@ wunderlist.helpers.background = (function($, wunderlist, undefined){
         // Background Switcher
         $('#backgroundList').fadeOut(100);
       
-        backgroundListOpen = 0; 
+        backgroundListOpen = 0;
       
         }, 350);
     });
