@@ -97,86 +97,157 @@ input#search {
 }
 
 #sidebar div.deletep { 
-background:url(/images/icons/delete_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none; 
--ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-opacity:0.5; 
--moz-opacity: 0.5}
+  background:url(/images/icons/delete_active.png);
+  cursor:pointer;
+  margin-right:4px;
+  width:14px;
+  height:14px;
+  float:right;
+  display:none; 
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  opacity:0.5; 
+  -moz-opacity: 0.5;
+}
 
-#sidebar div.deletep:hover {opacity:1.0}
+#sidebar div.editp {
+  background:url(/images/icons/edit_active.png);
+  cursor:pointer;
+  margin-right:4px;
+  width:14px;
+  height:14px;
+  float:right;
+  display:none;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  opacity:0.5; 
+  -moz-opacity: 0.5;
+}
 
-#sidebar div.editp { background:url(/images/icons/edit_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none;
--ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-opacity:0.5; 
--moz-opacity: 0.5}
+#sidebar div.savep {
+  background: url(/images/icons/editdone_active.png);
+  cursor: pointer;
+  margin-right: 4px;
+  width: 14px;
+  height: 14px;
+  float: right;
+  display: none;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  opacity: 0.5; 
+  -moz-opacity: 0.5;
+}
 
-#sidebar div.editp:hover {opacity:1.0}
+#sidebar div.deletep:hover, #sidebar div.editp:hover, #sidebar div.savep:hover, #sidebar div.savep:hover {
+  opacity: 1.0;
+}
 
-#sidebar div.savep { background:url(/images/icons/editdone_active.png); cursor:pointer; margin-right:4px; width:14px; height:14px; float:right; display:none;
--ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-opacity:0.5; 
--moz-opacity: 0.5}
 
-#sidebar div.savep:hover {opacity:1.0}
+#sidebar b.inbox {
+  padding-left: 24px;
+  background: url(/images/icons/inbox.png) no-repeat;
+  background-position: 0px 0px;
+}
 
-#sidebar b.inbox {padding-left:24px; background:url(/images/icons/inbox.png) no-repeat; background-position:0px 0px;}
+
 
 /* Share List Icon Behavior */
-
-#sidebar b.sharep {padding-right:22px;position:relative}
+#sidebar b.sharep {
+  padding-right: 22px;
+  position: relative;
+}
 
 #sidebar b.sharep .sharelist, #sidebar b.sharep .sharedlist {
-position:absolute; right:0px; top:-1px; width:17px; height:17px; background:url(/images/icons/sharelist.png) top right no-repeat; cursor:pointer !important}
+  position:absolute;
+  right:0px;
+  top:-1px;
+  width:17px;
+  height:17px;
+  background: url(/images/icons/sharelist.png) top right no-repeat;
+  cursor: pointer !important;
+}
 
-#sidebar b.sharep .sharelist {display:none}
+#sidebar b.sharep .sharelist {
+  display: none;
+}
 
-#sidebar .list:hover .sharelist {display:block; opacity:0.6}
+#sidebar .list:hover .sharelist {
+  display: block;
+  opacity: 0.6;
+}
 
-#sidebar .ui-state-disabled .sharelist {background:url(/images/icons/sharelist_white.png) top right no-repeat !important}
+#sidebar .ui-state-disabled .sharelist {
+  background: url(/images/icons/sharelist_white.png) top right no-repeat !important;
+}
 
-#sidebar .ui-state-disabled .sharedlist {background:url(/images/icons/sharelist_white.png) top right no-repeat !important; opacity:1.0 !important}
+#sidebar .ui-state-disabled .sharedlist {
+  background:url(/images/icons/sharelist_white.png) top right no-repeat !important;
+  opacity: 1.0 !important;
+}
 
-#sidebar b.sharep .sharedlist:hover, #sidebar b.sharep .sharelist:hover {opacity:1.0}
+#sidebar b.sharep .sharedlist:hover, #sidebar b.sharep .sharelist:hover {
+  opacity: 1.0;
+}
 
 #sidebar .list {
-  cursor:pointer;
-  color:#444;
+  cursor: pointer;
+  color: #444;
   text-shadow: #fff 0px 1px 2px;
-  padding:10px 8px 0px 12px;
+  padding: 10px 8px 0px 12px;
   background: #f8f8f8;
   background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
   background: -moz-linear-gradient(top,  #f8f8f8,  #f3f4f6);
-  display:block;
-  height:23px;
-  border-bottom:1px solid #e1e2e4;
+  display: block;
+  height: 23px;
+  border-bottom: 1px solid #e1e2e4;
 }
 
-#sidebar .list:first-child {border-top:1px solid #fff}
+#sidebar .list:first-child {
+  border-top: 1px solid #fff;
+}
 
 #sidebar .list:hover, #sidebar .list.hover {
-background:#fff;
-background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));
-background: -moz-linear-gradient(top,  #fff,  #f7f8fa)}
+  background: #fff;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));
+  background: -moz-linear-gradient(top,  #fff,  #f7f8fa);
+}
 
 #sidebar .list b {
-white-space:nowrap;
-text-overflow:ellipsis;
-overflow:hidden;
-display:block;
-float:left;
-max-width: 130px}
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+  float: left;
+  max-width: 130px;
+}
 
 #sidebar .placeholder {
-cursor:pointer;
-background:#e7eaf2;
-text-shadow: #fff 0px 1px 2px;
-padding:10px 10px 0px 14px;
-display:block;
-height:23px;
-border-bottom:1px solid #fff}
+  cursor: pointer;
+  background: #e7eaf2;
+  text-shadow: #fff 0px 1px 2px;
+  padding: 10px 10px 0px 14px;
+  display: block;
+  height: 23px;
+  border-bottom: 1px solid #fff;
+}
 
-#sidebar .list input, #sidebar .list .input-list { 
-outline:none !important; background:#fff;  border:1px solid #bbb; padding:4px 8px; margin-top:-4px; -webkit-border-radius:15px; -moz-border-radius:15px; border-radius:15px; font-size:12px; font-weight:bold; color:#555; border:none; font-family:Arial; margin-left:-1px;
-box-shadow: inset 1px 1px 3px #999; -webkit-box-shadow: inset 1px 1px 3px #999; -moz-box-shadow: inset 1px 1px 3px #999; width:134px !important}
+#sidebar .list input, #sidebar .list .input-list {
+  outline: none !important;
+  background: #fff;
+  border: 1px solid #bbb;
+  padding: 4px 8px;
+  margin-top: -4px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+  border: none;
+  font-family: Arial;
+  margin-left: -1px;
+  box-shadow: inset 1px 1px 3px #999;
+  -webkit-box-shadow: inset 1px 1px 3px #999;
+  -moz-box-shadow: inset 1px 1px 3px #999;
+  width: 134px !important;
+}
 
 /* List Edit Icons */
 
