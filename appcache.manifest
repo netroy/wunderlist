@@ -4,16 +4,18 @@ CACHE:
 /css/bottombar.css
 /css/content.css
 /css/dialogs.css
+/css/menu.css
 /css/normalize.css
+/css/sharing.css
 /css/sidebar.css
+/css/tipsy.css
 /css/wunderlist.css
 
 /js/namespaces.js
 
-/js/libraries/jquery-1.6.min.js
 /js/libraries/jquery-1.7.min.js
-/js/libraries/jquery.ui.1.8.10.min.js
-/js/libraries/jquery.async.js
+/js/libraries/jquery-ui-1.8.16.custom.min.js
+/js/libraries/json2.js
 /js/libraries/shortcuts.js
 /js/libraries/encoder.js
 /js/libraries/async-min.js
@@ -31,7 +33,6 @@ CACHE:
 /js/helpers/list.js 
 /js/helpers/task.js 
 /js/helpers/utils.js 
-/js/helpers/note.js 
 /js/backend/database/websql.js 
 /js/backend/wunderlist.settings.js 
 /js/backend/wunderlist.account.js 
@@ -50,6 +51,9 @@ CACHE:
 /js/web/menu.js 
 /js/frontend/layout.js 
 /js/frontend/hotkeys.js
+
+/backgrounds/wood.jpg
+/backgrounds/icons/icon_wood.png
 
 /backgrounds/blue.jpg
 /backgrounds/icons/icon_blue.png
@@ -74,8 +78,6 @@ CACHE:
 /backgrounds/icons/icon_wheat.png
 /backgrounds/whitefade.jpg
 /backgrounds/icons/icon_whitefade.png
-/backgrounds/wood.jpg
-/backgrounds/icons/icon_wood.png
 
 /images/sidebar.png 
 /images/close.png
