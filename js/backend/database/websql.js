@@ -94,7 +94,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
   /**
-   * Gets list(s) from the database. 
+   * Gets list(s) from the database.
    * @param list_id (Optional) - numeric id of a list to fetch (for getting individual lists)
    * @param callback - function to call with an array of fetched list
    * TODO: getTasks looks very similar, try to merge.
@@ -293,7 +293,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    * Fetch list's online_id by its offline_id
    * @param list_id - offline id of the list
    * @param callback - function to call with the online_id of the list
-   */ 
+   */
   var getListOnlineIdByIdSQL = "SELECT online_id FROM lists WHERE id = ?";
   function getListOnlineIdById(list_id, callback) {
     execute(getListOnlineIdByIdSQL, list_id, function(err, result){
@@ -372,7 +372,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
 
 
   /**
-   * Fetch info on badges due for today or overdued 
+   * Fetch info on badges due for today or overdued
    * @param filter - today or overdue
    * @param callback - function to call task count
    */
@@ -494,7 +494,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    */
   function getFilteredTasks(filter, type, callback) {
     var date = html.getWorldWideDate(), // Current date
-        sql = "SELECT * FROM tasks ", 
+        sql = "SELECT * FROM tasks ",
         where = "",
         date_type;
 
@@ -544,14 +544,20 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     });
   }
 
-  function updateTask(noVersion, callback){
-    
+
+  /*
+   * Check if a list/task is already marked as deleted
+   * @param type - list/tasks
+   * @param online_id - online id of the list/task
+   * @param callback - function to call with a boolean value if entitiy is deleted or not
+   */
+  var isDeletedSQL = "SELECT deleted FROM '?' WHERE online_id = ? AND deleted = 1";
+  function isDeleted(type, online_id, callback) {
+    execute(isDeletedSQL, type, online_id, function(result) {
+      callback(null, result.rows.length > 0);
+    });
   }
 
-
-  function getListIdsByTaskId(task_id, callback){
-    
-  }
 
 /***********************************************
 ***** TODO: complete the following methods *****
@@ -564,9 +570,8 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
 
 
   function createStandardElements(){}
-  
+  function getListIdsByTaskId(task_id, callback){}
   function search(query, callback){}
-  function isDeleted(type, online_id, callback){}
   function isShared(list_id, callback){}
   function isSynced(list_id, callback){}
 
@@ -598,8 +603,10 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "existsByOnlineId": existsByOnlineId,
     "hasElementsWithoutOnlineId": hasElementsWithoutOnlineId,
     "getDataForSync": getDataForSync,
+
     "deleteNotSyncedElements": deleteNotSyncedElements,
     "deleteElements": deleteElements,
+    "isDeleted": isDeleted,
 
     "createListByOnlineId": createListByOnlineId,
     "getListOnlineIdById": getListOnlineIdById,
