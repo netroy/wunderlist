@@ -578,7 +578,6 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   function createTuts(list_id){}
   function recreateTuts(){}
 
-  function fetchData(resultSet){}
   function updateTaskCount(list_id){}
 
 
