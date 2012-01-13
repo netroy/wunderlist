@@ -9,7 +9,7 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
   var syncUrlBase = '/1.2.0',//'https://sync.wunderlist.net/1.2.0';
       alreadyRegistered = false,
       isSyncing = false,
-      timeOutInterval, 
+      timeOutInterval,
       user_credentials;
 
   // Response Status codes
@@ -36,10 +36,10 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
       if (Titanium.Network.online === true) {
         wunderlist.timer.stop();
         wunderlist.sync.fireSync();
-        return false;      
+        return false;
       } else {
         wunderlist.helpers.dialogs.createAlertDialog(wunderlist.language.data.sync_error, wunderlist.language.data.no_internet);
-      }                    
+      }
     }
   }
 
@@ -150,7 +150,7 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
           wunderlist.database.existsByOnlineId('tasks', item.online_id, function(err, exists){
             var method = exists ? "updateTaskByOnlineId": "createTaskByOnlineId";
             wunderlist.database.getListIdByOnlineId(item.list_id, function(err, id){
-              wunderlist.database[method](item.online_id, item.name, item.date, item.done, id, item.position,  
+              wunderlist.database[method](item.online_id, item.name, item.date, item.done, id, item.position,
                   item.important, item.done_date, item.deleted, item.version, item.note, clback);
             });
           });
@@ -192,7 +192,7 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
    * Callback on sync success
    * @author Dennis Schneider
    */
-  function syncSuccess(response_step1) { 
+  function syncSuccess(response_step1) {
     var i, length;
 
     if (response_step1.sync_table === undefined) {
@@ -226,7 +226,7 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
       workerQueue.push(deleteTasks(sync_table_step1.delete_tasks));
     }
 
-    if(workerQueue.length > 0) {    
+    if(workerQueue.length > 0) {
       async.series(workerQueue, function(err){
         wunderlist.frontend.lists.redraw();
       });
@@ -322,7 +322,7 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
 
     window.setTimeout(function() {
       isSyncing = false;
-    }, 2000);  
+    }, 2000);
     wunderlist.layout.stopSyncAnimation();
 
     // The callback for the sharing functionality
@@ -349,7 +349,7 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
 
 
   function syncStep1Success(response_data, text, xhrobject) {
-    if (response_data !== '' && text !== '' && xhrobject !== undefined) {          
+    if (response_data !== '' && text !== '' && xhrobject !== undefined) {
       wunderlist.layout.switchSyncSymbol(xhrobject.status);
                   
       if (xhrobject.status === 200) {
@@ -429,9 +429,9 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
       window.setTimeout(wunderlist.layout.stopSyncAnimation, 10);
       var html_code  = '<div style="min-height: 30px; padding-top: 10px;">' + wunderlist.language.data.sync_not_logged_in + '</div>';
         html_code += '<div style="padding-top: 10px; padding-bottom: 10px; min-height: 35px;">'+
-                     '<input class="input-button register" type="submit" id="notloggedin-yes" value="' + 
+                     '<input class="input-button register" type="submit" id="notloggedin-yes" value="' +
                      wunderlist.language.data.sync_not_logged_in_yes + '" />' +
-                     '<input class="input-button" type="submit" id="notloggedin-cancel" value="' + 
+                     '<input class="input-button" type="submit" id="notloggedin-cancel" value="' +
                      wunderlist.language.data.sync_not_logged_in_no + '" /></div>';
 
       var notloggedin_dialog = wunderlist.helpers.dialogs.generateDialog(wunderlist.language.data.sync_not_logged_in_title, html_code);
@@ -453,7 +453,7 @@ wunderlist.sync = (function(window, $, wunderlist, async, Titanium, undefined){
         $(notloggedin_dialog).dialog('close');
       });
     } else {
-      if (Titanium.Network.online === true) {    
+      if (Titanium.Network.online === true) {
         if (isSyncing === false) {
           // SYNC STEP 1
           syncSuccessful = false;
