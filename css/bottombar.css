@@ -63,7 +63,7 @@
   box-shadow:0px 1px 0px #676767;
   padding: 2px 8px;
   text-shadow: #333 0px 1px 2px;
-  background:url(/images/bottombar_menu.png) repeat-x;
+  background-color: #2C8AD0;
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#4f4f4f));
   background-image: -webkit-linear-gradient(top, #444, #4f4f4f);
   background-image: -moz-linear-gradient(top, #444, #4f4f4f);
@@ -284,7 +284,6 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
   display:block;
   text-indent: 0px !important;
   cursor:pointer;
-  font-size:11px;
   margin-top:-2px;
   border: 1px solid #343434;
   border-radius:10px;
