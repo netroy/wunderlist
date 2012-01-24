@@ -20,7 +20,7 @@ body {
   background-size: cover;
 }
 
-body, input, select, textarea {
+body, button, input, select, textarea {
   font-family: 'Open Sans', 'Lucida Grande', Arial, sans-serif;
 }
 
