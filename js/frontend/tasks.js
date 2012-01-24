@@ -26,7 +26,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
       if (string.search('today') != -1) {
         return {
           string: string.replace('today', ''),
-          timestamp: html.getWorldWideDate(date)
+          timestamp: wunderlist.helpers.utils.getWorldWideDate(date)
         };
       }
 
@@ -35,7 +35,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
         date.setDate(date.getDate() + 1);
         return {
           string: string.replace('tomorrow', ''),
-          timestamp: html.getWorldWideDate(date)
+          timestamp: wunderlist.helpers.utils.getWorldWideDate(date)
         };
       }
 
@@ -69,7 +69,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
         }
         return {
           string: string.replace(result[0], ''),
-          timestamp: html.getWorldWideDate(date)
+          timestamp: wunderlist.helpers.utils.getWorldWideDate(date)
         };
       }
 
@@ -103,7 +103,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
         date = wunderlist.helpers.utils.setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
         return {
           string: string.replace(result[0], ''),
-          timestamp: html.getWorldWideDate(date)
+          timestamp: wunderlist.helpers.utils.getWorldWideDate(date)
         };
       }
 
@@ -116,7 +116,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
         date = wunderlist.helpers.utils.setToFuture(new Date(month + ' ' + number + ', ' + date.getFullYear()));
         return {
           string: string.replace(result[0], ''),
-          timestamp: html.getWorldWideDate(date)
+          timestamp: wunderlist.helpers.utils.getWorldWideDate(date)
         };
       }
     }
@@ -317,7 +317,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
           smartDateObject.setMonth(monthNumber);
           smartDateObject.setDate(day);
           smartDateObject.setFullYear(year);
-          timestamp           = html.getWorldWideDate(smartDateObject);
+          timestamp           = wunderlist.helpers.utils.getWorldWideDate(smartDateObject);
           task_name           = smartDate['string'];
         */
       }
@@ -334,9 +334,9 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
           var activeFilter = $('#left a.active');
           
           if (list_id === 'today' || activeFilter.attr('id') === 'today') {
-            timestamp = html.getWorldWideDate();
+            timestamp = wunderlist.helpers.utils.getWorldWideDate();
           } else if (list_id === 'tomorrow' || activeFilter.attr('id') === 'tomorrow') {
-            timestamp = html.getWorldWideDate() + 86400;
+            timestamp = wunderlist.helpers.utils.getWorldWideDate() + 86400;
           } else if (list_id === 'starred' || activeFilter.attr('id') === 'starred') {
             important = 1;
           }
@@ -813,7 +813,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
       var done, done_date;
       if(node.hasClass("checked")) {
         done = 1;
-        done_date = html.getWorldWideDate();
+        done_date = wunderlist.helpers.utils.getWorldWideDate();
       } else { // If is already checked, append to upper list
         done = 0;
         done_date = 0;

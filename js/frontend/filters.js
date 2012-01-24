@@ -196,7 +196,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     // TODO: file a bug for jqueryUI .. "this" is diambigous & a possible strict-mode violation..
     // ui or event object should contain the value of the drop target
     var droppedFilter          = $(this).attr('id');
-    var today                  = html.getWorldWideDate();
+    var today                  = wunderlist.helpers.utils.getWorldWideDate();
     var tomorrow               = (today + 86400);
     var droppedTaskDate        = droppedTask.children('span.showdate');
     var droppedTaskDateInput   = droppedTask.children('input.datepicker');

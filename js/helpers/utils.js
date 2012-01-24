@@ -54,6 +54,34 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, undefined){
     }
   }
 
+  /**
+   * Convert the date to the beginning of the day at 00:00:00
+   * @author Dennis Schneider
+   */
+  function getWorldWideDate(currentLocationDate) {
+    if(!(currentLocationDate instanceof Date)){
+      currentLocationDate = new Date();
+    }
+    currentLocationDate.setMinutes(0);
+    currentLocationDate.setHours(0);
+    currentLocationDate.setSeconds(0);
+    currentLocationDate.setMilliseconds(0);
+
+    var offset = (currentLocationDate.getTimezoneOffset() / 60) * (-1);
+
+    // convert to msec
+    // add local time zone offset
+    // get UTC time in msec
+    var utc = currentLocationDate.getTime() + (currentLocationDate.getTimezoneOffset() * 60000);
+
+    // create new Date object for different city
+    // using supplied offset
+    var timeZoneLocation = new Date(utc + (3600000 * offset));
+    var timestamp = timeZoneLocation.getTime() / 1000;
+    
+    return Math.round(timestamp);
+  }
+
 
   /**
    * Replace the search string with the given string
@@ -129,7 +157,8 @@ wunderlist.helpers.utils = (function(window, document, wunderlist, undefined){
     "is_email": is_email,
     "ucfirst": ucfirst,
     "setToFuture": setToFuture,
-    "convertString": convertString
+    "convertString": convertString,
+    "getWorldWideDate": getWorldWideDate
   };
 
 })(window, document, wunderlist);
