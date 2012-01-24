@@ -6,7 +6,6 @@ html {
 
 body {
   display: none;
-  font-family: 'Open Sans', 'Lucida Grande', Arial, sans-serif;
   font-size: 12px;
   color: #4e4e4e;
   overflow: hidden;
@@ -19,6 +18,10 @@ body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
+}
+
+body, input, select, textarea {
+  font-family: 'Open Sans', 'Lucida Grande', Arial, sans-serif;
 }
 
 body.login {
