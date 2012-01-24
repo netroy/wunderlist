@@ -584,7 +584,9 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 							createUser(data['email'], data['password']);
 
 							// Create standard elements
-							wunderlist.database.createStandardElements();
+							wunderlist.database.anyListsExist(function(err, result){
+								
+							});
 
 							// Load interface
 							wunderlist.account.loadInterface();
@@ -593,7 +595,7 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 							$('#sync').click();
 
 							// Hide the wood texture
-							$('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
+							// $('div.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
 
 							break;
 

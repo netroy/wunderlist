@@ -530,11 +530,11 @@ wunderlist.database.search = function(search) {
   $("#content").html("");
 	var resultSet = wunderlist.database.db.execute("SELECT * FROM tasks WHERE (name LIKE '%" + search + "%' OR note LIKE '%" + search + "%') AND tasks.deleted = 0 ORDER BY done ASC, important DESC, date DESC");
 	if (resultSet.rowCount() > 0) {
-		$("#content").prepend("<div id='listfunctions'><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>");
+		//$("#content").prepend("<div id='listfunctions'><a rel='print tasks' class='list-print'></a><a rel='send by email' class='list-email'></a><a rel='share with cloud app' class='list-cloud'></a><div id='cloudtip'><span class='triangle'></span><span class='copy'>COPY LINK</span><span class='link'></span></div></div>");
 		$("#content").append("<h1>"+ wunderlist.language.data.search_results + ": " + search + "</h1><ul id='list' class='mainlist searchlist'></ul>");
 
         while(resultSet.isValidRow()) {
-            var values = new Object();
+            var values = {};
 
             for(var i = 0, max = resultSet.fieldCount(); i < max; i++)
                 values[resultSet.fieldName(i)] = resultSet.field(i);

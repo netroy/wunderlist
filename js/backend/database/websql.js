@@ -61,6 +61,19 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     return arr;
   }
 
+  /**
+   * Higher order function to pre-process data before sending it to the callback
+   */
+  function callbackWrapper(callback) {
+    return function(err, result){
+      if(err) {
+        callback(err);
+      } else {
+        callback(null, resultToArray(result));
+      }
+    };
+  }
+
 
   /**
    * Create tables for lists & tasks if they don't exist already
@@ -535,13 +548,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     }
 
     sql += where + " AND tasks.deleted = 0 ORDER BY tasks.list_id ASC, tasks.important DESC, tasks.date ASC, tasks.position ASC";
-    execute(sql, function(err, result){
-      if(err) {
-        callback(err);
-        return;
-      }
-      callback(null, resultToArray(result));
-    });
+    execute(sql, callbackWrapper(callback));
   }
 
 
@@ -553,9 +560,24 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    */
   var isDeletedSQL = "SELECT deleted FROM '?' WHERE online_id = ? AND deleted = 1";
   function isDeleted(type, online_id, callback) {
-    execute(isDeletedSQL, type, online_id, function(result) {
+    execute(isDeletedSQL, type, online_id, function(err, result) {
       callback(null, result.rows.length > 0);
     });
+  }
+
+
+  var anyListsExistSQL = "SELECT id FROM lists WHERE id = '1' AND lists.deleted = 0 LIMIT 1";
+  function anyListsExist(callback) {
+    execute(anyListsExistSQL, callback);
+  }
+
+
+  /**
+   * Search from all the tasks
+   */
+  var searchSQL = "SELECT * FROM tasks WHERE (name LIKE '%?%' OR note LIKE '%?%') AND tasks.deleted = 0 ORDER BY done ASC, important DESC, date DESC";
+  function search(query, callback){
+    execute(searchSQL, query, query, callbackWrapper(callback));
   }
 
 
@@ -569,9 +591,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    */
 
 
-  function createStandardElements(){}
   function getListIdsByTaskId(task_id, callback){}
-  function search(query, callback){}
   function isShared(list_id, callback){}
   function isSynced(list_id, callback){}
 
@@ -596,10 +616,13 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "getLists": getLists,
     "getTasks": getTasks,
     "updateByMap": updateByMap,
-    "createStandardElements": createStandardElements,
+
     "truncate": truncate,
     "existsById": existsById,
     "existsByOnlineId": existsByOnlineId,
+    "anyListsExist": anyListsExist,
+    "search": search,
+
     "hasElementsWithoutOnlineId": hasElementsWithoutOnlineId,
     "getDataForSync": getDataForSync,
 
