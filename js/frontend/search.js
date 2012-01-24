@@ -22,37 +22,35 @@ wunderlist.frontend.search = (function($, wunderlist, html, undefined){
         row = rows[i];
         ul.append(html.generateTaskHTML(row.id, row.name, row.list_id, row.done, row.important, row.date, row.note));
       }
+      html.make_timestamp_to_string();
     } else {
       content.append(h1.html(wunderlist.language.data.no_search_results + ": " + query));
     }
   }
 
 
+  var lastSearch;
   function search(e) {
 
     var value = searchBox.val();
-
-    if(e.keyCode === 13) {
-      if(value !== '') {
-        wunderlist.database.search(value, function(err, rows) {
-          renderResults(value, rows);
-        });
-
-        html.make_timestamp_to_string();
-      } else {
-        wunderlist.frontend.lists.openList(1);
+    if(e.keyCode === 27) {
+      // Clear on ESC key & go to the last open list
+      clear();
+      wunderlist.frontend.lists.openList();
+    } else if(value === lastSearch) {
+      // Ignore if the keystroke(s) didn't alter the search query
+      return;
+    } else if(value !== '') {
+      $("a.list").droppable({ disabled: false });
+      wunderlist.database.search(value, function(err, rows) {
+        lastSearch = value;
+        renderResults(value, rows);
+      });
+    } else {
+      if(focusSearch === 0) {
+        wunderlist.frontend.lists.openList();
       }
     }
-
-    /* else if(value !== '') {
-      $("a.list").droppable({ disabled: false });
-      wunderlist.database.search(value);
-      html.make_timestamp_to_string();
-    } else {
-      if(focusSearch === 0){
-        wunderlist.frontend.lists.openList(1);
-      }
-    }*/
 
     $('#left a').removeClass('active');
   }
