@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.database = (function(wunderlist, html, async, window, undefined){
+wunderlist.database = (function(wunderlist, async, window, undefined){
   "use strict";
   
   var DB_NAME  = "wunderlist",
@@ -419,27 +419,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
                          "tasks.done_date, tasks.note FROM tasks WHERE tasks.done = 1 AND list_id = '?' AND tasks.deleted = 0 ORDER BY "+
                          "tasks.done_date DESC";
   function getLastDoneTasks(list_id, callback) {
-    var doneListsTasks = [];
-
-    execute(lastDoneTasksSQL, list_id, function(err, result){
-      if(err) {
-        callback(err);
-        return;
-      }
-
-      var rows = result.rows, row;
-      for(var i = 0, l = rows.length; i < l; i++) {
-        var values = rows.item(i);
-        var days   = wunderlist.helpers.utils.calculateDayDifference(values.done_date);
-        var htmlId = days.toString();
-        if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
-          doneListsTasks[htmlId] = [];
-        }
-        var markup = html.generateTaskHTML(values.task_id, values.name, values.list_id, values.done, values.important, values.date, values.note);
-        doneListsTasks[htmlId].push(markup);
-      }
-      callback(null, doneListsTasks);
-    });
+    execute(lastDoneTasksSQL, list_id, callback);
   }
 
 
@@ -670,4 +650,4 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "getFilteredTasks": getFilteredTasks
   };
 
-})(wunderlist, html, async, window);
+})(wunderlist, async, window);

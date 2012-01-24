@@ -313,7 +313,19 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
    */
   var listOpenHandler = false;
 
-  function renderLastDoneTasks(err, doneListsTasks){
+  function renderLastDoneTasks(err, result){
+    var doneListsTasks = [], rows = result.rows, row;
+    for(var i = 0, l = rows.length; i < l; i++) {
+      var values = rows.item(i);
+      var days   = wunderlist.helpers.utils.calculateDayDifference(values.done_date);
+      var htmlId = days.toString();
+      if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
+        doneListsTasks[htmlId] = [];
+      }
+      var markup = html.generateTaskHTML(values.task_id, values.name, values.list_id, values.done, values.important, values.date, values.note);
+      doneListsTasks[htmlId].push(markup);
+    }
+
     for(var listId in doneListsTasks) {
       var day_string = wunderlist.language.data.day_ago;
       var heading    = '<h3>';
