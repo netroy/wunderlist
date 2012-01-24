@@ -97,48 +97,51 @@ input#search {
   display: block;
 }
 
-#sidebar div.deletep { 
-  background:url(/images/icons/delete_active.png);
-  cursor:pointer;
-  margin-right:4px;
-  width:14px;
-  height:14px;
-  float:right;
-  display:none; 
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  opacity:0.5; 
-  -moz-opacity: 0.5;
-}
 
-#sidebar div.editp {
-  background:url(/images/icons/edit_active.png);
-  cursor:pointer;
-  margin-right:4px;
-  width:14px;
-  height:14px;
-  float:right;
-  display:none;
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  opacity:0.5; 
-  -moz-opacity: 0.5;
-}
 
-#sidebar div.savep {
-  background: url(/images/icons/editdone_active.png);
+
+/* List Action Icons */
+#sidebar a.list div {
   cursor: pointer;
   margin-right: 4px;
   width: 14px;
   height: 14px;
   float: right;
   display: none;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  opacity: 0.5; 
-  -moz-opacity: 0.5;
+  opacity: 0.6;
 }
 
-#sidebar div.deletep:hover, #sidebar div.editp:hover, #sidebar div.savep:hover, #sidebar div.savep:hover {
+#sidebar a.list:hover div.sharelist, #sidebar a.list:hover div.sharedlist {
+  display: block;
+}
+
+#sidebar a.list div:hover {
   opacity: 1.0;
 }
+
+#sidebar .deletep { 
+  background:url(/images/icons/delete_active.png);
+}
+
+#sidebar .editp {
+  background:url(/images/icons/edit_active.png);
+}
+
+#sidebar .savep {
+  background: url(/images/icons/editdone_active.png);
+}
+
+#sidebar div.sharelist, #sidebar div.sharedlist {
+  background: url(/images/icons/sharelist.png) top right no-repeat;
+  width: 25px;
+}
+
+#sidebar .ui-state-disabled div.sharelist, #sidebar .ui-state-disabled div.sharedlist {
+  background: url(/images/icons/sharelist_white.png) top center no-repeat;
+  opacity: 1.0;
+}
+
+
 
 
 #sidebar b.inbox {
@@ -147,44 +150,8 @@ input#search {
   background-position: 0px 0px;
 }
 
-
-
-/* Share List Icon Behavior */
 #sidebar b.sharep {
   padding-right: 22px;
-  position: relative;
-}
-
-#sidebar b.sharep .sharelist, #sidebar b.sharep .sharedlist {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  width: 17px;
-  height: 17px;
-  background: url(/images/icons/sharelist.png) top right no-repeat;
-  cursor: pointer !important;
-}
-
-#sidebar b.sharep .sharelist {
-  display: none;
-}
-
-#sidebar .list:hover .sharelist {
-  display: block;
-  opacity: 0.6;
-}
-
-#sidebar .ui-state-disabled .sharelist {
-  background: url(/images/icons/sharelist_white.png) top right no-repeat !important;
-}
-
-#sidebar .ui-state-disabled .sharedlist {
-  background:url(/images/icons/sharelist_white.png) top right no-repeat !important;
-  opacity: 1.0 !important;
-}
-
-#sidebar b.sharep .sharedlist:hover, #sidebar b.sharep .sharelist:hover {
-  opacity: 1.0;
 }
 
 #sidebar .list {
