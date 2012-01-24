@@ -160,8 +160,10 @@ input#search {
   text-shadow: #fff 0px 1px 2px;
   padding: 10px 8px 0px 12px;
   background: #f8f8f8;
-  background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
-  background: -moz-linear-gradient(top,  #f8f8f8,  #f3f4f6);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f3f4f6));
+  background-image: -webkit-linear-gradient(top, #f8f8f8, #f3f4f6);
+  background-image: -moz-linear-gradient(top,  #f8f8f8,  #f3f4f6);
+  background-image: -o-linear-gradient(top,  #f8f8f8,  #f3f4f6);
   display: block;
   height: 23px;
   border-bottom: 1px solid #e1e2e4;
@@ -172,9 +174,11 @@ input#search {
 }
 
 #sidebar .list:hover, #sidebar .list.hover {
-  background: #fff;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));
-  background: -moz-linear-gradient(top,  #fff,  #f7f8fa);
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f7f8fa));
+  background-image: -webkit-linear-gradient(top, #fff, #f7f8fa);
+  background-image: -moz-linear-gradient(top,  #fff,  #f7f8fa);
+  background-image: -o-linear-gradient(top,  #fff,  #f7f8fa);
 }
 
 #sidebar .list b {
@@ -205,8 +209,8 @@ input#search {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 1em;
+  font-weight: normal;
   color: #555;
   border: none;
   font-family: Arial;
@@ -242,7 +246,9 @@ opacity:0.5;
 #sidebar .ui-state-disabled, #sidebar .ui-dropped-disabled {
   background:#33a3ef !important;
   background: -webkit-gradient(linear, left top, left bottom, from(#33a3ef), to(#168ad4)) !important;
+  background: -webkit-linear-gradient(top,  #33a3ef,  #168ad4) !important;
   background: -moz-linear-gradient(top,  #33a3ef,  #168ad4) !important;
+  background: -o-linear-gradient(top,  #33a3ef,  #168ad4) !important;
   border-bottom:1px solid #177bbd;
   color: #fff;
   text-shadow: #125a8a 0px 1px 2px;
@@ -297,6 +303,7 @@ opacity:0.5;
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d33), to(#811));
   background-image: -webkit-linear-gradient(top, #d33, #811);
   background-image: -moz-linear-gradient(top, #d33, #811);
+  background-image: -o-linear-gradient(top, #d33, #811);
   border: 1px solid #611;
   border-radius: 25px;
   opacity: 0.9;

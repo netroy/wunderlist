@@ -74,10 +74,10 @@
   -moz-box-shadow:0px 1px 0px #676767;
   box-shadow:0px 1px 0px #676767;
   text-shadow: 0px 1px 2px #333;
-  background-color: #2C8AD0;
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#4f4f4f));
   background-image: -webkit-linear-gradient(top, #444, #4f4f4f);
   background-image: -moz-linear-gradient(top, #444, #4f4f4f);
+  background-image: -o-linear-gradient(top, #444, #4f4f4f);
 }
 
 #left a.roundedleft {
@@ -127,11 +127,13 @@
 
 #left a.filter:hover, #left a.active, #left a.droppable, #right a.addlist {
   color: #fff;
+  background-color: #2C8AD0;
   text-shadow: 0px 1px 3px #210;
   background-color: #2b8acf;
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#43a4ef), to(#1773b4));
   background-image: -webkit-linear-gradient(top, #43a4ef, #1773b4);
   background-image: -moz-linear-gradient(top, #43a4ef, #1773b4);
+  background-image: -o-linear-gradient(top, #43a4ef, #1773b4);
 }
 
 .togglesidebar {
@@ -235,40 +237,40 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
 }
 
 #right .bgone {
-  background-position-y: 0;
+  background-position: right 0;
 }
 #right .bgtwo {
-  background-position-y: -80px;
+  background-position: right -80px;
 }
 #right .bgthree {
-  background-position-y: -160px;
+  background-position: right -160px;
 }
 #right .bgfour {
-  background-position-y: -20px;
+  background-position: right -20px;
 }
 #right .bgfive {
-  background-position-y: -100px;
+  background-position: right -100px;
 }
 #right .bgsix {
-  background-position-y: -180px;
+  background-position: right -180px;
 }
 #right .bgseven {
-  background-position-y: -40px;
+  background-position: right -40px;
 }
 #right .bgeight {
-  background-position-y: -120px;
+  background-position: right -120px;
 }
 #right .bgnine {
-  background-position-y: -200px;
+  background-position: right -200px;
 }
 #right .bgten {
-  background-position-y: -60px;
+  background-position: right -60px;
 }
 #right .bgeleven {
-  background-position-y: -140px;
+  background-position: right -140px;
 }
 #right .bgtwelve {
-  background-position-y: -220px;
+  background-position: right -220px;
 }
 
 /* Add List */

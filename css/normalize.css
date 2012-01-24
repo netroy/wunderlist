@@ -11,7 +11,7 @@ a:visited{color:#551a8b}
 a:focus{outline:thin dotted}
 a:hover,a:active{outline:0}
 abbr[title]{border-bottom:1px dotted}
-b,strong{font-weight:bold}
+b,strong{font-weight: bold;font-weight: 600;}
 blockquote{margin:1em 40px}
 dfn{font-style:italic}
 mark{background:#ff0;color:#000}
