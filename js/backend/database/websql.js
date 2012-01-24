@@ -566,6 +566,32 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
   }
 
 
+  /*
+   * Check if a list is shared
+   * @param list_id - offline id of the list
+   * @param callback - function to call with a boolean value if list is shared or not
+   */
+  var isSharedSQL = "SELECT id FROM lists WHERE id = ? AND shared = 1";
+  function isShared(list_id, callback) {
+    execute(isSharedSQL, list_id, function(err, result) {
+      callback(null, result.rows.length > 0);
+    });
+  }
+
+
+  /*
+   * Check if a list is synced
+   * @param list_id - offline id of the list
+   * @param callback - function to call with a boolean value if list is synced or not
+   */
+  var isSyncedSQL = "SELECT id FROM lists WHERE online_id != 0 AND id = ?";
+  function isSynced(list_id, callback) {
+    execute(isSyncedSQL, list_id, function(err, result) {
+      callback(null, result.rows.length > 0);
+    });
+  }
+
+
   var anyListsExistSQL = "SELECT id FROM lists WHERE id = '1' AND lists.deleted = 0 LIMIT 1";
   function anyListsExist(callback) {
     execute(anyListsExistSQL, callback);
@@ -590,11 +616,7 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
    * TODO: move out any DOM stuff to frontend
    */
 
-
   function getListIdsByTaskId(task_id, callback){}
-  function isShared(list_id, callback){}
-  function isSynced(list_id, callback){}
-
   function createTuts(list_id){}
   function recreateTuts(){}
 
@@ -629,6 +651,8 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "deleteNotSyncedElements": deleteNotSyncedElements,
     "deleteElements": deleteElements,
     "isDeleted": isDeleted,
+    "isShared": isShared,
+    "isSynced": isSynced,
 
     "createListByOnlineId": createListByOnlineId,
     "getListOnlineIdById": getListOnlineIdById,
@@ -645,4 +669,5 @@ wunderlist.database = (function(wunderlist, html, async, window, undefined){
     "getLastTaskPosition": getLastTaskPosition,
     "getFilteredTasks": getFilteredTasks
   };
+
 })(wunderlist, html, async, window);
