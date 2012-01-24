@@ -55,20 +55,22 @@
 #content .mainlist, #content .donelist { margin-bottom:12px }
 
 #content .mainlist li, .donelist li {
-background:url(/images/task.jpg) repeat-x;
--webkit-box-shadow:0px 1px 3px #333;
--moz-box-shadow:0px 1px 3px #333;
-box-shadow:0px 1px 3px #333;
-padding:7px 0px 0px 8px;
-position:relative;
--webkit-border-radius:5px;
--moz-border-radius:5px;
-border-radius:5px;
-border-radius:5px;
-overflow: hidden;
-cursor:pointer;
-height:20px;
-margin-bottom:5px}
+  /*background:url(/images/task.jpg) repeat-x;*/
+  background-color: #fff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 1px 3px #333;
+  -moz-box-shadow: 0px 1px 3px #333;
+  box-shadow: 0px 1px 3px #333;
+
+  padding: 7px 0px 0px 8px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  height: 22px;
+  margin-bottom: 5px
+}
 
 /* Add Task Field */
 
@@ -87,8 +89,6 @@ div.add div.addwrapper input {
   margin: auto !important;
   padding: 10px 0px;
   background: none;
-  font-family: Arial, Verdana;
-  font-size: 13px;
   color: #fff;
   border: none;
   outline: none;
@@ -141,8 +141,18 @@ height:35px !important;
 background:url(/images/dragging.png) !important}
 
 #content .description {
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;
-right:115px;left:52px;top:0px;padding-top: 7px;height: 27px;display:block;color:#333}
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: absolute;
+  right: 115px;
+  left: 52px;
+  top: 0px;
+  padding-top: 6px;
+  height: 27px;
+  display: block;
+  color: #222;
+}
 
 #content .description a, #content .openApp {color:#2597e2}
 #content .description a:hover, #content .openApp:hover {text-decoration: underline; cursor: pointer; }

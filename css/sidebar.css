@@ -155,11 +155,11 @@ input#search {
 }
 
 #sidebar b.sharep .sharelist, #sidebar b.sharep .sharedlist {
-  position:absolute;
-  right:0px;
-  top:-1px;
-  width:17px;
-  height:17px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 17px;
+  height: 17px;
   background: url(/images/icons/sharelist.png) top right no-repeat;
   cursor: pointer !important;
 }
@@ -292,14 +292,14 @@ opacity:0.5;
 
 .list span {
   text-shadow: none;
-  font-size: 11px;
+  font-size: 0.9em;
   float: right;
   width: 31px;
-  height: 16px;
+  height: 18px;
   background: url(/images/taskcount.png) no-repeat;
   text-align: center;
   display: block;
-  padding-top: 3px;
+  padding-top: 1px;
   margin-top: -3px;
   font-weight: bold;
 }
@@ -321,9 +321,9 @@ opacity:0.5;
   font-weight: bold;
   background: url(/images/overdue.png) top left no-repeat;
   margin: 0 auto;
-  height: 19px;
+  height: 21px;
   text-shadow: 0px 1px 1px #2c0a0a;
-  padding-top: 6px;
+  padding-top: 4px;
   width: 214px;
   color: #fff;
 }
