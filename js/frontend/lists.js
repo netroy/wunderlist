@@ -55,14 +55,16 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
    */
   function bindListEditMode() {
     $('#lists div.editp').live('click', function() {
-      $(this).hide();
-      listEditMode($(this).parent('a'));
+      var node = $(this);
+      node.hide();
+      listEditMode(node.parent('a'));
     });
 
     $('#lists a.list').live('dblclick', function() {
-      if($(this).children('input').length === 0) {
-        $(this).children('div.editp').hide();
-        listEditMode($(this));
+      var node = $(this);
+      if(node.children('input').length === 0) {
+        node.children('div.editp').hide();
+        listEditMode(node);
       }
     });
   }
@@ -268,18 +270,15 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     if (lists !== undefined && wunderlist.helpers.utils.is_array(lists)) {
       $('div#lists').html('');
       for (var ix in lists) {
-        var listHTML  = '';
-        var listClass = 'sharelist';
-        var actions   = "<div class='deletep'></div><div class='editp'></div><div class='savep'></div>";
+        var listHTML, actions, sharedClass;
 
         if (lists[ix].inbox === 1) {
           actions  = "<div class='editp'></div><div class='savep'></div>";
           listHTML = "<a id='list" + lists[ix].id + "' class='list'><span>" + lists[ix].taskCount + "</span>" + actions + "<b class='inbox'>" + unescape(lists[ix].name) + "</b></a>";
-        } else if (lists[ix].shared === 1) {
-          listClass = "sharedlist";
-          listHTML = "<a id='list" + lists[ix].id + "' class='list sortablelist'><span>" + lists[ix].taskCount + "</span>" + actions + "<b class='sharep'>" + unescape(lists[ix].name) + "<div class='" + listClass + "'></div></b></a>";
         } else {
-          listHTML = "<a id='list" + lists[ix].id + "' class='list sortablelist'><span>" + lists[ix].taskCount + "</span>" + actions + "<b class='sharep'>" + unescape(lists[ix].name) + "<div class='" + listClass + "'></div></b></a>";
+          sharedClass = (lists[ix].shared === 1)?"sharedlist":"sharelist";
+          actions   = "<div class='" + sharedClass + "'></div><div class='deletep'></div><div class='editp'></div><div class='savep'></div>";
+          listHTML = "<a id='list" + lists[ix].id + "' class='list sortablelist'><span>" + lists[ix].taskCount + "</span>" + actions + "<b class='sharep'>" + unescape(lists[ix].name) + "</b></a>";
         }
 
         $("#lists").append(listHTML);
@@ -471,34 +470,37 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
 
   // Open a list on "click" (MOUSE CLICK)
   function listClick() {
-    if($('ul#list').attr('rel') != $(this).attr('id').replace('list', '') && $(this).attr('id').replace('list', '') != 'x') {
-      openList($(this).attr('id').replace('list', ''));
+    var node = $(this);
+    if($('ul#list').attr('rel') != node.attr('id').replace('list', '') && node.attr('id').replace('list', '') != 'x') {
+      openList(node.attr('id').replace('list', ''));
     }
   }
 
 
   // Show option buttons on "mouseover"
   function listMouseOver() {
-    var countInput = $(this).children('input').length;
+    var node = $(this);
+    var countInput = node.children('input').length;
 
     if(countInput === 0) {
-      $(this).children('.editp').show();
+      node.children('.editp').show();
     }
 
-    if($(this).attr('id').replace('list', '') != 'x' && $(this).attr('id').replace('list', '') != 1){
-      $(this).children('.deletep').show();
+    if(node.attr('id').replace('list', '') != 'x' && node.attr('id').replace('list', '') != 1){
+      node.children('.deletep').show();
     }
   }
 
 
   // Hide option buttons on "mouseout"
   function listMouseOut() {
-    var countInput = $(this).children('input').length;
+    var node = $(this);
+    var countInput = node.children('input').length;
 
-    $(this).children('.editp').hide();
+    node.children('.editp').hide();
 
     if(countInput === 0){
-      $(this).children('.deletep').hide();
+      node.children('.deletep').hide();
     }
       
   }
