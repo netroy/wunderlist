@@ -153,7 +153,7 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
   }
 
   function print() {
-    // Are they any tasks?  
+    // Are they any tasks?
     if ($('ul.mainlist span.description').length > 0) {
       var list_name = $('#content h1:first').text();
       var html_tasks = generateHTMLForPrint();
@@ -205,11 +205,11 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
       var month = selected_date.getMonth() + 1; //January is 0!
       var year  = selected_date.getFullYear();
 
-      if (day < 10) { 
+      if (day < 10) {
         day = '0' + day;
       }
 
-      if (month < 10)  { 
+      if (month < 10) {
         month = '0' + month;
       }
 

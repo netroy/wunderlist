@@ -64,7 +64,7 @@ wunderlist.helpers.sidebar = (function($, wunderlist, undefined){
     toggleButton = $("a.togglesidebar", "#right");
 
     initPosition();
-    toggleButton.live('click', toggleSidebar);  
+    toggleButton.live('click', toggleSidebar);
     $("#content, #sidebar").addClass("slideTransition");
   }
 

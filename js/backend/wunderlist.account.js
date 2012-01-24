@@ -559,7 +559,7 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 		var newsletter = $('input#register-newsletter').attr('checked');
 	
 		if (newsletter === true) {
-		  data['newsletter'] = 1;
+      data.newsletter = 1;
 		}
 
 		data['password'] = Titanium.Codec.digestToHex(Titanium.Codec.MD5, data['password']);
