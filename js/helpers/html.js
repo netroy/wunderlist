@@ -1,6 +1,8 @@
 /* global wunderlist */
 wunderlist.helpers.html = (function() {
 
+  //"use strict";
+
   /**
    * Returns the HTML structure of the login/register Dialog
    * @author Marvin Labod
@@ -12,7 +14,6 @@ wunderlist.helpers.html = (function() {
         '<p class="clearfix"><input class="input-login input-sharelist" type="text" id="share-list-email" name="email" placeholder="' + wunderlist.language.data.invite_email + ',' + wunderlist.language.data.invite_email + '..." />' +
         '<input id="send_share_invitation" class="input-button button-social" type="submit" value="'+ wunderlist.language.data.sharelist_button +'" /></p></div>' +
         '<ul class="sharelistusers"></ul><br/>';
-
     return html_code;
   }
 
@@ -129,8 +130,8 @@ wunderlist.helpers.html = (function() {
       taskHTML += "<input tabIndex='-1' class='input-checked' type='checkbox' />";
     }
     
-    var unescapedName = unescape(name);
-    name = replace_links(strip_tags(unescapedName)) || wunderlist.language.data.new_task;
+    var unescapedName = wunderlist.helpers.utils.stripTags(unescape(name));
+    name = wunderlist.helpers.utils.replaceLinks(unescapedName) || wunderlist.language.data.new_task;
 
     taskHTML += '</div>';
     taskHTML += '<span class="icon fav ' + (important == 1 ? '' : 'favina') + '"></span>';
@@ -227,45 +228,23 @@ wunderlist.helpers.html = (function() {
 
   /**
    * Generates the HTML structure for the add item method dialog
-   *
    * @author Daniel Marschner
    */
-  html.generateAddItemMethodHTML = function() {
+  function generateAddItemMethodHTML() {
       var html_code = '<div id="add-item-method-radios" class="radios">' +
             '<p><b>' + wunderlist.language.data.add_item_method_content + '</b></p>' +
         '<p><input id="add_item_method_0" type="radio" name="addItemMethod" value="0" /> <span>' + wunderlist.language.data.return_key + '</span> &nbsp; &nbsp; &nbsp; <input id="add_item_method_1" type="radio" name="addItemMethod" value="1" /> <span>' + wunderlist.helpers.utils.ucfirst(wunderlist.settings.shortcutkey) + ' + ' + wunderlist.language.data.return_key + '</span></p>' +
         '</div>' +
           '<p class="clearfix"><input id="cancel-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-settings" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p></div>';
-          
     return html_code;
-  };
+  }
 
-  /**
-   * Generates the HTML structure for the date format dialog
-   *
-   * @author Dennis Schneider
-   */
-  html.generateSwitchDateFormatHTML = function() {
-    var html_code =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
-          '<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
-            '<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p>' +
-            '<p><input type="radio" id="date_iso" name="switchDate" value="iso"> <span>YYYY/mm/dd</span></p></div>' +
-            '<div id="week-start-day-radios" class="radios">' +
-            '<span class="custom-dialog-headline">' + wunderlist.language.data.startday + '</span>' +
-        '<p><input id="startday_1" type="radio" name="startDay" value="1" /> <span>' + wunderlist.language.data.monday + '</span></p>' +
-        '<p><input id="startday_6" type="radio" name="startDay" value="6" /> <span>' + wunderlist.language.data.saturday + '</span></p>' +
-        '<p><input id="startday_0" type="radio" name="startDay" value="0" /> <span>' + wunderlist.language.data.sunday + '</span></p>' +
-        '</div>' +
-          '<p class="clearfix"><input id="cancel-dateformat" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p>';
-    return html_code;
-  };
 
   /**
    * Returns the HTML structure for the invitation dialog
-   *
    * @author Daniel Marschner
    */
-  html.generateSocialDialogHTML = function() {
+  function generateSocialDialogHTML() {
     var html_code = '<div id="invitebox"><div class="wunderlistlogo"></div>'+
 
       '<div class="socialform"><p><textarea class="textarea-dialog" id="invite-text" maxlength="140">'+ wunderlist.language.data.invitetextarea +'</textarea>' +
@@ -288,14 +267,13 @@ wunderlist.helpers.html = (function() {
      '    </div></div>' +
       '</span>';
     return html_code;
-  };
+  }
 
   /**
    * Returns the HTML structure for the edit profile dialog
-   *
    * @author Daniel Marschner
    */
-  html.generateEditProfileDialogHTML = function() {
+  function generateEditProfileDialogHTML() {
     var html_code =
       '<p>' + wunderlist.language.data.edit_profile_desc + '</p>' +
       '<input class="input-normal"          type="text"     id="new_email"    name="new_email" placeholder="'+wunderlist.language.data.new_email_address+'" />' +
@@ -308,412 +286,14 @@ wunderlist.helpers.html = (function() {
       '<span class="error"></div>';
 
     return html_code;
-  };
-
-  /**
-   * Shows the date in system specific format
-   *
-   * @author Christian Reber
-   */
-  html.showDateByLanguage = function(object, day, month, year) {
-    var dateformat;
-    if(wunderlist.settings.hasProperty('dateformat') === true) {
-      dateformat = wunderlist.settings.getString('dateformat');
-    } else {
-      dateformat = wunderlist.language.code;
-    }
-
-    // Format date by system language - germany
-    if(dateformat === 'de') {
-      $(object).html(day + '.' + month + '.' + year);
-    } else if(dateformat === 'en') {
-        $(object).html(day + '/' + month + '/' + year);
-    } else if(dateformat == 'us') { // Format date by system language - english countries
-      $(object).html(month + '/' + day + '/' + year);
-    } else {
-      $(object).html(year + '/' + month + '/' + day);
-    }
-  };
-
-  /**
-   * Converts a timestamp to a real date, or a string like "today, yesterday or tomorrow"
-   *
-   * @author Christian Reber, Dennis Schneider
-   */
-  html.make_timestamp_to_string = function() {
-    $('.timestamp').each(function(intIndex) {
-
-      var node = $(this);
-
-      // Convert Timestamp to normal date
-      var timestamp      = node.attr('rel');
-      var selected_date  = new Date(timestamp * 1000);
-
-      var day   = selected_date.getDate();
-      var month = selected_date.getMonth() + 1; //January is 0!
-      var year  = selected_date.getFullYear();
-
-      var today  = new Date();
-      var tday   = today.getDate();
-      var tmonth = today.getMonth() + 1; //January is 0!
-      var tyear  = today.getFullYear();
-
-      if (day < 10) {
-        day = '0' + day;
-      }
-
-      if (month < 10) {
-        month = '0' + month;
-      }
-
-      // Remove red color everytime
-      node.removeClass('red');
-      
-      // If older then yesterday, mark red and show the date
-      if((day < (tday - 1) && month == tmonth && year == tyear) || (month < tmonth && year == tyear) || (year < tyear)) {
-        node.addClass('red');
-        html.showDateByLanguage(this, day, month, year);
-      }
-      // If yesterday, mark red and show "yesterday"
-      else if((day < tday && day > tday - 2) && month == tmonth && year == tyear) {
-        node.addClass('red');
-        node.html(wunderlist.language.data.yesterday);
-      }
-      // or today
-      else if(day == tday && month == tmonth && year == tyear) {
-        $(this).html(wunderlist.language.data.today);
-      }
-      // or tomorrow
-      else if((day > tday && day < (tday + 2)) && month == tmonth && year == tyear) {
-        $(this).html(wunderlist.language.data.tomorrow);
-      } else {
-        html.showDateByLanguage(this, day, month, year);
-      }
-
-    });
-  };
-
-
-  /**
-   * Get the the name of the month
-   *
-   * @author Dennis Schneider
-   */
-  html.getMonthName = function(month_number) {
-    var month = new Array(12);
-    month[0]  = "January";
-    month[1]  = "February";
-    month[2]  = "March";
-    month[3]  = "April";
-    month[4]  = "May";
-    month[5]  = "June";
-    month[6]  = "July";
-    month[7]  = "August";
-    month[8]  = "September";
-    month[9]  = "October";
-    month[10] = "November";
-    month[11] = "December";
-
-    return month[month_number];
-  };
-
-  /**
-   * Get the month number by the given month name
-   * @author Dennis Schneider
-   */
-  var monthsArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  var monthsMap = {};
-  for(var i = 0, l = monthsArray.length; i < l; i++) {
-    monthsMap[monthsArray[i]] = i;
-  }
-  function getMonthNumber(monthName) {
-      return monthsMap[monthName] || "";
   }
 
-
-  /**
-   * Get the the name of the day
-   *
-   * @author Dennis Schneider
-   */
-  html.getDayName = function(day_number) {
-    var day = new Array(7);
-    day[0] = 'Sunday';
-    day[1] = 'Monday';
-    day[2] = 'Tuesday';
-    day[3] = 'Wednesday';
-    day[4] = 'Thursday';
-    day[5] = 'Friday';
-    day[6] = 'Saturday';
-
-    return day[day_number];
-  };
-
-  /**
-   * Enhances the DatePicker
-   *
-   * @author Dennis Schneider
-   */
-  html.addRemoveDateButton = function(object) {
-    var datePicker = $('#ui-datepicker-div');
-    $('div.remove_date', datePicker).remove();
-    datePicker.append("<div class='remove_date'>" + wunderlist.language.data.no_date + "</div>");
-    $('div.remove_date', datePicker).die().live('click', function() {
-      if (object.hasClass('add') !== true){
-        object.children('.ui-datepicker-trigger').remove();
-        object.children('input.datepicker').remove();
-        object.children('span.showdate').remove();
-        object.children('span.description').after("<input type='hidden' class='datepicker'/>");
-        html.createDatepicker();
-        
-        object.children('span.timestamp').attr('rel', '0');
-        
-        if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
-          // Store the parent, before removing the element
-          var parentList = $(object).parent();
-          
-          // Remove the object from the filter list
-          $(object).remove();
-          
-          // If the parent list now is empty, remove it and it's headline
-          if ( $(parentList).children('li').size() < 1 ) {
-            $(parentList).prev().remove();
-            $(parentList).remove();
-          }
-          
-          // If the view is not empty, reload it
-          if ($('#content li').size() < 1) {
-            if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active')) {
-              setTimeout(function () {
-                $('#bottombar #left a.filter.active').trigger('click');
-              }, 250);
-            }
-          }
-        }
-      } else {
-        $('#add-input-date').fadeOut(250, function () {
-          $('div.addwrapper').animate({ right: '15px' }, 300);
-          object.children('div.addwrapper').children('span.showdate').remove();
-        });
-        
-        if($('.add .input-add').val().length > 0) {
-          $('.add .input-add').select();
-        } else {
-          $('.add .input-add').focus();
-        }
-      }
-      
-      $('#ui-datepicker-div').hide();
-      
-      if (object.hasClass('add') !== true) {
-        wunderlist.helpers.task.set({
-          id: object.attr('id'),
-          date: 0
-        }).update();
-      }
-
-      setTimeout(function() {
-        datePickerOpen = false;
-      }, 10);
-    });
-  };
-
-  /**
-   * Creates a beautiful datepicker
-   *
-   * @author Marvin Labod
-   */
-  html.createDatepicker = function() {
-    var dayNamesEN        = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var dayNamesMinEN     = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-    var dayNamesShortEN   = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    var monthNamesEN    = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var monthNamesShortEN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-    var dayNamesFR        = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-    var dayNamesMinFR     = ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'];
-    var dayNamesShortFR   = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-    var monthNamesFR    = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-    var monthNamesShortFR = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jui', 'Jui', 'Aoû', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-    var dayNamesDE        = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
-    var dayNamesMinDE     = ['So','Mo','Di','Mi','Do','Fr','Sa'];
-    var dayNamesShortDE   = ['Son','Mon','Din','Mit','Don','Fre','Sam'];
-    var monthNamesDE    = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-    var monthNamesShortDE = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-
-    // Check for starting day of the week
-    var firstDay;
-    if (wunderlist.settings.hasProperty('weekstartday') === true) {
-      firstDay = wunderlist.settings.getString('weekstartday', '1');
-    } else {
-      if (wunderlist.language.code === 'de' || wunderlist.language.code === 'en') {
-        firstDay = 1;
-      } else {
-        firstDay = 0;
-      }
-      wunderlist.settings.setString('weekstartday', firstDay);
-    }
-
-    var dayNamesLang, dayNamesMinLang, dayNamesShortLang, monthNamesLang, monthNamesShortLang;
-    if (wunderlist.language.code === 'de') {
-        dayNamesLang        = dayNamesDE;
-        dayNamesMinLang     = dayNamesMinDE;
-        dayNamesShortLang   = dayNamesShortDE;
-        monthNamesLang      = monthNamesDE;
-        monthNamesShortLang = monthNamesShortDE;
-    } else if (wunderlist.language.code === 'fr') {
-        dayNamesLang        = dayNamesFR;
-        dayNamesMinLang     = dayNamesMinFR;
-        dayNamesShortLang   = dayNamesShortFR;
-        monthNamesLang      = monthNamesFR;
-        monthNamesShortLang = monthNamesShortFR;
-    } else {
-        dayNamesLang        = dayNamesEN;
-        dayNamesMinLang     = dayNamesMinEN;
-        dayNamesShortLang   = dayNamesShortEN;
-        monthNamesLang      = monthNamesEN;
-        monthNamesShortLang = monthNamesShortEN;
-    }
-
-    $(".datepicker").datepicker({
-      constrainInput: true,
-      buttonImage: '/images/icons/time.png',
-      buttonImageOnly: true,
-      buttonText: '',
-      showOn: 'both',
-      firstDay: parseInt(firstDay, 10),
-      dayNames: dayNamesLang,
-      dayNamesMin: dayNamesMinLang,
-      dayNamesShort: dayNamesShortLang,
-      monthNames: monthNamesLang,
-      monthNamesShort: monthNamesShortLang,
-      beforeShow: function() {
-        var $edit_li = $(this).parent();
-
-        setTimeout(function() {
-          var timestamp = $edit_li.children('.timestamp').attr('rel');
-          if (timestamp !== undefined && timestamp !== 0) {
-            var currentDate = new Date(timestamp * 1000);
-            $edit_li.find('.datepicker').datepicker("setDate" , currentDate);
-          }
-          html.addRemoveDateButton($edit_li);
-        }, 5);
-
-              wunderlist.frontend.tasks.datePickerOpen = true;
-      },
-      onChangeMonthYear: function(year, month, inst) {
-        var $edit_li = $(this).parent();
-        setTimeout(function() {
-          html.addRemoveDateButton($edit_li);
-        }, 5);
-      },
-      onClose: function() {
-        // nothing here todo
-      },
-      onSelect: function(dateText, inst) {
-        setTimeout(function() {
-          datePickerOpen = false;
-        }, 10);
-
-        // Get timestamp (in seconds) for database
-        var date       = new Date(dateText);
-        var timestamp  = html.getWorldWideDate(date);
-
-        var node = $(this), parent = node.parent(), $date, $html;
-        if (parent.find('.input-add').length == 1) {
-          $date = $(".add input.datepicker").val();
-          $html = '<span id="add-input-date" style="display:none;" class="showdate timestamp" rel="' + timestamp + '">&nbsp;</span>';
-          $('.add .showdate').remove();
-
-          var adder = $('.add .input-add');
-          adder.after($html);
-
-          if(adder.val().length > 0) {
-            adder.select();
-          } else {
-            adder.focus();
-          }
-
-          if ($('div.addwrapper').css('right') !== '90px') {
-            $('div.addwrapper').animate({
-              right: '90px'
-            }, 250, function () {
-              $('#add-input-date').fadeIn(250);
-            });
-          } else {
-            $('#add-input-date').show();
-          }
-        } else {
-          $date = $("li input.datepicker").val();
-          $html = '<span class="showdate timestamp" rel="' + timestamp + '">&nbsp;</span>';
-          parent.find('img.ui-datepicker-trigger').remove();
-          
-          if (parent.find('.showdate').length === 0) {
-            parent.find('.description').after($html);
-          } else {
-            parent.find('.showdate').attr("rel", timestamp);
-            parent.find('.datepicker').hide();
-          }
-          
-          wunderlist.helpers.task.set({
-            id: $(this).parent().attr("id"),
-            date: $(this).parent().find('span.timestamp').attr('rel')
-          }).update();
-            
-          
-          if ($('a#withoutdate').hasClass('active')) {
-            var parentList = $(this).parent().parent();
-            $(this).parent().remove();
-            if ($(parentList).children('li').size() < 1) {
-              $(parentList).prev().remove();
-              $(parentList).remove();
-            }
-          }
-            
-          if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
-            var oldTimestamp = $(this).parent().find('span.timestamp').html();
-            var timestampElement = $(this).parent().find('span.timestamp');
-            setTimeout(function() {
-              var newTimestamp = $(timestampElement).html();
-              var parentList = $(timestampElement).parent().parent();
-              if (oldTimestamp !== newTimestamp) {
-                if ($('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
-                  $(timestampElement).parent().remove();
-                } else if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active')) {
-                  $('#bottombar #left a.filter.active').trigger('click');
-                }
-              }
-              // If the parent list now is empty, remove it and it's headline
-              if ( $(parentList).children('li').size() < 1 ) {
-                $(parentList).prev().remove();
-                $(parentList).remove();
-              }
-            }, 250);
-          }
-        }
-
-        html.make_timestamp_to_string();
-      }
-    });
-  };
-
-  /**
-   * Replace a link in a given text with a clickable link
-   *
-   * @author Dennis Schneider
-   */
-  html.replace_http_link = function(text) {
-    var exp = /((http|https|ftp):\/\/[\w?=&.\-\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g;
-    return text.replace(exp,"<a href='$1'>$1</a>");
-  };
 
   /**
    * Build HTML for filters (including Add Field and Sharing Icons)
-   *
    * @author Daniel Marschner
    */
-  html.buildFilteredList = function(title, tasks, show_add, filter, callback) {
+  function buildFilteredList(title, tasks, show_add, filter, callback) {
     show_add = show_add || false;
     result = '';
     count  = 0;
@@ -769,7 +349,7 @@ wunderlist.helpers.html = (function() {
               result += '<h3 class="clickable cursor" rel="' + actual_list + '">' + unescape(list.name) +  '</h3>';
               result += '<ul id="filterlist' + actual_list + '" rel="' + (filter !== '' ? filter : 'x') + '" class="mainlist filterlist' + (filter == 'done' ? ' donelist' : ' sortable') + '">';
             }
-            result += html.generateTaskHTML(task.id, task.name, task.list_id, task.done, task.important, task.date, task.note);
+            result += generateTaskHTML(task.id, task.name, task.list_id, task.done, task.important, task.date, task.note);
             last_list = actual_list;
             last_task_list = task.list_id;
           }
@@ -797,7 +377,7 @@ wunderlist.helpers.html = (function() {
             result += '<ul id="filterlist' + actual_list + '" rel="' + (filter != '' ? filter : 'x') + '" class="mainlist filterlist' + (filter == 'done' ? ' donelist' : ' sortable') + '">';
           }
           
-          result += html.generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
+          result += generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
                   
           last_list      = actual_list;
           last_task_list = tasks[ix].list_id;
@@ -810,148 +390,7 @@ wunderlist.helpers.html = (function() {
       }
       callback(null, result);
     }
-  };
-
-
-  /**
-   * Is needed for the function xss_clean
-   *
-   * Ported by: slamidtfyn
-   * More info at: www.soerenlarsen.dk/development-projects/xss-clean
-   */
-  html.html_entity_decode = function(str) {
-    var ta = document.createElement("textarea");
-      ta.innerHTML = str.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-      
-      result = ta.value;
-      result = result.replace(/&#x([0-9a-f]{2,5})/g, String.fromCharCode("$1"));
-      result = result.replace(/&#([0-9]{2,4})/g, String.fromCharCode("$1"));
-      
-      return result;
-  };
-
-  /**
-   * Clean the string -> HTML or script
-   *
-   * Ported by: slamidtfyn
-   * More info at: www.soerenlarsen.dk/development-projects/xss-clean
-   */
-  html.xss_clean = function(str) {
-    var i, len, index;
-    str = wunderlist.helpers.utils.convertString(str);
-    str = str.replace(/\\0/gi, '');
-    str = str.replace(/\\\\0/gi, '');
-    str = str.replace(/#(&\#*\w+)[\x00-\x20]+;#u/g,"$1;");
-    str = str.replace(/#(&\#x*)([0-9A-F]+);*#iu/g,"$1$2;");
-    str = str.replace(/%u0([a-z0-9]{3})/gi, "&#x$1;");
-    str = str.replace(/%([a-z0-9]{2})/gi, "&#x$1;");
-    
-    results = str.match(/<.*?>/g, str);
-    
-    if(results) {
-      for(i = 0, len = results.length; i < len; i++) {
-        str = str.replace(results[i], html.html_entity_decode(results[i]));
-      }
-    }
-            
-    str = str.replace(/\\t+/g, " ");
-    str = str.replace(/<\?php/g,'&lt;?php');
-    str = str.replace(/<\?PHP/g,'&lt;?PHP');
-    str = str.replace(/<\?/g,'&lt;?');
-    str = str.replace(/\?>/g,'?&gt;');
-    words = new Array('javascript', 'vbscript', 'script', 'applet', 'alert', 'document', 'write', 'cookie', 'window');
-    
-    for(index in words) {
-      temp = '';
-      for (i = 0, len = words[index].length; i < len; i++) {
-        temp += words[index].substr( i, 1)+"\\s*";
-      }
-      
-      temp = temp.substr( 0,temp.length-3);
-      myRegExp = new RegExp(temp, "gi");
-      str = str.replace(myRegExp, words[t]);
-    }
-    
-    str = str.replace(/\/<a.+?href=.*?(alert\(|alert&\#40;|javascript\:|window\.|document\.|\.cookie|<script|<xss).*?\>.*?<\/a>/gi,"");
-    str = str.replace(/<img.+?src=.*?(alert\(|alert&\#40;|javascript\:|window\.|document\.|\.cookie|<script|<xss).*?\>/gi,"");
-    str = str.replace(/<(script|xss).*?\>/gi,"");
-    str = str.replace(/(<[^>]+.*?)(onblur|onchange|onclick|onfocus|onload|onmouseover|onmouseup|onmousedown|onselect|onsubmit|onunload|onkeypress|onkeydown|onkeyup|onresize)[^>]*>/gi,"$1");
-    str = str.replace(/<(\/*\s*)(alert|applet|basefont|base|behavior|bgsound|blink|body|embed|expression|form|frameset|frame|head|html|ilayer|iframe|input|layer|link|meta|object|plaintext|style|script|textarea|title|xml|xss)([^>]*)>/ig, "&lt;$1$2$3&gt;");
-    str = str.replace(/(alert|cmd|passthru|eval|exec|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)/gi, "$1$2&#40;$3&#41;");
-    bad = new Array('document.cookie', 'document.write', 'window.location', "javascript\\s*:", "Redirect\\s+302");
-    
-    for (var val in bad) {
-      myRegExp = new RegExp(bad[val], "gi");
-      str = str.replace(myRegExp, bad[val]);
-    }
-    
-    str = str.replace(/<!--/g,"&lt;!--");
-    str = str.replace(/-->/g,"--&gt;");
-    
-    return str;
-  };
-
-
-  /**
-   * Removes HTML Tags
-   * @author Dennis Schneider
-   */
-  function strip_tags (input, allowed) {
-    allowed = (((allowed || "") + "")
-      .toLowerCase()
-      .match(/<[a-z][a-z0-9]*>/g) || [])
-      .join(''); // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
-    var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
-    commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
-    return input.replace(commentsAndPhpTags, '').replace(tags, function($0, $1) {
-      return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
-    });
   }
-
-
-
-  /**
-   * Replace a link in a given text with a clickable link
-   * @author Dennis Schneider, Marvin Labod
-   */
-  function replace_links(text) {
-    // HTTP/HTTPS/FTP Links
-    text = text.replace(
-      /((http|https|ftp):\/\/[\w?=&.\-\/-;#~%-\ü\( \)]+(?![\w\s?&.\/;#~%"=-]*>))/g,
-      "<a href='$1'>$1</a>"
-    );
-    
-    // FILE Links (Windows)
-    text = text.replace(
-      /(file:\/\/\/[a-zA-Z]:\/)(\w.+)\.([a-zA-Z0-9]{1,5})/g,
-      "<span class='openApp'>$1$2.$3</span>"
-    );
-    
-    // Local File System Links (Mac)
-    text = text.replace(
-      /(^|\s)(\/\w.+)\.([a-zA-Z0-9]{1,5})/g,
-      "<span class='openApp'>$1$2.$3</span>"
-    );
-    
-    // Email addresses
-    text = text.replace(
-      /(([a-z0-9*._+]){1,}\@(([a-z0-9]+[-]?){1,}[a-z0-9]+\.){1,}([a-z]{2,4}|museum)(?![\w\s?&.\/;#~%"=-]*>))/g,
-      '<a href="mailto:$1">$1</a>'
-    );
-    
-    return text;
-  }
-
-
-
-
-  /**
-   * Replace the normal line break after enter it into a textarea to the HTML line break tag
-   * @author Marvin Labod
-   */
-  html.replace_breaks = function(text) {
-    return text.replace(/\n/g, '<br>');
-  };
 
 
   function init() {
@@ -968,21 +407,20 @@ wunderlist.helpers.html = (function() {
   }
 
 
-
-
   return {
     "init": init,
     "generateSidebarHTML": generateSidebarHTML,
-    "replace_links": replace_links,
-    "strip_tags": strip_tags,
-    "getMonthNumber": getMonthNumber,
     "generateTaskHTML": generateTaskHTML,
     "generateListContentHTML": generateListContentHTML,
     "generateCreditsDialogHTML": generateCreditsDialogHTML,
     "generateNewListElementHTML": generateNewListElementHTML,
     "generateShareListDialogHTML": generateShareListDialogHTML,
     "generateLoginRegisterDialogHTML": generateLoginRegisterDialogHTML,
-    "generateBackgroundsDialogHTML": generateBackgroundsDialogHTML
+    "generateBackgroundsDialogHTML": generateBackgroundsDialogHTML,
+    "generateAddItemMethodHTML": generateAddItemMethodHTML,
+    "generateSocialDialogHTML": generateSocialDialogHTML,
+    "generateEditProfileDialogHTML": generateEditProfileDialogHTML,
+    "buildFilteredList": buildFilteredList
   };
   
 })();

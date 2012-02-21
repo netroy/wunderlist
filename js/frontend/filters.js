@@ -151,9 +151,9 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefin
         $("#content").html('').hide().append(markup);
         wunderlist.frontend.sortdrop.makeSortable();
         if (filter == 'all' || filter == 'starred' || date_type == '='){
-          wunderlist.helpers.html.createDatepicker();
+          wunderlist.helpers.datetime.createDatepicker();
         }
-        wunderlist.helpers.html.make_timestamp_to_string();
+        wunderlist.helpers.datetime.convertTimestampToString();
         $("#content").fadeIn('fast');
         $("a.list").droppable({
           disabled: false
@@ -196,7 +196,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefin
     // TODO: file a bug for jqueryUI .. "this" is diambigous & a possible strict-mode violation..
     // ui or event object should contain the value of the drop target
     var droppedFilter          = $(this).attr('id');
-    var today                  = wunderlist.helpers.utils.getWorldWideDate();
+    var today                  = wunderlist.helpers.datetime.getWorldWideDate();
     var tomorrow               = (today + 86400);
     var droppedTaskDate        = droppedTask.children('span.showdate');
     var droppedTaskDateInput   = droppedTask.children('input.datepicker');
@@ -238,7 +238,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefin
             date: today
           }).update();
 
-          wunderlist.helpers.html.make_timestamp_to_string();
+          wunderlist.helpers.datetime.convertTimestampToString();
         }
 
       }
@@ -263,7 +263,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefin
             date: tomorrow
           }).update();
 
-          wunderlist.helpers.html.make_timestamp_to_string();
+          wunderlist.helpers.datetime.convertTimestampToString();
         }
       }
     }
@@ -276,7 +276,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefin
         if (droppedTaskDate.hasClass('timestamp') === true) {
           droppedTaskDate.remove();
           droppedTask.children('.description').after("<input type='hidden' class='datepicker'/>");
-          wunderlist.helpers.html.createDatepicker();
+          wunderlist.helpers.datetime.createDatepicker();
 
           wunderlist.helpers.task.set({
             id: taskID,

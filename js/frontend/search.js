@@ -22,7 +22,7 @@ wunderlist.frontend.search = (function($, wunderlist, undefined){
         row = rows[i];
         ul.append(wunderlist.helpers.html.generateTaskHTML(row.id, row.name, row.list_id, row.done, row.important, row.date, row.note));
       }
-      wunderlist.helpers.html.make_timestamp_to_string();
+      wunderlist.helpers.datetime.convertTimestampToString();
     } else {
       content.append(h1.html(wunderlist.language.data.no_search_results + ": " + query));
     }

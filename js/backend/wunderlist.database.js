@@ -546,11 +546,11 @@ wunderlist.database.search = function(search) {
             resultSet.next();
         }
         
-        wunderlist.helpers.html.make_timestamp_to_string();
-        wunderlist.helpers.html.createDatepicker();
-    }
-	else
+        wunderlist.helpers.datetime.convertTimestampToString();
+        wunderlist.helpers.datetime.createDatepicker();
+    } else {
         $("#content").append("<h1>"+ wunderlist.language.data.no_search_results + "</h1>");
+    }
 };
 
 /**
@@ -741,7 +741,7 @@ wunderlist.database.updateBadgeCount = function(filter) {
 	if (filter != undefined && (filter == 'today' || filter == 'overdue'))
 	{
 		var sql  = "SELECT id AS count FROM tasks WHERE ";
-		var date = wunderlist.helpers.utils.getWorldWideDate(); // Current date
+		var date = wunderlist.helpers.datetime.getWorldWideDate(); // Current date
 	
 		switch(filter)
 		{
@@ -799,7 +799,7 @@ wunderlist.database.getFilteredTasks = function(filter, date_type, printing) {
 
 	var title    = '';
 	var show_add = false;
-	var date     = wunderlist.helpers.utils.getWorldWideDate(); // Current date
+	var date     = wunderlist.helpers.datetime.getWorldWideDate(); // Current date
 	var sql      = "SELECT * FROM tasks ", where = "";
 
 	switch(filter) {
@@ -865,9 +865,9 @@ wunderlist.database.getFilteredTasks = function(filter, date_type, printing) {
 	wunderlist.frontend.sortdrop.makeSortable();
 	
 	if (filter == 'all' || filter == 'starred' || date_type == '='){
-	  wunderlist.helpers.html.createDatepicker();
+	  wunderlist.helpers.datetime.createDatepicker();
 	}
-	wunderlist.helpers.html.make_timestamp_to_string();
+	wunderlist.helpers.html.convertTimestampToString();
 	
 	$("#content").fadeIn('fast');
 };
@@ -961,7 +961,7 @@ wunderlist.database.getLastDoneTasks = function(list_id) {
 			for (var i = 0, max = resultSet.fieldCount(); i < max; i++){
 			  values[resultSet.fieldName(i)] = resultSet.field(i);
 			}
-			var days   = wunderlist.helpers.utils.calculateDayDifference(values['done_date']);
+			var days   = wunderlist.helpers.datetime.calculateDayDifference(values['done_date']);
 			var htmlId = days.toString();
 			if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
 			  doneListsTasks[htmlId] = [];

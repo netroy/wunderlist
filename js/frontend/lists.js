@@ -115,7 +115,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
   function saveList(listElement) {
     var listElementInput = listElement.children('input');
     var listElementTitle = listElement.children('b');
-    var listElementName  = wunderlist.helpers.html.strip_tags(wunderlist.helpers.utils.convertString(listElementInput.val()));
+    var listElementName  = wunderlist.helpers.utils.stripTags(wunderlist.helpers.utils.convertString(listElementInput.val()));
 
     if (listElementName === ''){
       listElementName = wunderlist.language.data.new_list;
@@ -178,7 +178,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     });
 
     listElementInput.remove();
-    var listHTML = '<b class="sharep">' + wunderlist.helpers.html.strip_tags(unescape(listElementName)) + '<div class="sharelist"></div></b>';
+    var listHTML = '<b class="sharep">' + wunderlist.helpers.utils.stripTags(unescape(listElementName)) + '<div class="sharelist"></div></b>';
 
     listElement.children('.savep').hide();
     listElement.children('.deletep').hide();
@@ -316,7 +316,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     var doneListsTasks = [], rows = result.rows, row;
     for(var i = 0, l = rows.length; i < l; i++) {
       var values = rows.item(i);
-      var days   = wunderlist.helpers.utils.calculateDayDifference(values.done_date);
+      var days   = wunderlist.helpers.datetime.calculateDayDifference(values.done_date);
       var htmlId = days.toString();
       if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
         doneListsTasks[htmlId] = [];
@@ -402,9 +402,9 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
         wunderlist.database.getLastDoneTasks(list_id, renderLastDoneTasks);
 
 
-        wunderlist.helpers.html.make_timestamp_to_string();
+        wunderlist.helpers.datetime.convertTimestampToString();
         wunderlist.settings.setString('last_opened_list', list_id);
-        wunderlist.helpers.html.createDatepicker();
+        wunderlist.helpers.datetime.createDatepicker();
         wunderlist.timer.resume();
         wunderlist.frontend.search.clear();
 

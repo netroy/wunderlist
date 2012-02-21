@@ -341,7 +341,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, undefined){
    */
   function openSwitchDateFormatDialog() {
     if ($("[role='dialog']").length === 0) {
-      switchDateFormatDialog = generateDialog(wunderlist.language.data.switchdateformat, wunderlist.helpers.html.generateSwitchDateFormatHTML());
+      switchDateFormatDialog = generateDialog(wunderlist.language.data.switchdateformat, wunderlist.helpers.datetime.generateSwitchDateFormatHTML());
       openDialog(switchDateFormatDialog, 'switchdateformat-credits');
     
       $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
@@ -375,8 +375,8 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, undefined){
           }
         });
       
-        wunderlist.helpers.html.createDatepicker();
-        wunderlist.helpers.html.make_timestamp_to_string();
+        wunderlist.helpers.datetime.createDatepicker();
+        wunderlist.helpers.datetime.convertTimestampToString();
   
         closeDialog(switchDateFormatDialog);
       });

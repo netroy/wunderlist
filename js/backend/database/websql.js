@@ -392,7 +392,7 @@ wunderlist.database = (function(wunderlist, async, window, undefined){
   function updateBadgeCount(filter, callback) {
     if (filter !== undefined && (filter === 'today' || filter === 'overdue')) {
       var sql  = "SELECT id AS count FROM tasks WHERE ";
-      var date = wunderlist.helpers.utils.getWorldWideDate(); // Current date
+      var date = wunderlist.helpers.datetime.getWorldWideDate(); // Current date
 
       switch(filter) {
         case 'today':
@@ -486,7 +486,7 @@ wunderlist.database = (function(wunderlist, async, window, undefined){
    * @param callback - function to call with the list of filtered tasks
    */
   function getFilteredTasks(filter, type, callback) {
-    var date = wunderlist.helpers.utils.getWorldWideDate(), // Current date
+    var date = wunderlist.helpers.datetime.getWorldWideDate(), // Current date
         sql = "SELECT * FROM tasks ",
         where = "",
         date_type;

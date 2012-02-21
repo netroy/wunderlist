@@ -111,9 +111,9 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
       replaceLinks = true;
     }
     if (replaceLinks === true){
-      text = wunderlist.helpers.html.replace_links(text);
+      text = wunderlist.helpers.utils.replaceLinks(text);
     }
-    return wunderlist.helpers.html.replace_breaks(text);
+    return wunderlist.helpers.utils.replaceBreaks(text);
   }
 
   function cleanUp() {
@@ -156,7 +156,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
       editMode = false;
 
       currentNoteText = notesTextArea.val();
-      newNote = wunderlist.helpers.html.xss_clean(currentNoteText);
+      newNote = wunderlist.helpers.utils.xssClean(currentNoteText);
 
       currentNoteIcon.toggleClass("activenote", newNote.length !== 0);
       currentNoteIcon.html(newNote);
@@ -234,7 +234,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
   }
 
   function openNotesWindow() {
-    var content = window.unescape(wunderlist.helpers.html.replace_breaks(wunderlist.helpers.html.replace_links(currentNoteText)));
+    var content = window.unescape(wunderlist.helpers.utils.replaceBreaks(wunderlist.helpers.utils.replaceLinks(currentNoteText)));
     notesDialog.dialog({
       title: currentNoteTitle,
       dialogClass : 'dialog-notes',
