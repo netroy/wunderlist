@@ -1,5 +1,5 @@
 /* globals wunderlist, jQuery, async */
-wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortcut, undefined){
+wunderlist.frontend.tasks = (function($, window, wunderlist, async, shortcut, undefined){
 
   "use strict";
 
@@ -260,7 +260,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
           $("ul.mainlist").append(markup).find("li:last").hide().fadeIn(225);
         }
       }
-      html.createDatepicker();
+      wunderlist.helpers.html.createDatepicker();
     }
 
     $("input.input-add").val('');
@@ -273,7 +273,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
     
     wunderlist.frontend.sortdrop.makeSortable();
     wunderlist.frontend.filters.updateBadges();
-    html.make_timestamp_to_string();
+    wunderlist.helpers.html.make_timestamp_to_string();
     
     if (addNewTaskToTop) {
       syncPositionsToDB();
@@ -313,7 +313,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
           var monthName       = smartDate['month'];
           var year            = smartDate['year'];
           var smartDateObject = new Date();
-          var monthNumber     = html.getMonthNumber(monthName);
+          var monthNumber     = wunderlist.helpers.html.getMonthNumber(monthName);
           smartDateObject.setMonth(monthNumber);
           smartDateObject.setDate(day);
           smartDateObject.setFullYear(year);
@@ -351,7 +351,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
           date: timestamp,
           important: important
         }).insert(function(err, taskId){
-          var taskHTML = html.generateTaskHTML(taskId, task_name, list_id, 0, important, timestamp);
+          var taskHTML = wunderlist.helpers.html.generateTaskHTML(taskId, task_name, list_id, 0, important, timestamp);
           addToDOM(important, taskHTML);
         });
 
@@ -373,7 +373,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
     var task_name = $('#task-edit').val();
     var task_id = $('#task-edit').parent().attr('id');
     
-    $('#task-edit').parent().find('.description').html(html.replace_links(unescape(task_name))).show();
+    $('#task-edit').parent().find('.description').html(wunderlist.helpers.html.replace_links(unescape(task_name))).show();
     $('#task-edit').remove();
     
     wunderlist.helpers.task.set({
@@ -580,7 +580,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
         }
 
         liElement.removeClass('done');
-        html.make_timestamp_to_string();
+        wunderlist.helpers.html.make_timestamp_to_string();
 
         liElement.children('input.datepicker').remove();
         liElement.children('img.ui-datepicker-trigger').remove();
@@ -590,7 +590,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
           $(datepickerHTML).insertAfter(liElement.children('span.description'));
         }
 
-        html.createDatepicker();
+        wunderlist.helpers.html.createDatepicker();
       }
     }
   }
@@ -753,7 +753,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
 
     description.after("<input type='hidden' class='datepicker'/>");
   
-    html.createDatepicker();
+    wunderlist.helpers.html.createDatepicker();
     
     datePickerInput = liElement.find(".datepicker");
     datePickerImage = liElement.find(".ui-datepicker-trigger");
@@ -1010,4 +1010,4 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, html, shortc
   };
 
   return self;
-})(jQuery, window, wunderlist, async, html, shortcut);
+})(jQuery, window, wunderlist, async, shortcut);

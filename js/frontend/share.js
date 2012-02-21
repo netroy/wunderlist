@@ -1,4 +1,4 @@
-wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Titanium, undefined){
+wunderlist.frontend.share = (function(window, $, wunderlist, Encoder, Titanium, undefined){
   "use strict";
 
 
@@ -262,4 +262,4 @@ wunderlist.frontend.share = (function(window, $, wunderlist, html, Encoder, Tita
     "share_with_cloudapp": share_with_cloudapp
   };
 
-})(window, jQuery, wunderlist, html, Encoder, Titanium);
+})(window, jQuery, wunderlist, Encoder, Titanium);

@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
+wunderlist.helpers.dialogs = (function(window, $, wunderlist, undefined){
   "use strict";
 
 
@@ -341,7 +341,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
    */
   function openSwitchDateFormatDialog() {
     if ($("[role='dialog']").length === 0) {
-      switchDateFormatDialog = generateDialog(wunderlist.language.data.switchdateformat, html.generateSwitchDateFormatHTML());
+      switchDateFormatDialog = generateDialog(wunderlist.language.data.switchdateformat, wunderlist.helpers.html.generateSwitchDateFormatHTML());
       openDialog(switchDateFormatDialog, 'switchdateformat-credits');
     
       $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
@@ -375,8 +375,8 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
           }
         });
       
-        html.createDatepicker();
-        html.make_timestamp_to_string();
+        wunderlist.helpers.html.createDatepicker();
+        wunderlist.helpers.html.make_timestamp_to_string();
   
         closeDialog(switchDateFormatDialog);
       });
@@ -390,7 +390,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
    */
   function openSidebarPositionDialog() {
     if ($("[role='dialog']").length === 0) {
-      sidebarDialog = generateDialog(wunderlist.language.data.sidebar_position, html.generateSidebarHTML());
+      sidebarDialog = generateDialog(wunderlist.language.data.sidebar_position, wunderlist.helpers.html.generateSidebarHTML());
       openDialog(sidebarDialog);
 
       $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
@@ -458,7 +458,7 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
    */
   function openSelectAddItemMethodDialog() {
     if ($("[role='dialog']").length === 0) {
-      var addItemMethodDialog = generateDialog(wunderlist.language.data.add_item_method, html.generateAddItemMethodHTML());
+      var addItemMethodDialog = generateDialog(wunderlist.language.data.add_item_method, wunderlist.helpers.html.generateAddItemMethodHTML());
       openDialog(addItemMethodDialog);
     
       $('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');
@@ -521,14 +521,14 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
    */
   function openCreditsDialog() {
     if ($("[role='dialog']").length === 0){
-      openDialog(generateDialog('What is Wunderlist?', html.generateCreditsDialogHTML(), 'dialog-credits'));
+      openDialog(generateDialog('What is Wunderlist?', wunderlist.helpers.html.generateCreditsDialogHTML(), 'dialog-credits'));
     }
   }
 
 
   function openBackgroundsDialog() {
     if ($("[role='dialog']").length === 0){
-      openDialog(generateDialog('Background Credits', html.generateBackgroundsDialogHTML(), 'background-credits'));
+      openDialog(generateDialog('Background Credits', wunderlist.helpers.html.generateBackgroundsDialogHTML(), 'background-credits'));
     }
   }
 
@@ -556,4 +556,4 @@ wunderlist.helpers.dialogs = (function(window, $, wunderlist, html, undefined){
     "openBackgroundsDialog": openBackgroundsDialog
   };
 
-})(window, jQuery, wunderlist, html);
+})(window, jQuery, wunderlist);

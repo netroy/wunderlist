@@ -1,5 +1,5 @@
 /* global wunderlist */
-wunderlist.frontend.search = (function($, wunderlist, html, undefined){
+wunderlist.frontend.search = (function($, wunderlist, undefined){
 
   "use strict";
 
@@ -20,9 +20,9 @@ wunderlist.frontend.search = (function($, wunderlist, html, undefined){
       content.append(ul);
       for(var i=0, l=rows.length; i<l; i++) {
         row = rows[i];
-        ul.append(html.generateTaskHTML(row.id, row.name, row.list_id, row.done, row.important, row.date, row.note));
+        ul.append(wunderlist.helpers.html.generateTaskHTML(row.id, row.name, row.list_id, row.done, row.important, row.date, row.note));
       }
-      html.make_timestamp_to_string();
+      wunderlist.helpers.html.make_timestamp_to_string();
     } else {
       content.append(h1.html(wunderlist.language.data.no_search_results + ": " + query));
     }
@@ -75,4 +75,4 @@ wunderlist.frontend.search = (function($, wunderlist, html, undefined){
     "clear": clear
   };
 
-})(jQuery, wunderlist, html);
+})(jQuery, wunderlist);

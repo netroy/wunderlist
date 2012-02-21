@@ -171,7 +171,7 @@ wunderlist.account.loadInterface = function() {
 wunderlist.account.showRegisterDialog = function() {
 	if ($("[role='dialog']").length === 0) {
 		register_dialog = $('<div></div>')
-			.html(html.generateLoginRegisterDialogHTML())
+			.html(wunderlist.helpers.html.generateLoginRegisterDialogHTML())
 			.dialog({
 				autoOpen: true,
 				draggable: false,
@@ -650,7 +650,7 @@ wunderlist.account.register = function(onlyRegister, registerOnLogin) {
 wunderlist.account.editProfile = function() {
 	if ($("[role='dialog']").length == 0)
 	{
-		edit_profile_dialog = $('<div></div>').html(html.generateEditProfileDialogHTML()).dialog({
+		edit_profile_dialog = $('<div></div>').html(wunderlist.helpers.html.generateEditProfileDialogHTML()).dialog({
 			autoOpen      : false,
 			draggable     : false,
 			resizable     : false,
@@ -967,7 +967,7 @@ wunderlist.account.showInviteDialog = function() {
 	if ($("[role='dialog']").length === 0) {
 		var inviteEventListener = 0;
 	
-		invite_dialog = wunderlist.helpers.dialogs.generateDialog(wunderlist.language.data.invite, html.generateSocialDialogHTML(), 'dialog-social');
+		invite_dialog = wunderlist.helpers.dialogs.generateDialog(wunderlist.language.data.invite, wunderlist.helpers.html.generateSocialDialogHTML(), 'dialog-social');
 		wunderlist.helpers.dialogs.openDialog(invite_dialog);
 	
 		$('.ui-widget-overlay').removeClass('ui-widget-overlay-wood');

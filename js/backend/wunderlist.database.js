@@ -539,15 +539,15 @@ wunderlist.database.search = function(search) {
             for(var i = 0, max = resultSet.fieldCount(); i < max; i++)
                 values[resultSet.fieldName(i)] = resultSet.field(i);
 
-            var task = html.generateTaskHTML(values['id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']);
+            var task = wunderlist.helpers.html.generateTaskHTML(values['id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']);
 
             $("#content ul.mainlist").append(task);
 
             resultSet.next();
         }
         
-        html.make_timestamp_to_string();
-        html.createDatepicker();
+        wunderlist.helpers.html.make_timestamp_to_string();
+        wunderlist.helpers.html.createDatepicker();
     }
 	else
         $("#content").append("<h1>"+ wunderlist.language.data.no_search_results + "</h1>");
@@ -860,14 +860,14 @@ wunderlist.database.getFilteredTasks = function(filter, date_type, printing) {
 		return result;
 
 	$("#content").html('').hide();
-	$("#content").append(html.buildFilteredList(title, wunderlist.database.fetchData(result), show_add, filter));
+	$("#content").append(wunderlist.helpers.html.buildFilteredList(title, wunderlist.database.fetchData(result), show_add, filter));
 	
 	wunderlist.frontend.sortdrop.makeSortable();
 	
 	if (filter == 'all' || filter == 'starred' || date_type == '='){
-	  html.createDatepicker();
+	  wunderlist.helpers.html.createDatepicker();
 	}
-	html.make_timestamp_to_string();
+	wunderlist.helpers.html.make_timestamp_to_string();
 	
 	$("#content").fadeIn('fast');
 };
@@ -966,7 +966,7 @@ wunderlist.database.getLastDoneTasks = function(list_id) {
 			if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
 			  doneListsTasks[htmlId] = [];
 			}
-			doneListsTasks[htmlId].push(html.generateTaskHTML(values['task_id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
+			doneListsTasks[htmlId].push(wunderlist.helpers.html.generateTaskHTML(values['task_id'], values['name'], values['list_id'], values['done'], values['important'], values['date'], values['note']));
       resultSet.next();
 		}
 	}

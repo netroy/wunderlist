@@ -1,4 +1,4 @@
-wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, undefined){
+wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefined){
   "use strict";
 
   var bottomBarLeft, today, overdue, notifications;
@@ -147,13 +147,13 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
         return;
       }
 
-      html.buildFilteredList(title, results, show_add, filter, function(err, markup){
+      wunderlist.helpers.html.buildFilteredList(title, results, show_add, filter, function(err, markup){
         $("#content").html('').hide().append(markup);
         wunderlist.frontend.sortdrop.makeSortable();
         if (filter == 'all' || filter == 'starred' || date_type == '='){
-          html.createDatepicker();
+          wunderlist.helpers.html.createDatepicker();
         }
-        html.make_timestamp_to_string();
+        wunderlist.helpers.html.make_timestamp_to_string();
         $("#content").fadeIn('fast');
         $("a.list").droppable({
           disabled: false
@@ -238,7 +238,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
             date: today
           }).update();
 
-          html.make_timestamp_to_string();
+          wunderlist.helpers.html.make_timestamp_to_string();
         }
 
       }
@@ -263,7 +263,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
             date: tomorrow
           }).update();
 
-          html.make_timestamp_to_string();
+          wunderlist.helpers.html.make_timestamp_to_string();
         }
       }
     }
@@ -276,7 +276,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
         if (droppedTaskDate.hasClass('timestamp') === true) {
           droppedTaskDate.remove();
           droppedTask.children('.description').after("<input type='hidden' class='datepicker'/>");
-          html.createDatepicker();
+          wunderlist.helpers.html.createDatepicker();
 
           wunderlist.helpers.task.set({
             id: taskID,
@@ -363,4 +363,4 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, html, Titanium, u
     "updateBadges": updateBadges
   };
 
-})(window, jQuery, wunderlist, html, Titanium);
+})(window, jQuery, wunderlist, Titanium);

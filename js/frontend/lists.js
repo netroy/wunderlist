@@ -30,7 +30,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
    */
   function addList() {
     // Add new list
-    $('div#lists').append(html.generateNewListElementHTML());
+    $('div#lists').append(wunderlist.helpers.html.generateNewListElementHTML());
 
     // Hide add button
     // $('h3 .add').hide();
@@ -115,7 +115,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
   function saveList(listElement) {
     var listElementInput = listElement.children('input');
     var listElementTitle = listElement.children('b');
-    var listElementName  = html.strip_tags(wunderlist.helpers.utils.convertString(listElementInput.val()));
+    var listElementName  = wunderlist.helpers.html.strip_tags(wunderlist.helpers.utils.convertString(listElementInput.val()));
 
     if (listElementName === ''){
       listElementName = wunderlist.language.data.new_list;
@@ -178,7 +178,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     });
 
     listElementInput.remove();
-    var listHTML = '<b class="sharep">' + html.strip_tags(unescape(listElementName)) + '<div class="sharelist"></div></b>';
+    var listHTML = '<b class="sharep">' + wunderlist.helpers.html.strip_tags(unescape(listElementName)) + '<div class="sharelist"></div></b>';
 
     listElement.children('.savep').hide();
     listElement.children('.deletep').hide();
@@ -299,7 +299,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     var tasksHTML = '';
     if (tasks !== undefined && wunderlist.helpers.utils.is_array(tasks)) {
       for (var ix in tasks){
-        tasksHTML += html.generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
+        tasksHTML += wunderlist.helpers.html.generateTaskHTML(tasks[ix].id, tasks[ix].name, tasks[ix].list_id, tasks[ix].done, tasks[ix].important, tasks[ix].date, tasks[ix].note);
       }
     }
     return tasksHTML;
@@ -321,7 +321,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
       if (wunderlist.helpers.utils.is_array(doneListsTasks[htmlId]) === false){
         doneListsTasks[htmlId] = [];
       }
-      var markup = html.generateTaskHTML(values.task_id, values.name, values.list_id, values.done, values.important, values.date, values.note);
+      var markup = wunderlist.helpers.html.generateTaskHTML(values.task_id, values.name, values.list_id, values.done, values.important, values.date, values.note);
       doneListsTasks[htmlId].push(markup);
     }
 
@@ -388,7 +388,7 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
         }
         wunderlist.database.getLists(list_id, function(err, lists){
           if(lists.length > 0){
-            $('#content').append(html.generateListContentHTML(lists[0].id, lists[0].name));
+            $('#content').append(wunderlist.helpers.html.generateListContentHTML(lists[0].id, lists[0].name));
           }
         });
 
@@ -402,9 +402,9 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
         wunderlist.database.getLastDoneTasks(list_id, renderLastDoneTasks);
 
 
-        html.make_timestamp_to_string();
+        wunderlist.helpers.html.make_timestamp_to_string();
         wunderlist.settings.setString('last_opened_list', list_id);
-        html.createDatepicker();
+        wunderlist.helpers.html.createDatepicker();
         wunderlist.timer.resume();
         wunderlist.frontend.search.clear();
 

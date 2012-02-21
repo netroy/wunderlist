@@ -1,4 +1,4 @@
-wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
+wunderlist.frontend.sortdrop = (function($, wunderlist, undefined){
   "use strict";
 
   // TODO: This variable is public, it shouldn't be
@@ -73,4 +73,4 @@ wunderlist.frontend.sortdrop = (function($, wunderlist, html, undefined){
     "makeSortable": makeSortable
   };
 
-})(jQuery, wunderlist, html);
+})(jQuery, wunderlist);

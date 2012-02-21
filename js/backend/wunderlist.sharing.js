@@ -548,7 +548,7 @@ wunderlist.sharing.deleteAllSharedEmails = function(list_id) {
  * @author Marvin Labod
  */
 wunderlist.sharing.openShareListDialog = function(list_id) {
-	wunderlist.sharing.shareListDialog = wunderlist.helpers.dialogs.generateDialog(wunderlist.language.data.sharing_is_caring + list_name, html.generateShareListDialogHTML(list_id),'dialog-sharelist');
+	wunderlist.sharing.shareListDialog = wunderlist.helpers.dialogs.generateDialog(wunderlist.language.data.sharing_is_caring + list_name, wunderlist.helpers.html.generateShareListDialogHTML(list_id),'dialog-sharelist');
 	wunderlist.helpers.dialogs.openDialog(wunderlist.sharing.shareListDialog);
 };
 
