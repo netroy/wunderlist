@@ -251,7 +251,7 @@ wunderlist.frontend.hotkeys = (function($, window, wunderlist, shortcut, Titaniu
           wunderlist.frontend.lists.cancelSaveList(false);
         } else if($('a.list input').length > 0) {
           wunderlist.frontend.lists.cancelSaveList(true);
-        } else if (wunderlist.frontend.tasks.datePickerOpen === true) {
+        } else if (wunderlist.helpers.datetime.isDatePickerOpen() === true) {
           $('.datepicker').datepicker('hide');
         } else {
           wunderlist.frontend.tasks.cancel();

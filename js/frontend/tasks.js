@@ -999,7 +999,6 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, shortcut, un
   }
 
   var self = {
-    "datePickerOpen": false, //TODO: shared state.. REMOVE
     "init": init,
     "add": add,
     "edit": edit,

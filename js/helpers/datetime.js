@@ -1,6 +1,15 @@
 /* global wunderlist */
 wunderlist.helpers.datetime = (function(window, $, wunderlist, undefined) {
 
+  "use strict";
+
+  var setTimeout = window.setTimeout;
+
+  var datePickerOpen;
+  function isDatePickerOpen() {
+    return datePickerOpen;
+  }
+
 
   /**
    * Shows the date in system specific format
@@ -116,6 +125,74 @@ wunderlist.helpers.datetime = (function(window, $, wunderlist, undefined) {
   }
 
 
+
+  /**
+   * Calculates the difference between the current and the given date
+   * returns difference between the two dates as number of days
+   * @author Dennis Schneider
+   */
+  function calculateDayDifference(done) {
+    var today         = new Date();
+    var one_day       = 86400; // One day in seconds
+    var unceiled_days = ((today.getTime() / 1000) - done) / (one_day);
+
+    if (unceiled_days > 1){
+      return Math.floor(unceiled_days);
+    } else {
+      return 0;
+    }
+  }
+
+
+  /**
+   * Convert the date to the beginning of the day at 00:00:00
+   * @author Dennis Schneider
+   */
+  function getWorldWideDate(currentLocationDate) {
+    if(!(currentLocationDate instanceof Date)){
+      currentLocationDate = new Date();
+    }
+    currentLocationDate.setMinutes(0);
+    currentLocationDate.setHours(0);
+    currentLocationDate.setSeconds(0);
+    currentLocationDate.setMilliseconds(0);
+
+    var offset = (currentLocationDate.getTimezoneOffset() / 60) * (-1);
+
+    // convert to msec
+    // add local time zone offset
+    // get UTC time in msec
+    var utc = currentLocationDate.getTime() + (currentLocationDate.getTimezoneOffset() * 60000);
+
+    // create new Date object for different city
+    // using supplied offset
+    var timeZoneLocation = new Date(utc + (3600000 * offset));
+    var timestamp = timeZoneLocation.getTime() / 1000;
+    
+    return Math.round(timestamp);
+  }
+
+
+  /**
+   * Generates the HTML structure for the date format dialog
+   * @author Dennis Schneider
+   */
+  function generateSwitchDateFormatHTML() {
+    var html_code =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
+          '<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
+            '<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p>' +
+            '<p><input type="radio" id="date_iso" name="switchDate" value="iso"> <span>YYYY/mm/dd</span></p></div>' +
+            '<div id="week-start-day-radios" class="radios">' +
+            '<span class="custom-dialog-headline">' + wunderlist.language.data.startday + '</span>' +
+        '<p><input id="startday_1" type="radio" name="startDay" value="1" /> <span>' + wunderlist.language.data.monday + '</span></p>' +
+        '<p><input id="startday_6" type="radio" name="startDay" value="6" /> <span>' + wunderlist.language.data.saturday + '</span></p>' +
+        '<p><input id="startday_0" type="radio" name="startDay" value="0" /> <span>' + wunderlist.language.data.sunday + '</span></p>' +
+        '</div>' +
+          '<p class="clearfix"><input id="cancel-dateformat" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p>';
+    return html_code;
+  }
+
+
   /**
    * Handle clicks on the date picker
    */
@@ -180,7 +257,7 @@ wunderlist.helpers.datetime = (function(window, $, wunderlist, undefined) {
     }
 
     setTimeout(function() {
-      wunderlist.frontend.tasks.datePickerOpen = false;
+      datePickerOpen = false;
     }, 10);
   }
 
@@ -209,7 +286,7 @@ wunderlist.helpers.datetime = (function(window, $, wunderlist, undefined) {
       addRemoveDateButton($edit_li);
     }, 5);
 
-    wunderlist.frontend.tasks.datePickerOpen = true;
+    datePickerOpen = true;
   }
 
   function onChangeMonthYear(year, month, inst) {
@@ -269,23 +346,25 @@ wunderlist.helpers.datetime = (function(window, $, wunderlist, undefined) {
       }
       
       wunderlist.helpers.task.set({
-        id: $(this).parent().attr("id"),
-        date: $(this).parent().find('span.timestamp').attr('rel')
+        id: parent.attr("id"),
+        date: parent.find('span.timestamp').attr('rel')
       }).update();
         
       
       if ($('a#withoutdate').hasClass('active')) {
-        var parentList = $(this).parent().parent();
-        $(this).parent().remove();
+        var parentList = parent.parent();
+        parent.remove();
         if ($(parentList).children('li').size() < 1) {
           $(parentList).prev().remove();
           $(parentList).remove();
         }
       }
         
-      if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') || $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') || $('a#today').hasClass('active')) {
-        var oldTimestamp = $(this).parent().find('span.timestamp').html();
-        var timestampElement = $(this).parent().find('span.timestamp');
+      if ($('a#later').hasClass('active') || $('a#someday').hasClass('active') ||
+          $('a#thisweek').hasClass('active') || $('a#tomorrow').hasClass('active') ||
+          $('a#today').hasClass('active')) {
+        var oldTimestamp = parent.find('span.timestamp').html();
+        var timestampElement = parent.find('span.timestamp');
         setTimeout(function() {
           var newTimestamp = $(timestampElement).html();
           var parentList = $(timestampElement).parent().parent();
@@ -386,74 +465,6 @@ wunderlist.helpers.datetime = (function(window, $, wunderlist, undefined) {
   }
 
 
-  /**
-   * Calculates the difference between the current and the given date
-   * returns difference between the two dates as number of days
-   * @author Dennis Schneider
-   */
-  function calculateDayDifference(done) {
-    var today         = new Date();
-    var one_day       = 86400; // One day in seconds
-    var unceiled_days = ((today.getTime() / 1000) - done) / (one_day);
-
-    if (unceiled_days > 1){
-      return Math.floor(unceiled_days);
-    } else {
-      return 0;
-    }
-  }
-
-
-  /**
-   * Convert the date to the beginning of the day at 00:00:00
-   * @author Dennis Schneider
-   */
-  function getWorldWideDate(currentLocationDate) {
-    if(!(currentLocationDate instanceof Date)){
-      currentLocationDate = new Date();
-    }
-    currentLocationDate.setMinutes(0);
-    currentLocationDate.setHours(0);
-    currentLocationDate.setSeconds(0);
-    currentLocationDate.setMilliseconds(0);
-
-    var offset = (currentLocationDate.getTimezoneOffset() / 60) * (-1);
-
-    // convert to msec
-    // add local time zone offset
-    // get UTC time in msec
-    var utc = currentLocationDate.getTime() + (currentLocationDate.getTimezoneOffset() * 60000);
-
-    // create new Date object for different city
-    // using supplied offset
-    var timeZoneLocation = new Date(utc + (3600000 * offset));
-    var timestamp = timeZoneLocation.getTime() / 1000;
-    
-    return Math.round(timestamp);
-  }
-
-
-  /**
-   * Generates the HTML structure for the date format dialog
-   * @author Dennis Schneider
-   */
-  function generateSwitchDateFormatHTML() {
-    var html_code =  '<div id="date-format-radios" class="radios"><p><input type="radio" id="date_de" name="switchDate" value="de"> <span>dd.mm.YYYY</span></p>' +
-          '<p><input type="radio" id="date_us" name="switchDate" value="us"> <span>mm/dd/YYYY</span></p>' +
-            '<p><input type="radio" id="date_en" name="switchDate" value="en"> <span>dd/mm/YYYY</span></p>' +
-            '<p><input type="radio" id="date_iso" name="switchDate" value="iso"> <span>YYYY/mm/dd</span></p></div>' +
-            '<div id="week-start-day-radios" class="radios">' +
-            '<span class="custom-dialog-headline">' + wunderlist.language.data.startday + '</span>' +
-        '<p><input id="startday_1" type="radio" name="startDay" value="1" /> <span>' + wunderlist.language.data.monday + '</span></p>' +
-        '<p><input id="startday_6" type="radio" name="startDay" value="6" /> <span>' + wunderlist.language.data.saturday + '</span></p>' +
-        '<p><input id="startday_0" type="radio" name="startDay" value="0" /> <span>' + wunderlist.language.data.sunday + '</span></p>' +
-        '</div>' +
-          '<p class="clearfix"><input id="cancel-dateformat" class="input-button" type="submit" value="'+ wunderlist.language.data.cancel +'" /> <input id="confirm-dateformat" class="input-button" type="submit" value="'+ wunderlist.language.data.save_changes +'" /></p>';
-    return html_code;
-  }
-
-
-
   return {
     "getMonthName": getMonthName,
     "getMonthNumber": getMonthNumber,
@@ -462,7 +473,8 @@ wunderlist.helpers.datetime = (function(window, $, wunderlist, undefined) {
     "convertTimestampToString": convertTimestampToString,
     "calculateDayDifference": calculateDayDifference,
     "getWorldWideDate": getWorldWideDate,
-    "generateSwitchDateFormatHTML": generateSwitchDateFormatHTML
+    "generateSwitchDateFormatHTML": generateSwitchDateFormatHTML,
+    "isDatePickerOpen": isDatePickerOpen
   };
 
 })(window, jQuery, wunderlist);
