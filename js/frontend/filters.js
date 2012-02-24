@@ -1,7 +1,9 @@
 wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefined){
+
   "use strict";
 
-  var bottomBarLeft, today, overdue, notifications;
+  var bottomBarLeft, today, overdue, notifications,
+      setTimeout = window.setTimeout;
 
   /**
    * Add class="active" on filters
@@ -354,7 +356,7 @@ wunderlist.frontend.filters = (function(window, $, wunderlist, Titanium, undefin
       $('a#list' + $(this).attr('rel')).click();
     });
 
-    window.setTimeout(updateBadges, 10);
+    setTimeout(updateBadges, 10);
   }
 
 

@@ -620,18 +620,18 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, shortcut, un
             } else {
               /*
               if (liElement.find('span.fav').length === 1) {
-                window.setTimeout(function() {
+                setTimeout(function() {
                   liElement.appendTo('ul#filterlist' + newListId).slideDown();
                 }, 10);
               } else {
-                window.setTimeout(function() {
+                setTimeout(function() {
                   liElement.appendTo('ul#filterlist' + newListId).slideDown();
                 }, 10);
               }
               */
             }
             /*
-            window.setTimeout(function() {
+            setTimeout(function() {
               liElement.appendTo('ul#filterlist' + newListId).slideDown();
             }, 10);
             */
@@ -640,7 +640,7 @@ wunderlist.frontend.tasks = (function($, window, wunderlist, async, shortcut, un
           }
 
           // TODO: do this with callbacks instead of timers
-          window.setTimeout(function() {
+          setTimeout(function() {
             var liCount = ulElement.children('li').length;
             if (liCount === 0) {
               // Remove list headline title and the ul element

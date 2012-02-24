@@ -12,6 +12,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
 
   var noteTitle, html, readOnly = false, editMode = false, newNote, focused;
   var detail, currentNoteText, currentNoteId, currentNoteIcon, currentNoteTitle;
+  var unescape = window.unescape;
 
 
   var notesDialog, noteDeleteDialog, notesDialogTemplate =
@@ -149,7 +150,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
       saveCloseButton.val(wunderlist.language.data.save_and_close_changes).show();
       $('span.hint').show();
 
-      notesTextArea.val(window.unescape(Encoder.htmlDecode(currentNoteText))).show().focus();
+      notesTextArea.val(unescape(Encoder.htmlDecode(currentNoteText))).show().focus();
       savedNote.hide();
     // EDIT MODE
     } else if (editMode === true) {
@@ -234,7 +235,7 @@ wunderlist.frontend.notes = (function(window, $, wunderlist, Encoder, shortcut, 
   }
 
   function openNotesWindow() {
-    var content = window.unescape(wunderlist.helpers.utils.replaceBreaks(wunderlist.helpers.utils.replaceLinks(currentNoteText)));
+    var content = unescape(wunderlist.helpers.utils.replaceBreaks(wunderlist.helpers.utils.replaceLinks(currentNoteText)));
     notesDialog.dialog({
       title: currentNoteTitle,
       dialogClass : 'dialog-notes',

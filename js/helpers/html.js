@@ -1,7 +1,10 @@
 /* global wunderlist */
-wunderlist.helpers.html = (function() {
+wunderlist.helpers.html = (function(window, $, wunderlist, Titanium, undefined) {
 
-  //"use strict";
+  "use strict";
+
+  var unescape = window.unescape;
+
 
   /**
    * Returns the HTML structure of the login/register Dialog
@@ -137,7 +140,7 @@ wunderlist.helpers.html = (function() {
     taskHTML += '<span class="icon fav ' + (important == 1 ? '' : 'favina') + '"></span>';
     taskHTML += '<span class="description">' + name + '</span>';
 
-    if (!!(+date)) {
+    if ((+date) !== 0) {
       taskHTML += '<span class="showdate timestamp" rel="' + date + '"></span>';
     } else {
       taskHTML += '<input type="hidden" class="datepicker" value="0"/>';
@@ -295,8 +298,7 @@ wunderlist.helpers.html = (function() {
    */
   function buildFilteredList(title, tasks, show_add, filter, callback) {
     show_add = show_add || false;
-    result = '';
-    count  = 0;
+    var result = '', count  = 0;
     
     // If tasks are set and not empty count them
     if (tasks !== undefined && (tasks instanceof Array) && tasks.length > 0){
@@ -324,9 +326,7 @@ wunderlist.helpers.html = (function() {
     
     // Build tasks sorted by list
     if (count > 0) {
-      actual_list = 0;
-      last_list = 0;
-      last_task_list = 0;
+      var actual_list = 0, last_list = 0, last_task_list = 0, task;
       
       wunderlist.database.getLists(undefined, function(err, lists){
         var listMap = {}, i, l, list;
@@ -423,4 +423,4 @@ wunderlist.helpers.html = (function() {
     "buildFilteredList": buildFilteredList
   };
   
-})();
+})(window, jQuery, wunderlist, Titanium);
