@@ -8,12 +8,17 @@ define('frontend/layout',
   var self = {};
 
   function init() {
-    require(['frontend/sidebar', 'frontend/filters', 'frontend/background'], function(sidebar, filters, background) {
-      sidebar.init();
-      filters.init();
-      background.init();
-      console.log("layout init");
-    });
+    if(settings.getString('logged_in', 'false') !== 'false') {
+      require(['frontend/sidebar', 'frontend/filters', 'frontend/background'], function(sidebar, filters, background) {
+        sidebar.init();
+        filters.init();
+        background.init();
+        console.log("layout init");
+      });
+    } else {
+      require(['frontend/login']);
+    }
+    $('body').show();
   }
 
   self.init = init;
