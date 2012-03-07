@@ -57,10 +57,10 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
   ];
   
   // replace translations
-  function replaceTranslatedStrings(translation){
+  function replaceTranslatedStrings(translation) {
     var langstring;
     for (langstring in translation) {
-      data[langstring] = translation[langstring] || data[langstring];
+      data[langstring] = translation[langstring] || english[langstring];
     }
   }
 
@@ -162,6 +162,7 @@ wunderlist.language = (function(window, $, wunderlist, Titanium, undefined){
 
   /**
    * Replace basics
+   // TODO: move this to layout files, better publish an event
    * @author Christian Reber
    */
   function replaceBasics() {
