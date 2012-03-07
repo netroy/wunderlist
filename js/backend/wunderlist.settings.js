@@ -11,7 +11,7 @@ wunderlist.settings = (function(window, wunderlist, Titanium, undefined){
       REQUEST_TIMEOUT = 100 * 1000,
       position_saved;
 
-  var isLocalStorageAvailable = 'localStorage' in window;    
+  var isLocalStorageAvailable = 'localStorage' in window;
   var hasProperty, getString, setString, propertyMap;
 
   if(isLocalStorageAvailable){
@@ -104,7 +104,7 @@ wunderlist.settings = (function(window, wunderlist, Titanium, undefined){
     self.shortcutkey = shortcutkey;
   
     // The timeout for sending a request e. g. with AJAX
-    self.REQUEST_TIMEOUT = REQUEST_TIMEOUT;  
+    self.REQUEST_TIMEOUT = REQUEST_TIMEOUT;
   
     // Count how often the program has been started
     setInt('runtime', getInt('runtime', 1) + 1);
@@ -141,7 +141,7 @@ wunderlist.settings = (function(window, wunderlist, Titanium, undefined){
 
         if(user_y !== 0) {
           currentWindow.y = user_y;
-        } 
+        }
       }
     }
   
