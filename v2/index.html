@@ -16,21 +16,23 @@
   <!-- Base Scripts -->
   <script type="text/javascript" src="js/libs/json2.js"></script>
   <script type="text/javascript" src="js/libs/require.js"></script>
+  <!-- js/libs.js == jquery + ui + async + underscore + backbone , to save http requests -->
+  <script type="text/javascript" src="js/libs.js"></script>
+
+  <!-- Init -->
   <script type="text/javascript">
     require.config({
       baseUrl: "js/"
-    });
-  </script>
-  <script type="text/javascript" src="js/libs/async.js"></script>
-  <script type="text/javascript" src="js/libs/jquery.js"></script>
-  <script type="text/javascript" src="js/libs/jquery-ui.js"></script>
-  <script type="text/javascript">
-    require(['libs/jquery', 'libs/async', 'libs/underscore', 'libs/backbone'], function($, A, _, B){
+    })([
+        'libs/jquery'
+      , 'libs/async'
+      , 'libs/underscore'
+      , 'libs/backbone'
+      //, 'libs/jquery-ui'
+    ], function($, A, _, B, undefined){
       console.log(arguments);
     });
   </script>
-  <!--
-  -->
 </head>
 <body>
   <div id="container"></div>
