@@ -254,7 +254,6 @@ wunderlist.frontend.lists = (function($, wunderlist, undefined){
     $('#lists div.deletep').live('click', function() {
       if (wunderlist.settings.getInt('delete_prompt', 1) === 1) {
         wunderlist.helpers.dialogs.createDeleteListDialog($(this).parent().attr('id').replace('list', ''), $(this).parent());
-        wunderlist.helpers.dialogs.openDialog(delete_dialog);
       } else {
         cancelSaveList();
         deleteList($(this).parent().attr('id').replace('list', ''), $(this).parent());
