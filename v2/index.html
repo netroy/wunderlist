@@ -23,14 +23,10 @@
   <script type="text/javascript">
     require.config({
       baseUrl: "js/"
-    })([
-        'libs/jquery'
-      , 'libs/async'
-      , 'libs/underscore'
-      , 'libs/backbone'
-      //, 'libs/jquery-ui'
-    ], function($, A, _, B, undefined){
-      console.log(arguments);
+    });
+
+    require(["frontend/layout"], function(layout) {
+      layout.init();
     });
   </script>
 </head>
