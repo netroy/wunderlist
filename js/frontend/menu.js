@@ -108,6 +108,7 @@ menu.initialize = function() {
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder,    function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com');});
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_tw, function() {Titanium.Desktop.openURL('http://www.twitter.com/6Wunderkinder');});
   aboutUsMenuItem.addItem(wunderlist.language.data.wunderkinder_fb, function() {Titanium.Desktop.openURL('http://www.facebook.com/6Wunderkinder');});
+  aboutUsMenuItem.addItem(wunderlist.language.data.privacy_policy, function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com/privacy-policy/')});
   //aboutUsMenuItem.addSeparatorItem();
   //aboutUsMenuItem.addItem(wunderlist.language.data.changelog, function() {Titanium.Desktop.openURL('http://www.6wunderkinder.com/wunderlist/changelog')});
 

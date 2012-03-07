@@ -10,7 +10,7 @@ For details on Wunderlist, please see <http://www.6wunderkinder.com. Wunderlist 
 
 Wunderlist is based on Titanium. Download the current Titanium stable on http://www.appcelerator.com/products/download/ and create an new desktop project. Open terminal and go into the "Resources" folder of the empty project you created.
 
-Then type "git clone git@github.com:6wunderkinder/wunderlist.git" and that's it! Now you are member of the Wunderlist community ;)
+Then type "git clone git@github.com:6wunderkinder/wunderlist.git ." and that's it! Now you are member of the Wunderlist community ;)
 
 --------------------
  Known Bugs
@@ -39,6 +39,7 @@ We'd also encourage you to follow us on Twitter at http://twitter.com/6Wunderkin
 - Dennis Schneider, App Developer
 - Marvin Labod, Front-End
 - Sebastian Kreutzberger, App Developer
+- Adam Renklint, Javascript Developer
 
 Translations:
 

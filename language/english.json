@@ -1,4 +1,4 @@
-{
+  {
   "sync":                "Synchronizing...",
   "tooltip_sync":        "Synchronize",
   "lists":               "Lists",
@@ -25,8 +25,6 @@
   "search":              "Search everywhere...",
   "search_results":      "Search Results",
   "no_search_results":   "No Search Results",
-
-
   "inbox":              "Inbox",
   "today":              "Today",
   "yesterday":          "Yesterday",
@@ -50,8 +48,6 @@
   "no_date":            "No Date",
   "choose_date":        "Choose Date",
   "days_ago":           "days ago",
-
-
   "one":              "One",
   "two":              "Two",
   "three":            "Three",
@@ -62,15 +58,12 @@
   "eight":            "Eight",
   "nine":             "Nine",
   "ten":              "Ten",
-
   "no_results":            "No Results",
   "reset_window_size":     "Reset Window",
   "reset_note_window":     "Reset Note Window",
   "options":               "Options",
   "fav":                   "No prioritization",
   "knowledge_base":        "Knowledge Base",
-
-
   "default_task_1":        "Doubleclick to edit me",
   "default_task_2":        "Press Ctrl + N or Ctrl + T to create a new task",
   "default_task_2_mac":    "Press Cmd + N or Cmd + T to create a new task",
@@ -83,10 +76,7 @@
   "default_task_6_mac":    "Press Cmd + S to synchronize your lists and tasks",
   "default_task_7":        "Ignore me, I'm already done",
   "default_task_8":        "Create a new list by clicking on the Add List button",
-
   "favina":                "Prioritize",
-
-
   "no_thanks":             "No Thanks",
   "login":                 "Login",
   "register":              "Register Now",
@@ -102,8 +92,6 @@
   "edit_profile_desc":     "If you want to change your password or email address, just type your new email address and password!",
   "error_invalid_email":   "Invalid email Address",
   "error_login_failed":    "Login denied. Please try again.",
-
-
   "tutorials":             "Tutorials",
   "overdue_text_pl":        "tasks are overdue",
   "overdue_text_sl":        "task is overdue",
@@ -129,6 +117,7 @@
   "wunderkinder":          "6Wunderkinder",
   "wunderkinder_fb":        "Follow us on Facebook",
   "wunderkinder_tw":        "Follow us on Twitter",
+  "privacy_policy":      "Privacy policy",
   "delete_account":        "Delete Account",
   "sign_in":            "Sign in",
   "restart":            "The changes you made require a restart. Please restart Wunderlist manually.",
