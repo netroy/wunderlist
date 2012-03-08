@@ -19,7 +19,7 @@ define('helpers/language',
     'fr-ca': { file : 'frenchcanadian', translation : 'Canadienne-Française' },
     'gl':    { file : 'galician',       translation : 'Galego' },
     'gr':    { file : 'greek',          translation : 'Ελληνικά' },
-    'hi':    { file : 'hindi',          translation : 'HINDI'}, // TODO: add hindi label
+    'hi':    { file : 'hindi',          translation : 'हिंदी'},
     'hu':    { file : 'hungarian',      translation : 'Magyar' },
     'hr':    { file : 'croatian',       translation : 'Hrvatski' },
     'is':    { file : 'icelandic',      translation : 'Íslenska' },
