@@ -1,3 +1,23 @@
+//import 'mixins'
+transition() {
+  -webkit-transition: arguments;
+  -moz-transition: arguments;
+  -ms-transition: arguments;
+  -o-transition: arguments;
+  transition: arguments;
+}
+
+box-shadow() {
+  -webkit-box-shadow: arguments;
+  -moz-box-shadow: arguments;
+  -ms-box-shadow: arguments;
+  -o-box-shadow: arguments;
+  box-shadow: arguments;
+}
+
+
+
+
 html {
   background: url('/backgrounds/wood.jpg') no-repeat fixed;
   overflow: hidden;
@@ -12,8 +32,6 @@ body {
   height: 100%;
   border-top: 0px solid #666;
   background-origin: padding-box;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
   background-size: cover;
 }
 
@@ -97,7 +115,6 @@ body, button, input, select, textarea {
       display: inline-block;
       text-indent: -23718px;
       background: url(/images/download.png);
-      background-position-y: -88px;
     }
 
     .iphone {
@@ -202,7 +219,7 @@ body, button, input, select, textarea {
     .wklogo {
       width: 580px;
       height: 50px;
-      background: url(/images/wklogo.png) 247px 9px no-repeat; 
+      background: url('/images/wklogo.png') 247px 9px no-repeat; 
       cursor: pointer;
       text-indent: -34129px;
     }
@@ -211,7 +228,7 @@ body, button, input, select, textarea {
       display: block;
       width: 330px;
       height: 50px;
-      background: url(/images/wklogowhite.png) 0 0 no-repeat;
+      background: url('/images/wklogowhite.png') 0 0 no-repeat;
       text-indent: -34129px;
       opacity: 0;
       float: right;
@@ -228,7 +245,7 @@ body, button, input, select, textarea {
     }
 
     .wklogo, .wklogowhite {
-      -webkit-transition: opacity 0.6s ease-out, margin-top 0.4s ease-in-out;  
+      transition: opacity 0.6s ease-out, margin-top 0.4s ease-in-out;  
     }
   }
 
