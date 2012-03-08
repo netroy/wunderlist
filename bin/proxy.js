@@ -8,7 +8,7 @@
       stylus = require('stylus'),
       fs = require('fs'),
       app = module.exports = connect.createServer(),
-      devMode = (process.env.NODE_ENV || '').toLowerCase() === 'production',
+      devMode = (process.env.NODE_ENV || '').toLowerCase() !== 'production',
       versionData = fs.readFileSync(__dirname + "/data/version.txt"),
       baseDir = __dirname + "/..",
       syncData, http, postOptions,
@@ -92,7 +92,7 @@
 
   //if (!module.parent) {
     app.listen(port);
-    console.log("Static HTTP server in "+(devMode?'production':'development')+" mode");
+    console.log("Static HTTP server in "+(devMode?'development':'production')+" mode");
     console.log("http://localhost:" + port + "/v2/");
     console.log("Press CTRL + C to stop");
   //}
