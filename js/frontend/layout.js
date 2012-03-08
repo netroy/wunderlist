@@ -3,9 +3,13 @@ define('frontend/layout',
       ['libs/jquery', 'helpers/settings', 'helpers/language'],
       function($, settings, language, undefined) {
 
-  "use strict";
+  'use strict';
 
   var self = {};
+
+  function loaded() {
+    $('body').css({'opacity': '1.0'});
+  }
 
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
@@ -13,12 +17,12 @@ define('frontend/layout',
         sidebar.init();
         filters.init();
         background.init();
-        console.log("layout init");
+        console.log('layout init');
+        loaded();
       });
     } else {
-      require(['frontend/login']);
+      require(['frontend/login'], loaded);
     }
-    $('body').show();
   }
 
   self.init = init;
