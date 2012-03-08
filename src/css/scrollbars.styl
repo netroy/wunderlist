@@ -1,0 +1,40 @@
+
+
+/* Scrollbars - WebKit ONLY */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(70,70,70,0.6);
+  border: 2px solid rgba(20,20,20,0.2);
+  box-shadow: none;
+  -webkit-transition: all 1s linear;
+}
+
+#lists::-webkit-scrollbar-thumb {
+  background: rgba(70, 70, 70, 0.2);
+  border-color: rgba(240,240,240,0.2);
+}
+
+:hover::-webkit-scrollbar-thumb, #lists:hover::-webkit-scrollbar-thumb  {
+  border-color: rgba(0,0,0,0.5);
+  border-width: 1px;
+  background-color: rgba(100,100,100,0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(150,150,150, 0.8);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) ;
+}
+
+::-webkit-scrollbar-thumb:active {
+  border-color: #222;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}

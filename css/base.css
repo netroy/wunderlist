@@ -47,3 +47,10 @@ div,input{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:bo
 html{overflow:hidden;height:100%;background:#444 url("/images/backgrounds/wood.jpg") no-repeat fixed top center;background-origin:padding-box;-webkit-background-size:cover;-moz-background-size:cover;background-size:cover}
 body{opacity:0;filter:alpha(opacity=0);-webkit-transition:opacity .3s ease-in-out;-moz-transition:opacity .3s ease-in-out;-ms-transition:opacity .3s ease-in-out;-o-transition:opacity .3s ease-in-out;transition:opacity .3s ease-in-out;font-size:12px;color:#4e4e4e;overflow:auto;height:100%}
 body,button,input,select,textarea{font-family:'Open Sans','Lucida Grande',Arial,sans-serif}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;background:rgba(70,70,70,0.60);border:2px solid rgba(20,20,20,0.20);-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;-webkit-transition:all 1s linear}
+#lists::-webkit-scrollbar-thumb{background:rgba(70,70,70,0.20);border-color:rgba(240,240,240,0.20)}
+:hover::-webkit-scrollbar-thumb,#lists:hover::-webkit-scrollbar-thumb{border-color:rgba(0,0,0,0.50);border-width:1px;background-color:rgba(100,100,100,0.50)}
+::-webkit-scrollbar-thumb:hover{background-color:rgba(150,150,150,0.80);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.10);-moz-box-shadow:0 2px 4px rgba(0,0,0,0.10);box-shadow:0 2px 4px rgba(0,0,0,0.10)}
+::-webkit-scrollbar-thumb:active{border-color:#222}
+::-webkit-scrollbar-button{display:none}
