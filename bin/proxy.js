@@ -39,10 +39,16 @@
     'src': baseDir + '/src',
     'dest': baseDir + '/',
     'compile': function (str, path, fn) {
-      return stylus(str).set('filename', path).set('compress', true);
+      return stylus(str)
+            .set('filename', path)
+            .set('path', [baseDir + '/src'])
+            .set('compress', true);
     }
   }));
-
+  if(devMode) {
+    // This module concats JS & templates in devmode
+    app.use(require('./asset-manager'));
+  }
   app.use(connect.bodyParser());
   app.use(connect['static'](baseDir));
   app.use(connect.router(function(router) {
