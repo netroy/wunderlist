@@ -120,24 +120,24 @@ input#search {
 }
 
 #sidebar .deletep { 
-  background:url(/images/icons/delete_active.png);
+  background:url(../images/icons/delete_active.png);
 }
 
 #sidebar .editp {
-  background:url(/images/icons/edit_active.png);
+  background:url(../images/icons/edit_active.png);
 }
 
 #sidebar .savep {
-  background: url(/images/icons/editdone_active.png);
+  background: url(../images/icons/editdone_active.png);
 }
 
 #sidebar div.sharelist, #sidebar div.sharedlist {
-  background: url(/images/icons/sharelist.png) top right no-repeat;
+  background: url(../images/icons/sharelist.png) top right no-repeat;
   width: 25px;
 }
 
 #sidebar .ui-state-disabled div.sharelist, #sidebar .ui-state-disabled div.sharedlist {
-  background: url(/images/icons/sharelist_white.png) top center no-repeat;
+  background: url(../images/icons/sharelist_white.png) top center no-repeat;
   opacity: 1.0;
 }
 
@@ -146,7 +146,7 @@ input#search {
 
 #sidebar b.inbox {
   padding-left: 24px;
-  background: url(/images/icons/inbox.png) no-repeat;
+  background: url(../images/icons/inbox.png) no-repeat;
   background-position: 0px 0px;
 }
 
@@ -229,9 +229,9 @@ background: #21638c; color:#fff;
 -moz-box-shadow: inset 1px 1px 3px #174460;
 box-shadow: inset 1px 1px 3px #174460}
 
-#sidebar .ui-state-disabled div.deletep , #sidebar .ui-dropped-disabled div.deletep {background:url(/images/icons/delete_white.png)}
-#sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(/images/icons/edit_white.png)}
-#sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(/images/icons/editdone_white.png)}
+#sidebar .ui-state-disabled div.deletep , #sidebar .ui-dropped-disabled div.deletep {background:url(../images/icons/delete_white.png)}
+#sidebar .ui-state-disabled div.editp , #sidebar .ui-dropped-disabled div.editp {background:url(../images/icons/edit_white.png)}
+#sidebar .ui-state-disabled div.savep , #sidebar .ui-dropped-disabled div.savep {background:url(../images/icons/editdone_white.png)}
 #sidebar .ui-state-disabled b.inbox , #sidebar .ui-dropped-disabled b.inbox {background-position:0px -14px}
 
 #sidebar .ui-state-disabled div , #sidebar .ui-dropped-disabled div {
@@ -261,7 +261,7 @@ opacity:0.5;
 }
 
 #sidebar .ui-state-disabled span, #sidebar .ui-dropped-disabled span {
-  background:url(/images/taskcounth.png) no-repeat;
+  background:url(../images/taskcounth.png) no-repeat;
 }
 
 .list span {
@@ -270,7 +270,7 @@ opacity:0.5;
   float: right;
   width: 31px;
   height: 18px;
-  background: url(/images/taskcount.png) no-repeat;
+  background: url(../images/taskcount.png) no-repeat;
   text-align: center;
   display: block;
   padding-top: 1px;
@@ -323,7 +323,7 @@ opacity:0.5;
 }
 
 .sidebarleft #sidebar {
-  background:url(/images/sidebar_left.png);
+  background:url(../images/sidebar_left.png);
   left: 0;
 }
 

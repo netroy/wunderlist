@@ -151,7 +151,7 @@ padding:5px 10px
 /* Active Menu and Indicator for Children */
 ul.menu li.hasChild {
   position:relative;
-  background:#4b4b4b url(/images/icons/hasChild.png) 128px no-repeat !important;
+  background:#4b4b4b url(../images/icons/hasChild.png) 128px no-repeat !important;
 }
 
 /* Not Yet implemented Menus */
@@ -166,14 +166,14 @@ ul.menu li.icon {
 }
 
 ul.menu li.settings {
-  background-image: url(/images/icons/settings.png);
+  background-image: url(../images/icons/settings.png);
 }
 ul.menu li.downloads {
-  background-image: url(/images/icons/downloads.png);
+  background-image: url(../images/icons/downloads.png);
 }
 ul.menu li.aboutus {
-  background-image: url(/images/icons/about.png);
+  background-image: url(../images/icons/about.png);
 }
 ul.menu li.logout {
-  background-image: url(/images/icons/logout.png);
+  background-image: url(../images/icons/logout.png);
 }

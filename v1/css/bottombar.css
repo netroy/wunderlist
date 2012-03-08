@@ -115,7 +115,7 @@
 }
 
 #left a.loggedinas span::before {
-  background: url(/images/menuopen.png);
+  background: url(../images/menuopen.png);
   width: 8px;
   height: 4px;
   top: 8px;
@@ -141,7 +141,7 @@
   width: 19px;
   height: 19px;
   cursor:pointer;
-  background:url(/images/sidebartogglen.png) no-repeat;
+  background:url(../images/sidebartogglen.png) no-repeat;
 }
 
 .hidden {
@@ -149,7 +149,7 @@
 }
 
 .togglesidebar:hover {
-  background-image:url(/images/sidebartoggleh.png);
+  background-image:url(../images/sidebartoggleh.png);
 }
 
 /* RIGHT BOTTOMBAR ------------------------------------------------------------*/
@@ -225,7 +225,7 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
 }
 
 #activebackground, #backgroundList a {
-  background-image: url(/backgrounds/icons.png);
+  background-image: url(/images/backgrounds/icons.png);
   background-repeat: repeat;
   background-position: right top;
 }
@@ -297,7 +297,7 @@ a.backgroundswitcher:hover, a.backgroundswitcheractive {
 
 .showhelp {
   margin:0px 10px 0px 6px !important;
-  background:url(/images/showhelp.png);
+  background:url(../images/showhelp.png);
   width:19px !important;
   height:19px;
   text-indent: -9999px;

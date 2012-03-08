@@ -44,10 +44,10 @@ body.sidebarClosed #listfunctions {
   opacity: 1.0;
 }
 
-#listfunctions .list-print {background:url(/images/icons/print.png) no-repeat}
-#listfunctions .list-email {background:url(/images/icons/sendmail.png) no-repeat}
-#listfunctions .list-cloud {background:url(/images/icons/cloudapp.png) no-repeat}
-#listfunctions .list-share {background:url(/images/icons/sharelist_white.png) no-repeat}
+#listfunctions .list-print {background:url(../images/icons/print.png) no-repeat}
+#listfunctions .list-email {background:url(../images/icons/sendmail.png) no-repeat}
+#listfunctions .list-cloud {background:url(../images/icons/cloudapp.png) no-repeat}
+#listfunctions .list-share {background:url(../images/icons/sharelist_white.png) no-repeat}
 
 #printFrame {
   width: 1px;
@@ -61,7 +61,7 @@ body.sidebarClosed #listfunctions {
 
 /* -- CUSTOM CHECKBOXES ---------------------------------------------------------------- */
 
-.checkboxcon {width:15px;height:15px;background:url(/images/checkbox.png) no-repeat;
+.checkboxcon {width:15px;height:15px;background:url(../images/checkbox.png) no-repeat;
 cursor:pointer;overflow:hidden;position:relative; float:left; margin-right:8px; margin-top:-1px}
 
 .input-checked {position:relative;left:30px}
