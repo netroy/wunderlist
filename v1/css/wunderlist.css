@@ -11,7 +11,7 @@ body {
   overflow: hidden;
   height: 100%;
   border-top: 0px solid #666;
-  background-image: url('../backgrounds/wood.jpg');
+  background-image: url('/backgrounds/wood.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-origin: padding-box;

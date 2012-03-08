@@ -26,7 +26,7 @@ wunderlist.helpers.html = (function(window, $, wunderlist, Titanium, undefined) 
    * @author Daniel Marschner
    */
   function generateLoginRegisterDialogHTML() {
-    var html_code = '<div class="wunderlistlogo"><img src="/images/iosicon.png" alt="Wunderlist Icon"/></div>' +
+    var html_code = '<div class="wunderlistlogo"><img src="images/iosicon.png" alt="Wunderlist Icon"/></div>' +
       
       // LOGIN DIALOG
       

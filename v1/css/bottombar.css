@@ -1,6 +1,6 @@
 /* Bottom Bar */
 #bottombar {
-  background:url(/images/bottombar.png) repeat-x;
+  background:url(../images/bottombar.png) repeat-x;
   position:fixed;
   bottom:0px;
   left:0px;
@@ -27,7 +27,7 @@
   position: relative;
   display:inline-block;
   float:left;
-  background-image: url(/images/sync_green.png);
+  background-image: url(../images/sync_green.png);
   background-repeat: no-repeat;
   height:22px;
   width:28px;
@@ -35,7 +35,7 @@
 }
 
 #sync.sync_red {
-  background:url(/images/sync_red.png);
+  background:url(../images/sync_red.png);
 }
 
 #syncing {
@@ -46,7 +46,7 @@
   left: 5px;
   height:14px;
   width:14px;
-  background-image: url(/images/sync_arrow.png);
+  background-image: url(../images/sync_arrow.png);
   
   -webkit-transition: 0.8s -webkit-transform linear;
   -moz-transition: 0.8s -moz-transform linear;
@@ -173,7 +173,7 @@
 /* BG Switcher START */
 
 a.backgroundswitcher {
-  background:url(/images/bgswitch.png);
+  background:url(../images/bgswitch.png);
   padding-left:17px;
   position: relative;
 }

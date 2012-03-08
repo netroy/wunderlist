@@ -10,7 +10,7 @@ wunderlist.helpers.background = (function($, wunderlist, undefined){
    */
   var bgSettings = {
     defaultBgColor:    '#000',
-    defaultBgRootPath: 'backgrounds/',
+    defaultBgRootPath: '/backgrounds/',
     defaultBgPosition: 'top center'
   };
 
