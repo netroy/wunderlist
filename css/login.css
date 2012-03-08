@@ -1,6 +1,6 @@
 #login{width:800px;margin:0 auto;}
 #login .loginHeader,#login .loginFooter{text-align:center;left:0;right:0}
-#login .loginHeader h1,#login .seefeatures,#login .visitblog,#login .freewunderlist,#login .wkdownload a,#login .wkseparator,#login .followus p,#login .followus p a.follow,#login .wklogo,#login a.wklogowhite{background:url("/images/login-sprites.png") no-repeat}
+#login .loginHeader h1,#login .seefeatures,#login .visitblog,#login .freewunderlist,#login .wkdownload a,#login .wkseparator,#login .followus p,#login .followus p a.follow,#login .wklogo,#login a.wklogowhite,#login .freeWunderlist{background:url("/images/login-sprites.png") no-repeat}
 #login .loginHeader{margin-top:100px;}
 #login .loginHeader h1{text-indent:-9678px;height:110px;width:640px;margin:0 auto 20px auto}
 #login .loginHeader h2{display:none}
