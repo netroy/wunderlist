@@ -74,45 +74,58 @@ define('helpers/language',
   }
 
 
-  // Load language code from settings
-  code = settings.getString('language', code);
+  function init() {
+    // Load language code from settings
+    code = settings.getString('language', code);
 
-  // If code is invalid or undefined, get it from the navigator object
-  if(!(code in availableLang)) {
-    // TODO: this won't work on 5-letter codes
-    code = window.navigator.language.substr(0, 2).toLowerCase();
-
-    // If still invalid, then set it to english
+    // If code is invalid or undefined, get it from the navigator object
     if(!(code in availableLang)) {
-      code = "en";
-    }
+      // TODO: this won't work on 5-letter codes
+      code = window.navigator.language.substr(0, 2).toLowerCase();
 
-    // Store the language in the settings
-    settings.setString('language', code);
+      // If still invalid, then set it to english
+      if(!(code in availableLang)) {
+        code = "en";
+      }
+
+      // Store the language in the settings
+      settings.setString('language', code);
+    }
   }
 
 
   function mergeTranslations(err, langData) {
     englishStrings = langData[0];
-    var key, languageStrings = langData[1];
-    for (key in languageStrings) {
+    var key, languageStrings = langData[1] || {};
+    for (key in englishStrings) {
       translations[key] = languageStrings[key] || englishStrings[key];
+    }
+
+    // Once new language is loaded, trigger an event so that views re-render
+    $(document).trigger('language_changed');
+  }
+
+
+  function setLanguage(langCode) {
+    if(langCode in availableLang) {
+      // Load the language file(s)
+      var requestQueue = [];
+      requestQueue.push(fetchLanguageData('en'));
+      if(langCode !== 'en') {
+        requestQueue.push(fetchLanguageData(langCode));
+      }
+      async.parallel.call(async, requestQueue, mergeTranslations);
     }
   }
 
-  // Load the language file(s)
-  code = 'de';
-  var requestQueue = [];
-  requestQueue.push(fetchLanguageData('en'));
-  if(code !== 'en') {
-    requestQueue.push(fetchLanguageData(code));
-  }
-  //requestQueue.push(mergeTranslations);
 
-  async.parallel.call(async, requestQueue, mergeTranslations);
+  init();
+  setLanguage(code);
+
 
   return {
-    "data": translations
+    "data": translations,
+    "setLanguage": setLanguage
   };
 
 });
