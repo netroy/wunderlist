@@ -1,0 +1,42 @@
+transition() {
+  -webkit-transition: arguments;
+  -moz-transition: arguments;
+  -ms-transition: arguments;
+  -o-transition: arguments;
+  transition: arguments;
+}
+
+box-shadow() {
+  -webkit-box-shadow: arguments;
+  -moz-box-shadow: arguments;
+  box-shadow: arguments;
+}
+
+background-size() {
+  -webkit-background-size: arguments;
+  -moz-background-size: arguments;
+  background-size: arguments;
+}
+
+background-clip() {
+  -webkit-background-clip: arguments;
+  -moz-background-clip: arguments;
+  background-clip: arguments;
+}
+
+border-radius() {
+  -webkit-border-radius: arguments;
+  -moz-border-radius: arguments;
+  border-radius: arguments;
+}
+
+box-sizing() {
+  -webkit-box-sizing: arguments;
+  -moz-box-sizing: arguments;
+  box-sizing: arguments;
+}
+
+opacity(n) {
+  opacity: n;
+  filter: unquote('alpha(opacity=' + round(n * 100) + ')');
+}
