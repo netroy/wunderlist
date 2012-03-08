@@ -1,4 +1,4 @@
-* {margin: 0px;padding: 0px;outline: none !important;text-decoration: none;}
+*{margin:0;padding:0;outline:none !important;text-decoration:none}
 article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block}
 audio,canvas,video{display:inline-block;*display:inline;*zoom:1}
 audio:not([controls]){display:none}
@@ -11,7 +11,7 @@ a:visited{color:#551a8b}
 a:focus{outline:thin dotted}
 a:hover,a:active{outline:0}
 abbr[title]{border-bottom:1px dotted}
-b,strong{font-weight: bold;font-weight: 600;}
+b,strong{font-weight:bold;font-weight:600}
 blockquote{margin:1em 40px}
 dfn{font-style:italic}
 mark{background:#ff0;color:#000}
@@ -36,11 +36,14 @@ button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*ve
 button,input{line-height:normal;*overflow:visible}
 table button,table input{*overflow:auto}
 button,html input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button}
-input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
-input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="checkbox"],input[type="radio"]{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}
 input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
 textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
-
-li {list-style: none;}
+li{list-style:none}
+div,input{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+html{overflow:hidden;height:100%;background:#444 url("/images/backgrounds/wood.jpg") no-repeat fixed top center;background-origin:padding-box;-webkit-background-size:cover;-moz-background-size:cover;background-size:cover}
+body{opacity:0;filter:alpha(opacity=0);-webkit-transition:opacity .3s ease-in-out;-moz-transition:opacity .3s ease-in-out;-ms-transition:opacity .3s ease-in-out;-o-transition:opacity .3s ease-in-out;transition:opacity .3s ease-in-out;font-size:12px;color:#4e4e4e;overflow:auto;height:100%}
+body,button,input,select,textarea{font-family:'Open Sans','Lucida Grande',Arial,sans-serif}
