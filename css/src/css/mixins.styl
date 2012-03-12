@@ -40,3 +40,10 @@ opacity(n) {
   opacity: n;
   filter: unquote('alpha(opacity=' + round(n * 100) + ')');
 }
+
+linear-gradient(start, stop) {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(start), to(stop));
+  background-image: -webkit-linear-gradient(top, start, stop);
+  background-image: -moz-linear-gradient(top, start, stop);
+  background-image: -o-linear-gradient(top, start, stop);
+}
