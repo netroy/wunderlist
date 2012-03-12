@@ -5,7 +5,7 @@
 // http://backbonejs.org
 (function(){
   var window = this;
-  function init(_, $) {
+  function init($, _) {
 var i=this,r=i.Backbone,s=Array.prototype.slice,t=Array.prototype.splice;
 var g="undefined"!==typeof exports?exports:i.Backbone={};
 g.VERSION="0.9.1";

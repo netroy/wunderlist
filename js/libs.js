@@ -8,7 +8,8 @@
   if(typeof define=="function" && define.amd && define.amd.jQuery){
   	define("libs/async", [], function() {return a});
   }
-})(define);// Underscore.js 1.3.1 | http://documentcloud.github.com/underscore
+})(define);
+// Underscore.js 1.3.1 | http://documentcloud.github.com/underscore
 // (c) 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
 (function(window, undefined){
 
@@ -50,7 +51,7 @@ if(typeof define === "function" && define.amd) {
 // http://backbonejs.org
 (function(){
   var window = this;
-  function init(_, $) {
+  function init($, _) {
 var i=this,r=i.Backbone,s=Array.prototype.slice,t=Array.prototype.splice;
 var g="undefined"!==typeof exports?exports:i.Backbone={};
 g.VERSION="0.9.1";
