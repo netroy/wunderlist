@@ -1,7 +1,7 @@
 /*global console: false, require:false */
 define('frontend/layout',
-      ['libs/jquery', 'helpers/settings', 'helpers/language'],
-      function($, settings, language, undefined) {
+      ['libs/jquery', 'libs/underscore', 'helpers/settings', 'helpers/language'],
+      function($, _, settings, language, undefined) {
 
   'use strict';
 
