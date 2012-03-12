@@ -1,7 +1,7 @@
-define('models/base', ['libs/backbone', 'libs/jquery'], function(Backbone, $) {
+define('models/base', ['libs/backbone'], function(Backbone) {
 
   var BaseModel = Backbone.Model.extend({
-    // on language_change event refresh all the view
+    // Keep this base class in case we might need to add some common functionality here
   });
 
   return BaseModel;
