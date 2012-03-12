@@ -1,0 +1,68 @@
+@import 'mixins'
+
+#layout {
+  height: 100%;
+  position: relative;
+}
+
+#bottomBar {
+  background: url(/images/bottombar.png) repeat-x;
+  linear-gradient: #636363 #404040;
+  border-top: 1px solid #4A4A4A;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0
+  height: 36px;
+  width: 100%;
+
+  .leftBottom {
+    float: left;
+    padding: 8px;
+    padding-right: 0px;
+    padding-left: 4px;
+  }
+
+  .rightBottom {
+    float:right;
+    padding:10px 16px 8px 0px;
+
+    a {
+      width: 19px;
+      height: 19px;
+      display: inline-block;
+      margin-right: 5px;
+      float: left;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+  }
+
+}
+
+
+
+#sidebar {
+  right: 0px;
+  background-color: #F4F5F7;
+  width: 250px;
+  height: 100%;
+  top: 0px;
+  position: fixed;
+  overflow: hidden;
+}
+
+#sidebar h3, #lists, #notification {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+#lists {
+  overflow-y: auto;
+  overflow-x: hidden;
+  top: 60px;
+  bottom: 40px;
+  width: 240px;
+  margin-left: 10px;
+}

@@ -1,0 +1,8 @@
+#layout{height:100%;position:relative}
+#bottomBar{background:url("/images/bottombar.png") repeat-x;background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#636363),to(#404040));background-image:-webkit-linear-gradient(top,#636363,#404040);background-image:-moz-linear-gradient(top,#636363,#404040);background-image:-o-linear-gradient(top,#636363,#404040);border-top:1px solid #4a4a4a;position:fixed;bottom:0;left:0;right:0;height:36px;width:100%;}
+#bottomBar .leftBottom{float:left;padding:8px;padding-right:0;padding-left:4px}
+#bottomBar .rightBottom{float:right;padding:10px 16px 8px 0;}
+#bottomBar .rightBottom a{width:19px;height:19px;display:inline-block;margin-right:5px;float:left;background-repeat:no-repeat;cursor:pointer}
+#sidebar{right:0;background-color:#f4f5f7;width:250px;height:100%;top:0;position:fixed;overflow:hidden}
+#sidebar h3,#lists,#notification{position:absolute;left:0;right:0}
+#lists{overflow-y:auto;overflow-x:hidden;top:60px;bottom:40px;width:240px;margin-left:10px}
