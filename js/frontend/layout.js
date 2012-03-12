@@ -13,7 +13,17 @@ define('frontend/layout',
 
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
-      require(['frontend/sidebar', 'frontend/filters', 'frontend/background'], function(sidebar, filters, background) {
+      require(
+        ['frontend/sidebar', 'frontend/filters', 'frontend/background'],
+        function(sidebar, filters, background) {
+
+        var body = $('body');
+        body.addClass('logged');
+
+        $.get('templates/layout.tmpl', function(response) {
+          body.html(_.template(response, language.data));
+        });
+
         sidebar.init();
         filters.init();
         background.init();

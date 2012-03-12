@@ -1,0 +1,60 @@
+<style type="text/css">
+  @import url('/css/layout.css');
+</style>
+
+<div id="layout">
+
+  <!-- SideBar -->
+  <div id="sidebar">
+    <h3>
+      <div class="searchside">
+        <span class="clearsearch"></span>
+        <input type="text" id="search"/>
+      </div>
+    </h3>
+    <div id="lists"></div>
+    <div id="notification"><div></div></div>
+  </div>
+
+
+  <!-- Task Listings -->
+  <div id="tasks"></div>
+
+
+  <!-- Print / Share controls -->
+  <div id="listFunctions" class="slideTransition">
+    <a rel="print tasks" class="list-print"></a>
+    <a rel="send by email" class="list-email"></a>
+    <a rel="share with cloud app" class="list-cloud"></a>
+    <div id="cloudtip">
+      <span class="triangle"></span>
+      <span class="copy">Copy Link</span>
+      <span class="link"></span>
+    </div>
+
+    <!-- Extra DOM for printing/sharing -->
+    <div id="extras">
+      <iframe id="printFrame"></iframe>
+    </div>
+  </div>
+
+
+  <!-- Bottom Panel -->
+  <div id="bottomBar">
+    <div class="leftBottom">
+        <span id="sync" class="more"><span id="syncing"></span></span>
+        <ul class="menu"></ul>
+        <span id="filters"></span>
+    </div>
+    <div class="rightBottom">
+      <a class="addlist"></a>
+      <a class="showhelp">?</a>
+      <a class="backgroundswitcher">
+        <span id="activebackground"></span>
+        <span id="backgroundList"></span>
+      </a>
+      <a class="togglesidebar"></a>
+    </div>
+  </div>
+
+</div>
