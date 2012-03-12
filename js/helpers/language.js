@@ -102,18 +102,25 @@ define('helpers/language',
     }
 
     // Once new language is loaded, trigger an event so that views re-render
-    $(document).trigger('language_changed');
+    $(document).trigger('language_changed', code);
   }
 
 
   function setLanguage(langCode) {
     if(langCode in availableLang) {
+
+      // Set the local reference to the new language code
+      code = langCode;
+      settings.setString('language', code);
+
       // Load the language file(s)
       var requestQueue = [];
       requestQueue.push(fetchLanguageData('en'));
       if(langCode !== 'en') {
         requestQueue.push(fetchLanguageData(langCode));
       }
+
+      // fire the ajax requests to fetch the language translations & then merge them
       async.parallel.call(async, requestQueue, mergeTranslations);
     }
   }
