@@ -1,0 +1,64 @@
+@import 'mixins'
+
+#sharing {
+  position: absolute;
+  right: 300px;
+  height: 30px;
+  width: 100px;
+  top: 15px;
+  z-index: 2;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0, 0.2);
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    border-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.6);
+    box-shadow: 1px 1px 4px rgba(10,10,10,0.5);
+  }
+
+  a {
+    width: 18px;
+    height: 20px;
+    opacity: .5;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 3px;
+    transition: all .3s ease-out;
+
+    &:hover {
+      opacity: 1.0;
+    }
+
+    &.print {
+      background-position: 0 0;
+    }
+
+    &.email {
+      background-position: -25px 0;
+    }
+
+    &.cloud {
+      background-position: -50px 0;
+    }
+  }
+
+  .cloudtip {
+    top: 30px;
+    right: -10px;
+    width: 320px;
+  }
+}
+
+
+#printFrame {
+  width: 1px;
+  height: 1px;
+  border: 0 none;
+  position: absolute;
+  top: -999px;
+  left: -999px;
+}

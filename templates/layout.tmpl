@@ -21,20 +21,19 @@
 
 
   <!-- Print / Share controls -->
-  <div id="listFunctions" class="slideTransition">
-    <a rel="print tasks" class="list-print"></a>
-    <a rel="send by email" class="list-email"></a>
-    <a rel="share with cloud app" class="list-cloud"></a>
-    <div id="cloudtip">
+  <div id="sharing">
+    <a rel="print tasks" class="icon print">Print Tasks</a>
+    <a rel="send by email" class="icon email">Send by Email</a>
+    <a rel="share with cloud app" class="icon cloud">Share with Cloud App</a>
+    <div class="tooltip cloudtip">
       <span class="triangle"></span>
       <span class="copy">Copy Link</span>
       <span class="link"></span>
     </div>
-
-    <!-- Extra DOM for printing/sharing -->
-    <div id="extras">
-      <iframe id="printFrame"></iframe>
-    </div>
+  </div>
+  <!-- Extra DOM for printing/sharing -->
+  <div id="extras">
+    <iframe id="printFrame"></iframe>
   </div>
 
 
