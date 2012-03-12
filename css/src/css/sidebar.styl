@@ -1,0 +1,64 @@
+@import 'mixins'
+
+#sidebar {
+  right: 0px;
+  background-color: #F4F5F7;
+  box-shadow: -2px 0 20px rgba(0,0,0,0.8);
+  width: 260px;
+  height: 100%;
+  top: 0px;
+  position: fixed;
+  overflow: hidden;
+
+  .searchSide {
+    padding: 0;
+    margin: 0;
+    linear-gradient: #F6F7F8, #E7EAF2;
+    border-bottom: 1px solid #D1D2D4;
+    position: relative;
+
+    input {
+      margin: 18px;
+      padding: 6px 30px;
+      display: block;
+      width: 225px;
+      background-color: #fff;
+      border: 1px solid #c8cddd;
+      box-shadow: 0px 1px 1px #fff;
+      border-radius:15px;
+      color: #333;
+    }
+
+    .lens, .clearSearch {
+      position: absolute;
+      top: 7px;
+      width: 15px;
+      height: 15px;
+    }
+
+    .lens {
+      left: 30px;
+      background-position: -50px -25px;
+    }
+
+    .clearSearch {
+      display: none;
+      right: 30px;
+      opacity: 0.7;
+      cursor: pointer;
+      background-position: 0 -25px;
+    }
+
+    &:hover .clearSearch {
+      display: block;
+    }
+  }
+
+
+  #notification {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+}

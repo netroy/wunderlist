@@ -42,27 +42,26 @@
 
 
 
-#sidebar {
-  right: 0px;
-  background-color: #F4F5F7;
-  width: 250px;
-  height: 100%;
-  top: 0px;
-  position: fixed;
-  overflow: hidden;
+.icon {
+  background: url('/images/icon-sprites.png') no-repeat;
+  text-indent: -9999px;
 }
 
-#sidebar h3, #lists, #notification {
+.tooltip {
   position: absolute;
-  left: 0;
-  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 5px 8px 5px 8px;
+  color: white;
+  text-shadow: 1px 1px 3px black;
+  z-index: 100;
+  font-size: 11px;
+  display: none;
 }
 
-#lists {
-  overflow-y: auto;
-  overflow-x: hidden;
-  top: 60px;
-  bottom: 40px;
-  width: 240px;
-  margin-left: 10px;
-}
+
+
+@import('sharing')
+@import('sidebar')
+@import('list')
