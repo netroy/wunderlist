@@ -36,7 +36,7 @@
 
 
   app.use(stylus.middleware({
-    'src': baseDir + '/src',
+    'src': baseDir + '/css/src',
     'dest': baseDir + '/',
     'compile': function (str, path, fn) {
       return stylus(str)
