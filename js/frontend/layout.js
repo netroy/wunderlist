@@ -11,24 +11,40 @@ define('frontend/layout',
     $('body').css({'opacity': '1.0'});
   }
 
+  function loadData() {
+    require(['models/list', 'views/list', 'models/task', 'views/task'],
+      function(ListModel, ListView, TaskModel, TaskView) {
+
+      var listModel = new ListModel();
+      var listView = new ListView({
+        'model': listModel
+      });
+
+    });
+  }
+
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
       require(
-        ['frontend/sidebar', 'frontend/filters', 'frontend/background'],
-        function(sidebar, filters, background) {
+        ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing'],
+        function(sidebar, filters, background, sharing) {
 
         var body = $('body');
         body.addClass('logged');
 
         $.get('templates/layout.tmpl', function(response) {
           body.html(_.template(response, language.data));
+          loaded();
+
+          sidebar.init();
+          sharing.init();
+          /*filters.init();
+          background.init();
+          console.log('layout init');*/
+
+          loadData();
         });
 
-        sidebar.init();
-        filters.init();
-        background.init();
-        console.log('layout init');
-        loaded();
       });
     } else {
       require(['frontend/login'], loaded);
