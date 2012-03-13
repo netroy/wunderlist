@@ -1,0 +1,157 @@
+body {
+
+  background-image: url('/images/backgrounds/wood.jpg');
+  background-position: top center;
+  background-color: #000;
+
+  &[rel='one'] {
+    background-image: url('/images/backgrounds/wood.jpg');
+  }
+
+  &[rel='two'] {
+    background-image: url('/images/backgrounds/wheat.jpg');
+    background-position: center center;
+  }
+
+  &[rel='three'] {
+    background-image: url('/images/backgrounds/bokeh.jpg');
+    background-position: center center;
+  }
+
+  &[rel='four'] {
+    background-image: url('/images/backgrounds/blue.jpg');
+    background-color: #2b1023;
+  }
+
+  &[rel='five'] {
+    background-image: url('/images/backgrounds/royal_purple.jpg');
+  }
+
+  &[rel='six'] {
+    background-image: url('/images/backgrounds/darkfade.jpg');
+    background-color: #242424;
+  }
+
+  &[rel='seven'] {
+    background-image: url('/images/backgrounds/whitefade.jpg');
+    background-color: #9c9c9c;
+  }
+
+  &[rel='eight'] {
+    background-image: url('/images/backgrounds/monster.jpg');
+    background-position: top right;
+    background-color: #81bcb8;
+  }
+
+  &[rel='nine'] {
+    background-image: url('/images/backgrounds/darkwood.jpg');
+    background-position: center center;
+  }
+
+  &[rel='ten'] {
+    background-image: url('/images/backgrounds/chalkboard.jpg');
+  }
+
+  &[rel='eleven'] {
+    background-image: url('/images/backgrounds/forrest.jpg');
+  }
+
+  &[rel='twelve'] {
+    background-image: url('/images/backgrounds/leaf.jpg');
+  }
+
+}
+
+#bottomBar .rightBottom {
+
+  a.backgroundSwitcher {
+    background-position: 0 -100px;
+    padding-left: 17px;
+    position: relative;
+
+    &:hover {
+      background-position: -50px -100px;
+    }
+  }
+
+  span.activeBackground {
+    width: 14px;
+    height: 19px;
+    display: block;
+    background-position: right 0;
+  }
+
+  span.backgroundList {
+    display: none;
+    position: absolute;
+    bottom: 35px;
+    left: -20px;
+    width: 70px;
+    padding: 5px 0px 0px 5px;
+    border: 1px solid #323232;
+    background: #4B4B4B;
+    border-radius: 3px;
+    box-shadow: 1px 3px 10px #000;
+    z-index: 5;
+
+    &::after {
+      border: 6px solid transparent;
+      border-top-color: #4B4B4B;
+      border-style: solid;
+      position: absolute;
+      z-index: 6;
+      left: 32px;
+      bottom: -12px;
+      width: 0;
+      height: 0;
+      content: ' ';
+    }
+
+    a {
+
+      margin-bottom: 5px;
+      width: 18px;
+
+      &[rel='one'] {
+        background-position: right 0;
+      }
+      &[rel='two'] {
+        background-position: right -80px;
+      }
+      &[rel='three'] {
+        background-position: right -160px;
+      }
+      &[rel='four'] {
+        background-position: right -20px;
+      }
+      &[rel='five'] {
+        background-position: right -100px;
+      }
+      &[rel='six'] {
+        background-position: right -180px;
+      }
+      &[rel='seven'] {
+        background-position: right -40px;
+      }
+      &[rel='eight'] {
+        background-position: right -120px;
+      }
+      &[rel='nine'] {
+        background-position: right -200px;
+      }
+      &[rel='ten'] {
+        background-position: right -60px;
+      }
+      &[rel='eleven'] {
+        background-position: right -140px;
+      }
+      &[rel='twelve'] {
+        background-position: right -220px;
+      }
+
+      &.active {
+        box-shadow: 0 0 6px #fff;
+      }
+    }
+  }
+}

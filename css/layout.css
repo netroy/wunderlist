@@ -1,3 +1,35 @@
+body{background-image:url("/images/backgrounds/wood.jpg");background-position:top center;background-color:#000;}
+body[rel='one']{background-image:url("/images/backgrounds/wood.jpg")}
+body[rel='two']{background-image:url("/images/backgrounds/wheat.jpg");background-position:center center}
+body[rel='three']{background-image:url("/images/backgrounds/bokeh.jpg");background-position:center center}
+body[rel='four']{background-image:url("/images/backgrounds/blue.jpg");background-color:#2b1023}
+body[rel='five']{background-image:url("/images/backgrounds/royal_purple.jpg")}
+body[rel='six']{background-image:url("/images/backgrounds/darkfade.jpg");background-color:#242424}
+body[rel='seven']{background-image:url("/images/backgrounds/whitefade.jpg");background-color:#9c9c9c}
+body[rel='eight']{background-image:url("/images/backgrounds/monster.jpg");background-position:top right;background-color:#81bcb8}
+body[rel='nine']{background-image:url("/images/backgrounds/darkwood.jpg");background-position:center center}
+body[rel='ten']{background-image:url("/images/backgrounds/chalkboard.jpg")}
+body[rel='eleven']{background-image:url("/images/backgrounds/forrest.jpg")}
+body[rel='twelve']{background-image:url("/images/backgrounds/leaf.jpg")}
+#bottomBar .rightBottom a.backgroundSwitcher{background-position:0 -100px;padding-left:17px;position:relative;}
+#bottomBar .rightBottom a.backgroundSwitcher:hover{background-position:-50px -100px}
+#bottomBar .rightBottom span.activeBackground{width:14px;height:19px;display:block;background-position:right 0}
+#bottomBar .rightBottom span.backgroundList{display:none;position:absolute;bottom:35px;left:-20px;width:70px;padding:5px 0 0 5px;border:1px solid #323232;background:#4b4b4b;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:1px 3px 10px #000;-moz-box-shadow:1px 3px 10px #000;box-shadow:1px 3px 10px #000;z-index:5;}
+#bottomBar .rightBottom span.backgroundList::after{border:6px solid transparent;border-top-color:#4b4b4b;border-style:solid;position:absolute;z-index:6;left:32px;bottom:-12px;width:0;height:0;content:' '}
+#bottomBar .rightBottom span.backgroundList a{margin-bottom:5px;width:18px;}
+#bottomBar .rightBottom span.backgroundList a[rel='one']{background-position:right 0}
+#bottomBar .rightBottom span.backgroundList a[rel='two']{background-position:right -80px}
+#bottomBar .rightBottom span.backgroundList a[rel='three']{background-position:right -160px}
+#bottomBar .rightBottom span.backgroundList a[rel='four']{background-position:right -20px}
+#bottomBar .rightBottom span.backgroundList a[rel='five']{background-position:right -100px}
+#bottomBar .rightBottom span.backgroundList a[rel='six']{background-position:right -180px}
+#bottomBar .rightBottom span.backgroundList a[rel='seven']{background-position:right -40px}
+#bottomBar .rightBottom span.backgroundList a[rel='eight']{background-position:right -120px}
+#bottomBar .rightBottom span.backgroundList a[rel='nine']{background-position:right -200px}
+#bottomBar .rightBottom span.backgroundList a[rel='ten']{background-position:right -60px}
+#bottomBar .rightBottom span.backgroundList a[rel='eleven']{background-position:right -140px}
+#bottomBar .rightBottom span.backgroundList a[rel='twelve']{background-position:right -220px}
+#bottomBar .rightBottom span.backgroundList a.active{-webkit-box-shadow:0 0 6px #fff;-moz-box-shadow:0 0 6px #fff;box-shadow:0 0 6px #fff}
 .icon{background:url("/images/icon-sprites.png") no-repeat;text-indent:-9999px}
 .tooltip{position:absolute;background:rgba(0,0,0,0.80);border:1px solid rgba(0,0,0,0.90);-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;padding:5px 8px 5px 8px;color:#fff;text-shadow:1px 1px 3px #000;z-index:100;font-size:11px;display:none}
 .slideTransition{-webkit-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;-moz-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;-ms-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;-o-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out}
@@ -12,8 +44,9 @@
 #bottomBar .rightBottom a.backgroundSwitcher{background-position:0 -100px;padding-left:17px;position:relative;}
 #bottomBar .rightBottom a.backgroundSwitcher:hover{background-position:-50px -100px}
 #bottomBar .rightBottom span.activeBackground{width:14px;height:19px;display:block;background-position:right 0}
-#bottomBar .rightBottom span.backgroundList{position:absolute;bottom:35px;left:-20px;width:70px;padding:5px 0 0 5px;border:1px solid #323232;background:#4b4b4b;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:1px 3px 10px #000;-moz-box-shadow:1px 3px 10px #000;box-shadow:1px 3px 10px #000;z-index:5;}
+#bottomBar .rightBottom span.backgroundList{display:none;position:absolute;bottom:35px;left:-20px;width:70px;padding:5px 0 0 5px;border:1px solid #323232;background:#4b4b4b;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:1px 3px 10px #000;-moz-box-shadow:1px 3px 10px #000;box-shadow:1px 3px 10px #000;z-index:5;}
 #bottomBar .rightBottom span.backgroundList::after{border:6px solid transparent;border-top-color:#4b4b4b;border-style:solid;position:absolute;z-index:6;left:32px;bottom:-12px;width:0;height:0;content:' '}
+#bottomBar .rightBottom span.backgroundList a.active{-webkit-box-shadow:0 0 6px #fff;-moz-box-shadow:0 0 6px #fff;box-shadow:0 0 6px #fff}
 #bottomBar .rightBottom a.toggleSidebar{background-position:0 -75px;}
 #bottomBar .rightBottom a.toggleSidebar:hover{background-position:-50px -75px}
 body.sidebarClosed #bottomBar .rightBottom a.toggleSidebar{background-position:-25px -75px;}

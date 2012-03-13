@@ -34,12 +34,14 @@ define('frontend/layout',
 
         $.get('templates/layout.tmpl', function(response) {
           body.html(_.template(response, language.data));
+
+          background.init();
+
           loaded();
 
           sidebar.init();
           sharing.init();
           /*filters.init();
-          background.init();
           console.log('layout init');*/
 
           loadData();
