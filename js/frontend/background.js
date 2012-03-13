@@ -18,6 +18,7 @@ define('frontend/background', ['libs/jquery', 'helpers/settings'], function($, s
 
     // set active menu switch
     body.attr('rel', name);
+    activeBackground.attr('rel', name);
 
     // Highlight the currently selected
     $('a.active', backgroundList).removeClass('active');

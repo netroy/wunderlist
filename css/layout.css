@@ -1,4 +1,4 @@
-body{background-image:url("/images/backgrounds/wood.jpg");background-position:top center;background-color:#000;}
+body{background-image:url("/images/backgrounds/wood.jpg");background-position:top center;background-color:#222;}
 body[rel='one']{background-image:url("/images/backgrounds/wood.jpg")}
 body[rel='two']{background-image:url("/images/backgrounds/wheat.jpg");background-position:center center}
 body[rel='three']{background-image:url("/images/backgrounds/bokeh.jpg");background-position:center center}
@@ -17,25 +17,28 @@ body[rel='twelve']{background-image:url("/images/backgrounds/leaf.jpg")}
 #bottomBar .rightBottom span.backgroundList{display:none;position:absolute;bottom:35px;left:-20px;width:70px;padding:5px 0 0 5px;border:1px solid #323232;background:#4b4b4b;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:1px 3px 10px #000;-moz-box-shadow:1px 3px 10px #000;box-shadow:1px 3px 10px #000;z-index:5;}
 #bottomBar .rightBottom span.backgroundList::after{border:6px solid transparent;border-top-color:#4b4b4b;border-style:solid;position:absolute;z-index:6;left:32px;bottom:-12px;width:0;height:0;content:' '}
 #bottomBar .rightBottom span.backgroundList a{margin-bottom:5px;width:18px;}
-#bottomBar .rightBottom span.backgroundList a[rel='one']{background-position:right 0}
-#bottomBar .rightBottom span.backgroundList a[rel='two']{background-position:right -80px}
-#bottomBar .rightBottom span.backgroundList a[rel='three']{background-position:right -160px}
-#bottomBar .rightBottom span.backgroundList a[rel='four']{background-position:right -20px}
-#bottomBar .rightBottom span.backgroundList a[rel='five']{background-position:right -100px}
-#bottomBar .rightBottom span.backgroundList a[rel='six']{background-position:right -180px}
-#bottomBar .rightBottom span.backgroundList a[rel='seven']{background-position:right -40px}
-#bottomBar .rightBottom span.backgroundList a[rel='eight']{background-position:right -120px}
-#bottomBar .rightBottom span.backgroundList a[rel='nine']{background-position:right -200px}
-#bottomBar .rightBottom span.backgroundList a[rel='ten']{background-position:right -60px}
-#bottomBar .rightBottom span.backgroundList a[rel='eleven']{background-position:right -140px}
-#bottomBar .rightBottom span.backgroundList a[rel='twelve']{background-position:right -220px}
-#bottomBar .rightBottom span.backgroundList a.active{-webkit-box-shadow:0 0 6px #fff;-moz-box-shadow:0 0 6px #fff;box-shadow:0 0 6px #fff}
+#bottomBar .rightBottom span.backgroundList a.active{-webkit-box-shadow:0 0 10px #fff;-moz-box-shadow:0 0 10px #fff;box-shadow:0 0 10px #fff;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px}
+#bottomBar .rightBottom a[rel='one'],#bottomBar .rightBottom span[rel='one']{background-position:right 0}
+#bottomBar .rightBottom a[rel='two'],#bottomBar .rightBottom span[rel='two']{background-position:right -80px}
+#bottomBar .rightBottom a[rel='three'],#bottomBar .rightBottom span[rel='three']{background-position:right -160px}
+#bottomBar .rightBottom a[rel='four'],#bottomBar .rightBottom span[rel='four']{background-position:right -20px}
+#bottomBar .rightBottom a[rel='five'],#bottomBar .rightBottom span[rel='five']{background-position:right -100px}
+#bottomBar .rightBottom a[rel='six'],#bottomBar .rightBottom span[rel='six']{background-position:right -180px}
+#bottomBar .rightBottom a[rel='seven'],#bottomBar .rightBottom span[rel='seven']{background-position:right -40px}
+#bottomBar .rightBottom a[rel='eight'],#bottomBar .rightBottom span[rel='eight']{background-position:right -120px}
+#bottomBar .rightBottom a[rel='nine'],#bottomBar .rightBottom span[rel='nine']{background-position:right -200px}
+#bottomBar .rightBottom a[rel='ten'],#bottomBar .rightBottom span[rel='ten']{background-position:right -60px}
+#bottomBar .rightBottom a[rel='eleven'],#bottomBar .rightBottom span[rel='eleven']{background-position:right -140px}
+#bottomBar .rightBottom a[rel='twelve'],#bottomBar .rightBottom span[rel='twelve']{background-position:right -220px}
 .icon{background:url("/images/icon-sprites.png") no-repeat;text-indent:-9999px}
 .tooltip{position:absolute;background:rgba(0,0,0,0.80);border:1px solid rgba(0,0,0,0.90);-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;padding:5px 8px 5px 8px;color:#fff;text-shadow:1px 1px 3px #000;z-index:100;font-size:11px;display:none}
 .slideTransition{-webkit-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;-moz-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;-ms-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;-o-transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out;transition:.2s width ease-in-out,.2s right ease-in-out,.2s left ease-in-out,background-color .2s ease-in-out}
 #layout{height:100%;position:relative}
 #bottomBar{background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#636363),to(#404040));background-image:-webkit-linear-gradient(top,#636363,#404040);background-image:-moz-linear-gradient(top,#636363,#404040);background-image:-o-linear-gradient(top,#636363,#404040);border-top:1px solid #4a4a4a;position:fixed;bottom:0;left:0;right:0;height:36px;width:100%;}
-#bottomBar .leftBottom{float:left;padding:8px;padding-right:0;padding-left:4px}
+#bottomBar .leftBottom{float:left;padding:8px;padding-right:0;padding-left:4px;}
+#bottomBar .leftBottom .sync{position:relative;display:inline-block;float:left;height:22px;width:22px;cursor:pointer;background-position:-75px 0;}
+#bottomBar .leftBottom .sync.error{background-position:-100px 0}
+#bottomBar .leftBottom .sync .syncing{position:absolute;display:inline-block;top:3px;left:5px;height:14px;width:14px;background-position:-75px -25px;-webkit-transition:.8s -webkit-transform linear;-moz-transition:.8s -moz-transform linear;-ms-transition:.8s -ms-transform linear;-o-transition:.8s -o-transform linear}
 #bottomBar .rightBottom{float:right;padding:10px 16px 8px 0;}
 #bottomBar .rightBottom a{width:19px;height:19px;display:inline-block;margin-right:5px;float:left;background-repeat:no-repeat;cursor:pointer}
 #bottomBar .rightBottom a.addList{text-align:center;font-size:.9em;margin-top:-4px;font-weight:bold;color:#eee;text-shadow:0 1px 2px #210;-webkit-box-shadow:inset 0 0 2px rgba(255,255,255,0.80);-moz-box-shadow:inset 0 0 2px rgba(255,255,255,0.80);box-shadow:inset 0 0 2px rgba(255,255,255,0.80);padding:3px 8px;width:55px;height:16px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px;background-color:#2b8acf;border:1px solid #343434;background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#43a4ef),to(#1773b4));background-image:-webkit-linear-gradient(top,#43a4ef,#1773b4);background-image:-moz-linear-gradient(top,#43a4ef,#1773b4);background-image:-o-linear-gradient(top,#43a4ef,#1773b4);-webkit-transition:color .2s ease-in-out;-moz-transition:color .2s ease-in-out;-ms-transition:color .2s ease-in-out;-o-transition:color .2s ease-in-out;transition:color .2s ease-in-out;}

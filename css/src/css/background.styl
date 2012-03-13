@@ -2,7 +2,7 @@ body {
 
   background-image: url('/images/backgrounds/wood.jpg');
   background-position: top center;
-  background-color: #000;
+  background-color: #222;
 
   &[rel='one'] {
     background-image: url('/images/backgrounds/wood.jpg');
@@ -108,50 +108,54 @@ body {
     }
 
     a {
-
       margin-bottom: 5px;
       width: 18px;
 
-      &[rel='one'] {
-        background-position: right 0;
-      }
-      &[rel='two'] {
-        background-position: right -80px;
-      }
-      &[rel='three'] {
-        background-position: right -160px;
-      }
-      &[rel='four'] {
-        background-position: right -20px;
-      }
-      &[rel='five'] {
-        background-position: right -100px;
-      }
-      &[rel='six'] {
-        background-position: right -180px;
-      }
-      &[rel='seven'] {
-        background-position: right -40px;
-      }
-      &[rel='eight'] {
-        background-position: right -120px;
-      }
-      &[rel='nine'] {
-        background-position: right -200px;
-      }
-      &[rel='ten'] {
-        background-position: right -60px;
-      }
-      &[rel='eleven'] {
-        background-position: right -140px;
-      }
-      &[rel='twelve'] {
-        background-position: right -220px;
-      }
-
       &.active {
-        box-shadow: 0 0 6px #fff;
+        box-shadow: 0 0 10px #fff;
+        border-radius: 10px;
       }
     }
   }
+
+  a, span {
+
+    &[rel='one'] {
+      background-position: right 0;
+    }
+    &[rel='two'] {
+      background-position: right -80px;
+    }
+    &[rel='three'] {
+      background-position: right -160px;
+    }
+    &[rel='four'] {
+      background-position: right -20px;
+    }
+    &[rel='five'] {
+      background-position: right -100px;
+    }
+    &[rel='six'] {
+      background-position: right -180px;
+    }
+    &[rel='seven'] {
+      background-position: right -40px;
+    }
+    &[rel='eight'] {
+      background-position: right -120px;
+    }
+    &[rel='nine'] {
+      background-position: right -200px;
+    }
+    &[rel='ten'] {
+      background-position: right -60px;
+    }
+    &[rel='eleven'] {
+      background-position: right -140px;
+    }
+    &[rel='twelve'] {
+      background-position: right -220px;
+    }
+  }
+  
 }
