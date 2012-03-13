@@ -1,12 +1,35 @@
 @import 'mixins'
 
+
+.icon {
+  background: url('/images/icon-sprites.png') no-repeat;
+  text-indent: -9999px;
+}
+
+.tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 5px 8px 5px 8px;
+  color: white;
+  text-shadow: 1px 1px 3px black;
+  z-index: 100;
+  font-size: 11px;
+  display: none;
+}
+
+.slideTransition {
+  transition: 0.2s width ease-in-out, 0.2s right ease-in-out, 0.2s left ease-in-out, background-color .2s ease-in-out;
+}
+
+
 #layout {
   height: 100%;
   position: relative;
 }
 
 #bottomBar {
-  background: url(/images/bottombar.png) repeat-x;
   linear-gradient: #636363 #404040;
   border-top: 1px solid #4A4A4A;
   position: fixed;
@@ -36,29 +59,90 @@
       background-repeat: no-repeat;
       cursor: pointer;
     }
+
+    a.addList {
+      text-align: center;
+      font-size: 0.9em;
+      margin-top: -2px;
+      border-radius: 10px;
+      border-width: 1px;
+      font-weight: bold;
+      color: #F0F0F0;
+      text-shadow: 0px 1px 2px #210;
+      transition: color 0.2s ease-in-out;
+      background-color: #2B8ACF;
+      linear-gradient: #43A4EF, #1773B4;
+      padding: 2px 8px;
+      width: 55px;
+      height: 16px;
+      border: 0px solid #343434;
+    }
+
+    a.showHelp {
+      background-position: 0 -50px;
+      margin: 0px 10px;
+
+      &:hover {
+        background-position: -25px -50px;
+      }
+    }
+
+    a.backgroundSwitcher {
+      background-position: 0 -100px;
+      padding-left: 17px;
+      position: relative;
+
+      &:hover {
+        background-position: -50px -100px;
+      }
+    }
+
+    span.activeBackground {
+      width: 14px;
+      height: 19px;
+      display: block;
+      background-position: right 0;
+    }
+
+    span.backgroundList {
+      position: absolute;
+      bottom: 35px;
+      left: -20px;
+      width: 70px;
+      padding: 5px 0px 0px 5px;
+      border: 1px solid #323232;
+      background: #4B4B4B;
+      border-radius: 3px;
+      box-shadow: 1px 3px 10px #000;
+      z-index: 5;
+
+      &::after {
+        border: 6px solid transparent;
+        border-top-color: #4B4B4B;
+        border-style: solid;
+        position: absolute;
+        z-index: 6;
+        left: 32px;
+        bottom: -12px;
+        width: 0;
+        height: 0;
+        content: ' ';
+      }
+    }
+
+    a.toggleSidebar {
+      background-position: 0px -75px;
+
+      &:hover {
+        background-position: -50px -75px;
+      }
+    }
+
   }
 
 }
 
 
-
-.icon {
-  background: url('/images/icon-sprites.png') no-repeat;
-  text-indent: -9999px;
-}
-
-.tooltip {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  border-radius: 8px;
-  padding: 5px 8px 5px 8px;
-  color: white;
-  text-shadow: 1px 1px 3px black;
-  z-index: 100;
-  font-size: 11px;
-  display: none;
-}
 
 
 
