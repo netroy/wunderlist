@@ -14,7 +14,6 @@ define('frontend/sidebar', ['libs/jquery', 'helpers/settings'], function($, sett
     isPositionLeft = (settings.getString(positionProperty, 'right') !== 'right');
     openStatus = (settings.getString(openStatusProperty, 'true') === 'true');
 
-    toggleButton.toggleClass('hidden', !openStatus);
     body.toggleClass('sidebarleft', isPositionLeft);
     body.toggleClass('sidebarClosed', !openStatus);
   }
@@ -24,7 +23,6 @@ define('frontend/sidebar', ['libs/jquery', 'helpers/settings'], function($, sett
    * Set the sidebar position based on the settings
    */
   function toggleSidebar() {
-    toggleButton.toggleClass('hidden', openStatus);
     body.toggleClass('sidebarClosed', openStatus);
 
     openStatus = !openStatus;
@@ -34,17 +32,17 @@ define('frontend/sidebar', ['libs/jquery', 'helpers/settings'], function($, sett
   /**
    * Return open status of the sidebar
    */
-  function isOpen(){
+  function isOpen() {
     return openStatus;
   }
 
 
-  function isSideBarRight(){
+  function isSideBarRight() {
     return !isPositionLeft;
   }
 
 
-  function setSideBarPosition(position){
+  function setSideBarPosition(position) {
     position = position.toLowerCase();
     if(!!position.match(/^(left|right)$/)) {
       isPositionLeft = (position === 'left');

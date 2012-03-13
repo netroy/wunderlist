@@ -16,6 +16,8 @@
 #bottomBar .rightBottom span.backgroundList::after{border:6px solid transparent;border-top-color:#4b4b4b;border-style:solid;position:absolute;z-index:6;left:32px;bottom:-12px;width:0;height:0;content:' '}
 #bottomBar .rightBottom a.toggleSidebar{background-position:0 -75px;}
 #bottomBar .rightBottom a.toggleSidebar:hover{background-position:-50px -75px}
+body.sidebarClosed #bottomBar .rightBottom a.toggleSidebar{background-position:-25px -75px;}
+body.sidebarClosed #bottomBar .rightBottom a.toggleSidebar:hover{background-position:-75px -75px}
 #sharing{position:absolute;right:300px;height:30px;width:100px;top:15px;z-index:2;text-align:center;padding:5px 10px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px;border:1px solid rgba(0,0,0,0.20);background-color:rgba(0,0,0,0.20);}
 #sharing:hover{border-color:rgba(0,0,0,0.40);background-color:rgba(0,0,0,0.60);-webkit-box-shadow:1px 1px 4px rgba(10,10,10,0.50);-moz-box-shadow:1px 1px 4px rgba(10,10,10,0.50);box-shadow:1px 1px 4px rgba(10,10,10,0.50)}
 #sharing a{width:18px;height:20px;opacity:.5;filter:alpha(opacity=50);display:inline-block;cursor:pointer;margin:0 3px;-webkit-transition:all .3s ease-out;-moz-transition:all .3s ease-out;-ms-transition:all .3s ease-out;-o-transition:all .3s ease-out;transition:all .3s ease-out;}
@@ -28,13 +30,13 @@ body.sidebarClosed #sharing{right:30px}
 #printFrame{width:1px;height:1px;border:0 none;position:absolute;top:-999px;left:-999px}
 #sidebar{right:0;background-color:#f4f5f7;-webkit-box-shadow:-2px 0 20px rgba(0,0,0,0.80);-moz-box-shadow:-2px 0 20px rgba(0,0,0,0.80);box-shadow:-2px 0 20px rgba(0,0,0,0.80);width:260px;height:100%;top:0;position:fixed;overflow:hidden;}
 #sidebar .searchSide{padding:0;margin:0;background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#f6f7f8),to(#e7eaf2));background-image:-webkit-linear-gradient(top,#f6f7f8,#e7eaf2);background-image:-moz-linear-gradient(top,#f6f7f8,#e7eaf2);background-image:-o-linear-gradient(top,#f6f7f8,#e7eaf2);border-bottom:1px solid #d1d2d4;position:relative;}
-#sidebar .searchSide input{margin:18px;padding:6px 30px;display:block;width:225px;background-color:#fff;border:1px solid #c8cddd;-webkit-box-shadow:0 1px 1px #fff;-moz-box-shadow:0 1px 1px #fff;box-shadow:0 1px 1px #fff;-webkit-border-radius:15px;-moz-border-radius:15px;border-radius:15px;color:#333}
+#sidebar .searchSide input{margin:18px;padding:4px 30px;display:block;width:225px;background-color:#fff;border:1px solid #c8cddd;-webkit-box-shadow:0 1px 1px #fff;-moz-box-shadow:0 1px 1px #fff;box-shadow:0 1px 1px #fff;-webkit-border-radius:15px;-moz-border-radius:15px;border-radius:15px;color:#333}
 #sidebar .searchSide input::-webkit-input-placeholder{opacity:.5;filter:alpha(opacity=50);color:#888}
 #sidebar .searchSide input::-moz-input-placeholder{opacity:.5;filter:alpha(opacity=50);color:#888}
 #sidebar .searchSide input::input-placeholder{opacity:.5;filter:alpha(opacity=50);color:#888}
 #sidebar .searchSide .lens,#sidebar .searchSide .clearSearch{position:absolute;top:7px;width:15px;height:15px}
 #sidebar .searchSide .lens{left:30px;background-position:-50px -25px}
-#sidebar .searchSide .clearSearch{display:none;right:30px;opacity:.7;filter:alpha(opacity=70);cursor:pointer;background-position:0 -25px}
+#sidebar .searchSide .clearSearch{display:none;top:6px;right:25px;opacity:.7;filter:alpha(opacity=70);cursor:pointer;background-position:0 -25px}
 #sidebar .searchSide:hover .clearSearch{display:block}
 #sidebar #notification{position:absolute;left:0;right:0}
 body.sidebarClosed #sidebar{width:0}
