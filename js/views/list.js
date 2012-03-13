@@ -1,10 +1,15 @@
-require(['libs/jquery', 'views/base', 'models/list'], function($, BaseView, ListModel) {
+define('views/list', ['libs/jquery', 'views/base', 'models/list'], function($, BaseView, ListModel) {
 
-  //"use strict";
+  "use strict";
 
-  //var
-  window.ListView = BaseView.extend({
-    el: '#lists'
+  var ListView = BaseView.extend({
+
+    'el': '#lists',
+
+    'initialize': function() {
+      return BaseView.prototype.initialize(this, arguments);
+    }
+
   });
 
   return ListView;

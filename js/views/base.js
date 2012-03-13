@@ -21,6 +21,8 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
 
     'render': function() {
       var self = this;
+      if(self.model === undefined) return;
+
       self.el.html(self.template(self.model.toJSON()));
       return self;
     }
