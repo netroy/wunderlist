@@ -45,6 +45,31 @@
     padding: 8px;
     padding-right: 0px;
     padding-left: 4px;
+
+    .sync {
+      position: relative;
+      display: inline-block;
+      float: left;
+      height: 22px;
+      width: 22px;
+      cursor: pointer;
+      background-position: -75px 0;
+
+      &.error {
+        background-position: -100px 0;
+      }
+
+      .syncing {
+        position: absolute;
+        display: inline-block;
+        top: 3px;
+        left: 5px;
+        height: 14px;
+        width: 14px;
+        background-position: -75px -25px;
+        transition-transform: 0.8s linear;
+      }
+    }
   }
 
   .rightBottom {
