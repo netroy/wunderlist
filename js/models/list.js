@@ -4,12 +4,11 @@ define('models/list', ['models/base'], function(BaseModel) {
 
   //var
   window.ListModel = BaseModel.extend({
-    'initialize': function() {
 
-    },
-    'uniqueId': function() {
-      
+    'initialize': function() {
+      return BaseModel.prototype.initialize(this, arguments);
     }
+
   });
 
   return ListModel;

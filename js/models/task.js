@@ -3,9 +3,11 @@ define('models/tasks', ['models/base'], function(BaseModel) {
   "use strict";
 
   var TaskModel = BaseModel.extend({
-    'initialize': function() {
 
+    'initialize': function() {
+      return BaseModel.prototype.initialize(this, arguments);
     }
+
   });
 
   return TaskModel;
