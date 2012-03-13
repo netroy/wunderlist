@@ -26,7 +26,7 @@ define('helpers/settings', ['helpers/titanium'], function(Titanium, undefined) {
     };
 
   } else {
-    // Otherwise use localStrorage if available, else use a simple JS object
+    // Otherwise use localStorage if available, else use a simple JS object
 
     propertyMap = window.localStorage || {};
 
