@@ -5,8 +5,6 @@ define('frontend/layout',
 
   'use strict';
 
-  var self = {};
-
   function loaded() {
     $('body').css({'opacity': '1.0'});
   }
@@ -26,8 +24,8 @@ define('frontend/layout',
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
       require(
-        ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing'],
-        function(sidebar, filters, background, sharing) {
+        ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing', 'frontend/menu'],
+        function(sidebar, filters, background, sharing, menu) {
 
         var body = $('body');
         body.addClass('logged');
@@ -36,6 +34,7 @@ define('frontend/layout',
           body.html(_.template(response, language.data));
 
           background.init();
+          menu.init();
 
           loaded();
 
@@ -53,7 +52,8 @@ define('frontend/layout',
     }
   }
 
-  self.init = init;
-  return self;
+  return {
+    "init": init
+  };
 
 });

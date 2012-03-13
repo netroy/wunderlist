@@ -6,6 +6,13 @@ transition() {
   transition: arguments;
 }
 
+transition-transform(time, easing) {
+  -webkit-transition: time -webkit-transform easing;
+  -moz-transition: time -moz-transform easing;
+  -ms-transition: time -ms-transform easing;
+  -o-transition: time -o-transform easing;
+}
+
 box-shadow() {
   -webkit-box-shadow: arguments;
   -moz-box-shadow: arguments;
