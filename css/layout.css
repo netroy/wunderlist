@@ -38,15 +38,10 @@ body[rel='twelve']{background-image:url("/images/backgrounds/leaf.jpg")}
 #bottomBar .leftBottom{float:left;padding:8px;padding-right:0;padding-left:4px}
 #bottomBar .rightBottom{float:right;padding:10px 16px 8px 0;}
 #bottomBar .rightBottom a{width:19px;height:19px;display:inline-block;margin-right:5px;float:left;background-repeat:no-repeat;cursor:pointer}
-#bottomBar .rightBottom a.addList{text-align:center;font-size:.9em;margin-top:-2px;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;border-width:1px;font-weight:bold;color:#f0f0f0;text-shadow:0 1px 2px #210;-webkit-transition:color .2s ease-in-out;-moz-transition:color .2s ease-in-out;-ms-transition:color .2s ease-in-out;-o-transition:color .2s ease-in-out;transition:color .2s ease-in-out;background-color:#2b8acf;background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#43a4ef),to(#1773b4));background-image:-webkit-linear-gradient(top,#43a4ef,#1773b4);background-image:-moz-linear-gradient(top,#43a4ef,#1773b4);background-image:-o-linear-gradient(top,#43a4ef,#1773b4);padding:2px 8px;width:55px;height:16px;border:0 solid #343434}
+#bottomBar .rightBottom a.addList{text-align:center;font-size:.9em;margin-top:-4px;font-weight:bold;color:#eee;text-shadow:0 1px 2px #210;-webkit-box-shadow:inset 0 0 2px rgba(255,255,255,0.80);-moz-box-shadow:inset 0 0 2px rgba(255,255,255,0.80);box-shadow:inset 0 0 2px rgba(255,255,255,0.80);padding:3px 8px;width:55px;height:16px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px;background-color:#2b8acf;border:1px solid #343434;background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#43a4ef),to(#1773b4));background-image:-webkit-linear-gradient(top,#43a4ef,#1773b4);background-image:-moz-linear-gradient(top,#43a4ef,#1773b4);background-image:-o-linear-gradient(top,#43a4ef,#1773b4);-webkit-transition:color .2s ease-in-out;-moz-transition:color .2s ease-in-out;-ms-transition:color .2s ease-in-out;-o-transition:color .2s ease-in-out;transition:color .2s ease-in-out;}
+#bottomBar .rightBottom a.addList:hover{color:#fff;text-shadow:0 1px 5px #000;border-color:#333}
 #bottomBar .rightBottom a.showHelp{background-position:0 -50px;margin:0 10px;}
 #bottomBar .rightBottom a.showHelp:hover{background-position:-25px -50px}
-#bottomBar .rightBottom a.backgroundSwitcher{background-position:0 -100px;padding-left:17px;position:relative;}
-#bottomBar .rightBottom a.backgroundSwitcher:hover{background-position:-50px -100px}
-#bottomBar .rightBottom span.activeBackground{width:14px;height:19px;display:block;background-position:right 0}
-#bottomBar .rightBottom span.backgroundList{display:none;position:absolute;bottom:35px;left:-20px;width:70px;padding:5px 0 0 5px;border:1px solid #323232;background:#4b4b4b;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:1px 3px 10px #000;-moz-box-shadow:1px 3px 10px #000;box-shadow:1px 3px 10px #000;z-index:5;}
-#bottomBar .rightBottom span.backgroundList::after{border:6px solid transparent;border-top-color:#4b4b4b;border-style:solid;position:absolute;z-index:6;left:32px;bottom:-12px;width:0;height:0;content:' '}
-#bottomBar .rightBottom span.backgroundList a.active{-webkit-box-shadow:0 0 6px #fff;-moz-box-shadow:0 0 6px #fff;box-shadow:0 0 6px #fff}
 #bottomBar .rightBottom a.toggleSidebar{background-position:0 -75px;}
 #bottomBar .rightBottom a.toggleSidebar:hover{background-position:-50px -75px}
 body.sidebarClosed #bottomBar .rightBottom a.toggleSidebar{background-position:-25px -75px;}

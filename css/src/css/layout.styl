@@ -64,19 +64,25 @@
     a.addList {
       text-align: center;
       font-size: 0.9em;
-      margin-top: -2px;
-      border-radius: 10px;
-      border-width: 1px;
+      margin-top: -4px;
       font-weight: bold;
-      color: #F0F0F0;
+      color: #eee;
       text-shadow: 0px 1px 2px #210;
-      transition: color 0.2s ease-in-out;
-      background-color: #2B8ACF;
-      linear-gradient: #43A4EF, #1773B4;
-      padding: 2px 8px;
+      box-shadow: inset 0 0 2px rgba(255,255,255,0.8);
+      padding: 3px 8px;
       width: 55px;
       height: 16px;
-      border: 0px solid #343434;
+      border-radius: 20px;
+      background-color: #2B8ACF;
+      border: 1px solid #343434;
+      linear-gradient: #43A4EF, #1773B4;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: #fff;
+        text-shadow: 0px 1px 5px #000;
+        border-color: #333;
+      }
     }
 
     a.showHelp {
@@ -87,58 +93,6 @@
         background-position: -25px -50px;
       }
     }
-
-    a.backgroundSwitcher {
-      background-position: 0 -100px;
-      padding-left: 17px;
-      position: relative;
-
-      &:hover {
-        background-position: -50px -100px;
-      }
-    }
-
-    span.activeBackground {
-      width: 14px;
-      height: 19px;
-      display: block;
-      background-position: right 0;
-    }
-
-    span.backgroundList {
-      display: none;
-      position: absolute;
-      bottom: 35px;
-      left: -20px;
-      width: 70px;
-      padding: 5px 0px 0px 5px;
-      border: 1px solid #323232;
-      background: #4B4B4B;
-      border-radius: 3px;
-      box-shadow: 1px 3px 10px #000;
-      z-index: 5;
-
-      &::after {
-        border: 6px solid transparent;
-        border-top-color: #4B4B4B;
-        border-style: solid;
-        position: absolute;
-        z-index: 6;
-        left: 32px;
-        bottom: -12px;
-        width: 0;
-        height: 0;
-        content: ' ';
-      }
-
-      a {
-        
-      }
-      a.active {
-        box-shadow: 0 0 6px #fff;
-      }
-    }
-
 
     a.toggleSidebar {
       background-position: 0px -75px;
