@@ -47,3 +47,9 @@ linear-gradient(start, stop) {
   background-image: -moz-linear-gradient(top, start, stop);
   background-image: -o-linear-gradient(top, start, stop);
 }
+
+placeholder(_opacity, _color) {
+  input::-webkit-input-placeholder {opacity: _opacity; color: _color;}
+  input::-moz-input-placeholder {opacity: _opacity; color: _color;}
+  input::input-placeholder {opacity: _opacity; color: _color;}
+}

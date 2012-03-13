@@ -17,6 +17,9 @@
 #sidebar{right:0;background-color:#f4f5f7;-webkit-box-shadow:-2px 0 20px rgba(0,0,0,0.80);-moz-box-shadow:-2px 0 20px rgba(0,0,0,0.80);box-shadow:-2px 0 20px rgba(0,0,0,0.80);width:260px;height:100%;top:0;position:fixed;overflow:hidden;}
 #sidebar .searchSide{padding:0;margin:0;background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#f6f7f8),to(#e7eaf2));background-image:-webkit-linear-gradient(top,#f6f7f8,#e7eaf2);background-image:-moz-linear-gradient(top,#f6f7f8,#e7eaf2);background-image:-o-linear-gradient(top,#f6f7f8,#e7eaf2);border-bottom:1px solid #d1d2d4;position:relative;}
 #sidebar .searchSide input{margin:18px;padding:6px 30px;display:block;width:225px;background-color:#fff;border:1px solid #c8cddd;-webkit-box-shadow:0 1px 1px #fff;-moz-box-shadow:0 1px 1px #fff;box-shadow:0 1px 1px #fff;-webkit-border-radius:15px;-moz-border-radius:15px;border-radius:15px;color:#333}
+#sidebar .searchSide input::-webkit-input-placeholder{opacity:.5;filter:alpha(opacity=50);color:#888}
+#sidebar .searchSide input::-moz-input-placeholder{opacity:.5;filter:alpha(opacity=50);color:#888}
+#sidebar .searchSide input::input-placeholder{opacity:.5;filter:alpha(opacity=50);color:#888}
 #sidebar .searchSide .lens,#sidebar .searchSide .clearSearch{position:absolute;top:7px;width:15px;height:15px}
 #sidebar .searchSide .lens{left:30px;background-position:-50px -25px}
 #sidebar .searchSide .clearSearch{display:none;right:30px;opacity:.7;filter:alpha(opacity=70);cursor:pointer;background-position:0 -25px}
