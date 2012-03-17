@@ -73,33 +73,35 @@ body.sidebarClosed #sharing{right:30px}
 body.sidebarClosed #sidebar{width:0}
 body.sidebarClosed #tasks{right:10px}
 body.sidebarClosed.sidebarleft #tasks{left:10px}
-ul.menu{color:#fff;left:20px;bottom:46px;font-size:.9em;z-index:20}
-ul.menu,ul.menu ul{position:absolute;border:1px solid #323232;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background:#4b4b4b !important;margin:0;padding:0;-webkit-box-shadow:-2px 4px 8px rgba(0,0,0,0.50);-moz-box-shadow:-2px 4px 8px rgba(0,0,0,0.50);box-shadow:-2px 4px 8px rgba(0,0,0,0.50)}
+ul.menu{color:#fff;left:20px;bottom:45px;font-size:.9em;z-index:20;}
+ul.menu,ul.menu ul{position:absolute;border:1px solid #323232;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background:#4b4b4b !important;margin:0;padding:0;-webkit-box-shadow:-2px 4px 10px rgba(0,0,0,0.50);-moz-box-shadow:-2px 4px 10px rgba(0,0,0,0.50);box-shadow:-2px 4px 10px rgba(0,0,0,0.50)}
 ul.menu ul,ul.menu li{text-indent:0}
+ul.menu li{position:relative;display:block;padding:8px 15px;min-width:110px;cursor:pointer;position:relative;border-bottom:1px solid rgba(45,45,45,0.10);border-top:1px solid rgba(120,120,120,0.15);text-shadow:0 1px 1px rgba(0,0,0,0.40);}
 ul.menu li > ul{display:none;bottom:-4px;left:100%}
-ul.menu:after{border-color:#4b4b4b transparent transparent transparent;border-style:solid;position:absolute;z-index:101;left:60px;bottom:24;border-width:6px;width:0;height:0}
-ul.menu li{position:relative;display:block;padding:8px 15px;min-width:110px;cursor:pointer;position:relative;border-bottom:1px solid rgba(45,45,45,0.10);border-top:1px solid rgba(120,120,120,0.15);text-shadow:0 1px 1px rgba(0,0,0,0.40)}
+ul.menu li ul li{color:#fff}
+ul.menu li.currenttree,ul.menu li:hover{-webkit-box-shadow:inset 0 1px 1px #84c7f4;-moz-box-shadow:inset 0 1px 1px #84c7f4;box-shadow:inset 0 1px 1px #84c7f4;background-color:#32a3f0;text-shadow:0 1px 2px #ccc;color:#000}
+ul.menu li:after{border-color:#4b4b4b transparent transparent transparent;border-style:solid;position:absolute;z-index:101;left:60px;bottom:24;border-width:6px;width:0;height:0}
 ul.menu li a{color:#fff}
 ul.menu li.separator{border-top:1px solid rgba(20,20,20,0.20);border-bottom:0 none;padding:0;cursor:default}
 ul.menu li:first-child{-webkit-box-shadow:inset 0 1px 1px #6d6d6d;-moz-box-shadow:inset 0 1px 1px #6d6d6d;box-shadow:inset 0 1px 1px #6d6d6d;-webkit-border-radius:3px 3px 0 0;-moz-border-radius:3px 3px 0 0;border-radius:3px 3px 0 0;border-top-width:0}
 ul.menu li:last-child{-webkit-border-radius:0 0 3px 3px;-moz-border-radius:0 0 3px 3px;border-radius:0 0 3px 3px;border-bottom-width:0}
-ul.menu li.currenttree,ul.menu li:hover{-webkit-box-shadow:inset 0 1px 1px #84c7f4;-moz-box-shadow:inset 0 1px 1px #84c7f4;box-shadow:inset 0 1px 1px #84c7f4;background-color:#32a3f0;text-shadow:0 1px 2px #000}
+ul.menu li.settings::before,ul.menu li.downloads::before,ul.menu li.aboutus::before,ul.menu li.logout::before{content:' ';background:url("/images/icon-sprites.png") no-repeat;display:inline-block;width:25px;height:16px;float:left}
+ul.menu li.settings::before{background-position:-100px -50px}
+ul.menu li.downloads::before{background-position:-100px -25px}
+ul.menu li.aboutus::before{background-position:-50px -50px}
+ul.menu li.logout::before{background-position:-75px -50px}
+ul.menu li.account,ul.menu li.downloads,ul.menu li.settings,ul.menu li.language,ul.menu li.aboutus{position:relative;}
+ul.menu li.account::after,ul.menu li.downloads::after,ul.menu li.settings::after,ul.menu li.language::after,ul.menu li.aboutus::after{position:absolute;right:8px;color:#ffe;opacity:.3;filter:alpha(opacity=30);text-shadow:0 0 1px #000}
+ul.menu li.account:hover::after,ul.menu li.downloads:hover::after,ul.menu li.settings:hover::after,ul.menu li.language:hover::after,ul.menu li.aboutus:hover::after{opacity:.8;filter:alpha(opacity=80)}
+ul.menu::after{position:absolute;left:50%;margin-left:-10px;bottom:-20px;width:0;height:0;content:' ';border:10px solid transparent;border-top-color:#333;z-index:6}
 ul.menu li.separator:hover{background-color:transparent;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none}
-li.account:hover::after,li.downloads:hover::after,li.settings:hover::after,li.language:hover::after,li.aboutus:hover::after{content:'\25b6';position:absolute;right:8px;color:#ffe;opacity:.6;filter:alpha(opacity=60);text-shadow:0 0 1px #000}
 ul.menu li:hover > ul{display:block}
 ul.menu ul.account{bottom:-60px}
 ul.menu ul.downloads{bottom:-33px}
 ul.menu ul.settings{width:195px;bottom:-64px}
 ul.menu ul.settings ul.language{bottom:-295px;width:180px}
 ul.menu ul.settings ul.language li{padding:2px 10px;font-size:.9em}
-ul.menu  ul.aboutus{width:159px}
-#left ul li.notyet,#left ul li.notyet:hover{background:#4b4b4b !important;cursor:default;border:none !important}
-#left ul li.notyet a,#left ul li.notyet:hover a{color:rgba(255,255,255,0.30) !important;border:none !important}
-ul.menu li.icon{padding-left:30px;background-repeat:no-repeat;background-position:8px 6px}
-ul.menu li.settings{background-position:-100px -50px}
-ul.menu li.downloads{background-position:-100px -25px}
-ul.menu li.aboutus{background-position:-50px -50px}
-ul.menu li.logout{background-position:-75px -50px}
+ul.menu ul.aboutus{width:159px}
 #lists{position:absolute;width:260px;bottom:40px;top:60px;overflow-y:auto;overflow-x:hidden;margin:0;padding:0;}
 #lists li{cursor:pointer;color:#444;text-shadow:#fff 0 1px 2px;padding:10px 10px 8px 15px;background-color:#f8f8f8;background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#f8f8f8),to(#f3f4f6));background-image:-webkit-linear-gradient(top,#f8f8f8,#f3f4f6);background-image:-moz-linear-gradient(top,#f8f8f8,#f3f4f6);background-image:-o-linear-gradient(top,#f8f8f8,#f3f4f6);display:block;max-height:25px;border-bottom:1px solid #e1e2e4;overflow:hidden;}
 #lists li label{color:#444;float:left;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:120px;cursor:pointer}

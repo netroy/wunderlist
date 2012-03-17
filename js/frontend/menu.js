@@ -23,7 +23,7 @@ define('frontend/menu',
         self.elem.addClass(cssClass);
       }
 
-      // BaseView.prototype.initialize(self, arguments);
+      // BaseView.prototype.initialize.apply(self, arguments);
 
       if(typeof handler === 'function') {
         self.elem.click(handler);
@@ -68,9 +68,9 @@ define('frontend/menu',
 
 
     var accountMenuItem   = menu.addItem(language.data.account,  undefined, 'account');
-    var settingsMenuItem  = menu.addItem(language.data.settings, undefined, 'icon settings');
-    var downloadsMenuItem = menu.addItem(language.data.downloads,undefined, 'icon downloads');
-    var aboutUsMenuItem   = menu.addItem(language.data.about_us, undefined, 'icon aboutus');
+    var settingsMenuItem  = menu.addItem(language.data.settings, undefined, 'settings');
+    var downloadsMenuItem = menu.addItem(language.data.downloads,undefined, 'downloads');
+    var aboutUsMenuItem   = menu.addItem(language.data.about_us, undefined, 'aboutus');
 
     /*
      * Accounts
@@ -83,7 +83,7 @@ define('frontend/menu',
       var logOutParent = (settings.os === "web") ? menu : accountMenuItem;
       logOutParent.addItem(language.data.logout, function() {
         sync.fireSync(true);
-      }, 'icon logout');
+      }, 'logout');
     } else {
       accountMenuItem.addItem(language.data.sign_in, function() {
         //helpers.dialogs.closeEveryone();
