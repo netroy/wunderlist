@@ -132,6 +132,7 @@ define('helpers/language',
 
   return {
     "data": translations,
+    "availableLang": availableLang,
     "setLanguage": setLanguage
   };
 
