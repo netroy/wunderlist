@@ -14,7 +14,7 @@
     cursor: pointer;
     color: #444;
     text-shadow: white 0px 1px 2px;
-    padding: 10px 10px 8px 20px;
+    padding: 10px 10px 8px 15px;
     background-color: #F8F8F8;
     linear-gradient: #F8F8F8, #F3F4F6;
     display: block;
@@ -22,25 +22,14 @@
     border-bottom: 1px solid #E1E2E4;
     overflow: hidden;
 
-    &:hover {
-      background-color: #fff;
-      linear-gradient: #fff, #F7F8FA;
-    }
-
-    &.selected {
-      linear-gradient: #33A3EF, #168AD4;
-      border-bottom: 1px solid #177BBD;
-      color: #fff;
-      text-shadow: #125A8A 0px 1px 2px;
-    }
-
     label {
       color: #444;
       float: left;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      width: 140px;
+      width: 120px;
+      cursor: pointer;
     }
 
     &.inbox label::before {
@@ -64,6 +53,79 @@
       font-weight: bold;
       border: 1px solid #CCC;
       border-radius: 10px;
+    }
+
+    .share, .delete, .edit, .save {
+      background: url('/images/icon-sprites.png') no-repeat;
+      width: 15px;
+      height: 15px;
+      float: right;
+      cursor: pointer;
+      margin-right: 5px;
+      opacity: 0.7;
+      display: none;
+
+      &:hover {
+        opacity: 1.0;
+      }
+    }
+
+    .share {
+      background-position: 0 -125px;
+    }
+
+    .delete {
+      background-position: -25px -125px;
+    }
+
+    .edit {
+      background-position: -50px -125px;
+    }
+
+    .save {
+      background-position: -75px -125px;
+    }
+
+
+    &:hover {
+      background-color: #fff;
+      linear-gradient: #fff, #F7F8FA;
+
+      .share, .delete, .edit {
+        display: inline;
+      }
+    }
+
+
+    &.selected {
+      linear-gradient: #33A3EF, #168AD4;
+      border-bottom: 1px solid #177BBD;
+
+      label {
+        color: #fff;
+        text-shadow: #125A8A 0px 1px 2px;
+
+        &::before {
+          background-position: -100px -100px;
+        }
+      }
+
+
+      .share {
+        background-position: 0 -150px;
+      }
+
+      .delete {
+        background-position: -25px -150px;
+      }
+
+      .edit {
+        background-position: -50px -150px;
+      }
+
+      .save {
+        background-position: -75px -150px;
+      }
     }
   }
 }
