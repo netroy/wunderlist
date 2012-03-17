@@ -17,13 +17,20 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
       });
 
       _.bindAll(this, 'render');
+
+      return self;
     },
 
     'render': function() {
       var self = this;
       if(self.model === undefined) return;
 
-      self.el.html(self.template(self.model.toJSON()));
+      if(self.el instanceof $) {
+        self.el.remove();
+        delete self.el;
+      }
+
+      self.el = $(self.template(self.model.toJSON()));
       return self;
     }
 
