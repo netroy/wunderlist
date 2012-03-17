@@ -13,9 +13,14 @@ define('frontend/layout',
     require(['models/list', 'views/list', 'models/task', 'views/task'],
       function(ListModel, ListView, TaskModel, TaskView) {
 
-      var listModel = new ListModel();
-      var listView = new ListView({
-        'model': listModel
+      var listsEl = $('#lists').first().empty();
+      _.forEach(window.Lists, function(list) {
+        var listModel = new ListModel(list);
+        var listView = new ListView({
+          'model': listModel
+        });
+        var renderedListEl = listView.render().el;
+        listsEl.append(renderedListEl);
       });
 
     });

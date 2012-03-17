@@ -2,12 +2,69 @@
 
 #lists {
   position: absolute;
-  left: 0;
-  right: 0;
+  width: 260px;
+  bottom: 40px;
+  top: 60px;
   overflow-y: auto;
   overflow-x: hidden;
-  top: 60px;
-  bottom: 40px;
-  width: 240px;
-  margin-left: 10px;
+  margin: 0;
+  padding: 0;
+
+  li {
+    cursor: pointer;
+    color: #444;
+    text-shadow: white 0px 1px 2px;
+    padding: 10px 10px 8px 20px;
+    background-color: #F8F8F8;
+    linear-gradient: #F8F8F8, #F3F4F6;
+    display: block;
+    max-height: 25px;
+    border-bottom: 1px solid #E1E2E4;
+    overflow: hidden;
+
+    &:hover {
+      background-color: #fff;
+      linear-gradient: #fff, #F7F8FA;
+    }
+
+    &.selected {
+      linear-gradient: #33A3EF, #168AD4;
+      border-bottom: 1px solid #177BBD;
+      color: #fff;
+      text-shadow: #125A8A 0px 1px 2px;
+    }
+
+    label {
+      color: #444;
+      float: left;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 140px;
+    }
+
+    &.inbox label::before {
+      content: ' ';
+      background: url('/images/icon-sprites.png') no-repeat -100px -75px;
+      display: inline-block;
+      width: 25px;
+      height: 20px;
+      float: left;
+    }
+
+    span.taskCount {
+      font-size: 0.9em;
+      float: right;
+      width: 31px;
+      height: 18px;
+      text-align: center;
+      display: block;
+      padding-top: 1px;
+      margin-top: -1px;
+      font-weight: bold;
+      border: 1px solid #CCC;
+      border-radius: 10px;
+    }
+  }
 }
+
