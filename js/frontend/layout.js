@@ -7,6 +7,9 @@ define('frontend/layout',
 
   function loaded() {
     $('body').css({'opacity': '1.0'});
+    setTimeout(function(){
+      $('#sidebar, #sharing').addClass('slideTransition');
+    }, 1000);
   }
 
   function loadData() {

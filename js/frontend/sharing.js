@@ -4,7 +4,7 @@ define('frontend/sharing', ['libs/jquery', 'helpers/settings'], function($, sett
   "use strict";
 
   function init() {
-    $('#sharing').addClass('slideTransition');
+     
   }
 
   return  {

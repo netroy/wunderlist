@@ -59,7 +59,6 @@ define('frontend/sidebar', ['libs/jquery', 'helpers/settings'], function($, sett
     initPosition();
 
     $('.rightBottom').delegate('a.toggleSidebar', 'click', toggleSidebar);
-    $('#sidebar').addClass('slideTransition');
   }
 
   return {
