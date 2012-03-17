@@ -18,11 +18,14 @@ define('frontend/layout',
 
       var listsEl = $('#lists').first().empty();
       _.forEach(window.Lists, function(list) {
-        var listModel = new ListModel(list);
-        var listView = new ListView({
-          'model': listModel
-        });
-        var renderedListEl = listView.render().el;
+        // Don't render deleted lists
+        if(list.deleted === '1') {
+          return;
+        }
+
+        var renderedListEl = new ListView({
+          'model': new ListModel(list)
+        }).render().el;
         listsEl.append(renderedListEl);
       });
 
