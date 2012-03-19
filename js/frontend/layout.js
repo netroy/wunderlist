@@ -55,10 +55,12 @@ define('frontend/layout',
 
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
-      require(['libs'], function(){
-        require(
-          ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing', 'frontend/menu'],
-          render);
+      require(['libs-min'], function() {
+        require(['app-min'], function() {
+          require(
+            ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing', 'frontend/menu'],
+            render);
+        });
       });
     } else {
       require(['frontend/login'], loaded);
