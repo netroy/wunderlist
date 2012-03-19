@@ -13,10 +13,10 @@
   <link type='text/css' rel='stylesheet' href='css/base.css' />
 
   <!-- Base Scripts -->
-  <script type='text/javascript' src='js/libs/json2.js'></script>
-  <script type='text/javascript' src='js/libs/require.js'></script>
-  <!-- js/libs.js == jquery + ui + async + underscore + backbone , to save http requests -->
-  <script type='text/javascript' src='js/libs.js'></script>
+  <!-- js/dev.js = json2 + require + jquery + underscore + async -->
+  <!-- js/base.js = json2 + require + jquery + underscore + async + setting + language + titanium + layout -->
+  <!-- js/libs.js = jqueryui + backbone -->
+  <script type='text/javascript' src='js/dev.js'></script>
 
   <!-- Init -->
   <script type='text/javascript'>
@@ -27,9 +27,9 @@
       {"online_id":"125","name":"Work",  "deleted":"0","position":"4","version":"0","inbox":"0","shared":"0"},
       {"online_id":"000","name":"Tech",  "deleted":"0","position":"5","version":"0","inbox":"0","shared":"0"},
       {"online_id":"234","name":"Main",  "deleted":"0","position":"6","version":"0","inbox":"0","shared":"0"},
-      {"online_id":"12", "name":"Jazz",  "deleted":"0","position":"7","version":"0","inbox":"0","shared":"0"},
-      {"online_id":"0",  "name":"Blues", "deleted":"0","position":"7","version":"0","inbox":"0","shared":"0"},
-      {"online_id":"0",  "name":"Others","deleted":"1","position":"7","version":"0","inbox":"0","shared":"0"}
+      {"online_id":"12", "name":"Jazz",  "deleted":"1","position":"7","version":"0","inbox":"0","shared":"0"},
+      {"online_id":"0",  "name":"Blues", "deleted":"1","position":"7","version":"0","inbox":"0","shared":"0"},
+      {"online_id":"0",  "name":"Account","deleted":"0","position":"7","version":"0","inbox":"0","shared":"0"}
     ];
 
     require.config({
