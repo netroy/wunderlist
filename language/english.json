@@ -246,5 +246,12 @@
   "privacy_policy":           "Privacy Policy",
   "enable_natural_date_recognition": "Enable smart date recognition",
   "disable_natural_date_recognition": "Disable smart date recognition",
-  "add_task_hint":      "Press &#9650;&#9660; to switch lists or Alt + Return to add task to the top"
+  "add_task_hint":      "Press &#9650;&#9660; to switch lists or Alt + Return to add task to the top",
+
+  "iphone": "iPhone",
+  "ipad": "iPad",
+  "android": "Android",
+  "macosx": "Mac OSX",
+  "windows": "Windows",
+  "linux": "Linux"
 }
