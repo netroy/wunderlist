@@ -14,6 +14,9 @@
   // Query Parser is needed for cache-busting in asset-manager
   app.use(connect.query());
 
+  // BodyParser is needed for fake sync calls
+  app.use(connect.bodyParser());
+
   // This module minifies & concats CSS, JS & templates
   app.use(require('./lib/asset-manager'));
 
@@ -22,7 +25,7 @@
   staticProvider.mime.types['tmpl'] = 'text/plain';
   staticProvider.mime.types['templates'] = 'application/json';
   app.use(staticProvider(baseDir,  {
-    maxAge: 86400*365
+    maxAge: 10 //86400*365
   }));
 
   // Router handles ajax requests which server dummy content in dev mode
