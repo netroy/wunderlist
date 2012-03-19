@@ -17,7 +17,11 @@
   // This module minifies & concats CSS, JS & templates
   app.use(require('./lib/asset-manager'));
 
-  app.use(connect['static'](baseDir,  {
+  // Add mimetypes for template files & groups
+  var staticProvider = connect['static'];
+  staticProvider.mime.types['tmpl'] = 'text/plain';
+  staticProvider.mime.types['templates'] = 'application/json';
+  app.use(staticProvider(baseDir,  {
     maxAge: 86400*365
   }));
 

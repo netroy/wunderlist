@@ -11,7 +11,8 @@
       path = require('path'),
       dirname = path.dirname,
       join = path.join,
-      baseDir = join(__dirname + '/../..');
+      baseDir = join(__dirname + '/../..'),
+      stylusImportPath = join(baseDir + '/css/src');
 
   var assetMap = {
     'js': {
@@ -61,15 +62,22 @@
       }
     },
     'templates': {
-
+      'login': {
+        'expires': 100,
+        'files': ['login'],
+        'compress': false
+      },
+      'app': {
+        'expires': 100,
+        'files': ['layout'],
+        'compress': false
+      }
     }
   };
 
-  var stylusImportPath = join(baseDir + '/css/src');
-
   var compilerMap = {
     'js': function(asset, code, compress, callback) {
-      code = '/** ' + asset + '**/\n' + (compress ? uglify(code) : code) + ';\n';
+      code = '/** ' + asset + ' **/\n' + (compress ? uglify(code) : code) + ';\n';
       callback(null, code);
     },
     'css': function(asset, code, compress, callback) {
@@ -78,16 +86,18 @@
         'paths': [stylusImportPath]
       }).render(callback);
     },
+    'templates': function(asset, code, compress, callback) {
+      callback(null, asset + ':' + JSON.stringify(code));
+    },
     'generic': function(asset, code, compress, callback) {
       callback(null, code);
     }
   };
 
-  function error(next) {
-    return function(err) {
-      next('ENOENT' == err.code ? null : err);
-    };
-  }
+  var typeMap = {
+    'css': 'styl',
+    'templates': 'tmpl'
+  };
 
   var validAssetRegExp = /(js|css|templates)\/(\w+)-min\.(js|css|templates)$/;
   module.exports = function AssetManager(req, res, next) {
@@ -106,10 +116,11 @@
 
       fs.stat(filePath, function(err, stat) {
         if('nocache' in req.query || err) {
-          // Create if doesn't exist or expired or explicitely asked for nocache in request query
+          // Create if doesn't exist or explicitely asked for nocache in request query
+          // TODO: add expiry checks
           async.map(toBuild.files, function(asset, callback) {
-            asset = asset + '.' + ((type === 'css')?'styl':type);
-            var assetPath = join(baseDir , type, asset),
+            var fileName = asset + '.' + (typeMap[type] || type);
+            var assetPath = join(baseDir , type, fileName),
                 assetCompiler = compilerMap[type] || compilerMap['generic'];
             fs.readFile(assetPath, function(err, buffer) {
               if(err){
@@ -119,10 +130,15 @@
               }
             });
           }, function(err, data) {
-            if(err){
+            if(err) {
               throw err;
             } else {
-              fs.writeFile(filePath, data.join('\n'), 'utf8', next);
+              if(type === 'templates') {
+                data = '({' + data.join(',\n').replace(/[\s\r\n]+/g, ' ') + '})';
+              } else {
+                data = data.join('\n');
+              }
+              fs.writeFile(filePath, data, 'utf8', next);
             }
           });
 
