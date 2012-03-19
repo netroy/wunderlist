@@ -47,7 +47,7 @@ div,input{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:bo
 @font-face{font-family:'Open Sans';font-style:normal;font-weight:400;src:local('Open Sans'),local('OpenSans'),url("fonts/OpenSans.woff") format('woff')}
 @font-face{font-family:'Open Sans';font-style:normal;font-weight:600;src:local('Open Sans Semibold'),local('OpenSans-Semibold'),url("fonts/OpenSans-Semibold.woff") format('woff')}
 html{overflow:hidden;height:100%;background-origin:padding-box;-webkit-background-size:cover;-moz-background-size:cover;background-size:cover}
-body{opacity:0;filter:alpha(opacity=0);-webkit-transition:opacity .3s ease-in-out;-moz-transition:opacity .3s ease-in-out;-ms-transition:opacity .3s ease-in-out;-o-transition:opacity .3s ease-in-out;transition:opacity .3s ease-in-out;font-size:12px;color:#4e4e4e;overflow:auto;height:100%;background:#444 url("/images/backgrounds/wood.jpg") no-repeat fixed top center}
+body{opacity:0;filter:alpha(opacity=0);-webkit-transition:opacity .3s ease-in-out;-moz-transition:opacity .3s ease-in-out;-ms-transition:opacity .3s ease-in-out;-o-transition:opacity .3s ease-in-out;transition:opacity .3s ease-in-out;font-size:12px;color:#4e4e4e;overflow:auto;height:100%;background-color:#444}
 body,button,input,select,textarea{font-family:'Open Sans','Lucida Grande',Arial,sans-serif}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-thumb{-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;background:rgba(70,70,70,0.60);border:2px solid rgba(20,20,20,0.20);-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;-webkit-transition:all 1s linear}
