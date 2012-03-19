@@ -25,6 +25,8 @@
     maxAge: 86400*365
   }));
 
+  // Router handles ajax requests which server dummy content in dev mode
+  // But acts as a proxy to wunderlist sync servers in production mode
   app.use(connect.router(require('./lib/routes')(devMode)));
 
   if (!module.parent) {

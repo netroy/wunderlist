@@ -44,24 +44,24 @@ module.exports = (function(undefined) {
 
   function router(app) {
     app.get("/version.txt", dummyJSONCallback(versionData));
-    //if(devMode) {
+    if(devMode) {
       app.post("/login", dummyJSONCallback('{"code": 200,"user_id": "1140994"}'));
       app.post("/1.2.0", function(req, resp) {
         dummyJSONCallback(syncData[req.body.step || 0])(req, resp);
       });
-    //} else {
-    //  app.post(/^\/(register|login|password|invite|(edit|delete)-account|1\.2\.0)\/?$/, proxyCallback);
-    //}
+    } else {
+      app.post(/^\/(register|login|password|invite|(edit|delete)-account|1\.2\.0)\/?$/, proxyCallback);
+    }
   }
 
   return function(mode) {
     devMode = mode;
-    //if(devMode) {
+    if(devMode) {
       syncData = ['',
         fs.readFileSync(dataDir + "/step1.json"),
         fs.readFileSync(dataDir + "/step2.json")
       ];
-    /*} else {
+    } else {
       http = require('http');
       postOptions = {
         host: 'sync.wunderlist.net',
@@ -74,7 +74,7 @@ module.exports = (function(undefined) {
           'Referer': 'http://www.wunderlist.net/home'
         }
       };
-    }*/
+    }
 
     return router;
   };
