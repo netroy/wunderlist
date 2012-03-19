@@ -25,9 +25,7 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
 
     'render': function() {
       var self = this, newEl;
-      if(self.model === undefined) return;
-
-      if(self.template !== undefined) {
+      if(self.model !== undefined && self.template !== undefined) {
         newEl = $(self.template(self.model.toJSON()));
         if(self.el instanceof $) {
           self.el.replaceWith(newEl).remove();
@@ -35,7 +33,6 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
         }
         self.el = newEl;
       }
-      
       return self;
     }
 

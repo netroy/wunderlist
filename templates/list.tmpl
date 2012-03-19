@@ -1,0 +1,10 @@
+<li<%= (inbox === '1')? " class=\'inbox\'" : "" %>>
+  <label><%=label%></label>
+  <span class="taskCount"><%=task_count%></span>
+  <% if(inbox !== '1') { %>
+  <a class="share"></a>
+  <a class="delete"></a>
+  <% } %>
+  <a class="edit"></a>
+  <a class="save"></a>
+</li>

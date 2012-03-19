@@ -19,7 +19,7 @@
       'base': {
         'expires': 0,
         'files': ['libs/json2', 'libs/require', 'libs/jquery', 'libs/underscore', 'libs/async',
-                  'helpers/settings', 'helpers/language', 'helpers/titanium', 'helpers/templates', 
+                  'helpers/settings', 'helpers/language', 'helpers/titanium', 'helpers/templates',
                   'frontend/layout'],
         'compress': true
       },
@@ -70,7 +70,7 @@
       },
       'app': {
         'expires': 100,
-        'files': ['layout'],
+        'files': ['layout', 'list'],
         'compress': false
       }
     }
