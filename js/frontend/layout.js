@@ -32,31 +32,33 @@ define('frontend/layout',
     });
   }
 
+  function render(sidebar, filters, background, sharing, menu) {
+      var body = $('body');
+      body.addClass('logged');
+
+      $.get('templates/layout.tmpl', function(response) {
+        body.html(_.template(response, language.data));
+
+        background.init();
+        menu.init();
+
+        loaded();
+
+        sidebar.init();
+        sharing.init();
+        /*filters.init();*/
+
+        loadData();
+      });
+
+    }
+
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
-      require(
-        ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing', 'frontend/menu'],
-        function(sidebar, filters, background, sharing, menu) {
-
-        var body = $('body');
-        body.addClass('logged');
-
-        $.get('templates/layout.tmpl', function(response) {
-          body.html(_.template(response, language.data));
-
-          background.init();
-          menu.init();
-
-          loaded();
-
-          sidebar.init();
-          sharing.init();
-          /*filters.init();
-          console.log('layout init');*/
-
-          loadData();
-        });
-
+      require(['libs'], function(){
+        require(
+          ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing', 'frontend/menu'],
+          render);
       });
     } else {
       require(['frontend/login'], loaded);
