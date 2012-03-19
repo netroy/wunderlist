@@ -8,3 +8,7 @@ version.txt
 .nodester.appconfig
 node_modules
 backup
+.monitor
+js/*-min.js
+css/*-min.css
+templates/*-min.templates
