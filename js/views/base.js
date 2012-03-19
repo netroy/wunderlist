@@ -1,4 +1,4 @@
-define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], function($, _, Backbone) {
+define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], function($, _, Backbone, undefined) {
 
   "use strict";
 
@@ -9,7 +9,9 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
     'initialize': function() {
       var self = this;
       self.el = $(self.el);
-      self.template = _.template(self.template || "");
+      if(typeof self.template === 'string') {
+        self.template = _.template(self.template);
+      }
 
       // on language_change event refresh all the view
       doc.on("language_changed", function(e, code) {
@@ -25,12 +27,14 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
       var self = this;
       if(self.model === undefined) return;
 
-      if(self.el instanceof $) {
-        self.el.remove();
-        delete self.el;
+      if(self.template !== undefined) {
+        if(self.el instanceof $) {
+          self.el.remove();
+          delete self.el;
+        }
+        self.el = $(self.template(self.model.toJSON()));
       }
-
-      self.el = $(self.template(self.model.toJSON()));
+      
       return self;
     }
 
