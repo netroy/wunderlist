@@ -1,7 +1,7 @@
 /*global console: false, require:false */
 define('frontend/layout',
-      ['libs/jquery', 'libs/underscore', 'helpers/settings', 'helpers/language'],
-      function($, _, settings, language, undefined) {
+      ['libs/jquery', 'libs/underscore', 'helpers/settings', 'helpers/language', 'helpers/templates'],
+      function($, _, settings, language, templates, undefined) {
 
   'use strict';
 
@@ -33,25 +33,20 @@ define('frontend/layout',
   }
 
   function render(sidebar, filters, background, sharing, menu) {
-      var body = $('body');
-      body.addClass('logged');
+    var body = $('body').addClass('logged');
+    body.html(templates.get('layout')(language.data));
 
-      $.get('templates/layout.tmpl', function(response) {
-        body.html(_.template(response, language.data));
+    background.init();
+    menu.init();
 
-        background.init();
-        menu.init();
+    loaded();
 
-        loaded();
+    sidebar.init();
+    sharing.init();
+    /*filters.init();*/
 
-        sidebar.init();
-        sharing.init();
-        /*filters.init();*/
-
-        loadData();
-      });
-
-    }
+    loadData();
+  }
 
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
@@ -59,11 +54,22 @@ define('frontend/layout',
         require(['app-min'], function() {
           require(
             ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing', 'frontend/menu'],
-            render);
+            function() {
+              var args = arguments;
+              templates.init(true, function() {
+                render.apply(null, args);
+              });
+            });
         });
       });
     } else {
-      require(['frontend/login'], loaded);
+      require(['frontend/login'], function(login) {
+        var args = arguments;
+        templates.init(false, function() {
+          loaded();
+          login.init();
+        });
+      });
     }
   }
 

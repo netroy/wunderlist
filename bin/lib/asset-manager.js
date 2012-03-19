@@ -19,12 +19,13 @@
       'base': {
         'expires': 0,
         'files': ['libs/json2', 'libs/require', 'libs/jquery', 'libs/underscore', 'libs/async',
-                  'helpers/settings', 'helpers/language', 'helpers/titanium', 'frontend/layout'],
+                  'helpers/settings', 'helpers/language', 'helpers/titanium', 'helpers/templates', 
+                  'frontend/layout'],
         'compress': true
       },
       'appbase': {
         'expires': 100,
-        'files': ['helpers/settings', 'helpers/language', 'helpers/titanium', 'frontend/layout'],
+        'files': ['helpers/settings', 'helpers/language', 'helpers/titanium', 'helpers/templates', 'frontend/layout'],
         'compress': true
       },
       'libs': {
