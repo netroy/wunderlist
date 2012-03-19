@@ -1,4 +1,4 @@
-define('models/tasks', ['models/base'], function(BaseModel) {
+define('models/task', ['models/base'], function(BaseModel) {
 
   "use strict";
 
