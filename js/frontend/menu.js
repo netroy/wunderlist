@@ -15,15 +15,12 @@ define('frontend/menu',
       var self = this;
       BaseView.prototype.initialize.apply(self, []);
 
-      self.model = self.model || new BaseModel({
-        "label": label
-      });
-
-      self.label = $('<span/>');
-      self.el.append(self.label);
-
       // On label change the item should re-render
-      self.model.bind('change:label', self.render);
+      self.label = label;
+      self.bind('change:label', self.render);
+
+      self.span = $('<span/>');
+      self.el.append(self.span);
 
       self.handler = handler;
       self.cssClass = cssClass;
@@ -53,27 +50,27 @@ define('frontend/menu',
     },
 
     setLabel: function(label) {
-      this.model.set('label', label);
+      this.label = label;
+      this.trigger("change:label");
     },
 
     render: function() {
       var self = this,
           el = self.el,
-          label = self.label,
-          model = self.model,
+          span = self.span,
           cssClass = self.cssClass,
           handler = self.handler,
-          text = model.get('label');
+          label = self.label;
 
-      text = language.data[text] || text;
+      label = language.data[label] || label;
       if(typeof cssClass !== 'undefined') {
         el.addClass(cssClass);
       }
 
       if(typeof handler === 'string') {
-        el.html("<a href=" + handler + " target='_blank'>" + text + "</a>");
+        el.html("<a href=" + handler + " target='_blank'>" + label + "</a>");
       } else {
-        label.html(text);
+        span.html(label);
       }
 
       return self;
