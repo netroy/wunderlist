@@ -2,7 +2,7 @@
 (function() {
 
   "use strict";
-  var CC = require("closure-compiler"),
+  var uglify = require("uglify-js"),
       fs = require('fs'),
       url = require('url'),
       async = require('async'),
@@ -20,7 +20,7 @@
   module.exports = function AssetManager(req, res, next) {
     if ('GET' != req.method && 'HEAD' != req.method) return next();
     var path = url.parse(req.url).pathname, filePath;
-    if (/\-min\.js$/.test(path)) {
+    if (/\-minz\.js$/.test(path)) {
       filePath = join(__dirname + '/../js/min' , path);
       console.log(filePath);
       fs.writeFile(filePath, "hello world", 'utf8', next);
