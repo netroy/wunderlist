@@ -87,7 +87,7 @@
       }).render(callback);
     },
     'templates': function(asset, code, compress, callback) {
-      callback(null, asset + ':' + JSON.stringify(code));
+      callback(null, '"' + asset + '": ' + JSON.stringify(code));
     },
     'generic': function(asset, code, compress, callback) {
       callback(null, code);
@@ -134,7 +134,7 @@
               throw err;
             } else {
               if(type === 'templates') {
-                data = '({' + data.join(',\n').replace(/[\s\r\n]+/g, ' ') + '})';
+                data = '{' + data.join(',\n').replace(/[\s\r\n]+/g, ' ') + '}';
               } else {
                 data = data.join('\n');
               }
