@@ -24,15 +24,16 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
     },
 
     'render': function() {
-      var self = this;
+      var self = this, newEl;
       if(self.model === undefined) return;
 
       if(self.template !== undefined) {
+        newEl = $(self.template(self.model.toJSON()));
         if(self.el instanceof $) {
-          self.el.remove();
+          self.el.replaceWith(newEl).remove();
           delete self.el;
         }
-        self.el = $(self.template(self.model.toJSON()));
+        self.el = newEl;
       }
       
       return self;
