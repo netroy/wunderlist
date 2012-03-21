@@ -9,6 +9,10 @@ version.txt
 node_modules
 backup
 .monitor
-js/*-min.js
-css/*-min.css
-templates/*-min.templates
+web/js/*-min.js
+web/css/*-min.css
+web/templates/*-min.templates
+desktop/Makefile
+desktop/bin
+desktop/*.pro.user
+*.o
