@@ -8,7 +8,7 @@
       stylus = require('stylus'),
       app = module.exports = connect.createServer(),
       devMode = (process.env.NODE_ENV || '').toLowerCase() !== 'production',
-      baseDir = __dirname + "/..",
+      baseDir = __dirname + "/../web",
       port = parseInt(process.env.app_port, 10) || 12587;
 
   // Query Parser is needed for cache-busting in asset-manager

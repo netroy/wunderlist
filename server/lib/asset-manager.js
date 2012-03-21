@@ -11,7 +11,7 @@
       path = require('path'),
       dirname = path.dirname,
       join = path.join,
-      baseDir = join(__dirname + '/../..'),
+      baseDir = join(__dirname + '/../../web'),
       stylusImportPath = join(baseDir + '/css/src');
 
   var assetMap = {

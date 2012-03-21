@@ -88,57 +88,11 @@ wunderlist.helpers.background = (function($, wunderlist, undefined){
     var theme = wunderlist.settings.getString("active_theme", "bgone");
     switchBg(null, theme);
 
-  /*
-    var menuTimer;
-  
-    // Menu Blur
-    $("#menublur").mouseenter(function(){
-      menuTimer = setTimeout(function() {
-    
-        // Account Menu
-        $("#left ul").hide();
-        $("#left a:first").removeClass("active");
-        $("#left li").removeClass("currenttree");
-        $("#menublur").hide();
-          
-        // Background Switcher
-        $('#backgroundList').fadeOut(100);
-      
-        backgroundListOpen = 0;
-      
-        }, 350);
-    });
-  
-    backgroundListOpen = 0;
-  
-    // Background Switcher
-    $("a.backgroundswitcher").click(function(){
-      clearTimeout(menuTimer);
-    
-      if(backgroundListOpen === 0) {
-        $("#backgroundList").fadeIn("100");
-        $("#menublur").show();
-        backgroundListOpen = 1;
-      }
-    
-      else {
-        $("#backgroundList").hide();
-        $("#menublur").hide();
-        backgroundListOpen = 0;
-      }
-    });
-  
-    $("#backgroundList").mouseenter(function(){
-      clearTimeout(menuTimer);
-    });
-
-    // Load Default Active State
-    //$(".bgchooser a.bgone").addClass("active");
-  */
   }
 
 
   return {
     "init": init
   };
+
 })(jQuery, wunderlist);
