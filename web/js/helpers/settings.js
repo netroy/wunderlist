@@ -109,7 +109,7 @@ define('helpers/settings', ['helpers/titanium'], function(Titanium, undefined) {
 
   // Load defaults for first run
   // TODO: move these to approriate modules
-  if(hasProperty('initialized')) {
+  if(!hasProperty('initialized')) {
     // Default background
     setString('theme', 'one');
 
