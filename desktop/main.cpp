@@ -1,46 +1,59 @@
 #include <QtGui/QApplication>
 #include <QWebView>
+#include <QWebFrame>
 #include <QWebSettings>
 #include <QWebInspector>
 #include <QUrl>
 #include <QString>
+#include <QDesktopServices>
+#include <QMenu>
+#include <QMenuBar>
+
 
 int main(int argc, char *argv[]) {
 
-    QString storagePath = QString('/tmp/data');
+    QString storagePath = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/Wunderlist";
 
     QApplication a(argc, argv);
 
     QWebView *view = new QWebView;
-    QWebInspector *inspector = new QWebInspector;
-    QWebPage *page = view->page();
-    QWebSettings *settings = page->settings();
+    view->setMinimumSize(760, 450);
 
-    settings->enablePersistentStorage("/tmp/data");
+    QWebPage *page = view->page();
+    QWebFrame *frame = page->mainFrame();
+    QWebSettings *webViewSettings = page->settings()->globalSettings();
+
+    QMenu *settingsMenu = new QMenu("&Settings");
+    QMenu *aboutUsMenu = new QMenu("About &Us");
+    QMenuBar *menuBar = new QMenuBar(view);
+    menuBar->addMenu(settingsMenu);
+    menuBar->addMenu(aboutUsMenu);
+
+    // Enable Inspect option
+    webViewSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+
+    // Enable Remote URL access for Sync
+    webViewSettings->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
+
+    // All Offline storage path
+    webViewSettings->enablePersistentStorage(storagePath);
+    webViewSettings->setOfflineStoragePath(storagePath);
 
     // Enable localstorage
-    settings->setAttribute(QWebSettings::LocalStorageEnabled, true);
-    //settings->setLocalStoragePath("/tmp/data");
+    webViewSettings->setAttribute(QWebSettings::LocalStorageEnabled, true);
 
     // Enable WebSQl database
-    settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled,true);
-    //settings->setOfflineStoragePath("/tmp/data");
-    settings->setOfflineStorageDefaultQuota(5*1024*1024);
+    webViewSettings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled,true);
+    webViewSettings->setOfflineStorageDefaultQuota(5*1024*1024);
 
     // Enable Offline AppCache
-    settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled,true);
-    //settings->setOfflineWebApplicationCachePath("/tmp/data");
-    settings->setOfflineWebApplicationCacheQuota(5*1024*1024);
+    webViewSettings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled,true);
+    webViewSettings->setOfflineWebApplicationCacheQuota(5*1024*1024);
 
     // Load the Web-App
     view->load(QUrl("http://localhost:8888/"));
-
-    // Enable Inspect option
-    settings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-    inspector->setPage(page);
-
     view->show();
-    inspector->show();
 
     return a.exec();
+
 }
