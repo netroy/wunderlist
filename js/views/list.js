@@ -5,13 +5,9 @@ define('views/list',
   "use strict";
 
   var BaseViewPrototype = BaseView.prototype;
+  var template = templates.get('list');
   var ListView = BaseView.extend({
-
-    'initialize': function() {
-      var self = this;
-      self.template = templates.get('list');
-      return BaseViewPrototype.initialize.apply(self, arguments);
-    },
+    'template': template,
 
     'render': function() {
       var self = this,

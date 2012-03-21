@@ -1,5 +1,5 @@
 /*global console: false*/
-define('frontend/sharing',
+define('frontend/bottombar',
       ['libs/jquery', 'views/base', 'helpers/templates'],
       function($, BaseView, templates, undefined) {
 
@@ -7,7 +7,7 @@ define('frontend/sharing',
 
   function init() {
     var sharingView = new BaseView();
-    sharingView.template = templates.get('sharing');
+    sharingView.template = templates.get('bottombar');
     $('#layout').append(sharingView.render().el);
   }
 

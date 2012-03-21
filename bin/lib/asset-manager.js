@@ -70,7 +70,7 @@
       },
       'app': {
         'expires': 100,
-        'files': ['layout', 'list'],
+        'files': ['layout', 'list', 'sharing', 'sidebar', 'bottombar'],
         'compress': false
       }
     }
@@ -124,7 +124,7 @@
             var assetPath = join(baseDir , type, fileName),
                 assetCompiler = compilerMap[type] || compilerMap['generic'];
             fs.readFile(assetPath, function(err, buffer) {
-              if(err){
+              if(err) {
                 callback(err);
               } else {
                 assetCompiler(asset, buffer.toString(), compress, callback);

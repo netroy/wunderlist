@@ -32,18 +32,20 @@ define('frontend/layout',
     });
   }
 
-  function render(sidebar, filters, background, sharing, menu) {
+  function render(bottombar, sidebar, filters, background, sharing, menu) {
     var body = $('body').addClass('logged');
     body.html(templates.get('layout')(language.data));
 
+    sidebar.init();
+
+    bottombar.init();
     background.init();
     menu.init();
+    filters.init();
+
+    sharing.init();
 
     loaded();
-
-    sidebar.init();
-    sharing.init();
-    /*filters.init();*/
 
     loadData();
   }
@@ -51,16 +53,18 @@ define('frontend/layout',
   function init() {
     if(settings.getString('logged_in', 'false') !== 'false') {
       require(['libs-min'], function() {
-        require(['app-min'], function() {
+      //  require(['app-min'], function() {
           require(
-            ['frontend/sidebar', 'frontend/filters', 'frontend/background', 'frontend/sharing', 'frontend/menu'],
+            ['frontend/bottombar', 'frontend/sidebar', 'frontend/filters',
+             'frontend/background', 'frontend/sharing', 'frontend/menu'],
             function() {
               var args = arguments;
               templates.init(true, function() {
                 render.apply(null, args);
               });
-            });
-        });
+            }
+          );
+      //  });
       });
     } else {
       require(['frontend/login'], function(login) {

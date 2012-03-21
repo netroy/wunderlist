@@ -1,4 +1,6 @@
-define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], function($, _, Backbone, undefined) {
+define('views/base',
+      ['libs/jquery', 'libs/underscore', 'libs/backbone', 'helpers/language'],
+      function($, _, Backbone, language, undefined) {
 
   "use strict";
 
@@ -24,14 +26,22 @@ define('views/base', ['libs/jquery', 'libs/underscore', 'libs/backbone'], functi
     },
 
     'render': function() {
-      var self = this, newEl;
-      if(self.model !== undefined && self.template !== undefined) {
-        newEl = $(self.template(self.model.toJSON()));
-        if(self.el instanceof $) {
-          self.el.replaceWith(newEl).remove();
-          delete self.el;
+      var self = this,
+          el = self.el,
+          template = self.template,
+          model = self.model,
+          newEl;
+      if(template !== undefined) {
+        if(model !== undefined) {
+          newEl = $(template(model.toJSON()));
+          if(el instanceof $) {
+            el.replaceWith(newEl).remove();
+            delete self.el;
+          }
+          self.el = newEl;
+        } else {
+          self.el = $(template(language.data));
         }
-        self.el = newEl;
       }
       return self;
     }

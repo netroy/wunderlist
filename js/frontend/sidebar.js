@@ -1,9 +1,11 @@
 /*global console: false*/
-define('frontend/sidebar', ['libs/jquery', 'helpers/settings'], function($, settings, undefined) {
+define('frontend/sidebar',
+      ['libs/jquery', 'views/base', 'helpers/settings', 'helpers/templates'],
+      function($, BaseView, settings, templates, undefined) {
 
   'use strict';
 
-  var isPositionLeft, openStatus, body, toggleButton;
+  var isPositionLeft, openStatus, body;
   var positionProperty = 'sidebar_position', openStatusProperty = 'sidebar_opened_status';
 
 
@@ -54,11 +56,15 @@ define('frontend/sidebar', ['libs/jquery', 'helpers/settings'], function($, sett
 
   function init() {
     body = $('body');
-    toggleButton = $('a.toggleSidebar', '.rightBottom');
+    var layout = $('#layout');
+
+    var sidebarView = new BaseView();
+    sidebarView.template = templates.get('sidebar');
+    layout.append(sidebarView.render().el);
 
     initPosition();
 
-    $('.rightBottom').delegate('a.toggleSidebar', 'click', toggleSidebar);
+    layout.delegate('a.toggleSidebar', 'click', toggleSidebar);
   }
 
   return {
